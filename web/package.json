@@ -5,7 +5,7 @@
   "type": "module",
   "scripts": {
     "dev": "node ./node_modules/vite/bin/vite.js --host --strictPort --port 5173",
-    "build": "node ./node_modules/typescript/bin/tsc -b && vite build",
+    "build": "node ./node_modules/typescript/bin/tsc -b && node ./node_modules/vite/bin/vite.js build",
     "preview": "vite preview",
     "test": "vitest",
     "test:ui": "vitest --ui",
