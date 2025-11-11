@@ -3973,9 +3973,18 @@ export function createInitialCampaignStages() {
     ...stage,
     firstReward: {
       ...stage.firstReward,
-      cards: stage.firstReward.cards ? [...stage.firstReward.cards] : undefined,
+      cards:
+        'cards' in stage.firstReward && Array.isArray(stage.firstReward.cards)
+          ? [...stage.firstReward.cards]
+          : undefined,
     },
-    repeatReward: { ...stage.repeatReward },
+    repeatReward: {
+      ...stage.repeatReward,
+      cards:
+        'cards' in stage.repeatReward && Array.isArray(stage.repeatReward.cards)
+          ? [...stage.repeatReward.cards]
+          : undefined,
+    },
     story: stage.story ? { ...stage.story } : undefined,
     cutscene: stage.cutscene
       ? {

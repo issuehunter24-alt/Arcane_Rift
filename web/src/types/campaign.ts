@@ -5,13 +5,19 @@ export type DialogueLine = {
   characterImage?: string;
 };
 
+type StageReward = {
+  gold: number;
+  shards: number;
+  cards?: string[];
+};
+
 export type CampaignStage = {
   id: number;
   name: string;
   theme: string;
   recommendedPower: number;
-  firstReward: { gold: number; shards: number; cards?: string[] };
-  repeatReward: { gold: number; shards: number };
+  firstReward: StageReward;
+  repeatReward: StageReward;
   cleared: boolean;
   story?: {
     description: string;
