@@ -1,0 +1,249 @@
+==========================================================
+■ 카툰 스타일 캐릭터 베이스 프롬프트 (중세 판타지 로맨스)
+==========================================================
+
+[필수 코어 프롬프트 - 모든 생성 시 포함]
+----------------------------------------------------------
+
+(masterpiece, best quality, ultra detailed, 8k resolution:1.4),
+anime style, cartoon style, disney style, studio ghibli style,
+
+# 기본 설정
+medieval fantasy setting, romantic atmosphere,
+elegant clothing, noble appearance,
+soft lighting, magical elements,
+
+# 얼굴 & 표정 (공통)
+beautiful character, expressive face, detailed facial features,
+clear skin, natural makeup, youthful appearance,
+big expressive eyes, detailed eyes, emotional expression,
+
+# 체형 (공통)
+graceful body, elegant proportions, feminine/masculine beauty,
+detailed clothing, luxurious fabric, fine details,
+
+# 전체 분위기
+high quality illustration, detailed character design,
+captivating character, beautiful art style,
+
+
+==========================================================
+■ 카툰 스타일 네거티브 프롬프트
+==========================================================
+
+[기본 네거티브 - 항상 사용]
+----------------------------------------------------------
+
+(worst quality, low quality, normal quality:1.4),
+realistic, photorealistic, 3d render,
+bad anatomy, bad proportions, deformed,
+ugly, poorly drawn face, blurry,
+extra limbs, extra fingers, missing fingers,
+bad hands, bad eyes, asymmetric eyes,
+dark skin, tan skin, muscular,
+masculine features, old, mature,
+scary, horror, gore, violence,
+nsfw, sexual content, nude,
+
+
+==========================================================
+■ 캐릭터별 색상 팔레트
+==========================================================
+
+# 세라피나 벨몬트 (주인공)
+- 보라색: #8B5CF6 (상징색)
+- 은색: #E5E7EB (머리카락)
+- 보라색 눈: #8B5CF6
+- 흰색: #FFFFFF (피부)
+
+# 카이 드레이크 (1남)
+- 진한 파랑: #1E40AF (상징색)
+- 갈색: #92400E (머리카락)
+- 청록색: #0D9488 (눈)
+- 금색: #F59E0B (장신구)
+
+# 레온 아르데니아 (2남)
+- 금색: #F59E0B (상징색)
+- 황금빛: #FBBF24 (머리카락)
+- 금색 눈: #FCD34D
+- 흰색: #FFFFFF (드레스)
+
+# 루시안 로즈가든 (3남)
+- 보라색: #8B5CF6 (상징색)
+- 진한 보라: #6D28D9 (머리카락)
+- 보라색 눈: #8B5CF6
+- 은색: #E5E7EB (드레스)
+
+# 엘레나 드레이크 (카이의 여동생)
+- 분홍색: #F472B6 (상징색)
+- 밝은 갈색: #D97706 (머리카락)
+- 청록색: #0D9488 (눈)
+- 흰색: #FFFFFF (드레스)
+
+# 이리스 벨몬트 (세라피나의 여동생)
+- 흰색: #FFFFFF (상징색)
+- 밝은 은발: #F3F4F6 (머리카락)
+- 보라색: #8B5CF6 (눈)
+- 분홍색: #F472B6 (드레스)
+
+# 마르쿠스 벨몬트 (세라피나의 오빠)
+- 진한 보라: #6D28D9 (상징색)
+- 진한 은발: #6B7280 (머리카락)
+- 보라색: #8B5CF6 (눈)
+- 은색: #E5E7EB (드레스)
+
+
+==========================================================
+■ 배경 설정 가이드
+==========================================================
+
+# 왕궁/성
+fantasy castle background, royal palace,
+throne room, elegant interior,
+soft lighting, majestic atmosphere,
+royal elements, regal environment,
+
+# 마법 연구소
+fantasy magic laboratory, mystical setting,
+ancient library, magical interior,
+mysterious lighting, enchanting atmosphere,
+magical elements, mystical environment,
+
+# 정원
+fantasy garden background, medieval setting,
+flower garden, elegant interior,
+soft lighting, pure atmosphere,
+magical sparkles, angelic environment,
+
+# 상업 도시
+fantasy city background, medieval setting,
+commercial district, elegant interior,
+soft lighting, mysterious atmosphere,
+magical elements, sophisticated environment,
+
+
+==========================================================
+■ 의상 스타일 가이드
+==========================================================
+
+# 여성 캐릭터
+medieval fantasy dress, noble gown,
+elegant clothing, luxurious fabric,
+fine details, royal appearance,
+jewelry, accessories,
+
+# 남성 캐릭터
+medieval fantasy noble suit, aristocratic clothing,
+elegant clothing, luxurious fabric,
+fine details, royal appearance,
+jewelry, accessories,
+
+# 마법사
+medieval fantasy wizard robe, mystical clothing,
+magical fabric, mystical details,
+enchanting appearance, magical accessories,
+mystical jewelry,
+
+
+==========================================================
+■ 포즈 및 상황별 프롬프트
+==========================================================
+
+# 우아한 포즈
+elegant standing pose, graceful posture,
+confident stance, noble bearing,
+heroic presence, majestic aura,
+
+# 로맨틱한 포즈
+gentle smile, warm expression,
+hand extended, romantic gesture,
+soft eyes, caring look,
+tender moment, loving gaze,
+
+# 걱정스러운 포즈
+worried expression, concerned look,
+protective gesture, caring expression,
+gentle concern, loving worry,
+
+# 결의에 찬 포즈
+determined expression, strong will,
+firm stance, resolute look,
+protective gesture, heroic pose,
+leadership aura, confident smile,
+
+
+==========================================================
+■ SD 설정 권장사항
+==========================================================
+
+# 기본 설정
+CFG Scale: 7-9
+Sampling Steps: 30-50
+Sampler: DPM++ 2M Karras
+Resolution: 512x768 또는 768x1024
+
+# LoRA 추천
+anime_style_lora:0.6
+fantasy_character_lora:0.5
+medieval_romance_lora:0.4
+
+# 체크포인트 추천
+anime_v2.safetensors
+fantasy_mix.safetensors
+cartoon_style.safetensors
+
+
+==========================================================
+■ 사용 예시 (전체 프롬프트)
+==========================================================
+
+(masterpiece, best quality, ultra detailed, 8k resolution:1.4),
+anime style, cartoon style, disney style, studio ghibli style,
+1girl, solo,
+
+# 캐릭터 기본 설정
+beautiful young woman, 18 years old, 165cm tall,
+noble lady, aristocratic appearance, elegant posture,
+
+# 얼굴 특징
+heart-shaped face, delicate facial features,
+large violet eyes, long eyelashes, small nose,
+small pink lips, porcelain white skin,
+cold but enchanting smile, confident expression,
+
+# 헤어스타일
+long silver-white hair, flowing hair, silky hair,
+hair reaching waist, natural waves, shiny hair,
+
+# 체형
+slim figure, feminine curves, graceful body,
+elegant proportions, noble bearing,
+
+# 의상
+medieval fantasy dress, noble gown, elegant clothing,
+purple and silver color scheme, luxurious fabric,
+jewelry, accessories, royal appearance,
+
+# 배경 및 분위기
+fantasy castle background, medieval setting,
+soft lighting, romantic atmosphere,
+magical sparkles, ethereal glow,
+
+# 스타일 강화
+detailed character design, high quality illustration,
+beautiful art style, captivating character,
+
+
+==========================================================
+■ 일관성 유지 팁
+==========================================================
+
+1. 코어 프롬프트는 항상 동일하게 유지
+2. 캐릭터별 색상 팔레트 고정 사용
+3. Seed 값을 기록하여 좋은 얼굴 나오면 재사용
+4. 의상/배경/포즈만 변경하여 시나리오 다양화
+5. CFG Scale: 7~9 유지
+6. Sampling Steps: 30~50 권장
+7. 카툰 스타일 키워드 항상 포함
+8. 중세 판타지 배경 일관성 유지
+

@@ -1,0 +1,6593 @@
+[
+  {
+    "id": "ATT_ARIANA_EP_003",
+    "name": "폭풍 연격",
+    "type": "Attack",
+    "rarity": "Epic",
+    "cost": 3,
+    "effects": [
+      {
+        "type": "Damage",
+        "value": 18
+      },
+      {
+        "type": "Chain",
+        "targets": 2,
+        "ratio": 0.6
+      },
+      {
+        "type": "ApplyStatus",
+        "key": "Shock",
+        "stacks": 1,
+        "duration": 2
+      }
+    ],
+    "tags": [
+      "Fire"
+    ],
+    "keywords": [
+      "Shock",
+      "Chain"
+    ],
+    "vfxKey": "atk_fire_aoe",
+    "sfxKey": "explosion_fire",
+    "version": 3,
+    "effectText": "피해 18, 연쇄 2명(60%), 쇼크 1중첩"
+  },
+  {
+    "id": "ATT_ARIANA_LE_004",
+    "name": "화염 폭발",
+    "type": "Attack",
+    "rarity": "Legendary",
+    "cost": 3,
+    "effects": [
+      {
+        "type": "Damage",
+        "value": 36
+      },
+      {
+        "type": "ApplyStatus",
+        "key": "Burn",
+        "stacks": 2,
+        "duration": 2,
+        "target": "enemy"
+      },
+      {
+        "type": "ApplyStatus",
+        "key": "Vulnerable",
+        "stacks": 1,
+        "duration": 2,
+        "target": "enemy"
+      }
+    ],
+    "tags": [
+      "Neutral"
+    ],
+    "keywords": [
+      "Burn",
+      "Vulnerable"
+    ],
+    "vfxKey": "atk_execute",
+    "sfxKey": "hit_final",
+    "version": 3,
+    "effectText": "피해 36, 화상 2중첩, 취약 1중첩(2턴)"
+  },
+  {
+    "id": "ATT_ARIANA_NO_001",
+    "name": "파이어볼",
+    "type": "Attack",
+    "rarity": "Normal",
+    "cost": 2,
+    "effects": [
+      {
+        "type": "Damage",
+        "value": 30
+      },
+      {
+        "type": "ApplyStatus",
+        "key": "Burn",
+        "stacks": 1,
+        "duration": 2
+      }
+    ],
+    "tags": [
+      "Neutral"
+    ],
+    "keywords": [
+      "Burn"
+    ],
+    "effectText": "피해 30, 대상에게 화상 1중첩(2턴)",
+    "levelCurve": {
+      "base": {
+        "damage": 20
+      },
+      "perLevel": {
+        "damage": 2
+      }
+    },
+    "vfxKey": "atk_basic",
+    "sfxKey": "hit_generic",
+    "version": 3
+  },
+  {
+    "id": "ATT_ARIANA_RA_002",
+    "name": "연성 폭연",
+    "type": "Attack",
+    "rarity": "Rare",
+    "cost": 2,
+    "effects": [
+      {
+        "type": "Damage",
+        "value": 22
+      },
+      {
+        "type": "ApplyStatus",
+        "key": "Burn",
+        "stacks": 1,
+        "duration": 2
+      },
+      {
+        "type": "ApplyStatus",
+        "key": "Vulnerable",
+        "stacks": 1,
+        "duration": 1
+      }
+    ],
+    "tags": [
+      "Fire"
+    ],
+    "keywords": [
+      "Burn",
+      "Vulnerable"
+    ],
+    "effectText": "피해 22, 화상 1중첩, 취약 1중첩(1턴)",
+    "levelCurve": {
+      "base": {
+        "damage": 30
+      },
+      "perLevel": {
+        "damage": 3
+      }
+    },
+    "vfxKey": "atk_fire",
+    "sfxKey": "hit_fire",
+    "version": 3
+  },
+  {
+    "id": "ATT_DARIUS_EP_019",
+    "name": "혈월의 일격",
+    "type": "Attack",
+    "rarity": "Epic",
+    "cost": 2,
+    "effects": [
+      {
+        "type": "Damage",
+        "value": 26
+      },
+      {
+        "type": "ApplyBleed",
+        "stacks": 2,
+        "duration": 2,
+        "damagePerStack": 6
+      }
+    ],
+    "tags": [
+      "Blood"
+    ],
+    "keywords": [
+      "Bleed"
+    ],
+    "vfxKey": "atk_bleed",
+    "sfxKey": "slash_heavy",
+    "version": 3,
+    "effectText": "피해 26, 출혈 2중첩(턴마다 6 피해)"
+  },
+  {
+    "id": "ATT_DARIUS_LE_020",
+    "name": "처형",
+    "type": "Attack",
+    "rarity": "Legendary",
+    "cost": 4,
+    "effects": [
+      {
+        "type": "Damage",
+        "value": 50
+      },
+      {
+        "type": "Conditional",
+        "if": "targetHp<=30%",
+        "then": [
+          {
+            "type": "Damage",
+            "value": 30
+          }
+        ]
+      }
+    ],
+    "tags": [
+      "Execution"
+    ],
+    "keywords": [
+      "Conditional"
+    ],
+    "vfxKey": "atk_execute",
+    "sfxKey": "hit_final",
+    "version": 3,
+    "effectText": "피해 50, 대상 HP 30% 이하 추가 피해 30"
+  },
+  {
+    "id": "ATT_DARIUS_NO_017",
+    "name": "사냥꾼의 일격",
+    "type": "Attack",
+    "rarity": "Normal",
+    "cost": 1,
+    "effects": [
+      {
+        "type": "Damage",
+        "value": 20
+      }
+    ],
+    "tags": [
+      "Hunter"
+    ],
+    "keywords": [],
+    "effectText": "피해 20",
+    "levelCurve": {
+      "base": {
+        "damage": 20
+      },
+      "perLevel": {
+        "damage": 2
+      }
+    },
+    "vfxKey": "atk_basic",
+    "sfxKey": "hit_generic",
+    "version": 3
+  },
+  {
+    "id": "ATT_DARIUS_RA_018",
+    "name": "심연 파동",
+    "type": "Attack",
+    "rarity": "Rare",
+    "cost": 3,
+    "effects": [
+      {
+        "type": "Damage",
+        "value": 4,
+        "hits": 4,
+        "lifestealRatio": 0.5
+      }
+    ],
+    "tags": [
+      "Shadow"
+    ],
+    "keywords": [
+      "Leech"
+    ],
+    "effectText": "4회 피해 4(총 16), 가한 피해의 50% 흡혈",
+    "levelCurve": {
+      "base": {
+        "damage": 30
+      },
+      "perLevel": {
+        "damage": 3
+      }
+    },
+    "vfxKey": "atk_shadow_multi",
+    "sfxKey": "slash_multi",
+    "version": 3
+  },
+  {
+    "id": "ATT_ELDER_EP_035",
+    "name": "자음 포화",
+    "type": "Attack",
+    "rarity": "Epic",
+    "cost": 3,
+    "effects": [
+      {
+        "type": "Damage",
+        "value": 30
+      },
+      {
+        "type": "ApplyStatus",
+        "key": "Shock",
+        "stacks": 2,
+        "duration": 2,
+        "target": "enemy"
+      },
+      {
+        "type": "TempoBoost",
+        "amount": 1,
+        "turns": 1,
+        "scope": "self"
+      }
+    ],
+    "tags": [
+      "Lightning"
+    ],
+    "keywords": [
+      "Shock",
+      "Tempo"
+    ],
+    "vfxKey": "atk_lightning_burst",
+    "sfxKey": "lightning_burst",
+    "version": 3,
+    "effectText": "피해 30, 쇼크 2중첩, 템포 부스트 +1 (1턴)"
+  },
+  {
+    "id": "ATT_ELDER_LE_036",
+    "name": "유리령 사격",
+    "type": "Attack",
+    "rarity": "Legendary",
+    "cost": 3,
+    "effects": [
+      {
+        "type": "Damage",
+        "value": 18
+      },
+      {
+        "type": "Evasion",
+        "charges": 1,
+        "duration": 1
+      },
+      {
+        "type": "Draw",
+        "value": 1
+      }
+    ],
+    "tags": [
+      "Storm"
+    ],
+    "keywords": [
+      "Evasion",
+      "Draw"
+    ],
+    "vfxKey": "atk_glass",
+    "sfxKey": "bow_quick",
+    "version": 3,
+    "effectText": "피해 18, 회피 1회(1턴), 드로우 1장"
+  },
+  {
+    "id": "ATT_ELDER_NO_033",
+    "name": "폭풍 개시",
+    "type": "Attack",
+    "rarity": "Normal",
+    "cost": 1,
+    "effects": [
+      {
+        "type": "Damage",
+        "value": 20
+      }
+    ],
+    "tags": [
+      "Storm"
+    ],
+    "keywords": [],
+    "effectText": "피해 20",
+    "levelCurve": {
+      "base": {
+        "damage": 20
+      },
+      "perLevel": {
+        "damage": 2
+      }
+    },
+    "vfxKey": "atk_basic",
+    "sfxKey": "hit_generic",
+    "version": 3
+  },
+  {
+    "id": "ATT_ELDER_RA_034",
+    "name": "연쇄 낙뢰",
+    "type": "Attack",
+    "rarity": "Rare",
+    "cost": 2,
+    "effects": [
+      {
+        "type": "Damage",
+        "value": 18
+      },
+      {
+        "type": "Chain",
+        "targets": 2,
+        "ratio": 0.6
+      },
+      {
+        "type": "ApplyStatus",
+        "key": "Shock",
+        "stacks": 1,
+        "duration": 2,
+        "target": "enemy"
+      }
+    ],
+    "tags": [
+      "Lightning"
+    ],
+    "keywords": [
+      "Shock",
+      "Chain"
+    ],
+    "effectText": "피해 18, 연쇄 2명(60%), 쇼크 1중첩",
+    "levelCurve": {
+      "base": {
+        "damage": 30
+      },
+      "perLevel": {
+        "damage": 3
+      }
+    },
+    "vfxKey": "atk_lightning_chain",
+    "sfxKey": "lightning_arc",
+    "version": 3
+  },
+  {
+    "id": "ATT_ELENA_EP_051",
+    "name": "한기 관통",
+    "type": "Attack",
+    "rarity": "Epic",
+    "cost": 3,
+    "effects": [
+      {
+        "type": "Damage",
+        "value": 26
+      },
+      {
+        "type": "ApplyStatus",
+        "key": "Freeze",
+        "duration": 1,
+        "target": "enemy"
+      },
+      {
+        "type": "ApplyStatus",
+        "key": "Vulnerable",
+        "stacks": 1,
+        "duration": 2,
+        "target": "enemy"
+      }
+    ],
+    "tags": [
+      "Frost"
+    ],
+    "keywords": [
+      "Freeze",
+      "Vulnerable"
+    ],
+    "vfxKey": "atk_ice_pierce",
+    "sfxKey": "ice_shatter",
+    "version": 3,
+    "effectText": "피해 26, 적에게 빙결 1턴 + 취약 1중첩(2턴)"
+  },
+  {
+    "id": "ATT_ELENA_LE_052",
+    "name": "절대 영도",
+    "type": "Attack",
+    "rarity": "Legendary",
+    "cost": 4,
+    "effects": [
+      {
+        "type": "Damage",
+        "value": 30
+      },
+      {
+        "type": "ApplyStatus",
+        "key": "Freeze",
+        "duration": 2,
+        "target": "enemy"
+      },
+      {
+        "type": "TempoBoost",
+        "amount": 1,
+        "turns": 1,
+        "scope": "self"
+      }
+    ],
+    "tags": [
+      "Frost"
+    ],
+    "keywords": [
+      "Freeze",
+      "Tempo"
+    ],
+    "vfxKey": "atk_ice_overdrive",
+    "sfxKey": "ice_blast",
+    "version": 3,
+    "effectText": "피해 30, 적에게 빙결 2턴, 다음 턴 에너지 +1"
+  },
+  {
+    "id": "ATT_ELENA_NO_049",
+    "name": "서릿발 베기",
+    "type": "Attack",
+    "rarity": "Normal",
+    "cost": 1,
+    "effects": [
+      {
+        "type": "Damage",
+        "value": 20
+      }
+    ],
+    "tags": [
+      "Frost"
+    ],
+    "keywords": [],
+    "effectText": "피해 20",
+    "levelCurve": {
+      "base": {
+        "damage": 20
+      },
+      "perLevel": {
+        "damage": 2
+      }
+    },
+    "vfxKey": "atk_basic",
+    "sfxKey": "hit_generic",
+    "version": 3
+  },
+  {
+    "id": "ATT_ELENA_RA_050",
+    "name": "얼음 척살",
+    "type": "Attack",
+    "rarity": "Rare",
+    "cost": 2,
+    "effects": [
+      {
+        "type": "Damage",
+        "value": 24
+      },
+      {
+        "type": "ApplyStatus",
+        "key": "Freeze",
+        "duration": 1,
+        "target": "enemy"
+      },
+      {
+        "type": "Conditional",
+        "if": "targetFrozen",
+        "then": [
+          {
+            "type": "Damage",
+            "value": 10
+          }
+        ]
+      }
+    ],
+    "tags": [
+      "Frost"
+    ],
+    "keywords": [
+      "Freeze"
+    ],
+    "effectText": "피해 24, 적이 빙결 상태면 추가 피해 10",
+    "levelCurve": {
+      "base": {
+        "damage": 30
+      },
+      "perLevel": {
+        "damage": 3
+      }
+    },
+    "vfxKey": "atk_ice_strike",
+    "sfxKey": "ice_crack",
+    "version": 3
+  },
+  {
+    "id": "ATT_GAREN_EP_067",
+    "name": "승리의 연격",
+    "type": "Attack",
+    "rarity": "Epic",
+    "cost": 3,
+    "effects": [
+      {
+        "type": "Damage",
+        "value": 15
+      },
+      {
+        "type": "DuplicateNext",
+        "typeFilter": "Attack",
+        "times": 1
+      },
+      {
+        "type": "Heal",
+        "value": 5
+      }
+    ],
+    "tags": [
+      "Valor"
+    ],
+    "keywords": [
+      "Duplicate",
+      "Heal"
+    ],
+    "vfxKey": "atk_combo",
+    "sfxKey": "combo_hit",
+    "version": 2,
+    "effectText": "피해 15, 다음 공격 카드 1회 추가 발동, 자신 HP 5 회복"
+  },
+  {
+    "id": "ATT_GAREN_LE_068",
+    "name": "정의의 심판",
+    "type": "Attack",
+    "rarity": "Legendary",
+    "cost": 4,
+    "effects": [
+      {
+        "type": "Damage",
+        "value": 50
+      },
+      {
+        "type": "Conditional",
+        "if": "targetHp<=30%",
+        "then": [
+          {
+            "type": "Damage",
+            "value": 30
+          }
+        ]
+      }
+    ],
+    "tags": [
+      "Valor"
+    ],
+    "keywords": [
+      "Execute"
+    ],
+    "vfxKey": "atk_execute",
+    "sfxKey": "hit_final",
+    "version": 2,
+    "effectText": "피해 50, 대상 HP 30% 이하이면 추가 피해 30"
+  },
+  {
+    "id": "ATT_GAREN_NO_065",
+    "name": "강철 참격",
+    "type": "Attack",
+    "rarity": "Normal",
+    "cost": 1,
+    "effects": [
+      {
+        "type": "Damage",
+        "value": 20
+      }
+    ],
+    "tags": [
+      "Valor"
+    ],
+    "keywords": [],
+    "effectText": "피해 20",
+    "levelCurve": {
+      "base": {
+        "damage": 20
+      },
+      "perLevel": {
+        "damage": 2
+      }
+    },
+    "vfxKey": "atk_slash_basic",
+    "sfxKey": "hit_blade",
+    "version": 2
+  },
+  {
+    "id": "ATT_GAREN_RA_066",
+    "name": "균열 타격",
+    "type": "Attack",
+    "rarity": "Rare",
+    "cost": 2,
+    "effects": [
+      {
+        "type": "Damage",
+        "value": 22
+      },
+      {
+        "type": "ArmorBreak",
+        "guard": 15,
+        "shield": 15
+      }
+    ],
+    "tags": [
+      "Valor"
+    ],
+    "keywords": [
+      "ArmorBreak"
+    ],
+    "effectText": "피해 22, 대상의 가드/보호막 15 제거",
+    "levelCurve": {
+      "base": {
+        "damage": 30
+      },
+      "perLevel": {
+        "damage": 3
+      }
+    },
+    "vfxKey": "atk_shield_break",
+    "sfxKey": "armor_break",
+    "version": 2
+  },
+  {
+    "id": "ATT_IRIS_EP_083",
+    "name": "성광 파동",
+    "type": "Attack",
+    "rarity": "Epic",
+    "cost": 3,
+    "effects": [
+      {
+        "type": "Damage",
+        "value": 26
+      },
+      {
+        "type": "Heal",
+        "value": 10
+      },
+      {
+        "type": "Cleanse",
+        "maxStacks": 2
+      }
+    ],
+    "tags": [
+      "Light"
+    ],
+    "keywords": [
+      "Heal",
+      "Cleanse"
+    ],
+    "vfxKey": "atk_radiant_wave",
+    "sfxKey": "light_wave",
+    "version": 3,
+    "effectText": "피해 26, 자신 HP 10 회복, 약화 2중첩 정화"
+  },
+  {
+    "id": "ATT_IRIS_LE_084",
+    "name": "천상 폭발",
+    "type": "Attack",
+    "rarity": "Legendary",
+    "cost": 4,
+    "effects": [
+      {
+        "type": "Damage",
+        "value": 40
+      },
+      {
+        "type": "ApplyStatus",
+        "key": "Burn",
+        "stacks": 2,
+        "duration": 2,
+        "target": "enemy"
+      },
+      {
+        "type": "ApplyStatus",
+        "key": "Vulnerable",
+        "stacks": 1,
+        "duration": 2,
+        "target": "enemy"
+      }
+    ],
+    "tags": [
+      "Light"
+    ],
+    "keywords": [
+      "Burn",
+      "Vulnerable"
+    ],
+    "vfxKey": "atk_radiant_burst",
+    "sfxKey": "explosion_light",
+    "version": 3,
+    "effectText": "피해 40, 화상 2중첩, 취약 1중첩(2턴)"
+  },
+  {
+    "id": "ATT_IRIS_NO_081",
+    "name": "광휘 베기",
+    "type": "Attack",
+    "rarity": "Normal",
+    "cost": 1,
+    "effects": [
+      {
+        "type": "Damage",
+        "value": 20
+      }
+    ],
+    "tags": [
+      "Light"
+    ],
+    "keywords": [],
+    "effectText": "피해 20",
+    "levelCurve": {
+      "base": {
+        "damage": 20
+      },
+      "perLevel": {
+        "damage": 2
+      }
+    },
+    "vfxKey": "atk_slash_light",
+    "sfxKey": "light_swing",
+    "version": 3
+  },
+  {
+    "id": "ATT_IRIS_RA_082",
+    "name": "성광 일섬",
+    "type": "Attack",
+    "rarity": "Rare",
+    "cost": 3,
+    "effects": [
+      {
+        "type": "Damage",
+        "value": 28
+      },
+      {
+        "type": "Cleanse",
+        "maxStacks": 2
+      },
+      {
+        "type": "Buff",
+        "stat": "attack",
+        "value": 10,
+        "duration": 1
+      }
+    ],
+    "tags": [
+      "Light"
+    ],
+    "keywords": [
+      "Cleanse",
+      "Buff"
+    ],
+    "effectText": "피해 28, 자신 약화 2중첩 정화, 공격력 +10%(1턴)",
+    "levelCurve": {
+      "base": {
+        "damage": 30
+      },
+      "perLevel": {
+        "damage": 3
+      }
+    },
+    "vfxKey": "atk_radiant_slash",
+    "sfxKey": "light_cut",
+    "version": 3
+  },
+  {
+    "id": "ATT_KAI_EP_099",
+    "name": "쇼크 공진",
+    "type": "Attack",
+    "rarity": "Epic",
+    "cost": 3,
+    "effects": [
+      {
+        "type": "Damage",
+        "value": 30
+      },
+      {
+        "type": "ApplyStatus",
+        "key": "Shock",
+        "stacks": 2,
+        "duration": 2,
+        "target": "enemy"
+      },
+      {
+        "type": "TempoBoost",
+        "amount": 1,
+        "turns": 1,
+        "scope": "self"
+      }
+    ],
+    "tags": [
+      "Tempest"
+    ],
+    "keywords": [
+      "Shock",
+      "Tempo"
+    ],
+    "vfxKey": "atk_shockwave",
+    "sfxKey": "shock_burst",
+    "version": 3,
+    "effectText": "피해 30, 쇼크 2중첩, 템포 부스트 +1(1턴)"
+  },
+  {
+    "id": "ATT_KAI_LE_100",
+    "name": "시공 절단",
+    "type": "Attack",
+    "rarity": "Legendary",
+    "cost": 4,
+    "effects": [
+      {
+        "type": "Damage",
+        "value": 28
+      },
+      {
+        "type": "GainAction",
+        "value": 1,
+        "delayed": true,
+        "delayTurns": 1
+      },
+      {
+        "type": "TempoBoost",
+        "amount": 1,
+        "turns": 2,
+        "scope": "self"
+      }
+    ],
+    "tags": [
+      "Chrono"
+    ],
+    "keywords": [
+      "Tempo"
+    ],
+    "vfxKey": "atk_chrono_cut",
+    "sfxKey": "time_slice",
+    "version": 3,
+    "effectText": "피해 28, 다음 턴 에너지 +1, 템포 부스트 +1(2턴)"
+  },
+  {
+    "id": "ATT_KAI_NO_097",
+    "name": "질풍 베기",
+    "type": "Attack",
+    "rarity": "Normal",
+    "cost": 1,
+    "effects": [
+      {
+        "type": "Damage",
+        "value": 20
+      }
+    ],
+    "tags": [
+      "Tempest"
+    ],
+    "keywords": [],
+    "effectText": "피해 20",
+    "levelCurve": {
+      "base": {
+        "damage": 20
+      },
+      "perLevel": {
+        "damage": 2
+      }
+    },
+    "vfxKey": "atk_wind_slash",
+    "sfxKey": "wind_slash",
+    "version": 3
+  },
+  {
+    "id": "ATT_KAI_RA_098",
+    "name": "연쇄 전격",
+    "type": "Attack",
+    "rarity": "Rare",
+    "cost": 2,
+    "effects": [
+      {
+        "type": "Damage",
+        "value": 18
+      },
+      {
+        "type": "Chain",
+        "targets": 2,
+        "ratio": 0.6
+      },
+      {
+        "type": "ApplyStatus",
+        "key": "Shock",
+        "stacks": 1,
+        "duration": 2,
+        "target": "enemy"
+      }
+    ],
+    "tags": [
+      "Tempest"
+    ],
+    "keywords": [
+      "Shock",
+      "Chain"
+    ],
+    "effectText": "피해 18, 연쇄 2명(60%), 쇼크 1중첩",
+    "levelCurve": {
+      "base": {
+        "damage": 30
+      },
+      "perLevel": {
+        "damage": 3
+      }
+    },
+    "vfxKey": "atk_lightning_chain",
+    "sfxKey": "lightning_arc",
+    "version": 3
+  },
+  {
+    "id": "ATT_LEON_EP_115",
+    "name": "전술 연격",
+    "type": "Attack",
+    "rarity": "Epic",
+    "cost": 3,
+    "effects": [
+      {
+        "type": "Damage",
+        "value": 15
+      },
+      {
+        "type": "DuplicateNext",
+        "typeFilter": "Attack",
+        "times": 1
+      },
+      {
+        "type": "Heal",
+        "value": 5
+      }
+    ],
+    "tags": [
+      "Legion"
+    ],
+    "keywords": [
+      "Duplicate",
+      "Heal"
+    ],
+    "vfxKey": "atk_combo",
+    "sfxKey": "combo_hit",
+    "version": 3,
+    "effectText": "피해 15, 다음 공격 카드 1회 추가 발동, 자신 HP 5 회복"
+  },
+  {
+    "id": "ATT_LEON_LE_116",
+    "name": "결전의 일격",
+    "type": "Attack",
+    "rarity": "Legendary",
+    "cost": 4,
+    "effects": [
+      {
+        "type": "Damage",
+        "value": 50
+      },
+      {
+        "type": "Conditional",
+        "if": "targetHp<=30%",
+        "then": [
+          {
+            "type": "Damage",
+            "value": 30
+          }
+        ]
+      }
+    ],
+    "tags": [
+      "Legion"
+    ],
+    "keywords": [
+      "Execute"
+    ],
+    "vfxKey": "atk_execute",
+    "sfxKey": "hit_final",
+    "version": 3,
+    "effectText": "피해 50, 대상 HP 30% 이하이면 추가 피해 30"
+  },
+  {
+    "id": "ATT_LEON_NO_113",
+    "name": "용병의 베기",
+    "type": "Attack",
+    "rarity": "Normal",
+    "cost": 1,
+    "effects": [
+      {
+        "type": "Damage",
+        "value": 20
+      }
+    ],
+    "tags": [
+      "Legion"
+    ],
+    "keywords": [],
+    "effectText": "피해 20",
+    "levelCurve": {
+      "base": {
+        "damage": 20
+      },
+      "perLevel": {
+        "damage": 2
+      }
+    },
+    "vfxKey": "atk_legion_slash",
+    "sfxKey": "slash_light",
+    "version": 3
+  },
+  {
+    "id": "ATT_LEON_RA_114",
+    "name": "룬식 충격",
+    "type": "Attack",
+    "rarity": "Rare",
+    "cost": 2,
+    "effects": [
+      {
+        "type": "Damage",
+        "value": 20
+      },
+      {
+        "type": "ApplyStatus",
+        "key": "Vulnerable",
+        "stacks": 1,
+        "duration": 2,
+        "target": "enemy"
+      },
+      {
+        "type": "GainAction",
+        "value": 1,
+        "delayed": true,
+        "delayTurns": 1
+      }
+    ],
+    "tags": [
+      "Rune"
+    ],
+    "keywords": [
+      "Vulnerable",
+      "Tempo"
+    ],
+    "effectText": "피해 20, 적에게 취약 1중첩(2턴), 다음 턴 에너지 +1",
+    "levelCurve": {
+      "base": {
+        "damage": 30
+      },
+      "perLevel": {
+        "damage": 3
+      }
+    },
+    "vfxKey": "atk_rune_strike",
+    "sfxKey": "arcane_burst",
+    "version": 3
+  },
+  {
+    "id": "ATT_LUCIAN_EP_131",
+    "name": "열압 폭연",
+    "type": "Attack",
+    "rarity": "Epic",
+    "cost": 3,
+    "effects": [
+      {
+        "type": "Damage",
+        "value": 22
+      },
+      {
+        "type": "ApplyStatus",
+        "key": "Burn",
+        "stacks": 1,
+        "duration": 2,
+        "target": "enemy"
+      },
+      {
+        "type": "ApplyStatus",
+        "key": "Vulnerable",
+        "stacks": 1,
+        "duration": 1,
+        "target": "enemy"
+      }
+    ],
+    "tags": [
+      "Overheat"
+    ],
+    "keywords": [
+      "Burn",
+      "Vulnerable"
+    ],
+    "vfxKey": "atk_thermal_burst",
+    "sfxKey": "fire_burst",
+    "version": 3,
+    "effectText": "피해 22, 화상 1중첩, 취약 1중첩(1턴)"
+  },
+  {
+    "id": "ATT_LUCIAN_LE_132",
+    "name": "종결 프로토콜",
+    "type": "Attack",
+    "rarity": "Legendary",
+    "cost": 4,
+    "effects": [
+      {
+        "type": "Damage",
+        "value": 50
+      },
+      {
+        "type": "Conditional",
+        "if": "targetHp<=30%",
+        "then": [
+          {
+            "type": "Damage",
+            "value": 30
+          }
+        ]
+      }
+    ],
+    "tags": [
+      "Metal"
+    ],
+    "keywords": [
+      "Execute"
+    ],
+    "vfxKey": "atk_execute",
+    "sfxKey": "hit_final",
+    "version": 3,
+    "effectText": "피해 50, 대상 HP 30% 이하이면 추가 피해 30"
+  },
+  {
+    "id": "ATT_LUCIAN_NO_129",
+    "name": "기계화 참격",
+    "type": "Attack",
+    "rarity": "Normal",
+    "cost": 1,
+    "effects": [
+      {
+        "type": "Damage",
+        "value": 20
+      }
+    ],
+    "tags": [
+      "Metal"
+    ],
+    "keywords": [],
+    "effectText": "피해 20",
+    "levelCurve": {
+      "base": {
+        "damage": 20
+      },
+      "perLevel": {
+        "damage": 2
+      }
+    },
+    "vfxKey": "atk_metal_slash",
+    "sfxKey": "slash_metal",
+    "version": 3
+  },
+  {
+    "id": "ATT_LUCIAN_RA_130",
+    "name": "합금 균열",
+    "type": "Attack",
+    "rarity": "Rare",
+    "cost": 2,
+    "effects": [
+      {
+        "type": "Damage",
+        "value": 22
+      },
+      {
+        "type": "ArmorBreak",
+        "guard": 15,
+        "shield": 15,
+        "target": "enemy"
+      }
+    ],
+    "tags": [
+      "Metal"
+    ],
+    "keywords": [
+      "ArmorBreak"
+    ],
+    "effectText": "피해 22, 대상의 가드/보호막 15 제거",
+    "levelCurve": {
+      "base": {
+        "damage": 30
+      },
+      "perLevel": {
+        "damage": 3
+      }
+    },
+    "vfxKey": "atk_shield_break",
+    "sfxKey": "armor_break",
+    "version": 3
+  },
+  {
+    "id": "ATT_MARCUS_EP_147",
+    "name": "자음 포화",
+    "type": "Attack",
+    "rarity": "Epic",
+    "cost": 3,
+    "effects": [
+      {
+        "type": "Damage",
+        "value": 30
+      },
+      {
+        "type": "ApplyStatus",
+        "key": "Shock",
+        "stacks": 2,
+        "duration": 2,
+        "target": "enemy"
+      },
+      {
+        "type": "TempoBoost",
+        "amount": 1,
+        "turns": 1,
+        "scope": "self"
+      }
+    ],
+    "tags": [
+      "Chrono"
+    ],
+    "keywords": [
+      "Shock",
+      "Tempo"
+    ],
+    "vfxKey": "atk_shockwave",
+    "sfxKey": "shock_burst",
+    "version": 3,
+    "effectText": "피해 30, 쇼크 2중첩, 템포 부스트 +1(1턴)"
+  },
+  {
+    "id": "ATT_MARCUS_LE_148",
+    "name": "시간의 처단",
+    "type": "Attack",
+    "rarity": "Legendary",
+    "cost": 4,
+    "effects": [
+      {
+        "type": "Damage",
+        "value": 50
+      },
+      {
+        "type": "Conditional",
+        "if": "targetHp<=30%",
+        "then": [
+          {
+            "type": "Damage",
+            "value": 30
+          }
+        ]
+      }
+    ],
+    "tags": [
+      "Chrono"
+    ],
+    "keywords": [
+      "Execute"
+    ],
+    "vfxKey": "atk_execute",
+    "sfxKey": "hit_final",
+    "version": 3,
+    "effectText": "피해 50, 대상 HP 30% 이하이면 추가 피해 30"
+  },
+  {
+    "id": "ATT_MARCUS_NO_145",
+    "name": "전술 타격",
+    "type": "Attack",
+    "rarity": "Normal",
+    "cost": 1,
+    "effects": [
+      {
+        "type": "Damage",
+        "value": 20
+      }
+    ],
+    "tags": [
+      "Tactics"
+    ],
+    "keywords": [],
+    "effectText": "피해 20",
+    "levelCurve": {
+      "base": {
+        "damage": 20
+      },
+      "perLevel": {
+        "damage": 2
+      }
+    },
+    "vfxKey": "atk_tactical_slash",
+    "sfxKey": "slash_light",
+    "version": 3
+  },
+  {
+    "id": "ATT_MARCUS_RA_146",
+    "name": "룬식 교란",
+    "type": "Attack",
+    "rarity": "Rare",
+    "cost": 2,
+    "effects": [
+      {
+        "type": "Damage",
+        "value": 20
+      },
+      {
+        "type": "ApplyStatus",
+        "key": "Vulnerable",
+        "stacks": 1,
+        "duration": 2,
+        "target": "enemy"
+      },
+      {
+        "type": "GainAction",
+        "value": 1,
+        "delayed": true,
+        "delayTurns": 1
+      }
+    ],
+    "tags": [
+      "Rune"
+    ],
+    "keywords": [
+      "Vulnerable",
+      "Tempo"
+    ],
+    "effectText": "피해 20, 적에게 취약 1중첩(2턴), 다음 턴 에너지 +1",
+    "levelCurve": {
+      "base": {
+        "damage": 30
+      },
+      "perLevel": {
+        "damage": 3
+      }
+    },
+    "vfxKey": "atk_rune_strike",
+    "sfxKey": "arcane_burst",
+    "version": 3
+  },
+  {
+    "id": "ATT_MIRA_EP_163",
+    "name": "심연 흡혈",
+    "type": "Attack",
+    "rarity": "Epic",
+    "cost": 3,
+    "effects": [
+      {
+        "type": "Damage",
+        "value": 4,
+        "hits": 4,
+        "lifestealRatio": 0.5
+      }
+    ],
+    "tags": [
+      "Specter"
+    ],
+    "keywords": [
+      "Leech"
+    ],
+    "vfxKey": "atk_shadow_multi",
+    "sfxKey": "slash_multi",
+    "version": 3,
+    "effectText": "4회 피해 4(총 16), 가한 피해의 50% 흡혈"
+  },
+  {
+    "id": "ATT_MIRA_LE_164",
+    "name": "혈월 침투",
+    "type": "Attack",
+    "rarity": "Legendary",
+    "cost": 3,
+    "effects": [
+      {
+        "type": "Damage",
+        "value": 26
+      },
+      {
+        "type": "ApplyBleed",
+        "stacks": 2,
+        "duration": 2,
+        "damagePerStack": 6
+      }
+    ],
+    "tags": [
+      "Specter"
+    ],
+    "keywords": [
+      "Bleed"
+    ],
+    "vfxKey": "atk_bleed",
+    "sfxKey": "slash_heavy",
+    "version": 3,
+    "effectText": "피해 26, 출혈 2중첩(턴마다 6 피해)",
+    "levelCurve": {
+      "base": {
+        "damage": 26
+      },
+      "perLevel": {
+        "damage": 3
+      }
+    }
+  },
+  {
+    "id": "ATT_MIRA_NO_161",
+    "name": "그림자 찌르기",
+    "type": "Attack",
+    "rarity": "Normal",
+    "cost": 1,
+    "effects": [
+      {
+        "type": "Damage",
+        "value": 20
+      }
+    ],
+    "tags": [
+      "Specter"
+    ],
+    "keywords": [],
+    "effectText": "피해 20",
+    "levelCurve": {
+      "base": {
+        "damage": 20
+      },
+      "perLevel": {
+        "damage": 2
+      }
+    },
+    "vfxKey": "atk_shadow_slash",
+    "sfxKey": "slash_light",
+    "version": 3
+  },
+  {
+    "id": "ATT_MIRA_RA_162",
+    "name": "유령 사격",
+    "type": "Attack",
+    "rarity": "Rare",
+    "cost": 2,
+    "effects": [
+      {
+        "type": "Damage",
+        "value": 18
+      },
+      {
+        "type": "Evasion",
+        "charges": 1,
+        "duration": 1
+      },
+      {
+        "type": "Draw",
+        "value": 1
+      }
+    ],
+    "tags": [
+      "Specter"
+    ],
+    "keywords": [
+      "Evasion",
+      "Draw"
+    ],
+    "effectText": "피해 18, 회피 1회(1턴), 카드 1장 드로우",
+    "levelCurve": {
+      "base": {
+        "damage": 18
+      },
+      "perLevel": {
+        "damage": 2
+      }
+    },
+    "vfxKey": "atk_ghost_arrow",
+    "sfxKey": "arrow_whisper",
+    "version": 3
+  },
+  {
+    "id": "ATT_SERAPHINA_EP_179",
+    "name": "혈월의 일격",
+    "type": "Attack",
+    "rarity": "Epic",
+    "cost": 3,
+    "effects": [
+      {
+        "type": "Damage",
+        "value": 26
+      },
+      {
+        "type": "ApplyBleed",
+        "stacks": 2,
+        "duration": 2,
+        "damagePerStack": 6,
+        "target": "enemy"
+      }
+    ],
+    "tags": [
+      "Shadow",
+      "Blood"
+    ],
+    "keywords": [
+      "Bleed"
+    ],
+    "vfxKey": "atk_bleed",
+    "sfxKey": "slash_heavy",
+    "version": 3,
+    "effectText": "피해 26, 출혈 2중첩(턴마다 6 피해)",
+    "levelCurve": {
+      "base": {
+        "damage": 26
+      },
+      "perLevel": {
+        "damage": 3
+      }
+    }
+  },
+  {
+    "id": "ATT_SERAPHINA_LE_180",
+    "name": "영혼 폭발",
+    "type": "Attack",
+    "rarity": "Legendary",
+    "cost": 3,
+    "effects": [
+      {
+        "type": "Damage",
+        "value": 36
+      },
+      {
+        "type": "ApplyStatus",
+        "key": "Burn",
+        "stacks": 2,
+        "duration": 2,
+        "target": "enemy"
+      },
+      {
+        "type": "ApplyStatus",
+        "key": "Vulnerable",
+        "stacks": 1,
+        "duration": 2,
+        "target": "enemy"
+      }
+    ],
+    "tags": [
+      "Shadow",
+      "Fire"
+    ],
+    "keywords": [
+      "Burn",
+      "Vulnerable"
+    ],
+    "vfxKey": "atk_fire_aoe",
+    "sfxKey": "explosion_fire",
+    "version": 3,
+    "effectText": "피해 36, 화상 2중첩, 취약 1중첩(2턴)"
+  },
+  {
+    "id": "ATT_SERAPHINA_NO_177",
+    "name": "그림자 일섬",
+    "type": "Attack",
+    "rarity": "Normal",
+    "cost": 1,
+    "effects": [
+      {
+        "type": "Damage",
+        "value": 20
+      }
+    ],
+    "tags": [
+      "Shadow"
+    ],
+    "keywords": [],
+    "effectText": "피해 20",
+    "levelCurve": {
+      "base": {
+        "damage": 20
+      },
+      "perLevel": {
+        "damage": 2
+      }
+    },
+    "vfxKey": "atk_shadow_slash",
+    "sfxKey": "slash_light",
+    "version": 3
+  },
+  {
+    "id": "ATT_SERAPHINA_RA_178",
+    "name": "홍염 투척",
+    "type": "Attack",
+    "rarity": "Rare",
+    "cost": 2,
+    "effects": [
+      {
+        "type": "Damage",
+        "value": 30
+      },
+      {
+        "type": "ApplyStatus",
+        "key": "Burn",
+        "stacks": 1,
+        "duration": 2,
+        "target": "enemy"
+      }
+    ],
+    "tags": [
+      "Shadow",
+      "Fire"
+    ],
+    "keywords": [
+      "Burn"
+    ],
+    "effectText": "피해 30, 화상 1중첩(2턴)",
+    "levelCurve": {
+      "base": {
+        "damage": 30
+      },
+      "perLevel": {
+        "damage": 3
+      }
+    },
+    "vfxKey": "atk_fire_orb",
+    "sfxKey": "fire_throw",
+    "version": 3
+  },
+  {
+    "id": "ATT_SERAPHINE_EP_195",
+    "name": "성가의 일섬",
+    "type": "Attack",
+    "rarity": "Epic",
+    "cost": 3,
+    "effects": [
+      {
+        "type": "Damage",
+        "value": 28
+      },
+      {
+        "type": "Cleanse",
+        "maxStacks": 2
+      },
+      {
+        "type": "Buff",
+        "stat": "attack",
+        "value": 10,
+        "duration": 1
+      }
+    ],
+    "tags": [
+      "Harmony",
+      "Radiant"
+    ],
+    "keywords": [
+      "Cleanse",
+      "Buff"
+    ],
+    "vfxKey": "atk_radiant_slash",
+    "sfxKey": "light_cut",
+    "version": 2,
+    "effectText": "피해 28, 자신 약화 2중첩 해제, 공격력 +10%(1턴)"
+  },
+  {
+    "id": "ATT_SERAPHINE_LE_196",
+    "name": "천상의 레퀴엠",
+    "type": "Attack",
+    "rarity": "Legendary",
+    "cost": 3,
+    "effects": [
+      {
+        "type": "Damage",
+        "value": 26
+      },
+      {
+        "type": "Heal",
+        "value": 10
+      },
+      {
+        "type": "Cleanse",
+        "maxStacks": 2
+      }
+    ],
+    "tags": [
+      "Harmony",
+      "Radiant"
+    ],
+    "keywords": [
+      "Heal",
+      "Cleanse"
+    ],
+    "vfxKey": "atk_radiant_wave",
+    "sfxKey": "light_wave",
+    "version": 2,
+    "effectText": "피해 26, 자신 HP 10 회복, 약화 2중첩 해제"
+  },
+  {
+    "id": "ATT_SERAPHINE_NO_193",
+    "name": "빛의 선율",
+    "type": "Attack",
+    "rarity": "Normal",
+    "cost": 2,
+    "effects": [
+      {
+        "type": "Damage",
+        "value": 30
+      },
+      {
+        "type": "ApplyStatus",
+        "key": "Burn",
+        "stacks": 1,
+        "duration": 2,
+        "target": "enemy"
+      }
+    ],
+    "tags": [
+      "Harmony",
+      "Radiant"
+    ],
+    "keywords": [
+      "Burn"
+    ],
+    "effectText": "피해 30, 화상 1중첩(2턴)",
+    "levelCurve": {
+      "base": {
+        "damage": 30
+      },
+      "perLevel": {
+        "damage": 3
+      }
+    },
+    "vfxKey": "atk_radiant_bolt",
+    "sfxKey": "fire_throw",
+    "version": 2
+  },
+  {
+    "id": "ATT_SERAPHINE_RA_194",
+    "name": "빙결 아리아",
+    "type": "Attack",
+    "rarity": "Rare",
+    "cost": 2,
+    "effects": [
+      {
+        "type": "Damage",
+        "value": 24
+      },
+      {
+        "type": "ApplyStatus",
+        "key": "Freeze",
+        "duration": 1,
+        "target": "enemy"
+      },
+      {
+        "type": "Conditional",
+        "if": "targetFrozen",
+        "then": [
+          {
+            "type": "Damage",
+            "value": 10
+          }
+        ]
+      }
+    ],
+    "tags": [
+      "Harmony",
+      "Frost"
+    ],
+    "keywords": [
+      "Freeze"
+    ],
+    "effectText": "피해 24, 적에게 빙결 1턴, 빙결 상태면 추가 피해 10",
+    "vfxKey": "atk_ice_arpeggio",
+    "sfxKey": "ice_crack",
+    "version": 2
+  },
+  {
+    "id": "DEF_ARIANA_EP_015",
+    "name": "천벌 결계",
+    "type": "Defense",
+    "rarity": "Epic",
+    "cost": 3,
+    "effects": [
+      {
+        "type": "Shield",
+        "value": 25,
+        "duration": 2
+      },
+      {
+        "type": "OnHitStatus",
+        "status": {
+          "key": "Shock",
+          "stacks": 1,
+          "duration": 2,
+          "chance": 100
+        },
+        "duration": 2
+      },
+      {
+        "type": "GainAction",
+        "value": 1,
+        "delayed": true,
+        "delayTurns": 1
+      }
+    ],
+    "tags": [
+      "Neutral"
+    ],
+    "keywords": [
+      "Shield",
+      "Shock",
+      "Tempo"
+    ],
+    "vfxKey": "null_wall",
+    "sfxKey": "whoosh_cancel",
+    "version": 3,
+    "effectText": "보호막 25(2턴), 공격자에게 쇼크 1중첩, 다음 턴 에너지 +1"
+  },
+  {
+    "id": "DEF_ARIANA_LE_016",
+    "name": "성스러운 보호",
+    "type": "Defense",
+    "rarity": "Legendary",
+    "cost": 3,
+    "effects": [
+      {
+        "type": "Shield",
+        "value": 40,
+        "duration": 2
+      },
+      {
+        "type": "Immune",
+        "keywords": [
+          "Burn"
+        ],
+        "duration": 1
+      }
+    ],
+    "tags": [
+      "Light"
+    ],
+    "keywords": [
+      "Shield",
+      "Immune"
+    ],
+    "vfxKey": "aegis",
+    "sfxKey": "shield_holy",
+    "version": 3,
+    "effectText": "보호막 40(2턴), 화상 면역 1턴"
+  },
+  {
+    "id": "DEF_ARIANA_NO_013",
+    "name": "마력 장막",
+    "type": "Defense",
+    "rarity": "Normal",
+    "cost": 1,
+    "effects": [
+      {
+        "type": "Shield",
+        "value": 20,
+        "duration": 1
+      }
+    ],
+    "tags": [
+      "Neutral"
+    ],
+    "keywords": [
+      "Shield"
+    ],
+    "vfxKey": "shield",
+    "sfxKey": "block_shield",
+    "version": 3,
+    "effectText": "보호막 20(1턴)"
+  },
+  {
+    "id": "DEF_ARIANA_RA_014",
+    "name": "마력 역류",
+    "type": "Defense",
+    "rarity": "Rare",
+    "cost": 2,
+    "effects": [
+      {
+        "type": "Nullify",
+        "times": 1
+      },
+      {
+        "type": "GainAction",
+        "value": 1,
+        "delayed": true,
+        "delayTurns": 1
+      }
+    ],
+    "tags": [
+      "Neutral"
+    ],
+    "keywords": [
+      "Nullify"
+    ],
+    "vfxKey": "counter",
+    "sfxKey": "clang",
+    "version": 3,
+    "effectText": "무효화 1회, 다음 턴 에너지 +1"
+  },
+  {
+    "id": "DEF_DARIUS_EP_027",
+    "type": "Defense",
+    "rarity": "Epic",
+    "name": "그림자 회피술",
+    "cost": 2,
+    "effects": [
+      {
+        "type": "Evasion",
+        "charges": 2,
+        "duration": 1
+      },
+      {
+        "type": "Counter",
+        "value": 12,
+        "duration": 1
+      }
+    ],
+    "tags": [
+      "Shadow"
+    ],
+    "keywords": [
+      "Evasion",
+      "Counter"
+    ],
+    "effectText": "회피 2회(1턴), 반격 12 (1턴)",
+    "version": 2,
+    "vfxKey": "def_evasion",
+    "sfxKey": "step_swift"
+  },
+  {
+    "id": "DEF_DARIUS_LE_028",
+    "type": "Defense",
+    "rarity": "Legendary",
+    "name": "회오리 방출",
+    "cost": 3,
+    "effects": [
+      {
+        "type": "Evasion",
+        "charges": 1,
+        "duration": 1
+      },
+      {
+        "type": "Damage",
+        "value": 16
+      },
+      {
+        "type": "ApplyStatus",
+        "key": "Shock",
+        "stacks": 1,
+        "duration": 2,
+        "target": "enemy"
+      }
+    ],
+    "tags": [
+      "Storm"
+    ],
+    "keywords": [
+      "Evasion",
+      "Damage",
+      "Shock"
+    ],
+    "effectText": "회피 1회, 피해 16, 쇼크 1중첩",
+    "version": 2,
+    "vfxKey": "def_whirlwind",
+    "sfxKey": "slash_whirl"
+  },
+  {
+    "id": "DEF_DARIUS_NO_025",
+    "type": "Defense",
+    "rarity": "Normal",
+    "name": "받아치기",
+    "cost": 2,
+    "effects": [
+      {
+        "type": "Counter",
+        "value": 20,
+        "duration": 1
+      }
+    ],
+    "tags": [
+      "Guard"
+    ],
+    "keywords": [
+      "Counter"
+    ],
+    "effectText": "반격 20 (1턴)",
+    "version": 2,
+    "vfxKey": "def_counter",
+    "sfxKey": "guard_clash"
+  },
+  {
+    "id": "DEF_DARIUS_RA_026",
+    "type": "Defense",
+    "rarity": "Rare",
+    "name": "지각 단층",
+    "cost": 2,
+    "effects": [
+      {
+        "type": "Shield",
+        "value": 20,
+        "duration": 2
+      },
+      {
+        "type": "OnHitStatus",
+        "status": {
+          "key": "Vulnerable",
+          "stacks": 1,
+          "duration": 2,
+          "chance": 100
+        },
+        "duration": 2
+      }
+    ],
+    "tags": [
+      "Earth"
+    ],
+    "keywords": [
+      "Shield",
+      "Vulnerable"
+    ],
+    "effectText": "보호막 20(2턴), 공격자에게 취약 1중첩(2턴)",
+    "version": 2,
+    "vfxKey": "def_earth",
+    "sfxKey": "shield_earth"
+  },
+  {
+    "id": "DEF_ELDER_EP_047",
+    "type": "Defense",
+    "rarity": "Epic",
+    "name": "회오리 방출",
+    "cost": 3,
+    "effects": [
+      {
+        "type": "Evasion",
+        "charges": 1,
+        "duration": 1
+      },
+      {
+        "type": "Damage",
+        "value": 16
+      },
+      {
+        "type": "ApplyStatus",
+        "key": "Shock",
+        "stacks": 1,
+        "duration": 2,
+        "target": "enemy"
+      }
+    ],
+    "tags": [
+      "Cyclone"
+    ],
+    "keywords": [
+      "Evasion",
+      "Damage",
+      "Shock"
+    ],
+    "effectText": "회피 1회, 피해 16, 쇼크 1중첩",
+    "version": 2,
+    "vfxKey": "def_whirlwind",
+    "sfxKey": "slash_whirl"
+  },
+  {
+    "id": "DEF_ELDER_LE_048",
+    "type": "Defense",
+    "rarity": "Legendary",
+    "name": "폭풍심 재가동",
+    "cost": 4,
+    "effects": [
+      {
+        "type": "Shield",
+        "value": 30,
+        "duration": 2
+      },
+      {
+        "type": "TempoBoost",
+        "amount": 2,
+        "turns": 2,
+        "scope": "self"
+      },
+      {
+        "type": "ApplyStatus",
+        "key": "Shock",
+        "stacks": 1,
+        "duration": 2,
+        "target": "enemy"
+      }
+    ],
+    "tags": [
+      "Storm"
+    ],
+    "keywords": [
+      "Shield",
+      "Tempo",
+      "Shock"
+    ],
+    "effectText": "보호막 30(2턴), 템포 부스트 +2 (2턴), 적에게 쇼크 1중첩",
+    "version": 2,
+    "vfxKey": "def_storm_core",
+    "sfxKey": "shield_surge"
+  },
+  {
+    "id": "DEF_ELDER_NO_045",
+    "type": "Defense",
+    "rarity": "Normal",
+    "name": "방풍 장막",
+    "cost": 1,
+    "effects": [
+      {
+        "type": "Shield",
+        "value": 20,
+        "duration": 1
+      }
+    ],
+    "tags": [
+      "Cyclone"
+    ],
+    "keywords": [
+      "Shield"
+    ],
+    "effectText": "보호막 20(1턴)",
+    "version": 2,
+    "vfxKey": "def_shield_basic",
+    "sfxKey": "shield_basic"
+  },
+  {
+    "id": "DEF_ELDER_RA_046",
+    "type": "Defense",
+    "rarity": "Rare",
+    "name": "천벌 결계",
+    "cost": 3,
+    "effects": [
+      {
+        "type": "Shield",
+        "value": 25,
+        "duration": 2
+      },
+      {
+        "type": "OnHitStatus",
+        "status": {
+          "key": "Shock",
+          "stacks": 1,
+          "duration": 2,
+          "chance": 100
+        },
+        "duration": 2
+      },
+      {
+        "type": "TempoBoost",
+        "amount": 1,
+        "turns": 1,
+        "scope": "self"
+      }
+    ],
+    "tags": [
+      "Lightning"
+    ],
+    "keywords": [
+      "Shield",
+      "Shock",
+      "Tempo"
+    ],
+    "effectText": "보호막 25(2턴), 공격자에게 쇼크 1중첩, 다음 턴 에너지 +1",
+    "version": 2,
+    "vfxKey": "def_thunder_barrier",
+    "sfxKey": "shield_electric"
+  },
+  {
+    "id": "DEF_ELENA_EP_063",
+    "name": "회오리 방출",
+    "type": "Defense",
+    "rarity": "Epic",
+    "cost": 3,
+    "effects": [
+      {
+        "type": "Evasion",
+        "charges": 1,
+        "duration": 1
+      },
+      {
+        "type": "Damage",
+        "value": 16
+      },
+      {
+        "type": "ApplyStatus",
+        "key": "Shock",
+        "stacks": 1,
+        "duration": 2,
+        "target": "enemy"
+      }
+    ],
+    "tags": [
+      "Cyclone"
+    ],
+    "keywords": [
+      "Evasion",
+      "Damage",
+      "Shock"
+    ],
+    "vfxKey": "def_whirlwind",
+    "sfxKey": "slash_whirl",
+    "version": 3,
+    "effectText": "회피 1회, 피해 16, 쇼크 1중첩"
+  },
+  {
+    "id": "DEF_ELENA_LE_064",
+    "name": "얼음 결계",
+    "type": "Defense",
+    "rarity": "Legendary",
+    "cost": 4,
+    "effects": [
+      {
+        "type": "Shield",
+        "value": 35,
+        "duration": 2
+      },
+      {
+        "type": "OnHitStatus",
+        "status": {
+          "key": "Freeze",
+          "duration": 1,
+          "chance": 100
+        },
+        "duration": 2
+      },
+      {
+        "type": "Nullify",
+        "times": 1
+      }
+    ],
+    "tags": [
+      "Frost"
+    ],
+    "keywords": [
+      "Shield",
+      "Freeze",
+      "Nullify"
+    ],
+    "vfxKey": "def_ice_prism",
+    "sfxKey": "shield_crystal",
+    "version": 3,
+    "effectText": "보호막 35(2턴), 공격자 빙결 1턴, 다음 공격 1회 무효"
+  },
+  {
+    "id": "DEF_ELENA_NO_061",
+    "name": "방풍 장막",
+    "type": "Defense",
+    "rarity": "Normal",
+    "cost": 1,
+    "effects": [
+      {
+        "type": "Shield",
+        "value": 20,
+        "duration": 1
+      }
+    ],
+    "tags": [
+      "Frost"
+    ],
+    "keywords": [
+      "Shield"
+    ],
+    "vfxKey": "def_shield_basic",
+    "sfxKey": "shield_basic",
+    "version": 3,
+    "effectText": "보호막 20(1턴)"
+  },
+  {
+    "id": "DEF_ELENA_RA_062",
+    "name": "결빙 장막",
+    "type": "Defense",
+    "rarity": "Rare",
+    "cost": 2,
+    "effects": [
+      {
+        "type": "Shield",
+        "value": 18,
+        "duration": 2
+      },
+      {
+        "type": "OnHitStatus",
+        "status": {
+          "key": "Freeze",
+          "duration": 1,
+          "chance": 100
+        },
+        "duration": 2
+      }
+    ],
+    "tags": [
+      "Frost"
+    ],
+    "keywords": [
+      "Shield",
+      "Freeze"
+    ],
+    "vfxKey": "def_ice_barrier",
+    "sfxKey": "shield_ice",
+    "version": 3,
+    "effectText": "보호막 18(2턴), 공격자에게 빙결 1턴"
+  },
+  {
+    "id": "DEF_GAREN_EP_079",
+    "type": "Defense",
+    "rarity": "Epic",
+    "name": "균열 방진",
+    "cost": 3,
+    "effects": [
+      {
+        "type": "Shield",
+        "value": 20,
+        "duration": 2
+      },
+      {
+        "type": "ApplyStatus",
+        "key": "Vulnerable",
+        "stacks": 1,
+        "duration": 2,
+        "target": "enemy"
+      }
+    ],
+    "tags": [
+      "Valor"
+    ],
+    "keywords": [
+      "Shield",
+      "Vulnerable"
+    ],
+    "effectText": "보호막 20(2턴), 적에게 취약 1중첩(2턴)",
+    "vfxKey": "def_ground_shock",
+    "sfxKey": "earthquake",
+    "version": 1
+  },
+  {
+    "id": "DEF_GAREN_LE_080",
+    "type": "Defense",
+    "rarity": "Legendary",
+    "name": "철벽 수호",
+    "cost": 4,
+    "effects": [
+      {
+        "type": "Shield",
+        "value": 40,
+        "duration": 2
+      },
+      {
+        "type": "Immune",
+        "keywords": [
+          "Burn"
+        ],
+        "duration": 1
+      }
+    ],
+    "tags": [
+      "Valor"
+    ],
+    "keywords": [
+      "Shield",
+      "Immune"
+    ],
+    "effectText": "보호막 40(2턴), 화상 면역 1턴",
+    "vfxKey": "def_barrier",
+    "sfxKey": "shield_hard",
+    "version": 1
+  },
+  {
+    "id": "DEF_GAREN_NO_077",
+    "type": "Defense",
+    "rarity": "Normal",
+    "name": "방패 자세",
+    "cost": 1,
+    "effects": [
+      {
+        "type": "Shield",
+        "value": 20,
+        "duration": 1
+      }
+    ],
+    "tags": [
+      "Valor"
+    ],
+    "keywords": [
+      "Shield"
+    ],
+    "effectText": "보호막 20(1턴)",
+    "vfxKey": "def_shield_basic",
+    "sfxKey": "shield_basic",
+    "version": 1
+  },
+  {
+    "id": "DEF_GAREN_RA_078",
+    "type": "Defense",
+    "rarity": "Rare",
+    "name": "전열 방진",
+    "cost": 2,
+    "effects": [
+      {
+        "type": "Guard",
+        "value": 18,
+        "duration": 2
+      },
+      {
+        "type": "GainAction",
+        "value": 1,
+        "delayed": true,
+        "delayTurns": 1
+      }
+    ],
+    "tags": [
+      "Valor"
+    ],
+    "keywords": [
+      "Guard",
+      "Tempo"
+    ],
+    "effectText": "가드 18(2턴), 다음 턴 에너지 +1",
+    "vfxKey": "def_guard_wall",
+    "sfxKey": "guard_set",
+    "version": 1
+  },
+  {
+    "id": "DEF_IRIS_EP_095",
+    "name": "정화의 결계",
+    "type": "Defense",
+    "rarity": "Epic",
+    "cost": 3,
+    "effects": [
+      {
+        "type": "Nullify",
+        "times": 1
+      },
+      {
+        "type": "GainAction",
+        "value": 1,
+        "delayed": true,
+        "delayTurns": 1
+      }
+    ],
+    "tags": [
+      "Sanctify"
+    ],
+    "keywords": [
+      "Nullify",
+      "Tempo"
+    ],
+    "vfxKey": "def_mana_flow",
+    "sfxKey": "mana_shift",
+    "version": 3,
+    "effectText": "무효화 1회, 다음 턴 에너지 +1"
+  },
+  {
+    "id": "DEF_IRIS_LE_096",
+    "name": "빛의 수호",
+    "type": "Defense",
+    "rarity": "Legendary",
+    "cost": 4,
+    "effects": [
+      {
+        "type": "Shield",
+        "value": 40,
+        "duration": 2
+      },
+      {
+        "type": "Immune",
+        "keywords": [
+          "Burn"
+        ],
+        "duration": 1
+      }
+    ],
+    "tags": [
+      "Sanctify"
+    ],
+    "keywords": [
+      "Shield",
+      "Immune"
+    ],
+    "vfxKey": "def_holy_barrier",
+    "sfxKey": "shield_holy",
+    "version": 3,
+    "effectText": "보호막 40(2턴), 화상 면역 1턴"
+  },
+  {
+    "id": "DEF_IRIS_NO_093",
+    "name": "천상의 방벽",
+    "type": "Defense",
+    "rarity": "Normal",
+    "cost": 1,
+    "effects": [
+      {
+        "type": "Nullify",
+        "times": 1
+      }
+    ],
+    "tags": [
+      "Sanctify"
+    ],
+    "keywords": [
+      "Nullify"
+    ],
+    "vfxKey": "def_nullify",
+    "sfxKey": "nullify",
+    "version": 3,
+    "effectText": "무효화 1회"
+  },
+  {
+    "id": "DEF_IRIS_RA_094",
+    "name": "성역 구축",
+    "type": "Defense",
+    "rarity": "Rare",
+    "cost": 3,
+    "effects": [
+      {
+        "type": "Shield",
+        "value": 30,
+        "duration": 3
+      },
+      {
+        "type": "Regen",
+        "value": 5,
+        "duration": 3
+      }
+    ],
+    "tags": [
+      "Sanctify"
+    ],
+    "keywords": [
+      "Shield",
+      "Regen"
+    ],
+    "vfxKey": "def_sanctuary",
+    "sfxKey": "regen_field",
+    "version": 3,
+    "effectText": "보호막 30(3턴), 재생 5(3턴)"
+  },
+  {
+    "id": "DEF_KAI_EP_111",
+    "type": "Defense",
+    "rarity": "Epic",
+    "name": "회오리 반사",
+    "cost": 3,
+    "effects": [
+      {
+        "type": "Evasion",
+        "charges": 1,
+        "duration": 1
+      },
+      {
+        "type": "Damage",
+        "value": 16
+      },
+      {
+        "type": "ApplyStatus",
+        "key": "Shock",
+        "stacks": 1,
+        "duration": 2,
+        "target": "enemy"
+      }
+    ],
+    "tags": [
+      "Tempest"
+    ],
+    "keywords": [
+      "Evasion",
+      "Damage",
+      "Shock"
+    ],
+    "effectText": "회피 1회, 피해 16, 쇼크 1중첩",
+    "vfxKey": "def_whirlwind",
+    "sfxKey": "slash_whirl",
+    "version": 2
+  },
+  {
+    "id": "DEF_KAI_LE_112",
+    "type": "Defense",
+    "rarity": "Legendary",
+    "name": "반응 장갑 전개",
+    "cost": 4,
+    "effects": [
+      {
+        "type": "ReactiveArmor",
+        "charges": 2,
+        "reflectRatio": 0.35,
+        "shieldRatio": 0.25,
+        "duration": 2
+      },
+      {
+        "type": "Guard",
+        "value": 8,
+        "duration": 2
+      }
+    ],
+    "tags": [
+      "Tempest"
+    ],
+    "keywords": [
+      "Reactive",
+      "Guard"
+    ],
+    "effectText": "반응 장갑 2회 (35% 반격/25% 보호막), 가드 8(2턴)",
+    "vfxKey": "def_reactive_armor",
+    "sfxKey": "metal_shift",
+    "version": 2
+  },
+  {
+    "id": "DEF_KAI_NO_109",
+    "type": "Defense",
+    "rarity": "Normal",
+    "name": "전위 방벽",
+    "cost": 1,
+    "effects": [
+      {
+        "type": "Shield",
+        "value": 20,
+        "duration": 1
+      }
+    ],
+    "tags": [
+      "Tempest"
+    ],
+    "keywords": [
+      "Shield"
+    ],
+    "effectText": "보호막 20(1턴)",
+    "vfxKey": "def_wind_barrier",
+    "sfxKey": "shield_soft",
+    "version": 2
+  },
+  {
+    "id": "DEF_KAI_RA_110",
+    "type": "Defense",
+    "rarity": "Rare",
+    "name": "충격 대응",
+    "cost": 3,
+    "effects": [
+      {
+        "type": "Shield",
+        "value": 25,
+        "duration": 2
+      },
+      {
+        "type": "OnHitStatus",
+        "status": {
+          "key": "Shock",
+          "stacks": 1,
+          "duration": 2,
+          "chance": 100
+        },
+        "duration": 2
+      },
+      {
+        "type": "GainAction",
+        "value": 1,
+        "delayed": true,
+        "delayTurns": 1
+      }
+    ],
+    "tags": [
+      "Tempest"
+    ],
+    "keywords": [
+      "Shield",
+      "Shock",
+      "Tempo"
+    ],
+    "effectText": "보호막 25(2턴), 공격자에게 쇼크 1중첩, 다음 턴 에너지 +1",
+    "vfxKey": "def_shock_barrier",
+    "sfxKey": "electric_guard",
+    "version": 2
+  },
+  {
+    "id": "DEF_LEON_EP_123",
+    "type": "Defense",
+    "rarity": "Epic",
+    "name": "속박 덫",
+    "cost": 3,
+    "effects": [
+      {
+        "type": "Guard",
+        "value": 12,
+        "duration": 2
+      },
+      {
+        "type": "ApplyStatus",
+        "key": "Root",
+        "duration": 1,
+        "target": "enemy"
+      }
+    ],
+    "tags": [
+      "Tactics"
+    ],
+    "keywords": [
+      "Guard",
+      "Root"
+    ],
+    "effectText": "가드 12(2턴), 적에게 속박 1턴",
+    "vfxKey": "def_snare_field",
+    "sfxKey": "trap_snap",
+    "version": 2
+  },
+  {
+    "id": "DEF_LEON_LE_124",
+    "type": "Defense",
+    "rarity": "Legendary",
+    "name": "무효의 벽",
+    "cost": 3,
+    "effects": [
+      {
+        "type": "Nullify",
+        "times": 1
+      }
+    ],
+    "tags": [
+      "Tactics"
+    ],
+    "keywords": [
+      "Nullify"
+    ],
+    "effectText": "다음 적 카드 1회 무효화",
+    "vfxKey": "def_nullify",
+    "sfxKey": "nullify",
+    "version": 2
+  },
+  {
+    "id": "DEF_LEON_NO_121",
+    "type": "Defense",
+    "rarity": "Normal",
+    "name": "반격 자세",
+    "cost": 2,
+    "effects": [
+      {
+        "type": "Counter",
+        "value": 20,
+        "duration": 1
+      }
+    ],
+    "tags": [
+      "Vanguard"
+    ],
+    "keywords": [
+      "Counter"
+    ],
+    "effectText": "반격 20(1턴)",
+    "vfxKey": "def_counter",
+    "sfxKey": "guard_clash",
+    "version": 2
+  },
+  {
+    "id": "DEF_LEON_RA_122",
+    "type": "Defense",
+    "rarity": "Rare",
+    "name": "철벽 방진",
+    "cost": 2,
+    "effects": [
+      {
+        "type": "Guard",
+        "value": 18,
+        "duration": 2
+      },
+      {
+        "type": "GainAction",
+        "value": 1,
+        "delayed": true,
+        "delayTurns": 1
+      }
+    ],
+    "tags": [
+      "Vanguard"
+    ],
+    "keywords": [
+      "Guard",
+      "Tempo"
+    ],
+    "effectText": "가드 18(2턴), 다음 턴 에너지 +1",
+    "vfxKey": "def_guard_wall",
+    "sfxKey": "guard_set",
+    "version": 2
+  },
+  {
+    "id": "DEF_LUCIAN_EP_211",
+    "type": "Defense",
+    "rarity": "Epic",
+    "name": "전술 재배치",
+    "cost": 3,
+    "effects": [
+      {
+        "type": "Guard",
+        "value": 18,
+        "duration": 2
+      },
+      {
+        "type": "GainAction",
+        "value": 1,
+        "delayed": true,
+        "delayTurns": 1
+      }
+    ],
+    "tags": [
+      "Aegis"
+    ],
+    "keywords": [
+      "Guard",
+      "Tempo"
+    ],
+    "effectText": "가드 18(2턴), 다음 턴 에너지 +1",
+    "vfxKey": "def_guard_wall",
+    "sfxKey": "guard_set",
+    "version": 2
+  },
+  {
+    "id": "DEF_LUCIAN_LE_212",
+    "type": "Defense",
+    "rarity": "Legendary",
+    "name": "차폐 매트릭스",
+    "cost": 4,
+    "effects": [
+      {
+        "type": "Nullify",
+        "times": 1
+      },
+      {
+        "type": "GainAction",
+        "value": 1,
+        "delayed": true,
+        "delayTurns": 1
+      }
+    ],
+    "tags": [
+      "Aegis"
+    ],
+    "keywords": [
+      "Nullify",
+      "Tempo"
+    ],
+    "effectText": "다음 적 카드 1회 무효화, 다음 턴 에너지 +1",
+    "vfxKey": "def_nullify",
+    "sfxKey": "nullify",
+    "version": 2
+  },
+  {
+    "id": "DEF_LUCIAN_NO_137",
+    "type": "Defense",
+    "rarity": "Normal",
+    "name": "강철 방벽",
+    "cost": 1,
+    "effects": [
+      {
+        "type": "Shield",
+        "value": 20,
+        "duration": 1
+      }
+    ],
+    "tags": [
+      "Aegis"
+    ],
+    "keywords": [
+      "Shield"
+    ],
+    "effectText": "보호막 20(1턴)",
+    "vfxKey": "def_shield_basic",
+    "sfxKey": "shield_basic",
+    "version": 2
+  },
+  {
+    "id": "DEF_LUCIAN_RA_210",
+    "name": "반응 장갑 전개",
+    "type": "Defense",
+    "rarity": "Rare",
+    "cost": 2,
+    "effects": [
+      {
+        "type": "ReactiveArmor",
+        "charges": 2,
+        "reflectRatio": 0.35,
+        "shieldRatio": 0.25,
+        "duration": 2
+      },
+      {
+        "type": "Guard",
+        "value": 8,
+        "duration": 2
+      }
+    ],
+    "tags": [
+      "Aegis"
+    ],
+    "keywords": [
+      "Reactive",
+      "Guard"
+    ],
+    "effectText": "2회 반응 장갑(35% 반격/25% 보호막), 가드 8(2턴)",
+    "vfxKey": "def_reactive",
+    "sfxKey": "armor_charge",
+    "version": 3
+  },
+  {
+    "id": "DEF_MARCUS_EP_159",
+    "type": "Defense",
+    "rarity": "Epic",
+    "name": "속박 지휘",
+    "cost": 3,
+    "effects": [
+      {
+        "type": "Guard",
+        "value": 12,
+        "duration": 2
+      },
+      {
+        "type": "ApplyStatus",
+        "key": "Root",
+        "duration": 1,
+        "target": "enemy"
+      }
+    ],
+    "tags": [
+      "Tactics"
+    ],
+    "keywords": [
+      "Guard",
+      "Root"
+    ],
+    "effectText": "가드 12(2턴), 적에게 속박 1턴",
+    "vfxKey": "def_snare_field",
+    "sfxKey": "trap_snap",
+    "version": 2
+  },
+  {
+    "id": "DEF_MARCUS_LE_160",
+    "type": "Defense",
+    "rarity": "Legendary",
+    "name": "차원 차단",
+    "cost": 4,
+    "effects": [
+      {
+        "type": "Nullify",
+        "times": 1
+      },
+      {
+        "type": "GainAction",
+        "value": 1,
+        "delayed": true,
+        "delayTurns": 1
+      }
+    ],
+    "tags": [
+      "Tactics"
+    ],
+    "keywords": [
+      "Nullify",
+      "Tempo"
+    ],
+    "effectText": "다음 적 카드 1회 무효화, 다음 턴 에너지 +1",
+    "vfxKey": "def_nullify",
+    "sfxKey": "nullify",
+    "version": 2
+  },
+  {
+    "id": "DEF_MARCUS_NO_157",
+    "type": "Defense",
+    "rarity": "Normal",
+    "name": "전술 방벽",
+    "cost": 1,
+    "effects": [
+      {
+        "type": "Shield",
+        "value": 20,
+        "duration": 1
+      }
+    ],
+    "tags": [
+      "Barrier"
+    ],
+    "keywords": [
+      "Shield"
+    ],
+    "effectText": "보호막 20(1턴)",
+    "vfxKey": "def_shield_basic",
+    "sfxKey": "shield_basic",
+    "version": 2
+  },
+  {
+    "id": "DEF_MARCUS_RA_158",
+    "type": "Defense",
+    "rarity": "Rare",
+    "name": "재편 방진",
+    "cost": 3,
+    "effects": [
+      {
+        "type": "Guard",
+        "value": 18,
+        "duration": 2
+      },
+      {
+        "type": "GainAction",
+        "value": 1,
+        "delayed": true,
+        "delayTurns": 1
+      }
+    ],
+    "tags": [
+      "Barrier"
+    ],
+    "keywords": [
+      "Guard",
+      "Tempo"
+    ],
+    "effectText": "가드 18(2턴), 다음 턴 에너지 +1",
+    "vfxKey": "def_guard_wall",
+    "sfxKey": "guard_set",
+    "version": 2
+  },
+  {
+    "id": "DEF_MIRA_EP_175",
+    "name": "속박 지휘",
+    "type": "Defense",
+    "rarity": "Epic",
+    "cost": 3,
+    "effects": [
+      {
+        "type": "Guard",
+        "value": 12,
+        "duration": 2
+      },
+      {
+        "type": "ApplyStatus",
+        "key": "Root",
+        "duration": 1,
+        "target": "enemy"
+      }
+    ],
+    "tags": [
+      "Veil"
+    ],
+    "keywords": [
+      "Guard",
+      "Root"
+    ],
+    "vfxKey": "def_snare_field",
+    "sfxKey": "trap_snap",
+    "version": 3,
+    "effectText": "가드 12(2턴), 적에게 속박 1턴"
+  },
+  {
+    "id": "DEF_MIRA_LE_176",
+    "name": "차원 차단",
+    "type": "Defense",
+    "rarity": "Legendary",
+    "cost": 4,
+    "effects": [
+      {
+        "type": "Nullify",
+        "times": 1
+      },
+      {
+        "type": "GainAction",
+        "value": 1,
+        "delayed": true,
+        "delayTurns": 1
+      }
+    ],
+    "tags": [
+      "Veil"
+    ],
+    "keywords": [
+      "Nullify",
+      "Tempo"
+    ],
+    "vfxKey": "def_nullify",
+    "sfxKey": "nullify",
+    "version": 3,
+    "effectText": "다음 적 카드 1회 무효화, 다음 턴 에너지 +1"
+  },
+  {
+    "id": "DEF_MIRA_NO_173",
+    "name": "은신 장막",
+    "type": "Defense",
+    "rarity": "Normal",
+    "cost": 1,
+    "effects": [
+      {
+        "type": "Shield",
+        "value": 20,
+        "duration": 1
+      }
+    ],
+    "tags": [
+      "Veil"
+    ],
+    "keywords": [
+      "Shield"
+    ],
+    "vfxKey": "def_shield_basic",
+    "sfxKey": "shield_soft",
+    "version": 3,
+    "effectText": "보호막 20(1턴)"
+  },
+  {
+    "id": "DEF_MIRA_RA_174",
+    "name": "그림자 회피술",
+    "type": "Defense",
+    "rarity": "Rare",
+    "cost": 2,
+    "effects": [
+      {
+        "type": "Evasion",
+        "charges": 2,
+        "duration": 1
+      },
+      {
+        "type": "Counter",
+        "value": 12,
+        "duration": 1
+      }
+    ],
+    "tags": [
+      "Veil"
+    ],
+    "keywords": [
+      "Evasion",
+      "Counter"
+    ],
+    "vfxKey": "def_evasion",
+    "sfxKey": "dash_swish",
+    "version": 3,
+    "effectText": "회피 2회(1턴), 반격 12(1턴)"
+  },
+  {
+    "id": "DEF_SERAPHINA_EP_191",
+    "name": "월식 폭쇄",
+    "type": "Defense",
+    "rarity": "Epic",
+    "cost": 3,
+    "effects": [
+      {
+        "type": "Evasion",
+        "charges": 1,
+        "duration": 1
+      },
+      {
+        "type": "Damage",
+        "value": 16
+      },
+      {
+        "type": "ApplyStatus",
+        "key": "Shock",
+        "stacks": 1,
+        "duration": 2,
+        "target": "enemy"
+      }
+    ],
+    "tags": [
+      "Shadow"
+    ],
+    "keywords": [
+      "Evasion",
+      "Damage",
+      "Shock"
+    ],
+    "vfxKey": "def_whirlwind",
+    "sfxKey": "slash_whirl",
+    "version": 3,
+    "effectText": "회피 1회, 피해 16, 쇼크 1중첩"
+  },
+  {
+    "id": "DEF_SERAPHINA_LE_192",
+    "name": "홍염 결계",
+    "type": "Defense",
+    "rarity": "Legendary",
+    "cost": 3,
+    "effects": [
+      {
+        "type": "Shield",
+        "value": 40,
+        "duration": 2
+      },
+      {
+        "type": "Immune",
+        "keywords": [
+          "Burn"
+        ],
+        "duration": 1
+      }
+    ],
+    "tags": [
+      "Shadow",
+      "Fire"
+    ],
+    "keywords": [
+      "Shield",
+      "Immune"
+    ],
+    "vfxKey": "def_flame_barrier",
+    "sfxKey": "shield_fire",
+    "version": 3,
+    "effectText": "보호막 40(2턴), 화상 면역 1턴"
+  },
+  {
+    "id": "DEF_SERAPHINA_NO_189",
+    "name": "어둠의 장막",
+    "type": "Defense",
+    "rarity": "Normal",
+    "cost": 1,
+    "effects": [
+      {
+        "type": "Shield",
+        "value": 20,
+        "duration": 1
+      }
+    ],
+    "tags": [
+      "Shadow"
+    ],
+    "keywords": [
+      "Shield"
+    ],
+    "vfxKey": "def_shadow_barrier",
+    "sfxKey": "shield_soft",
+    "version": 3,
+    "effectText": "보호막 20(1턴)"
+  },
+  {
+    "id": "DEF_SERAPHINA_RA_190",
+    "name": "그림자 회피술",
+    "type": "Defense",
+    "rarity": "Rare",
+    "cost": 2,
+    "effects": [
+      {
+        "type": "Evasion",
+        "charges": 2,
+        "duration": 1
+      },
+      {
+        "type": "Counter",
+        "value": 12,
+        "duration": 1
+      }
+    ],
+    "tags": [
+      "Shadow"
+    ],
+    "keywords": [
+      "Evasion",
+      "Counter"
+    ],
+    "vfxKey": "def_evasion",
+    "sfxKey": "step_swift",
+    "version": 3,
+    "effectText": "회피 2회(1턴), 반격 12(1턴)"
+  },
+  {
+    "id": "DEF_SERAPHINE_EP_207",
+    "name": "성가의 결계",
+    "type": "Defense",
+    "rarity": "Epic",
+    "cost": 3,
+    "effects": [
+      {
+        "type": "Shield",
+        "value": 30,
+        "duration": 3
+      },
+      {
+        "type": "Regen",
+        "value": 5,
+        "duration": 3
+      }
+    ],
+    "tags": [
+      "Harmony"
+    ],
+    "keywords": [
+      "Shield",
+      "Regen"
+    ],
+    "vfxKey": "def_sanctify_barrier",
+    "sfxKey": "heal_breeze",
+    "version": 2,
+    "effectText": "보호막 30(3턴), 재생 5(3턴)"
+  },
+  {
+    "id": "DEF_SERAPHINE_LE_208",
+    "name": "성스러운 포옹",
+    "type": "Defense",
+    "rarity": "Legendary",
+    "cost": 3,
+    "effects": [
+      {
+        "type": "Shield",
+        "value": 40,
+        "duration": 2
+      },
+      {
+        "type": "Immune",
+        "keywords": [
+          "Burn"
+        ],
+        "duration": 1
+      }
+    ],
+    "tags": [
+      "Harmony",
+      "Radiant"
+    ],
+    "keywords": [
+      "Shield",
+      "Immune"
+    ],
+    "vfxKey": "def_holy_barrier",
+    "sfxKey": "shield_holy",
+    "version": 2,
+    "effectText": "보호막 40(2턴), 화상 면역 1턴"
+  },
+  {
+    "id": "DEF_SERAPHINE_NO_205",
+    "name": "수호의 장막",
+    "type": "Defense",
+    "rarity": "Normal",
+    "cost": 1,
+    "effects": [
+      {
+        "type": "Shield",
+        "value": 20,
+        "duration": 1
+      }
+    ],
+    "tags": [
+      "Harmony"
+    ],
+    "keywords": [
+      "Shield"
+    ],
+    "vfxKey": "def_harmony_barrier",
+    "sfxKey": "shield_soft",
+    "version": 2,
+    "effectText": "보호막 20(1턴)"
+  },
+  {
+    "id": "DEF_SERAPHINE_RA_206",
+    "name": "빙결 선율 보호",
+    "type": "Defense",
+    "rarity": "Rare",
+    "cost": 2,
+    "effects": [
+      {
+        "type": "Shield",
+        "value": 18,
+        "duration": 2
+      },
+      {
+        "type": "OnHitStatus",
+        "status": {
+          "key": "Freeze",
+          "duration": 1,
+          "chance": 100
+        },
+        "duration": 2
+      }
+    ],
+    "tags": [
+      "Harmony",
+      "Frost"
+    ],
+    "keywords": [
+      "Shield",
+      "Freeze"
+    ],
+    "vfxKey": "def_ice_barrier",
+    "sfxKey": "shield_ice",
+    "version": 2,
+    "effectText": "보호막 18(2턴), 공격자에게 빙결 1턴"
+  },
+  {
+    "id": "HEA_ARIANA_EP_007",
+    "name": "천위 강림",
+    "type": "Heal",
+    "rarity": "Epic",
+    "cost": 3,
+    "effects": [
+      {
+        "type": "Heal",
+        "value": 35
+      },
+      {
+        "type": "Immune",
+        "keywords": [
+          "Burn",
+          "Shock"
+        ],
+        "duration": 1
+      },
+      {
+        "type": "PriorityBoost",
+        "value": 1,
+        "duration": 1
+      }
+    ],
+    "tags": [
+      "Neutral"
+    ],
+    "keywords": [
+      "Heal",
+      "Immune",
+      "Priority"
+    ],
+    "vfxKey": "heal_full",
+    "sfxKey": "heal_soft",
+    "version": 3,
+    "effectText": "체력 35 회복, 화상/쇼크 면역 1턴, 우선권 +1"
+  },
+  {
+    "id": "HEA_ARIANA_LE_008",
+    "name": "축복",
+    "type": "Heal",
+    "rarity": "Legendary",
+    "cost": 3,
+    "effects": [
+      {
+        "type": "Heal",
+        "value": 60
+      },
+      {
+        "type": "Buff",
+        "stat": "attack",
+        "value": 20,
+        "duration": 2
+      }
+    ],
+    "tags": [
+      "Light"
+    ],
+    "keywords": [
+      "Heal",
+      "Buff"
+    ],
+    "vfxKey": "bless",
+    "sfxKey": "bless",
+    "version": 3,
+    "effectText": "체력 60 회복, 공격력 +20%(2턴)"
+  },
+  {
+    "id": "HEA_ARIANA_NO_005",
+    "name": "연금 촉진",
+    "type": "Heal",
+    "rarity": "Normal",
+    "cost": 2,
+    "effects": [
+      {
+        "type": "Heal",
+        "value": 18
+      },
+      {
+        "type": "Regen",
+        "value": 4,
+        "duration": 2
+      },
+      {
+        "type": "GainAction",
+        "value": 2
+      }
+    ],
+    "tags": [
+      "Neutral"
+    ],
+    "keywords": [
+      "Heal",
+      "Regen"
+    ],
+    "vfxKey": "heal_basic",
+    "sfxKey": "heal_soft",
+    "version": 3,
+    "effectText": "체력 18 회복, 재생 4(2턴), 에너지 +1"
+  },
+  {
+    "id": "HEA_ARIANA_RA_006",
+    "name": "정화의 숨결",
+    "type": "Heal",
+    "rarity": "Rare",
+    "cost": 2,
+    "effects": [
+      {
+        "type": "Heal",
+        "value": 25
+      },
+      {
+        "type": "Cleanse",
+        "maxStacks": 3
+      }
+    ],
+    "tags": [
+      "Neutral"
+    ],
+    "keywords": [
+      "Heal",
+      "Cleanse"
+    ],
+    "vfxKey": "heal_strong",
+    "sfxKey": "heal_soft",
+    "version": 3,
+    "effectText": "체력 25 회복, 최대 3중첩 디버프 해제"
+  },
+  {
+    "id": "HEA_DARIUS_EP_023",
+    "name": "월광 재생",
+    "type": "Heal",
+    "rarity": "Epic",
+    "cost": 3,
+    "effects": [
+      {
+        "type": "Heal",
+        "value": 18
+      },
+      {
+        "type": "Regen",
+        "value": 8,
+        "duration": 3
+      },
+      {
+        "type": "ApplyBleed",
+        "stacks": 1,
+        "duration": 2,
+        "damagePerStack": 6
+      }
+    ],
+    "tags": [
+      "Blood"
+    ],
+    "keywords": [
+      "Heal",
+      "Regen",
+      "Bleed"
+    ],
+    "vfxKey": "heal_blood",
+    "sfxKey": "heal_deep",
+    "version": 3,
+    "effectText": "체력 18 회복, 재생 8(3턴), 적에게 출혈 1중첩"
+  },
+  {
+    "id": "HEA_DARIUS_LE_024",
+    "name": "시간 회귀",
+    "type": "Heal",
+    "rarity": "Legendary",
+    "cost": 3,
+    "effects": [
+      {
+        "type": "Heal",
+        "value": 30
+      },
+      {
+        "type": "UndoDamage",
+        "percent": 30,
+        "target": "player"
+      }
+    ],
+    "tags": [
+      "Time"
+    ],
+    "keywords": [
+      "Heal",
+      "Undo"
+    ],
+    "vfxKey": "heal_time",
+    "sfxKey": "time_rewind",
+    "version": 3,
+    "effectText": "체력 30 회복, 지난 턴 피해의 30% 복구"
+  },
+  {
+    "id": "HEA_DARIUS_NO_021",
+    "name": "사냥꾼의 휴식",
+    "type": "Heal",
+    "rarity": "Normal",
+    "cost": 1,
+    "effects": [
+      {
+        "type": "Heal",
+        "value": 20
+      }
+    ],
+    "tags": [
+      "Hunter"
+    ],
+    "keywords": [
+      "Heal"
+    ],
+    "vfxKey": "heal_basic",
+    "sfxKey": "heal_soft",
+    "version": 3,
+    "effectText": "체력 20 회복"
+  },
+  {
+    "id": "HEA_DARIUS_RA_022",
+    "name": "불굴의 맹세",
+    "type": "Heal",
+    "rarity": "Rare",
+    "cost": 2,
+    "effects": [
+      {
+        "type": "Heal",
+        "value": 20
+      },
+      {
+        "type": "Guard",
+        "value": 12,
+        "duration": 2
+      },
+      {
+        "type": "Counter",
+        "value": 15,
+        "duration": 1
+      }
+    ],
+    "tags": [
+      "Valor"
+    ],
+    "keywords": [
+      "Heal",
+      "Guard",
+      "Counter"
+    ],
+    "vfxKey": "heal_guard",
+    "sfxKey": "guard_impact",
+    "version": 3,
+    "effectText": "체력 20 회복, 가드 12(2턴), 반격 15(1턴)"
+  },
+  {
+    "id": "HEA_ELDER_EP_039",
+    "name": "폭풍 진동",
+    "type": "Heal",
+    "rarity": "Epic",
+    "cost": 3,
+    "effects": [
+      {
+        "type": "Heal",
+        "value": 35
+      },
+      {
+        "type": "Immune",
+        "keywords": [
+          "Burn",
+          "Shock"
+        ],
+        "duration": 1
+      },
+      {
+        "type": "PriorityBoost",
+        "value": 1,
+        "duration": 1
+      }
+    ],
+    "tags": [
+      "Storm"
+    ],
+    "keywords": [
+      "Heal",
+      "Immune",
+      "Priority"
+    ],
+    "vfxKey": "heal_storm",
+    "sfxKey": "heal_burst",
+    "version": 3,
+    "effectText": "체력 35 회복, 화상/쇼크 면역 1턴, 우선권 +1"
+  },
+  {
+    "id": "HEA_ELDER_LE_040",
+    "name": "회오리 정비",
+    "type": "Heal",
+    "rarity": "Legendary",
+    "cost": 3,
+    "effects": [
+      {
+        "type": "Heal",
+        "value": 18
+      },
+      {
+        "type": "Evasion",
+        "charges": 1,
+        "duration": 1
+      },
+      {
+        "type": "DuplicateNext",
+        "typeFilter": "Defense",
+        "times": 1
+      }
+    ],
+    "tags": [
+      "Cyclone"
+    ],
+    "keywords": [
+      "Heal",
+      "Evasion",
+      "Duplicate"
+    ],
+    "vfxKey": "heal_twist",
+    "sfxKey": "step_swift",
+    "version": 3,
+    "effectText": "체력 18 회복, 회피 1회(1턴), 다음 방어 카드 1회 추가 발동"
+  },
+  {
+    "id": "HEA_ELDER_NO_037",
+    "name": "바람의 수선",
+    "type": "Heal",
+    "rarity": "Normal",
+    "cost": 2,
+    "effects": [
+      {
+        "type": "Heal",
+        "value": 24,
+        "overflowToShield": true
+      },
+      {
+        "type": "Regen",
+        "value": 6,
+        "duration": 2
+      }
+    ],
+    "tags": [
+      "Gale"
+    ],
+    "keywords": [
+      "Heal",
+      "Shield",
+      "Regen"
+    ],
+    "vfxKey": "heal_wind",
+    "sfxKey": "heal_breeze",
+    "version": 3,
+    "effectText": "체력 24 회복, 초과분 보호막 +재생 6(2턴)"
+  },
+  {
+    "id": "HEA_ELDER_RA_038",
+    "name": "서클 리제너",
+    "type": "Heal",
+    "rarity": "Rare",
+    "cost": 3,
+    "effects": [
+      {
+        "type": "Heal",
+        "value": 18
+      },
+      {
+        "type": "Regen",
+        "value": 4,
+        "duration": 2
+      },
+      {
+        "type": "GainAction",
+        "value": 2
+      }
+    ],
+    "tags": [
+      "Support"
+    ],
+    "keywords": [
+      "Heal",
+      "Regen",
+      "GainAction"
+    ],
+    "vfxKey": "heal_circle",
+    "sfxKey": "heal_wave",
+    "version": 3,
+    "effectText": "체력 18 회복, 에너지 +1, 재생 4(2턴)"
+  },
+  {
+    "id": "HEA_ELENA_EP_055",
+    "name": "폭풍 진동",
+    "type": "Heal",
+    "rarity": "Epic",
+    "cost": 3,
+    "effects": [
+      {
+        "type": "Heal",
+        "value": 35
+      },
+      {
+        "type": "Immune",
+        "keywords": [
+          "Burn",
+          "Shock"
+        ],
+        "duration": 1
+      },
+      {
+        "type": "PriorityBoost",
+        "value": 1,
+        "duration": 1
+      }
+    ],
+    "tags": [
+      "Storm"
+    ],
+    "keywords": [
+      "Heal",
+      "Immune",
+      "Priority"
+    ],
+    "vfxKey": "heal_storm",
+    "sfxKey": "heal_burst",
+    "version": 3,
+    "effectText": "체력 35 회복, 화상/쇼크 면역 1턴, 우선권 +1"
+  },
+  {
+    "id": "HEA_ELENA_LE_056",
+    "name": "회오리 정비",
+    "type": "Heal",
+    "rarity": "Legendary",
+    "cost": 3,
+    "effects": [
+      {
+        "type": "Heal",
+        "value": 18
+      },
+      {
+        "type": "Evasion",
+        "charges": 1,
+        "duration": 1
+      },
+      {
+        "type": "DuplicateNext",
+        "typeFilter": "Defense",
+        "times": 1
+      }
+    ],
+    "tags": [
+      "Cyclone"
+    ],
+    "keywords": [
+      "Heal",
+      "Evasion",
+      "Duplicate"
+    ],
+    "vfxKey": "heal_twist",
+    "sfxKey": "step_swift",
+    "version": 3,
+    "effectText": "체력 18 회복, 회피 1회(1턴), 다음 방어 카드 1회 추가 발동"
+  },
+  {
+    "id": "HEA_ELENA_NO_053",
+    "name": "바람의 수선",
+    "type": "Heal",
+    "rarity": "Normal",
+    "cost": 2,
+    "effects": [
+      {
+        "type": "Heal",
+        "value": 24,
+        "overflowToShield": true
+      },
+      {
+        "type": "Regen",
+        "value": 6,
+        "duration": 2
+      }
+    ],
+    "tags": [
+      "Gale"
+    ],
+    "keywords": [
+      "Heal",
+      "Shield",
+      "Regen"
+    ],
+    "vfxKey": "heal_wind",
+    "sfxKey": "heal_breeze",
+    "version": 3,
+    "effectText": "체력 24 회복, 초과분 보호막 +재생 6(2턴)"
+  },
+  {
+    "id": "HEA_ELENA_RA_054",
+    "name": "정화의 숨결",
+    "type": "Heal",
+    "rarity": "Rare",
+    "cost": 2,
+    "effects": [
+      {
+        "type": "Heal",
+        "value": 25
+      },
+      {
+        "type": "Cleanse",
+        "maxStacks": 3
+      }
+    ],
+    "tags": [
+      "Purify"
+    ],
+    "keywords": [
+      "Heal",
+      "Cleanse"
+    ],
+    "vfxKey": "heal_purify",
+    "sfxKey": "cleanse_soft",
+    "version": 3,
+    "effectText": "체력 25 회복, 최대 3중첩 디버프 제거"
+  },
+  {
+    "id": "HEA_GAREN_EP_071",
+    "name": "강인한 재생",
+    "type": "Heal",
+    "rarity": "Epic",
+    "cost": 2,
+    "effects": [
+      {
+        "type": "Heal",
+        "value": 40
+      }
+    ],
+    "tags": [
+      "Valor"
+    ],
+    "keywords": [
+      "Heal"
+    ],
+    "vfxKey": "heal_strong",
+    "sfxKey": "heal_pulse",
+    "version": 2,
+    "effectText": "체력 40 회복"
+  },
+  {
+    "id": "HEA_GAREN_LE_072",
+    "name": "결의의 회복",
+    "type": "Heal",
+    "rarity": "Legendary",
+    "cost": 4,
+    "effects": [
+      {
+        "type": "Heal",
+        "value": 30
+      },
+      {
+        "type": "UndoDamage",
+        "percent": 30
+      }
+    ],
+    "tags": [
+      "Valor"
+    ],
+    "keywords": [
+      "Heal",
+      "UndoDamage"
+    ],
+    "vfxKey": "heal_time",
+    "sfxKey": "rewind",
+    "version": 2,
+    "effectText": "체력 30 회복, 지난 턴 받은 피해 30% 복구"
+  },
+  {
+    "id": "HEA_GAREN_NO_069",
+    "name": "전열 재정비",
+    "type": "Heal",
+    "rarity": "Normal",
+    "cost": 1,
+    "effects": [
+      {
+        "type": "Heal",
+        "value": 20
+      }
+    ],
+    "tags": [
+      "Valor"
+    ],
+    "keywords": [
+      "Heal"
+    ],
+    "vfxKey": "heal_basic",
+    "sfxKey": "heal_soft",
+    "version": 2,
+    "effectText": "체력 20 회복"
+  },
+  {
+    "id": "HEA_GAREN_RA_070",
+    "name": "불굴의 맹세",
+    "type": "Heal",
+    "rarity": "Rare",
+    "cost": 3,
+    "effects": [
+      {
+        "type": "Heal",
+        "value": 20
+      },
+      {
+        "type": "Guard",
+        "value": 12,
+        "duration": 2
+      },
+      {
+        "type": "Counter",
+        "value": 15,
+        "duration": 1
+      }
+    ],
+    "tags": [
+      "Valor"
+    ],
+    "keywords": [
+      "Heal",
+      "Guard",
+      "Counter"
+    ],
+    "vfxKey": "heal_guard",
+    "sfxKey": "guard_impact",
+    "version": 2,
+    "effectText": "체력 20 회복, 가드 12(2턴), 반격 15(1턴)"
+  },
+  {
+    "id": "HEA_IRIS_EP_087",
+    "name": "천위 강림",
+    "type": "Heal",
+    "rarity": "Epic",
+    "cost": 3,
+    "effects": [
+      {
+        "type": "Heal",
+        "value": 35
+      },
+      {
+        "type": "Immune",
+        "keywords": [
+          "Burn",
+          "Shock"
+        ],
+        "duration": 1
+      },
+      {
+        "type": "PriorityBoost",
+        "value": 1,
+        "duration": 1
+      }
+    ],
+    "tags": [
+      "Light"
+    ],
+    "keywords": [
+      "Heal",
+      "Immune",
+      "Priority"
+    ],
+    "vfxKey": "heal_radiant",
+    "sfxKey": "heal_burst",
+    "version": 3,
+    "effectText": "체력 35 회복, 화상/쇼크 면역 1턴, 우선권 +1"
+  },
+  {
+    "id": "HEA_IRIS_LE_088",
+    "name": "축복",
+    "type": "Heal",
+    "rarity": "Legendary",
+    "cost": 4,
+    "effects": [
+      {
+        "type": "Heal",
+        "value": 60
+      },
+      {
+        "type": "Buff",
+        "stat": "attack",
+        "value": 20,
+        "duration": 2
+      }
+    ],
+    "tags": [
+      "Light"
+    ],
+    "keywords": [
+      "Heal",
+      "Buff"
+    ],
+    "vfxKey": "heal_bless",
+    "sfxKey": "bless",
+    "version": 3,
+    "effectText": "체력 60 회복, 공격력 +20%(2턴)"
+  },
+  {
+    "id": "HEA_IRIS_NO_085",
+    "name": "치유의 기원",
+    "type": "Heal",
+    "rarity": "Normal",
+    "cost": 2,
+    "effects": [
+      {
+        "type": "Heal",
+        "value": 40
+      }
+    ],
+    "tags": [
+      "Light"
+    ],
+    "keywords": [
+      "Heal"
+    ],
+    "vfxKey": "heal_strong_light",
+    "sfxKey": "heal_strong",
+    "version": 3,
+    "effectText": "체력 40 회복"
+  },
+  {
+    "id": "HEA_IRIS_RA_086",
+    "name": "정화의 숨결",
+    "type": "Heal",
+    "rarity": "Rare",
+    "cost": 2,
+    "effects": [
+      {
+        "type": "Heal",
+        "value": 25
+      },
+      {
+        "type": "Cleanse",
+        "maxStacks": 3
+      }
+    ],
+    "tags": [
+      "Light"
+    ],
+    "keywords": [
+      "Heal",
+      "Cleanse"
+    ],
+    "vfxKey": "heal_purify",
+    "sfxKey": "cleanse_soft",
+    "version": 3,
+    "effectText": "체력 25 회복, 최대 3중첩 디버프 제거"
+  },
+  {
+    "id": "HEA_KAI_EP_103",
+    "name": "순환 촉진",
+    "type": "Heal",
+    "rarity": "Epic",
+    "cost": 3,
+    "effects": [
+      {
+        "type": "Heal",
+        "value": 18
+      },
+      {
+        "type": "Regen",
+        "value": 4,
+        "duration": 2
+      },
+      {
+        "type": "GainAction",
+        "value": 2
+      }
+    ],
+    "tags": [
+      "Support"
+    ],
+    "keywords": [
+      "Heal",
+      "Tempo"
+    ],
+    "vfxKey": "heal_cycle",
+    "sfxKey": "heal_wave",
+    "version": 3,
+    "effectText": "체력 18 회복, 재생 4(2턴), 에너지 +1"
+  },
+  {
+    "id": "HEA_KAI_LE_104",
+    "name": "시간 역행",
+    "type": "Heal",
+    "rarity": "Legendary",
+    "cost": 4,
+    "effects": [
+      {
+        "type": "Heal",
+        "value": 30
+      },
+      {
+        "type": "UndoDamage",
+        "percent": 30
+      }
+    ],
+    "tags": [
+      "Chrono"
+    ],
+    "keywords": [
+      "Heal",
+      "UndoDamage"
+    ],
+    "vfxKey": "heal_time",
+    "sfxKey": "rewind",
+    "version": 3,
+    "effectText": "체력 30 회복, 지난 턴 피해 30% 복구"
+  },
+  {
+    "id": "HEA_KAI_NO_101",
+    "name": "응급 회복",
+    "type": "Heal",
+    "rarity": "Normal",
+    "cost": 1,
+    "effects": [
+      {
+        "type": "Heal",
+        "value": 20
+      }
+    ],
+    "tags": [
+      "Support"
+    ],
+    "keywords": [
+      "Heal"
+    ],
+    "vfxKey": "heal_basic",
+    "sfxKey": "heal_soft",
+    "version": 3,
+    "effectText": "체력 20 회복"
+  },
+  {
+    "id": "HEA_KAI_RA_102",
+    "name": "순풍 재생",
+    "type": "Heal",
+    "rarity": "Rare",
+    "cost": 2,
+    "effects": [
+      {
+        "type": "Heal",
+        "value": 24,
+        "overflowToShield": true
+      },
+      {
+        "type": "Regen",
+        "value": 6,
+        "duration": 2
+      }
+    ],
+    "tags": [
+      "Support"
+    ],
+    "keywords": [
+      "Heal",
+      "Shield",
+      "Regen"
+    ],
+    "vfxKey": "heal_wind",
+    "sfxKey": "heal_breeze",
+    "version": 3,
+    "effectText": "체력 24 회복, 초과분은 보호막, 재생 6(2턴)"
+  },
+  {
+    "id": "HEA_LEON_EP_119",
+    "name": "불굴의 맹세",
+    "type": "Heal",
+    "rarity": "Epic",
+    "cost": 3,
+    "effects": [
+      {
+        "type": "Heal",
+        "value": 20
+      },
+      {
+        "type": "Guard",
+        "value": 12,
+        "duration": 2
+      },
+      {
+        "type": "Counter",
+        "value": 15,
+        "duration": 1
+      }
+    ],
+    "tags": [
+      "Support"
+    ],
+    "keywords": [
+      "Heal",
+      "Guard",
+      "Counter"
+    ],
+    "vfxKey": "heal_guard",
+    "sfxKey": "guard_impact",
+    "version": 3,
+    "effectText": "체력 20 회복, 가드 12(2턴), 반격 15(1턴)"
+  },
+  {
+    "id": "HEA_LEON_LE_120",
+    "name": "축복",
+    "type": "Heal",
+    "rarity": "Legendary",
+    "cost": 4,
+    "effects": [
+      {
+        "type": "Heal",
+        "value": 60
+      },
+      {
+        "type": "Buff",
+        "stat": "attack",
+        "value": 20,
+        "duration": 2
+      }
+    ],
+    "tags": [
+      "Support"
+    ],
+    "keywords": [
+      "Heal",
+      "Buff"
+    ],
+    "vfxKey": "heal_bless",
+    "sfxKey": "bless_chime",
+    "version": 3,
+    "effectText": "체력 60 회복, 공격력 20% 증가(2턴)"
+  },
+  {
+    "id": "HEA_LEON_NO_117",
+    "name": "응급 치료",
+    "type": "Heal",
+    "rarity": "Normal",
+    "cost": 1,
+    "effects": [
+      {
+        "type": "Heal",
+        "value": 20
+      }
+    ],
+    "tags": [
+      "Support"
+    ],
+    "keywords": [
+      "Heal"
+    ],
+    "vfxKey": "heal_basic",
+    "sfxKey": "heal_soft",
+    "version": 3,
+    "effectText": "체력 20 회복"
+  },
+  {
+    "id": "HEA_LEON_RA_118",
+    "name": "생명 전이",
+    "type": "Heal",
+    "rarity": "Rare",
+    "cost": 2,
+    "effects": [
+      {
+        "type": "TransferHp",
+        "value": 15,
+        "from": "enemy",
+        "to": "player"
+      },
+      {
+        "type": "Shield",
+        "value": 15,
+        "duration": 1
+      }
+    ],
+    "tags": [
+      "Support"
+    ],
+    "keywords": [
+      "TransferHp",
+      "Shield"
+    ],
+    "vfxKey": "heal_siphon",
+    "sfxKey": "drain_hit",
+    "version": 3,
+    "effectText": "적의 체력 15 흡수, 자신 보호막 15(1턴)"
+  },
+  {
+    "id": "HEA_LUCIAN_EP_135",
+    "name": "순환 촉진",
+    "type": "Heal",
+    "rarity": "Epic",
+    "cost": 3,
+    "effects": [
+      {
+        "type": "Heal",
+        "value": 18
+      },
+      {
+        "type": "Regen",
+        "value": 4,
+        "duration": 2
+      },
+      {
+        "type": "GainAction",
+        "value": 2
+      }
+    ],
+    "tags": [
+      "Support"
+    ],
+    "keywords": [
+      "Heal",
+      "Tempo"
+    ],
+    "vfxKey": "heal_cycle",
+    "sfxKey": "heal_wave",
+    "version": 3,
+    "effectText": "체력 18 회복, 재생 4(2턴), 에너지 +1"
+  },
+  {
+    "id": "HEA_LUCIAN_LE_136",
+    "name": "시간 역행 프로토콜",
+    "type": "Heal",
+    "rarity": "Legendary",
+    "cost": 4,
+    "effects": [
+      {
+        "type": "Heal",
+        "value": 30
+      },
+      {
+        "type": "UndoDamage",
+        "percent": 30
+      }
+    ],
+    "tags": [
+      "Support"
+    ],
+    "keywords": [
+      "Heal",
+      "UndoDamage"
+    ],
+    "vfxKey": "heal_time",
+    "sfxKey": "rewind",
+    "version": 3,
+    "effectText": "체력 30 회복, 지난 턴 피해 30% 복구"
+  },
+  {
+    "id": "HEA_LUCIAN_NO_133",
+    "name": "응급 수리",
+    "type": "Heal",
+    "rarity": "Normal",
+    "cost": 1,
+    "effects": [
+      {
+        "type": "Heal",
+        "value": 20
+      }
+    ],
+    "tags": [
+      "Support"
+    ],
+    "keywords": [
+      "Heal"
+    ],
+    "vfxKey": "heal_basic",
+    "sfxKey": "heal_soft",
+    "version": 3,
+    "effectText": "체력 20 회복"
+  },
+  {
+    "id": "HEA_LUCIAN_RA_134",
+    "name": "재생 코팅",
+    "type": "Heal",
+    "rarity": "Rare",
+    "cost": 2,
+    "effects": [
+      {
+        "type": "Heal",
+        "value": 24,
+        "overflowToShield": true
+      },
+      {
+        "type": "Regen",
+        "value": 6,
+        "duration": 2
+      }
+    ],
+    "tags": [
+      "Support"
+    ],
+    "keywords": [
+      "Heal",
+      "Shield",
+      "Regen"
+    ],
+    "vfxKey": "heal_wind",
+    "sfxKey": "heal_breeze",
+    "version": 3,
+    "effectText": "체력 24 회복, 초과분 보호막, 재생 6(2턴)"
+  },
+  {
+    "id": "HEA_MARCUS_EP_151",
+    "name": "재생 코어",
+    "type": "Heal",
+    "rarity": "Epic",
+    "cost": 3,
+    "effects": [
+      {
+        "type": "Heal",
+        "value": 24,
+        "overflowToShield": true
+      },
+      {
+        "type": "Regen",
+        "value": 6,
+        "duration": 2
+      }
+    ],
+    "tags": [
+      "Support"
+    ],
+    "keywords": [
+      "Heal",
+      "Shield",
+      "Regen"
+    ],
+    "vfxKey": "heal_wind",
+    "sfxKey": "heal_breeze",
+    "version": 3,
+    "effectText": "체력 24 회복, 초과분 보호막, 재생 6(2턴)"
+  },
+  {
+    "id": "HEA_MARCUS_LE_152",
+    "name": "시간 회귀 프로토콜",
+    "type": "Heal",
+    "rarity": "Legendary",
+    "cost": 4,
+    "effects": [
+      {
+        "type": "Heal",
+        "value": 30
+      },
+      {
+        "type": "UndoDamage",
+        "percent": 30
+      }
+    ],
+    "tags": [
+      "Chrono"
+    ],
+    "keywords": [
+      "Heal",
+      "UndoDamage"
+    ],
+    "vfxKey": "heal_time",
+    "sfxKey": "rewind",
+    "version": 3,
+    "effectText": "체력 30 회복, 지난 턴 받은 피해 30% 복구"
+  },
+  {
+    "id": "HEA_MARCUS_NO_149",
+    "name": "응급 재정비",
+    "type": "Heal",
+    "rarity": "Normal",
+    "cost": 1,
+    "effects": [
+      {
+        "type": "Heal",
+        "value": 20
+      }
+    ],
+    "tags": [
+      "Support"
+    ],
+    "keywords": [
+      "Heal"
+    ],
+    "vfxKey": "heal_basic",
+    "sfxKey": "heal_soft",
+    "version": 3,
+    "effectText": "체력 20 회복"
+  },
+  {
+    "id": "HEA_MARCUS_RA_150",
+    "name": "순환 재배치",
+    "type": "Heal",
+    "rarity": "Rare",
+    "cost": 3,
+    "effects": [
+      {
+        "type": "Heal",
+        "value": 18
+      },
+      {
+        "type": "Regen",
+        "value": 4,
+        "duration": 2
+      },
+      {
+        "type": "GainAction",
+        "value": 2
+      }
+    ],
+    "tags": [
+      "Support"
+    ],
+    "keywords": [
+      "Heal",
+      "Tempo"
+    ],
+    "vfxKey": "heal_cycle",
+    "sfxKey": "heal_wave",
+    "version": 3,
+    "effectText": "체력 18 회복, 재생 4(2턴), 에너지 +1"
+  },
+  {
+    "id": "HEA_MIRA_EP_167",
+    "name": "그림자 봉합",
+    "type": "Heal",
+    "rarity": "Epic",
+    "cost": 3,
+    "effects": [
+      {
+        "type": "Heal",
+        "value": 18
+      },
+      {
+        "type": "Evasion",
+        "charges": 1,
+        "duration": 1
+      },
+      {
+        "type": "DuplicateNext",
+        "typeFilter": "Defense",
+        "times": 1
+      }
+    ],
+    "tags": [
+      "Support"
+    ],
+    "keywords": [
+      "Heal",
+      "Evasion",
+      "Duplicate"
+    ],
+    "vfxKey": "heal_shadow",
+    "sfxKey": "heal_whisper",
+    "version": 3,
+    "effectText": "체력 18 회복, 회피 1회(1턴), 다음 방어 카드 1회 추가 발동"
+  },
+  {
+    "id": "HEA_MIRA_LE_168",
+    "name": "시간 회귀 의식",
+    "type": "Heal",
+    "rarity": "Legendary",
+    "cost": 4,
+    "effects": [
+      {
+        "type": "Heal",
+        "value": 30
+      },
+      {
+        "type": "UndoDamage",
+        "percent": 30
+      }
+    ],
+    "tags": [
+      "Chrono"
+    ],
+    "keywords": [
+      "Heal",
+      "UndoDamage"
+    ],
+    "vfxKey": "heal_time",
+    "sfxKey": "rewind",
+    "version": 3,
+    "effectText": "체력 30 회복, 지난 턴 피해 30% 복구"
+  },
+  {
+    "id": "HEA_MIRA_NO_165",
+    "name": "응급 재정비",
+    "type": "Heal",
+    "rarity": "Normal",
+    "cost": 1,
+    "effects": [
+      {
+        "type": "Heal",
+        "value": 20
+      }
+    ],
+    "tags": [
+      "Support"
+    ],
+    "keywords": [
+      "Heal"
+    ],
+    "vfxKey": "heal_basic",
+    "sfxKey": "heal_soft",
+    "version": 3,
+    "effectText": "체력 20 회복"
+  },
+  {
+    "id": "HEA_MIRA_RA_166",
+    "name": "생명 전이",
+    "type": "Heal",
+    "rarity": "Rare",
+    "cost": 2,
+    "effects": [
+      {
+        "type": "TransferHp",
+        "value": 15,
+        "from": "enemy",
+        "to": "player"
+      },
+      {
+        "type": "Shield",
+        "value": 15,
+        "duration": 1
+      }
+    ],
+    "tags": [
+      "Support"
+    ],
+    "keywords": [
+      "TransferHp",
+      "Shield"
+    ],
+    "vfxKey": "heal_siphon",
+    "sfxKey": "drain_hit",
+    "version": 3,
+    "effectText": "적의 체력 15 흡수, 자신 보호막 15(1턴)"
+  },
+  {
+    "id": "HEA_SERAPHINA_EP_183",
+    "name": "그림자 봉합",
+    "type": "Heal",
+    "rarity": "Epic",
+    "cost": 3,
+    "effects": [
+      {
+        "type": "Heal",
+        "value": 18
+      },
+      {
+        "type": "Evasion",
+        "charges": 1,
+        "duration": 1
+      },
+      {
+        "type": "DuplicateNext",
+        "typeFilter": "Defense",
+        "times": 1
+      }
+    ],
+    "tags": [
+      "Shadow"
+    ],
+    "keywords": [
+      "Heal",
+      "Evasion",
+      "Duplicate"
+    ],
+    "vfxKey": "heal_shadow",
+    "sfxKey": "heal_whisper",
+    "version": 3,
+    "effectText": "체력 18 회복, 회피 1회(1턴), 다음 방어 카드 1회 추가 발동"
+  },
+  {
+    "id": "HEA_SERAPHINA_LE_184",
+    "name": "완전 회복",
+    "type": "Heal",
+    "rarity": "Legendary",
+    "cost": 4,
+    "effects": [
+      {
+        "type": "Heal",
+        "value": 60
+      }
+    ],
+    "tags": [
+      "Support"
+    ],
+    "keywords": [
+      "Heal"
+    ],
+    "vfxKey": "heal_full",
+    "sfxKey": "heal_full",
+    "version": 3,
+    "effectText": "체력 60 회복"
+  },
+  {
+    "id": "HEA_SERAPHINA_NO_181",
+    "name": "응급 치유",
+    "type": "Heal",
+    "rarity": "Normal",
+    "cost": 1,
+    "effects": [
+      {
+        "type": "Heal",
+        "value": 20
+      }
+    ],
+    "tags": [
+      "Support"
+    ],
+    "keywords": [
+      "Heal"
+    ],
+    "vfxKey": "heal_basic",
+    "sfxKey": "heal_soft",
+    "version": 3,
+    "effectText": "체력 20 회복"
+  },
+  {
+    "id": "HEA_SERAPHINA_RA_182",
+    "name": "월광 재생",
+    "type": "Heal",
+    "rarity": "Rare",
+    "cost": 3,
+    "effects": [
+      {
+        "type": "Heal",
+        "value": 18
+      },
+      {
+        "type": "Regen",
+        "value": 8,
+        "duration": 3
+      },
+      {
+        "type": "ApplyBleed",
+        "stacks": 1,
+        "duration": 2,
+        "damagePerStack": 6,
+        "target": "enemy"
+      }
+    ],
+    "tags": [
+      "Blood"
+    ],
+    "keywords": [
+      "Heal",
+      "Regen",
+      "Bleed"
+    ],
+    "vfxKey": "heal_blood",
+    "sfxKey": "heal_deep",
+    "version": 3,
+    "effectText": "체력 18 회복, 재생 8(3턴), 적에게 출혈 1중첩"
+  },
+  {
+    "id": "HEA_SERAPHINE_EP_199",
+    "name": "천상의 합창",
+    "type": "Heal",
+    "rarity": "Epic",
+    "cost": 3,
+    "effects": [
+      {
+        "type": "Heal",
+        "value": 35
+      },
+      {
+        "type": "Immune",
+        "keywords": [
+          "Burn",
+          "Shock"
+        ],
+        "duration": 1
+      },
+      {
+        "type": "PriorityBoost",
+        "value": 1,
+        "duration": 1
+      }
+    ],
+    "tags": [
+      "Chorus",
+      "Radiant"
+    ],
+    "keywords": [
+      "Heal",
+      "Immune",
+      "Priority"
+    ],
+    "vfxKey": "heal_storm",
+    "sfxKey": "heal_burst",
+    "version": 2,
+    "effectText": "체력 35 회복, 화상/쇼크 면역 1턴, 우선권 +1"
+  },
+  {
+    "id": "HEA_SERAPHINE_LE_200",
+    "name": "완전한 앙코르",
+    "type": "Heal",
+    "rarity": "Legendary",
+    "cost": 4,
+    "effects": [
+      {
+        "type": "Heal",
+        "value": 60
+      }
+    ],
+    "tags": [
+      "Chorus"
+    ],
+    "keywords": [
+      "Heal"
+    ],
+    "vfxKey": "heal_full",
+    "sfxKey": "heal_full",
+    "version": 2,
+    "effectText": "체력 60 회복"
+  },
+  {
+    "id": "HEA_SERAPHINE_NO_197",
+    "name": "치유의 화음",
+    "type": "Heal",
+    "rarity": "Normal",
+    "cost": 1,
+    "effects": [
+      {
+        "type": "Heal",
+        "value": 20
+      }
+    ],
+    "tags": [
+      "Chorus"
+    ],
+    "keywords": [
+      "Heal"
+    ],
+    "vfxKey": "heal_basic",
+    "sfxKey": "heal_soft",
+    "version": 2,
+    "effectText": "체력 20 회복"
+  },
+  {
+    "id": "HEA_SERAPHINE_RA_198",
+    "name": "정화의 코러스",
+    "type": "Heal",
+    "rarity": "Rare",
+    "cost": 2,
+    "effects": [
+      {
+        "type": "Heal",
+        "value": 25
+      },
+      {
+        "type": "Cleanse",
+        "maxStacks": 3
+      }
+    ],
+    "tags": [
+      "Chorus"
+    ],
+    "keywords": [
+      "Heal",
+      "Cleanse"
+    ],
+    "vfxKey": "heal_purify",
+    "sfxKey": "cleanse_soft",
+    "version": 2,
+    "effectText": "체력 25 회복, 최대 3중첩 디버프 해제"
+  },
+  {
+    "id": "HEAL_IRIS_RA_211",
+    "name": "빛의 넘침",
+    "type": "Heal",
+    "rarity": "Rare",
+    "cost": 2,
+    "effects": [
+      {
+        "type": "Heal",
+        "value": 24,
+        "overflowToShield": true
+      },
+      {
+        "type": "Regen",
+        "value": 6,
+        "duration": 2
+      }
+    ],
+    "tags": [
+      "Light"
+    ],
+    "keywords": [
+      "Shield",
+      "Regen"
+    ],
+    "effectText": "체력 24 회복, 초과분은 보호막으로 전환하고 2턴 동안 매턴 6 회복",
+    "levelCurve": {
+      "base": {
+        "heal": 24
+      },
+      "perLevel": {
+        "heal": 3
+      }
+    },
+    "vfxKey": "heal_overflow",
+    "sfxKey": "heal_glow",
+    "version": 1
+  },
+  {
+    "id": "SPE_ARIANA_EP_011",
+    "name": "오라 공진",
+    "type": "Special",
+    "rarity": "Epic",
+    "cost": 3,
+    "effects": [
+      {
+        "type": "Buff",
+        "stat": "attack",
+        "value": 15,
+        "duration": 2
+      },
+      {
+        "type": "Buff",
+        "stat": "speed",
+        "value": 10,
+        "duration": 2
+      },
+      {
+        "type": "Draw",
+        "value": 1
+      }
+    ],
+    "tags": [
+      "Arcane"
+    ],
+    "keywords": [
+      "Buff"
+    ],
+    "vfxKey": "doublecast",
+    "sfxKey": "cast_chime",
+    "version": 3,
+    "effectText": "공격력 +15%(2턴), 속도 +10%(2턴), 드로우 1장"
+  },
+  {
+    "id": "SPE_ARIANA_LE_012",
+    "name": "빛의 선언",
+    "type": "Special",
+    "rarity": "Legendary",
+    "cost": 3,
+    "effects": [
+      {
+        "type": "Immune",
+        "keywords": [
+          "Burn",
+          "Bleed",
+          "Shock"
+        ],
+        "duration": 2
+      },
+      {
+        "type": "GainAction",
+        "value": 2
+      }
+    ],
+    "tags": [
+      "Arcane"
+    ],
+    "keywords": [
+      "Immune",
+      "Tempo"
+    ],
+    "vfxKey": "copy",
+    "sfxKey": "cast_chime",
+    "version": 3,
+    "effectText": "화상/출혈/쇼크 면역 2턴, 에너지 +1"
+  },
+  {
+    "id": "SPE_ARIANA_NO_009",
+    "name": "추가 드로우",
+    "type": "Special",
+    "rarity": "Normal",
+    "cost": 1,
+    "effects": [
+      {
+        "type": "Draw",
+        "value": 2
+      }
+    ],
+    "tags": [
+      "Neutral"
+    ],
+    "keywords": [
+      "Draw"
+    ],
+    "vfxKey": "draw",
+    "sfxKey": "paper",
+    "version": 3,
+    "effectText": "드로우 2장"
+  },
+  {
+    "id": "SPE_ARIANA_RA_010",
+    "name": "원소 전환",
+    "type": "Special",
+    "rarity": "Rare",
+    "cost": 2,
+    "effects": [
+      {
+        "type": "ElementShift",
+        "from": "Fire",
+        "to": "Lightning",
+        "duration": 2
+      },
+      {
+        "type": "Damage",
+        "value": 15
+      }
+    ],
+    "tags": [
+      "Neutral"
+    ],
+    "keywords": [
+      "ElementShift"
+    ],
+    "vfxKey": "ap_up",
+    "sfxKey": "tick",
+    "version": 3,
+    "effectText": "속성 변환 (Fire→Lightning, 2턴), 피해 15"
+  },
+  {
+    "id": "SPE_DARIUS_EP_031",
+    "type": "Special",
+    "rarity": "Epic",
+    "name": "사령 개시",
+    "cost": 3,
+    "effects": [
+      {
+        "type": "Revive",
+        "value": 20,
+        "chance": 100
+      },
+      {
+        "type": "ApplyBleed",
+        "stacks": 2,
+        "duration": 2,
+        "damagePerStack": 6
+      }
+    ],
+    "tags": [
+      "Necromancy"
+    ],
+    "keywords": [
+      "Revive",
+      "Bleed"
+    ],
+    "effectText": "체력이 0이 되면 20 회복, 적에게 출혈 2중첩",
+    "version": 2,
+    "vfxKey": "spell_revenant",
+    "sfxKey": "revive_dark"
+  },
+  {
+    "id": "SPE_DARIUS_LE_032",
+    "type": "Special",
+    "rarity": "Legendary",
+    "name": "미러 폴드",
+    "cost": 3,
+    "effects": [
+      {
+        "type": "StealCard",
+        "from": "opponentHand",
+        "count": 1,
+        "filter": "lowestCost"
+      }
+    ],
+    "tags": [
+      "Trick"
+    ],
+    "keywords": [
+      "Steal"
+    ],
+    "effectText": "상대 손패 최저 코스트 카드 1장 훔치기",
+    "version": 2,
+    "vfxKey": "spell_mirror",
+    "sfxKey": "steal_card"
+  },
+  {
+    "id": "SPE_DARIUS_NO_029",
+    "type": "Special",
+    "rarity": "Normal",
+    "name": "전투 본능",
+    "cost": 1,
+    "effects": [
+      {
+        "type": "GainAction",
+        "value": 2
+      }
+    ],
+    "tags": [
+      "Tempo"
+    ],
+    "keywords": [
+      "GainAction"
+    ],
+    "effectText": "에너지 +2",
+    "version": 2,
+    "vfxKey": "buff_energy",
+    "sfxKey": "energy_gain"
+  },
+  {
+    "id": "SPE_DARIUS_RA_030",
+    "type": "Special",
+    "rarity": "Rare",
+    "name": "황혼 선포",
+    "cost": 2,
+    "effects": [
+      {
+        "type": "Damage",
+        "value": 12,
+        "target": "enemy"
+      },
+      {
+        "type": "ApplyStatus",
+        "key": "Burn",
+        "stacks": 1,
+        "duration": 2,
+        "target": "enemy"
+      },
+      {
+        "type": "ApplyStatus",
+        "key": "Bleed",
+        "stacks": 1,
+        "duration": 2,
+        "target": "enemy"
+      }
+    ],
+    "tags": [
+      "Twilight"
+    ],
+    "keywords": [
+      "Burn",
+      "Bleed"
+    ],
+    "effectText": "피해 12, 화상 1중첩, 출혈 1중첩",
+    "version": 2,
+    "vfxKey": "spell_twilight",
+    "sfxKey": "burn_bleed"
+  },
+  {
+    "id": "SPE_ELDER_EP_043",
+    "name": "오라 공진",
+    "type": "Special",
+    "rarity": "Epic",
+    "cost": 3,
+    "effects": [
+      {
+        "type": "Buff",
+        "stat": "attack",
+        "value": 15,
+        "duration": 2
+      },
+      {
+        "type": "Buff",
+        "stat": "speed",
+        "value": 10,
+        "duration": 2
+      },
+      {
+        "type": "Draw",
+        "value": 1
+      }
+    ],
+    "tags": [
+      "Support"
+    ],
+    "keywords": [
+      "Buff",
+      "Draw"
+    ],
+    "vfxKey": "aura_resonate",
+    "sfxKey": "buff_aura",
+    "version": 3,
+    "effectText": "공격력 +15%(2턴), 속도 +10%(2턴), 드로우 1장"
+  },
+  {
+    "id": "SPE_ELDER_LE_044",
+    "name": "천둥 각성",
+    "type": "Special",
+    "rarity": "Legendary",
+    "cost": 4,
+    "effects": [
+      {
+        "type": "TempoBoost",
+        "amount": 2,
+        "turns": 2,
+        "scope": "self"
+      },
+      {
+        "type": "GainAction",
+        "value": 1
+      },
+      {
+        "type": "ApplyStatus",
+        "key": "Shock",
+        "stacks": 1,
+        "duration": 2,
+        "target": "enemy"
+      }
+    ],
+    "tags": [
+      "Lightning"
+    ],
+    "keywords": [
+      "Tempo",
+      "Shock"
+    ],
+    "vfxKey": "spell_thunder_awaken",
+    "sfxKey": "lightning_awaken",
+    "version": 3,
+    "effectText": "템포 부스트 +2 (2턴), 에너지 +1, 적에게 쇼크 1중첩"
+  },
+  {
+    "id": "SPE_ELDER_NO_041",
+    "name": "원소 전환",
+    "type": "Special",
+    "rarity": "Normal",
+    "cost": 2,
+    "effects": [
+      {
+        "type": "ElementShift",
+        "from": "Fire",
+        "to": "Lightning",
+        "duration": 2
+      },
+      {
+        "type": "Damage",
+        "value": 15
+      }
+    ],
+    "tags": [
+      "Element"
+    ],
+    "keywords": [
+      "ElementShift"
+    ],
+    "vfxKey": "spell_elements",
+    "sfxKey": "element_shift",
+    "version": 3,
+    "effectText": "속성 변환 (Fire→Lightning, 2턴), 피해 15"
+  },
+  {
+    "id": "SPE_ELDER_RA_042",
+    "name": "윤회 가속",
+    "type": "Special",
+    "rarity": "Rare",
+    "cost": 3,
+    "effects": [
+      {
+        "type": "TempoBoost",
+        "amount": 2,
+        "turns": 2,
+        "scope": "self"
+      },
+      {
+        "type": "Draw",
+        "value": 1
+      }
+    ],
+    "tags": [
+      "Tempo"
+    ],
+    "keywords": [
+      "Tempo"
+    ],
+    "vfxKey": "buff_tempo",
+    "sfxKey": "tick",
+    "version": 3,
+    "effectText": "템포 부스트 +2 (2턴), 드로우 1장"
+  },
+  {
+    "id": "SPE_ELENA_EP_059",
+    "name": "서릿빛 공명",
+    "type": "Special",
+    "rarity": "Epic",
+    "cost": 3,
+    "effects": [
+      {
+        "type": "TempoBoost",
+        "amount": 1,
+        "turns": 2,
+        "scope": "self"
+      },
+      {
+        "type": "Draw",
+        "value": 1
+      },
+      {
+        "type": "ApplyStatus",
+        "key": "Freeze",
+        "duration": 1,
+        "target": "enemy"
+      }
+    ],
+    "tags": [
+      "Frost"
+    ],
+    "keywords": [
+      "Tempo",
+      "Freeze",
+      "Draw"
+    ],
+    "vfxKey": "spell_ice_resonate",
+    "sfxKey": "ice_chime",
+    "version": 3,
+    "effectText": "템포 부스트 +1(2턴), 드로우 1장, 적에게 빙결 1턴"
+  },
+  {
+    "id": "SPE_ELENA_LE_060",
+    "name": "빙하 각성",
+    "type": "Special",
+    "rarity": "Legendary",
+    "cost": 3,
+    "effects": [
+      {
+        "type": "GainAction",
+        "value": 1
+      },
+      {
+        "type": "TempoBoost",
+        "amount": 1,
+        "turns": 1,
+        "scope": "self"
+      },
+      {
+        "type": "ApplyStatus",
+        "key": "Freeze",
+        "duration": 1,
+        "target": "enemy"
+      }
+    ],
+    "tags": [
+      "Frost"
+    ],
+    "keywords": [
+      "Tempo",
+      "Freeze"
+    ],
+    "vfxKey": "spell_ice_awaken",
+    "sfxKey": "ice_awaken",
+    "version": 3,
+    "effectText": "에너지 +1, 템포 부스트 +1(1턴), 적에게 빙결 1턴"
+  },
+  {
+    "id": "SPE_ELENA_NO_057",
+    "name": "빙결 연구",
+    "type": "Special",
+    "rarity": "Normal",
+    "cost": 1,
+    "effects": [
+      {
+        "type": "Draw",
+        "value": 2
+      }
+    ],
+    "tags": [
+      "Focus"
+    ],
+    "keywords": [
+      "Draw"
+    ],
+    "vfxKey": "draw",
+    "sfxKey": "paper",
+    "version": 3,
+    "effectText": "카드 2장 드로우"
+  },
+  {
+    "id": "SPE_ELENA_RA_058",
+    "name": "빙정 봉인",
+    "type": "Special",
+    "rarity": "Rare",
+    "cost": 2,
+    "effects": [
+      {
+        "type": "ApplyStatus",
+        "key": "Freeze",
+        "duration": 1,
+        "target": "enemy"
+      },
+      {
+        "type": "Nullify",
+        "times": 1
+      }
+    ],
+    "tags": [
+      "Frost"
+    ],
+    "keywords": [
+      "Freeze",
+      "Nullify"
+    ],
+    "vfxKey": "spell_ice_bind",
+    "sfxKey": "ice_bind",
+    "version": 3,
+    "effectText": "적에게 빙결 1턴, 다음 적 공격 1회 무효"
+  },
+  {
+    "id": "SPE_GAREN_EP_075",
+    "name": "전우의 함성",
+    "type": "Special",
+    "rarity": "Epic",
+    "cost": 3,
+    "effects": [
+      {
+        "type": "Buff",
+        "stat": "attack",
+        "value": 15,
+        "duration": 2
+      },
+      {
+        "type": "Buff",
+        "stat": "speed",
+        "value": 10,
+        "duration": 2
+      },
+      {
+        "type": "Draw",
+        "value": 1
+      }
+    ],
+    "tags": [
+      "Valor"
+    ],
+    "keywords": [
+      "Buff"
+    ],
+    "vfxKey": "spell_aura",
+    "sfxKey": "buff_aura",
+    "version": 2,
+    "effectText": "공격력 +15%(2턴), 속도 +10%(2턴), 드로우 1장"
+  },
+  {
+    "id": "SPE_GAREN_LE_076",
+    "name": "결의의 함성",
+    "type": "Special",
+    "rarity": "Legendary",
+    "cost": 4,
+    "effects": [
+      {
+        "type": "Guard",
+        "value": 15,
+        "duration": 2
+      },
+      {
+        "type": "Buff",
+        "stat": "attack",
+        "value": 15,
+        "duration": 2
+      },
+      {
+        "type": "GainAction",
+        "value": 1,
+        "delayed": true,
+        "delayTurns": 1
+      }
+    ],
+    "tags": [
+      "Valor"
+    ],
+    "keywords": [
+      "Guard",
+      "Buff",
+      "Tempo"
+    ],
+    "vfxKey": "spell_battlecry",
+    "sfxKey": "battle_shout",
+    "version": 2,
+    "effectText": "가드 15(2턴), 공격력 +15%(2턴), 다음 턴 에너지 +1"
+  },
+  {
+    "id": "SPE_GAREN_NO_073",
+    "name": "전장의 구령",
+    "type": "Special",
+    "rarity": "Normal",
+    "cost": 1,
+    "effects": [
+      {
+        "type": "GainAction",
+        "value": 2
+      }
+    ],
+    "tags": [
+      "Valor"
+    ],
+    "keywords": [
+      "Tempo"
+    ],
+    "vfxKey": "spell_charge",
+    "sfxKey": "energy_gain",
+    "version": 2,
+    "effectText": "에너지 +2"
+  },
+  {
+    "id": "SPE_GAREN_RA_074",
+    "name": "합동 진군",
+    "type": "Special",
+    "rarity": "Rare",
+    "cost": 3,
+    "effects": [
+      {
+        "type": "TempoBoost",
+        "amount": 1,
+        "turns": 3
+      },
+      {
+        "type": "Shield",
+        "value": 10,
+        "duration": 3
+      },
+      {
+        "type": "GainAction",
+        "value": 1
+      }
+    ],
+    "tags": [
+      "Valor"
+    ],
+    "keywords": [
+      "Tempo",
+      "Shield"
+    ],
+    "vfxKey": "spell_galvanize",
+    "sfxKey": "tempo_gain",
+    "version": 2,
+    "effectText": "템포 부스트 +1(3턴), 보호막 10(3턴), 에너지 +1"
+  },
+  {
+    "id": "SPE_IRIS_EP_091",
+    "name": "오라 공진",
+    "type": "Special",
+    "rarity": "Epic",
+    "cost": 3,
+    "effects": [
+      {
+        "type": "Buff",
+        "stat": "attack",
+        "value": 15,
+        "duration": 2
+      },
+      {
+        "type": "Buff",
+        "stat": "speed",
+        "value": 10,
+        "duration": 2
+      },
+      {
+        "type": "Draw",
+        "value": 1
+      }
+    ],
+    "tags": [
+      "Light"
+    ],
+    "keywords": [
+      "Buff"
+    ],
+    "vfxKey": "spell_aura",
+    "sfxKey": "buff_aura",
+    "version": 3,
+    "effectText": "공격력 +15%(2턴), 속도 +10%(2턴), 드로우 1장"
+  },
+  {
+    "id": "SPE_IRIS_LE_092",
+    "name": "빛의 선언",
+    "type": "Special",
+    "rarity": "Legendary",
+    "cost": 3,
+    "effects": [
+      {
+        "type": "Immune",
+        "keywords": [
+          "Burn",
+          "Bleed",
+          "Shock"
+        ],
+        "duration": 2
+      },
+      {
+        "type": "GainAction",
+        "value": 1
+      }
+    ],
+    "tags": [
+      "Light"
+    ],
+    "keywords": [
+      "Immune",
+      "Tempo"
+    ],
+    "vfxKey": "spell_radiant",
+    "sfxKey": "holy_chord",
+    "version": 3,
+    "effectText": "화상/출혈/쇼크 면역 2턴, 에너지 +1"
+  },
+  {
+    "id": "SPE_IRIS_NO_089",
+    "name": "빛의 영감",
+    "type": "Special",
+    "rarity": "Normal",
+    "cost": 1,
+    "effects": [
+      {
+        "type": "Draw",
+        "value": 2
+      }
+    ],
+    "tags": [
+      "Light"
+    ],
+    "keywords": [
+      "Draw"
+    ],
+    "vfxKey": "draw",
+    "sfxKey": "paper",
+    "version": 3,
+    "effectText": "카드 2장 드로우"
+  },
+  {
+    "id": "SPE_IRIS_RA_090",
+    "name": "전술 시계",
+    "type": "Special",
+    "rarity": "Rare",
+    "cost": 2,
+    "effects": [
+      {
+        "type": "TempoBoost",
+        "amount": 2,
+        "turns": 2
+      },
+      {
+        "type": "Draw",
+        "value": 1
+      }
+    ],
+    "tags": [
+      "Sanctify"
+    ],
+    "keywords": [
+      "Tempo",
+      "Draw"
+    ],
+    "vfxKey": "spell_timeburst",
+    "sfxKey": "clock_tick",
+    "version": 3,
+    "effectText": "템포 부스트 +2(2턴), 드로우 1장"
+  },
+  {
+    "id": "SPE_KAI_EP_107",
+    "name": "전술 시계",
+    "type": "Special",
+    "rarity": "Epic",
+    "cost": 3,
+    "effects": [
+      {
+        "type": "TempoBoost",
+        "amount": 2,
+        "turns": 2,
+        "scope": "self"
+      },
+      {
+        "type": "Draw",
+        "value": 1
+      }
+    ],
+    "tags": [
+      "Tempo"
+    ],
+    "keywords": [
+      "Tempo",
+      "Draw"
+    ],
+    "vfxKey": "spell_timeburst",
+    "sfxKey": "clock_tick",
+    "version": 3,
+    "effectText": "템포 부스트 +2(2턴), 드로우 1장"
+  },
+  {
+    "id": "SPE_KAI_LE_108",
+    "name": "천둥 각성",
+    "type": "Special",
+    "rarity": "Legendary",
+    "cost": 4,
+    "effects": [
+      {
+        "type": "TempoBoost",
+        "amount": 2,
+        "turns": 2,
+        "scope": "self"
+      },
+      {
+        "type": "GainAction",
+        "value": 1
+      },
+      {
+        "type": "ApplyStatus",
+        "key": "Shock",
+        "stacks": 1,
+        "duration": 2,
+        "target": "enemy"
+      }
+    ],
+    "tags": [
+      "Tempo",
+      "Shock"
+    ],
+    "keywords": [
+      "Tempo",
+      "Shock"
+    ],
+    "vfxKey": "spell_thunder_awakening",
+    "sfxKey": "thunder_snap",
+    "version": 3,
+    "effectText": "템포 부스트 +2(2턴), 에너지 +1, 적에게 쇼크 1중첩"
+  },
+  {
+    "id": "SPE_KAI_NO_105",
+    "name": "신속 배치",
+    "type": "Special",
+    "rarity": "Normal",
+    "cost": 1,
+    "effects": [
+      {
+        "type": "GainAction",
+        "value": 1
+      }
+    ],
+    "tags": [
+      "Tempo"
+    ],
+    "keywords": [
+      "Tempo"
+    ],
+    "vfxKey": "spell_charge",
+    "sfxKey": "energy_gain",
+    "version": 3,
+    "effectText": "에너지 +2"
+  },
+  {
+    "id": "SPE_KAI_RA_106",
+    "name": "감응 증폭",
+    "type": "Special",
+    "rarity": "Rare",
+    "cost": 2,
+    "effects": [
+      {
+        "type": "ApplyStatus",
+        "key": "Shock",
+        "stacks": 1,
+        "duration": 2,
+        "target": "enemy"
+      },
+      {
+        "type": "GainAction",
+        "value": 1,
+        "delayed": true,
+        "delayTurns": 1
+      }
+    ],
+    "tags": [
+      "Tempo",
+      "Shock"
+    ],
+    "keywords": [
+      "Shock",
+      "Tempo"
+    ],
+    "vfxKey": "spell_shockwave",
+    "sfxKey": "electric_pop",
+    "version": 3,
+    "effectText": "적에게 쇼크 1중첩, 에너지 +1"
+  },
+  {
+    "id": "SPE_LEON_EP_127",
+    "type": "Special",
+    "rarity": "Epic",
+    "name": "기계 과부하",
+    "cost": 3,
+    "effects": [
+      {
+        "type": "GainAction",
+        "value": 1
+      },
+      {
+        "type": "Damage",
+        "value": 18
+      },
+      {
+        "type": "ApplyStatus",
+        "key": "Vulnerable",
+        "stacks": 1,
+        "duration": 1,
+        "target": "player"
+      }
+    ],
+    "tags": [
+      "Tactics"
+    ],
+    "keywords": [
+      "Tempo",
+      "Risk"
+    ],
+    "effectText": "에너지 +1, 피해 18, 자신에게 취약 1중첩",
+    "vfxKey": "spell_overload",
+    "sfxKey": "energy_overload",
+    "version": 2
+  },
+  {
+    "id": "SPE_LEON_LE_128",
+    "type": "Special",
+    "rarity": "Legendary",
+    "name": "미러 폴드",
+    "cost": 4,
+    "effects": [
+      {
+        "type": "StealCard",
+        "from": "opponentHand",
+        "filter": "lowestCost",
+        "to": "hand"
+      }
+    ],
+    "tags": [
+      "Tactics"
+    ],
+    "keywords": [
+      "Steal"
+    ],
+    "effectText": "상대 손패 최저 코스트 카드 1장 훔치기",
+    "vfxKey": "spell_mirror",
+    "sfxKey": "steal_card",
+    "version": 2
+  },
+  {
+    "id": "SPE_LEON_NO_125",
+    "type": "Special",
+    "rarity": "Normal",
+    "name": "전술 명령",
+    "cost": 1,
+    "effects": [
+      {
+        "type": "GainAction",
+        "value": 1
+      }
+    ],
+    "tags": [
+      "Tactics"
+    ],
+    "keywords": [
+      "Tempo"
+    ],
+    "effectText": "에너지 +2",
+    "vfxKey": "spell_order",
+    "sfxKey": "energy_gain",
+    "version": 2
+  },
+  {
+    "id": "SPE_LEON_RA_126",
+    "type": "Special",
+    "rarity": "Rare",
+    "name": "더블캐스트",
+    "cost": 2,
+    "effects": [
+      {
+        "type": "DuplicateNext",
+        "typeFilter": "Attack",
+        "times": 1
+      }
+    ],
+    "tags": [
+      "Tactics"
+    ],
+    "keywords": [
+      "Duplicate"
+    ],
+    "effectText": "다음 공격 카드 1회 추가 발동",
+    "vfxKey": "spell_twincast",
+    "sfxKey": "arcane_twist",
+    "version": 2
+  },
+  {
+    "id": "SPE_LUCIAN_EP_215",
+    "type": "Special",
+    "rarity": "Epic",
+    "name": "합금 가속기",
+    "cost": 3,
+    "effects": [
+      {
+        "type": "TempoBoost",
+        "amount": 1,
+        "turns": 3,
+        "scope": "self"
+      },
+      {
+        "type": "Shield",
+        "value": 10,
+        "duration": 3
+      },
+      {
+        "type": "GainAction",
+        "value": 1
+      }
+    ],
+    "tags": [
+      "Tempo"
+    ],
+    "keywords": [
+      "Tempo",
+      "Shield"
+    ],
+    "effectText": "템포 부스트 +1(3턴), 보호막 10(3턴), 에너지 +1",
+    "vfxKey": "spell_alloy_boost",
+    "sfxKey": "gear_spin",
+    "version": 2
+  },
+  {
+    "id": "SPE_LUCIAN_LE_216",
+    "type": "Special",
+    "rarity": "Legendary",
+    "name": "과충전 돌격",
+    "cost": 4,
+    "effects": [
+      {
+        "type": "TempoBoost",
+        "amount": 2,
+        "turns": 2,
+        "scope": "self"
+      },
+      {
+        "type": "GainAction",
+        "value": 1
+      },
+      {
+        "type": "ApplyStatus",
+        "key": "Shock",
+        "stacks": 1,
+        "duration": 2,
+        "target": "enemy"
+      }
+    ],
+    "tags": [
+      "Tempo",
+      "Shock"
+    ],
+    "keywords": [
+      "Tempo",
+      "Shock"
+    ],
+    "effectText": "템포 부스트 +2(2턴), 에너지 +1, 적에게 쇼크 1중첩",
+    "vfxKey": "spell_thunder_awakening",
+    "sfxKey": "thunder_snap",
+    "version": 2
+  },
+  {
+    "id": "SPE_LUCIAN_NO_213",
+    "type": "Special",
+    "rarity": "Normal",
+    "name": "작전 지령",
+    "cost": 1,
+    "effects": [
+      {
+        "type": "GainAction",
+        "value": 1
+      }
+    ],
+    "tags": [
+      "Tactics"
+    ],
+    "keywords": [
+      "Tempo"
+    ],
+    "effectText": "에너지 +2",
+    "vfxKey": "spell_order",
+    "sfxKey": "energy_gain",
+    "version": 2
+  },
+  {
+    "id": "SPE_LUCIAN_RA_214",
+    "type": "Special",
+    "rarity": "Rare",
+    "name": "과부하 실행",
+    "cost": 2,
+    "effects": [
+      {
+        "type": "GainAction",
+        "value": 1
+      },
+      {
+        "type": "Damage",
+        "value": 16
+      },
+      {
+        "type": "ApplyStatus",
+        "key": "Vulnerable",
+        "stacks": 1,
+        "duration": 1,
+        "target": "player"
+      }
+    ],
+    "tags": [
+      "Tempo",
+      "Overheat"
+    ],
+    "keywords": [
+      "Tempo",
+      "Vulnerable"
+    ],
+    "effectText": "에너지 +1, 피해 16, 자신 취약 1중첩",
+    "vfxKey": "spell_overload",
+    "sfxKey": "energy_overload",
+    "version": 2
+  },
+  {
+    "id": "SPE_MARCUS_EP_155",
+    "name": "전술 시계",
+    "type": "Special",
+    "rarity": "Epic",
+    "cost": 2,
+    "effects": [
+      {
+        "type": "TempoBoost",
+        "amount": 2,
+        "turns": 2,
+        "scope": "self"
+      },
+      {
+        "type": "Draw",
+        "value": 1
+      }
+    ],
+    "tags": [
+      "Tempo"
+    ],
+    "keywords": [
+      "Tempo",
+      "Draw"
+    ],
+    "vfxKey": "spell_timeburst",
+    "sfxKey": "clock_tick",
+    "version": 3,
+    "effectText": "템포 부스트 +2(2턴), 카드 1장 드로우"
+  },
+  {
+    "id": "SPE_MARCUS_LE_156",
+    "name": "시간 정지",
+    "type": "Special",
+    "rarity": "Legendary",
+    "cost": 4,
+    "effects": [
+      {
+        "type": "GainAction",
+        "value": 2
+      },
+      {
+        "type": "TurnSkip",
+        "chance": 40,
+        "target": "enemy"
+      }
+    ],
+    "tags": [
+      "Chrono"
+    ],
+    "keywords": [
+      "Tempo",
+      "TurnSkip"
+    ],
+    "vfxKey": "spell_time_stop",
+    "sfxKey": "time_freeze",
+    "version": 3,
+    "effectText": "에너지 +2, 적 턴 40% 확률로 스킵"
+  },
+  {
+    "id": "SPE_MARCUS_NO_153",
+    "name": "작전 지령",
+    "type": "Special",
+    "rarity": "Normal",
+    "cost": 1,
+    "effects": [
+      {
+        "type": "GainAction",
+        "value": 1
+      }
+    ],
+    "tags": [
+      "Tempo"
+    ],
+    "keywords": [
+      "Tempo"
+    ],
+    "vfxKey": "spell_order",
+    "sfxKey": "energy_gain",
+    "version": 3,
+    "effectText": "에너지 +2"
+  },
+  {
+    "id": "SPE_MARCUS_RA_154",
+    "name": "미러 폴드",
+    "type": "Special",
+    "rarity": "Rare",
+    "cost": 3,
+    "effects": [
+      {
+        "type": "StealCard",
+        "from": "opponentHand",
+        "filter": "lowestCost",
+        "to": "hand"
+      }
+    ],
+    "tags": [
+      "Tactics"
+    ],
+    "keywords": [
+      "Steal"
+    ],
+    "vfxKey": "spell_mirror",
+    "sfxKey": "steal_card",
+    "version": 3,
+    "effectText": "상대 손패 최저 코스트 카드 1장 훔치기"
+  },
+  {
+    "id": "SPE_MIRA_EP_171",
+    "name": "그림자 탈취",
+    "type": "Special",
+    "rarity": "Epic",
+    "cost": 3,
+    "effects": [
+      {
+        "type": "StealCard",
+        "from": "opponentHand",
+        "filter": "lowestCost",
+        "to": "hand"
+      }
+    ],
+    "tags": [
+      "Tactics"
+    ],
+    "keywords": [
+      "Steal"
+    ],
+    "vfxKey": "spell_mirror",
+    "sfxKey": "steal_card",
+    "version": 3,
+    "effectText": "상대 손패 최저 코스트 카드 1장 훔치기"
+  },
+  {
+    "id": "SPE_MIRA_LE_172",
+    "name": "시간 전조",
+    "type": "Special",
+    "rarity": "Legendary",
+    "cost": 4,
+    "effects": [
+      {
+        "type": "GainAction",
+        "value": 2
+      },
+      {
+        "type": "TurnSkip",
+        "chance": 40,
+        "target": "enemy"
+      }
+    ],
+    "tags": [
+      "Chrono"
+    ],
+    "keywords": [
+      "Tempo",
+      "TurnSkip"
+    ],
+    "vfxKey": "spell_time_stop",
+    "sfxKey": "time_freeze",
+    "version": 3,
+    "effectText": "에너지 +2, 적 턴 40% 확률로 스킵"
+  },
+  {
+    "id": "SPE_MIRA_NO_169",
+    "name": "은신 명령",
+    "type": "Special",
+    "rarity": "Normal",
+    "cost": 1,
+    "effects": [
+      {
+        "type": "GainAction",
+        "value": 1
+      }
+    ],
+    "tags": [
+      "Tempo"
+    ],
+    "keywords": [
+      "Tempo"
+    ],
+    "vfxKey": "spell_order",
+    "sfxKey": "energy_gain",
+    "version": 3,
+    "effectText": "에너지 +2"
+  },
+  {
+    "id": "SPE_MIRA_RA_170",
+    "name": "영혼 소환",
+    "type": "Special",
+    "rarity": "Rare",
+    "cost": 3,
+    "effects": [
+      {
+        "type": "Summon",
+        "creature": "wraith",
+        "attack": 12,
+        "hp": 20,
+        "duration": 2,
+        "target": "player"
+      }
+    ],
+    "tags": [
+      "Specter"
+    ],
+    "keywords": [
+      "Summon"
+    ],
+    "vfxKey": "spell_summon",
+    "sfxKey": "summon_shade",
+    "version": 3,
+    "effectText": "공격력 12, 체력 20, 2턴 지속하는 망령 소환"
+  },
+  {
+    "id": "SPE_SERAPHINA_EP_187",
+    "name": "황혼 선언",
+    "type": "Special",
+    "rarity": "Epic",
+    "cost": 2,
+    "effects": [
+      {
+        "type": "Damage",
+        "value": 12,
+        "target": "enemy"
+      },
+      {
+        "type": "ApplyStatus",
+        "key": "Burn",
+        "stacks": 1,
+        "duration": 2,
+        "target": "enemy"
+      },
+      {
+        "type": "ApplyStatus",
+        "key": "Bleed",
+        "stacks": 1,
+        "duration": 2,
+        "target": "enemy"
+      }
+    ],
+    "tags": [
+      "Twilight"
+    ],
+    "keywords": [
+      "Burn",
+      "Bleed"
+    ],
+    "vfxKey": "spell_twilight",
+    "sfxKey": "burn_bleed",
+    "version": 3,
+    "effectText": "피해 12, 화상 1중첩, 출혈 1중첩"
+  },
+  {
+    "id": "SPE_SERAPHINA_LE_188",
+    "name": "혼령 각성",
+    "type": "Special",
+    "rarity": "Legendary",
+    "cost": 3,
+    "effects": [
+      {
+        "type": "Revive",
+        "value": 20,
+        "chance": 100
+      },
+      {
+        "type": "ApplyBleed",
+        "stacks": 2,
+        "duration": 2,
+        "damagePerStack": 6,
+        "target": "enemy"
+      }
+    ],
+    "tags": [
+      "Necromancy"
+    ],
+    "keywords": [
+      "Revive",
+      "Bleed"
+    ],
+    "vfxKey": "spell_revenant",
+    "sfxKey": "revive_dark",
+    "version": 3,
+    "effectText": "체력이 0이 되면 20 회복, 적에게 출혈 2중첩"
+  },
+  {
+    "id": "SPE_SERAPHINA_NO_185",
+    "name": "긴급 지휘",
+    "type": "Special",
+    "rarity": "Normal",
+    "cost": 1,
+    "effects": [
+      {
+        "type": "GainAction",
+        "value": 1
+      }
+    ],
+    "tags": [
+      "Tempo"
+    ],
+    "keywords": [
+      "Tempo"
+    ],
+    "vfxKey": "buff_energy",
+    "sfxKey": "energy_gain",
+    "version": 3,
+    "effectText": "에너지 +2"
+  },
+  {
+    "id": "SPE_SERAPHINA_RA_186",
+    "name": "전술 재정비",
+    "type": "Special",
+    "rarity": "Rare",
+    "cost": 1,
+    "effects": [
+      {
+        "type": "Draw",
+        "value": 2
+      }
+    ],
+    "tags": [
+      "Tactics"
+    ],
+    "keywords": [
+      "Draw"
+    ],
+    "vfxKey": "spell_plan",
+    "sfxKey": "paper",
+    "version": 3,
+    "effectText": "카드 2장 드로우"
+  },
+  {
+    "id": "SPE_SERAPHINE_EP_203",
+    "name": "은빛 성가",
+    "type": "Special",
+    "rarity": "Epic",
+    "cost": 3,
+    "effects": [
+      {
+        "type": "Regen",
+        "value": 5,
+        "duration": 3,
+        "target": "player"
+      },
+      {
+        "type": "Cleanse",
+        "maxStacks": 2,
+        "target": "player"
+      }
+    ],
+    "tags": [
+      "Harmony",
+      "Chorus"
+    ],
+    "keywords": [
+      "Regen",
+      "Cleanse"
+    ],
+    "vfxKey": "spell_hymn",
+    "sfxKey": "choir_soft",
+    "version": 2,
+    "effectText": "재생 5(3턴), 약화 2중첩 해제"
+  },
+  {
+    "id": "SPE_SERAPHINE_LE_204",
+    "name": "빛의 선언",
+    "type": "Special",
+    "rarity": "Legendary",
+    "cost": 4,
+    "effects": [
+      {
+        "type": "Immune",
+        "keywords": [
+          "Burn",
+          "Bleed",
+          "Shock"
+        ],
+        "duration": 2
+      },
+      {
+        "type": "GainAction",
+        "value": 1
+      }
+    ],
+    "tags": [
+      "Harmony",
+      "Radiant"
+    ],
+    "keywords": [
+      "Immune",
+      "Tempo"
+    ],
+    "vfxKey": "spell_light_barrier",
+    "sfxKey": "light_burst",
+    "version": 2,
+    "effectText": "화상/출혈/쇼크 면역 2턴, 에너지 +1"
+  },
+  {
+    "id": "SPE_SERAPHINE_NO_201",
+    "name": "차분한 조율",
+    "type": "Special",
+    "rarity": "Normal",
+    "cost": 1,
+    "effects": [
+      {
+        "type": "Draw",
+        "value": 2
+      }
+    ],
+    "tags": [
+      "Harmony"
+    ],
+    "keywords": [
+      "Draw"
+    ],
+    "vfxKey": "spell_plan",
+    "sfxKey": "paper",
+    "version": 2,
+    "effectText": "카드 2장 드로우"
+  },
+  {
+    "id": "SPE_SERAPHINE_RA_202",
+    "name": "빙결 서곡",
+    "type": "Special",
+    "rarity": "Rare",
+    "cost": 2,
+    "effects": [
+      {
+        "type": "ApplyStatus",
+        "key": "Freeze",
+        "duration": 1,
+        "target": "enemy"
+      },
+      {
+        "type": "Nullify",
+        "times": 1
+      }
+    ],
+    "tags": [
+      "Harmony",
+      "Frost"
+    ],
+    "keywords": [
+      "Freeze",
+      "Nullify"
+    ],
+    "vfxKey": "spell_ice_bind",
+    "sfxKey": "ice_bind",
+    "version": 2,
+    "effectText": "적에게 빙결 1턴, 다음 적 공격 1회 무효"
+  }
+]

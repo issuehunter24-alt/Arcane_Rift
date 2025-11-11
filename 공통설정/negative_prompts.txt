@@ -1,0 +1,71 @@
+==========================================================
+■ 네거티브 프롬프트 (Negative Prompts)
+==========================================================
+
+[기본 네거티브 - 항상 사용]
+----------------------------------------------------------
+
+(worst quality, low quality, normal quality:1.4),
+(lowres, low resolution:1.2),
+(bad anatomy, bad proportions:1.3),
+(ugly, poorly drawn face:1.2),
+(mutation, deformed, disfigured:1.3),
+(extra limbs, missing limbs, extra fingers, missing fingers:1.3),
+(fused fingers, too many fingers:1.2),
+(long neck, long body:1.2),
+
+
+[얼굴 품질 개선용]
+----------------------------------------------------------
+
+blurry face, blurry eyes, asymmetric eyes, cross-eyed,
+bad eyes, weird eyes, asymmetric face,
+double face, multiple faces,
+bad teeth, open mouth with teeth,
+watermark, signature, username, artist name, text,
+
+
+[체형 관련 (지영이 특징 유지용)]
+----------------------------------------------------------
+
+flat chest, small breasts, petite body,
+(skinny, thin body:1.2),
+narrow hips, small hips, flat ass,
+thin legs, skinny legs,
+masculine, muscular, abs,
+
+
+[그라비아 품질 개선용]
+----------------------------------------------------------
+
+amateur photo, phone photo, selfie,
+grainy, noisy, jpeg artifacts,
+overexposed, underexposed,
+bad lighting, harsh shadows,
+cluttered background,
+
+
+[연령/분위기 조정]
+----------------------------------------------------------
+
+child, loli, young, underage, teen,
+old, mature, aged, wrinkles,
+cartoon, anime, illustration, painting, drawing, 3d render,
+
+
+==========================================================
+■ 사용 예시 (복사해서 사용)
+==========================================================
+
+(worst quality, low quality:1.4), (lowres:1.2), (bad anatomy, bad proportions:1.3), (ugly, poorly drawn face:1.2), (mutation, deformed:1.3), (extra limbs, extra fingers:1.3), (fused fingers:1.2), (long neck:1.2), blurry face, asymmetric eyes, double face, bad teeth, watermark, signature, text, flat chest, small breasts, skinny, narrow hips, flat ass, thin legs, masculine, amateur photo, grainy, bad lighting, child, loli, old, cartoon, anime, 3d render
+
+
+==========================================================
+■ 가중치 조정 팁
+==========================================================
+
+- 얼굴 문제가 계속 나오면: (bad anatomy:1.5)로 상향
+- 손가락 문제 심하면: (extra fingers, bad hands:1.5)
+- 체형이 너무 마름: (flat chest, skinny:1.5)
+- 애니메이션 느낌 나오면: (anime, cartoon, illustration:1.5)
+

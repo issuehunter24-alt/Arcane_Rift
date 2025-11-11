@@ -1,0 +1,4 @@
+Illustration,Name,Cost,Effect,Rarity,Attribute,TypeIcon,OutName
+CardImages/sample1.png,화염 베기,3,12 피해. 대상이 화상 상태이면 추가로 8 피해.,Epic,Dark,CardIcons/Type/type_attack.png,card_flame_slash.png
+CardImages/sample2.jpg,신속 회복,1,아군 1명 체력 10 회복.,Rare,Light,CardIcons/Type/type_heal.png,card_heal.png
+,별의 각성,2,이번 턴 동안 스킬 피해 +50%. 다음 턴 기절.,Legendary,Wind,CardIcons/Type/type_special.png,card_star.png
