@@ -62,8 +62,47 @@ let endTurnTimer: number | null = null;
 let pvpPollTimer: number | null = null;
 let pvpUnloadCleanup: (() => void) | null = null;
 let pvpTurnTimerInterval: number | null = null;
+let pvpSearchTimer: number | null = null;
+let pvpAiFallbackTimer: number | null = null;
+let pvpAiDecisionTimer: number | null = null;
 
 const DEFAULT_PVP_TURN_DURATION = 15;
+const PVP_AI_FALLBACK_MIN_MS = 15_000;
+const PVP_AI_FALLBACK_MAX_MS = 15_000;
+const PVP_AI_ESTIMATE_MIN_SECONDS = Math.floor(PVP_AI_FALLBACK_MIN_MS / 1000);
+const PVP_AI_ESTIMATE_MAX_SECONDS = Math.floor(PVP_AI_FALLBACK_MAX_MS / 1000);
+const PVP_FAKE_OPPONENT_NAMES: readonly string[] = [
+  '미러 기사 알파',
+  '노바 스펙터',
+  '환영 소환사 루나',
+  '데이터 팬텀',
+  '가상 검사 벨로스',
+  '시뮬라크럼 델타',
+  '에코 가디언',
+  'AI 듀얼리스트 카일',
+];
+
+function formatDurationSeconds(totalSeconds: number): string {
+  const clamped = Math.max(0, Math.floor(totalSeconds));
+  const minutes = Math.floor(clamped / 60).toString().padStart(2, '0');
+  const seconds = (clamped % 60).toString().padStart(2, '0');
+  return `${minutes}:${seconds}`;
+}
+
+function buildPvpSearchStatusMessage(elapsedSeconds: number): string {
+  const elapsedLabel = formatDurationSeconds(elapsedSeconds);
+  const estimateRange = `${formatDurationSeconds(PVP_AI_ESTIMATE_MIN_SECONDS)}~${formatDurationSeconds(PVP_AI_ESTIMATE_MAX_SECONDS)}`;
+  const caution = elapsedSeconds >= PVP_AI_ESTIMATE_MIN_SECONDS ? ' · 상대가 없으면 AI 모의전으로 전환됩니다.' : '';
+  return `매칭 대기 ${elapsedLabel} (예상 ${estimateRange})${caution}`;
+}
+
+function getRandomFakeOpponentName(): string {
+  if (PVP_FAKE_OPPONENT_NAMES.length === 0) {
+    return '시스템 모의전';
+  }
+  const index = Math.floor(Math.random() * PVP_FAKE_OPPONENT_NAMES.length);
+  return PVP_FAKE_OPPONENT_NAMES[index]!;
+}
 
 const CLOUD_SAVE_EVENT = 'cloud-save-force';
 
@@ -82,11 +121,19 @@ const clampDeckSnapshot = (cards: Card[]): Card[] => cards.slice(0, 20);
 
 function normalizeCardId(cardId: string): string {
   const withoutSnapshot = cardId.split('__snap__')[0] ?? cardId;
-  const parts = withoutSnapshot.split('_');
-  if (parts.length <= 6) {
-    return withoutSnapshot;
+  const canonicalMatch = withoutSnapshot.match(/^([A-Z]+_[A-Z0-9]+_[A-Z]+_[0-9]+)/);
+  if (canonicalMatch) {
+    return canonicalMatch[1]!;
   }
-  return parts.slice(0, 6).join('_');
+  const parts = withoutSnapshot.split('_');
+  const timestampIndex = parts.findIndex(part => /^\d{10,}$/.test(part));
+  if (timestampIndex >= 0) {
+    parts.splice(timestampIndex);
+  }
+  if (parts.length >= 4) {
+    return parts.slice(0, 4).join('_');
+  }
+  return parts.join('_');
 }
 
 function rehydrateCardFromPool(card: Card, pool: Card[]): Card {
@@ -163,6 +210,19 @@ function getSeededRandom(baseSeed: number, counter: number, salt: number = 0): n
   return seed / LCG_M;
 }
 
+function shuffleWithSeed<T>(items: readonly T[], seed: number): T[] {
+  const result = [...items];
+  let counter = 0;
+  for (let i = result.length - 1; i > 0; i--) {
+    const rand = getSeededRandom(seed, counter++);
+    const j = Math.floor(rand * (i + 1));
+    const temp = result[i];
+    result[i] = result[j];
+    result[j] = temp;
+  }
+  return result;
+}
+
 type SerializedCard = Pick<
   Card,
   | 'id'
@@ -212,6 +272,33 @@ function clearPvpPolling() {
   if (pvpPollTimer !== null) {
     window.clearInterval(pvpPollTimer);
     pvpPollTimer = null;
+  }
+}
+
+function clearPvpSearchTimers() {
+  if (typeof window !== 'undefined') {
+    if (pvpSearchTimer !== null) {
+      window.clearInterval(pvpSearchTimer);
+      pvpSearchTimer = null;
+    }
+    if (pvpAiFallbackTimer !== null) {
+      window.clearTimeout(pvpAiFallbackTimer);
+      pvpAiFallbackTimer = null;
+    }
+  } else {
+    pvpSearchTimer = null;
+    pvpAiFallbackTimer = null;
+  }
+}
+
+function clearPvpAiDecisionTimer() {
+  if (typeof window !== 'undefined') {
+    if (pvpAiDecisionTimer !== null) {
+      window.clearTimeout(pvpAiDecisionTimer);
+      pvpAiDecisionTimer = null;
+    }
+  } else {
+    pvpAiDecisionTimer = null;
   }
 }
 
@@ -266,6 +353,7 @@ type PvpMatchState = {
   playerDeckSnapshot: DeckSnapshotEntry[];
   playerRole: 'player1' | 'player2';
   status: 'pending' | 'ready' | 'completed';
+  mode: 'online' | 'ai';
 };
 
 export function setVFXCallback(callback: VFXCallback) {
@@ -647,6 +735,8 @@ type BattleState = {
   pvpTurnDuration: number;
   pvpTurnTimeLeft: number | null;
   pvpTurnTimerActive: boolean;
+  pvpSearchElapsed: number;
+  pvpEstimatedWaitSeconds: number | null;
   startPvpTurnTimer: (forceRestart?: boolean) => void;
   stopPvpTurnTimer: (resetState?: boolean) => void;
   handlePvpTurnTimeout: () => void;
@@ -663,6 +753,7 @@ type BattleState = {
   enemyEnergy: number;
   round: number;
   roundSeed: number; // 라운드별 난수 시드 (우선순위 동률 결정용)
+  currentInitiative: 'player' | 'enemy' | null;
   playerDamageTakenThisTurn: number;
   playerDamageTakenLastTurn: number;
   enemyDamageTakenThisTurn: number;
@@ -715,6 +806,119 @@ type BattleState = {
   processStatusEffects: (phase?: 'playerEnd' | 'enemyEnd' | 'both') => void;
   checkGameOver: () => void;
 };
+
+type StoreSetter = (
+  partial: Partial<BattleState> | ((state: BattleState) => Partial<BattleState>),
+  replace?: boolean
+) => void;
+type StoreGetter = () => BattleState;
+
+function pickAiPvpCards(state: BattleState, evaluate: BattleState['evaluateCard']): Card[] {
+  if (!Array.isArray(state.enemyHand) || state.enemyHand.length === 0) {
+    return [];
+  }
+  let remainingEnergy = Math.max(0, state.enemyEnergy);
+  if (remainingEnergy <= 0) {
+    return [];
+  }
+
+  const context = {
+    enemyHp: state.enemyHp,
+    enemyMaxHp: state.enemyMaxHp,
+    playerHp: state.playerHp,
+    playerMaxHp: state.playerMaxHp,
+    enemyStatus: state.enemyStatus,
+    playerStatus: state.playerStatus,
+  };
+
+  const available = state.enemyHand.map((card, index) => ({ card, index }));
+  const used = new Set<number>();
+  const chosen: Card[] = [];
+
+  while (remainingEnergy > 0 && used.size < available.length) {
+    const playable = available.filter(entry => !used.has(entry.index) && entry.card.cost <= remainingEnergy);
+    if (playable.length === 0) {
+      break;
+    }
+    const scored = playable.map(entry => ({
+      entry,
+      score: evaluate(entry.card, context),
+    }));
+    scored.sort((a, b) => b.score - a.score);
+    const topCount = Math.max(1, Math.ceil(scored.length * 0.5));
+    const pick = scored[Math.floor(Math.random() * topCount)]!.entry;
+    chosen.push({ ...pick.card });
+    used.add(pick.index);
+    remainingEnergy -= pick.card.cost;
+    if (chosen.length >= 4) {
+      break;
+    }
+  }
+
+  if (chosen.length === 0 && state.playerQueue.length > 0) {
+    const desiredIds = state.playerQueue.map(entry => normalizeCardId(entry.card.id));
+    for (const desired of desiredIds) {
+      const match = available.find(entry => !used.has(entry.index) && normalizeCardId(entry.card.id) === desired && entry.card.cost <= remainingEnergy);
+      if (match) {
+        chosen.push({ ...match.card });
+        used.add(match.index);
+        remainingEnergy -= match.card.cost;
+      }
+    }
+  }
+
+  if (chosen.length === 0 && remainingEnergy > 0) {
+    const affordable = available
+      .filter(entry => !used.has(entry.index) && entry.card.cost <= remainingEnergy)
+      .sort((a, b) => a.card.cost - b.card.cost);
+    if (affordable.length > 0) {
+      const pick = affordable[0]!;
+      chosen.push({ ...pick.card });
+      used.add(pick.index);
+      remainingEnergy -= pick.card.cost;
+    }
+  }
+
+  return chosen;
+}
+
+function ensureAiPvpSubmission(getState: StoreGetter, setState: StoreSetter, round: number): Card[] {
+  const current = getState();
+  if (current.battleContext.type !== 'pvp' || current.pvpMatch?.mode !== 'ai') {
+    return [];
+  }
+  if (current.round !== round) {
+    return [];
+  }
+  const existing = current.pvpRemoteSubmission;
+  if (existing && existing.round === round) {
+    return existing.cards;
+  }
+
+  const evaluate = getState().evaluateCard;
+  const aiCards = pickAiPvpCards(current, evaluate);
+  const energySnapshot = current.enemyEnergy;
+
+  setState(state => {
+    if (state.battleContext.type !== 'pvp' || state.pvpMatch?.mode !== 'ai' || state.round !== round) {
+      return {};
+    }
+    return {
+      enemyQueue: aiCards.map(card => ({ card })),
+      pvpRemoteSubmission: { round, cards: aiCards, energySnapshot },
+      enemyEnergy: energySnapshot,
+      pvpOpponentReady: true,
+    };
+  });
+
+  const aiSummary =
+    aiCards.length > 0
+      ? aiCards.map(card => `${card.name} (코스트 ${card.cost})`).join(', ')
+      : `선택 가능한 카드 없음 (에너지 ${energySnapshot}, 손패 ${current.enemyHand.length}장)`;
+  getState().addLog(`🤖 AI 선언: ${aiSummary}`, 'system');
+
+  return aiCards;
+}
 
 const initialEntityStatus: EntityStatus = {
   statuses: [],
@@ -1106,7 +1310,76 @@ function getInitialDeck(allCards: Card[]): Card[] {
   
   return initialDeck.slice(0, 20);
 }
-export const useBattleStore = create<BattleState>((set, get) => ({
+export const useBattleStore = create<BattleState>((set, get) => {
+  const resolveDeckSnapshot = (snapshot: DeckSnapshotEntry[], fallback?: Card[]): Card[] => {
+    if (!Array.isArray(snapshot) || snapshot.length === 0) {
+      return [];
+    }
+    const state = get();
+    const pools: Card[][] = [];
+    if (state.allCardsPool.length > 0) {
+      pools.push(state.allCardsPool);
+    }
+    if (state.collection.length > 0) {
+      pools.push(state.collection);
+    }
+    if (fallback && fallback.length > 0) {
+      pools.push(fallback);
+    }
+    if (state.playerDeck.length > 0) {
+      pools.push(state.playerDeck);
+    }
+    for (const pool of pools) {
+      const deck = buildDeckFromSnapshot(snapshot, pool);
+      if (deck.length > 0) {
+        return deck;
+      }
+    }
+    return [];
+  };
+
+  const isOnlinePvpMatch = () => {
+    const state = get();
+    return state.battleContext.type === 'pvp' && state.pvpMatch?.mode === 'online';
+  };
+
+  const consumePvpRandom = () => {
+    const state = get();
+    const value = getSeededRandom(state.roundSeed, state.pvpRandomCounter);
+    set({ pvpRandomCounter: state.pvpRandomCounter + 1 });
+    return value;
+  };
+
+  const shuffleForCurrentContext = <T>(items: readonly T[]): T[] => {
+    if (!isOnlinePvpMatch()) {
+      const copy = [...items];
+      copy.sort(() => Math.random() - 0.5);
+      return copy;
+    }
+    const state = get();
+    const seed = state.roundSeed;
+    let counter = state.pvpRandomCounter;
+    const result = [...items];
+    for (let i = result.length - 1; i > 0; i--) {
+      const rand = getSeededRandom(seed, counter++);
+      const j = Math.floor(rand * (i + 1));
+      const temp = result[i];
+      result[i] = result[j];
+      result[j] = temp;
+    }
+    set({ pvpRandomCounter: counter });
+    return result;
+  };
+
+  const pickRandomIndex = (length: number): number => {
+    if (length <= 0) {
+      return 0;
+    }
+    const roll = isOnlinePvpMatch() ? consumePvpRandom() : Math.random();
+    return Math.floor(roll * length);
+  };
+
+  return {
   // 화면 상태
   gameScreen: 'intro',
   setGameScreen: (screen: GameScreen) => {
@@ -1291,9 +1564,11 @@ export const useBattleStore = create<BattleState>((set, get) => ({
   pvpTurnDuration: DEFAULT_PVP_TURN_DURATION,
   pvpTurnTimeLeft: null,
   pvpTurnTimerActive: false,
+  pvpSearchElapsed: 0,
+  pvpEstimatedWaitSeconds: null,
   startPvpTurnTimer: (forceRestart = false) => {
     const state = get();
-    if (state.battleContext.type !== 'pvp' || state.gameOver !== 'none') {
+    if (state.battleContext.type !== 'pvp' || state.gameOver !== 'none' || !state.pvpMatch) {
       return;
     }
     if (!forceRestart && state.pvpTurnTimerActive) {
@@ -1312,8 +1587,27 @@ export const useBattleStore = create<BattleState>((set, get) => ({
       pvpTurnTimeLeft: duration,
       pvpTurnTimerActive: true,
     });
+    clearPvpAiDecisionTimer();
     if (typeof window === 'undefined') {
       return;
+    }
+    if (state.pvpMatch.mode === 'ai') {
+      const targetRound = get().round;
+      const durationMs = (get().pvpTurnDuration || DEFAULT_PVP_TURN_DURATION) * 1000;
+      const minDelay = 3000;
+      const maxDelay = Math.max(minDelay + 1000, durationMs - 1000);
+      const randomDelay = minDelay + Math.floor(Math.random() * Math.max(1, maxDelay - minDelay));
+      const clampedDelay = Math.min(Math.max(minDelay, randomDelay), Math.max(minDelay, durationMs - 1000));
+      pvpAiDecisionTimer = window.setTimeout(() => {
+        pvpAiDecisionTimer = null;
+        const cards = ensureAiPvpSubmission(get, set, targetRound);
+        if (cards.length > 0) {
+          get().addLog(`AI 상대가 선언을 완료했습니다.`, 'system');
+        } else {
+          get().addLog(`AI 상대가 이번 턴에는 행동하지 않습니다.`, 'system');
+        }
+        void get().tryResolvePvpRound(targetRound);
+      }, clampedDelay);
     }
     pvpTurnTimerInterval = window.setInterval(() => {
       const current = get();
@@ -1340,6 +1634,7 @@ export const useBattleStore = create<BattleState>((set, get) => ({
       window.clearInterval(pvpTurnTimerInterval);
       pvpTurnTimerInterval = null;
     }
+    clearPvpAiDecisionTimer();
     set(state => ({
       pvpTurnTimerActive: false,
       pvpTurnTimeLeft: resetState ? null : state.pvpTurnTimeLeft,
@@ -1351,6 +1646,12 @@ export const useBattleStore = create<BattleState>((set, get) => ({
       return;
     }
     get().addLog('⏳ 제한 시간이 초과되어 자동으로 턴이 종료됩니다.', 'system');
+    if (state.pvpMatch?.mode === 'ai') {
+      clearPvpAiDecisionTimer();
+      ensureAiPvpSubmission(get, set, state.round);
+      void get().submitPvpTurn();
+      return;
+    }
     void get().endPlayerTurn();
   },
   startPvpMatchmaking: async () => {
@@ -1362,14 +1663,17 @@ export const useBattleStore = create<BattleState>((set, get) => ({
     }
     const userId = session.user.id;
     clearPvpPolling();
+    clearPvpSearchTimers();
     get().stopPvpTurnTimer(true);
     set(state => {
       const isPvp = state.battleContext.type === 'pvp';
       return {
-      pvpQueueStatus: 'searching',
-      pvpStatusMessage: '매칭을 찾는 중입니다...',
-      pvpError: null,
-      pvpMatch: null,
+        pvpQueueStatus: 'searching',
+        pvpStatusMessage: buildPvpSearchStatusMessage(0),
+        pvpError: null,
+        pvpMatch: null,
+        pvpSearchElapsed: 0,
+        pvpEstimatedWaitSeconds: PVP_AI_ESTIMATE_MIN_SECONDS,
         pvpLocalSubmissionRound: isPvp ? state.pvpLocalSubmissionRound : null,
         pvpRemoteSubmission: isPvp ? state.pvpRemoteSubmission : null,
         pvpLastResolvedRound: 0,
@@ -1399,12 +1703,97 @@ export const useBattleStore = create<BattleState>((set, get) => ({
     const upsertResult = await supabase.from('pvp_queue').upsert(queuePayload);
     if (upsertResult.error) {
       set({ pvpQueueStatus: 'error', pvpError: upsertResult.error.message });
+      clearPvpSearchTimers();
       console.error('[PvP] Failed to join queue', upsertResult.error, queuePayload);
       return;
     }
     console.log('[PvP] Joined queue', { userId, deckSnapshotSize: deckSnapshot.length });
 
     registerPvpUnloadCleanup(userId);
+
+    if (typeof window !== 'undefined') {
+      const searchStartedAt = Date.now();
+      clearPvpSearchTimers();
+      set({
+        pvpSearchElapsed: 0,
+        pvpEstimatedWaitSeconds: PVP_AI_ESTIMATE_MIN_SECONDS,
+        pvpStatusMessage: buildPvpSearchStatusMessage(0),
+      });
+      pvpSearchTimer = window.setInterval(() => {
+        const state = get();
+        if (state.pvpQueueStatus !== 'searching') {
+          clearPvpSearchTimers();
+          return;
+        }
+        const elapsed = Math.floor((Date.now() - searchStartedAt) / 1000);
+        if (elapsed !== state.pvpSearchElapsed) {
+          console.log('[PvP] Matchmaking wait elapsed', elapsed);
+        }
+        set({
+          pvpSearchElapsed: elapsed,
+          pvpStatusMessage: buildPvpSearchStatusMessage(elapsed),
+        });
+      }, 1000);
+      const fallbackDelay =
+        PVP_AI_FALLBACK_MIN_MS + Math.floor(Math.random() * (PVP_AI_FALLBACK_MAX_MS - PVP_AI_FALLBACK_MIN_MS));
+      pvpAiFallbackTimer = window.setTimeout(() => {
+        const currentState = get();
+        if (currentState.pvpQueueStatus !== 'searching') {
+          return;
+        }
+        void (async () => {
+          try {
+            const { data: refreshedSessionData } = await supabase.auth.getSession();
+            const refreshedSession = refreshedSessionData.session;
+            if (refreshedSession) {
+              await supabase.from('pvp_queue').delete().eq('user_id', refreshedSession.user.id);
+            }
+          } catch (error) {
+            console.warn('[PvP] Failed to clear queue before AI fallback', error);
+          } finally {
+            detachPvpUnloadCleanup();
+          }
+          clearPvpPolling();
+          clearPvpSearchTimers();
+          const fallbackState = get();
+          if (fallbackState.pvpQueueStatus !== 'searching') {
+            return;
+          }
+          const playerDeck = fallbackState.playerDeck;
+          const cardsPool = fallbackState.allCardsPool;
+          const snapshot = getDeckSnapshot(playerDeck);
+          let opponentDeckCards = resolveDeckSnapshot(snapshot, playerDeck);
+          if (opponentDeckCards.length === 0) {
+            opponentDeckCards = playerDeck.map((card, index) => ({
+              ...card,
+              id: `${normalizeCardId(card.id)}__ai__${index}`,
+            }));
+          }
+          const aiName = getRandomFakeOpponentName();
+          const matchId = `ai-${Date.now()}`;
+          const seed = Math.floor(Math.random() * 1_000_000);
+          set({
+            pvpQueueStatus: 'matched',
+            pvpStatusMessage: `${aiName}와의 모의전이 준비되었습니다.`,
+            pvpMatch: {
+              matchId,
+              seed,
+              opponentId: matchId,
+              opponentName: aiName,
+              opponentDeckSnapshot: snapshot,
+              opponentDeckCards,
+              playerDeckSnapshot: snapshot,
+              playerRole: 'player2',
+              status: 'pending',
+              mode: 'ai',
+            },
+            pvpSearchElapsed: fallbackState.pvpSearchElapsed,
+            pvpEstimatedWaitSeconds: null,
+          });
+          void Promise.resolve().then(() => get().acceptPvpMatch());
+        })();
+      }, fallbackDelay);
+    }
 
     const opponentRes = await supabase
       .from('pvp_queue')
@@ -1416,6 +1805,7 @@ export const useBattleStore = create<BattleState>((set, get) => ({
 
     if (opponentRes.error) {
       set({ pvpQueueStatus: 'error', pvpError: opponentRes.error.message });
+      clearPvpSearchTimers();
       console.error('[PvP] Failed to search opponent', opponentRes.error);
       return;
     }
@@ -1455,8 +1845,9 @@ export const useBattleStore = create<BattleState>((set, get) => ({
         .maybeSingle();
 
       const opponentDeckSnapshot: DeckSnapshotEntry[] = opponent.deck_snapshot ?? [];
-      const opponentDeckCards = buildDeckFromSnapshot(opponentDeckSnapshot, get().allCardsPool);
+      const opponentDeckCards = resolveDeckSnapshot(opponentDeckSnapshot);
 
+      clearPvpSearchTimers();
       set({
         pvpQueueStatus: 'matched',
         pvpStatusMessage: '상대와 매칭되었습니다.',
@@ -1470,7 +1861,9 @@ export const useBattleStore = create<BattleState>((set, get) => ({
           playerDeckSnapshot: deckSnapshot,
           playerRole: 'player2',
           status: 'pending',
+          mode: 'online',
         },
+        pvpEstimatedWaitSeconds: null,
       });
       void Promise.resolve().then(() => get().acceptPvpMatch());
       return;
@@ -1487,6 +1880,7 @@ export const useBattleStore = create<BattleState>((set, get) => ({
       if (queueRes.error) {
         set({ pvpQueueStatus: 'error', pvpError: queueRes.error.message });
         clearPvpPolling();
+        clearPvpSearchTimers();
         return;
       }
 
@@ -1511,15 +1905,16 @@ export const useBattleStore = create<BattleState>((set, get) => ({
       const match = matchRes.data;
       const playerRole: 'player1' | 'player2' = match.player1_id === userId ? 'player1' : 'player2';
       const opponentId = playerRole === 'player1' ? match.player2_id : match.player1_id;
-      const opponentSnapshot = (playerRole === 'player1' ? match.player2_deck : match.player1_deck) as DeckSnapshotEntry[];
-      const ownSnapshot = (playerRole === 'player1' ? match.player1_deck : match.player2_deck) as DeckSnapshotEntry[];
-      const opponentDeckCards = buildDeckFromSnapshot(opponentSnapshot ?? [], get().allCardsPool);
+      const opponentSnapshot = ((playerRole === 'player1' ? match.player2_deck : match.player1_deck) ?? []) as DeckSnapshotEntry[];
+      const ownSnapshot = ((playerRole === 'player1' ? match.player1_deck : match.player2_deck) ?? []) as DeckSnapshotEntry[];
+      const opponentDeckCards = resolveDeckSnapshot(opponentSnapshot);
       const opponentProfile = await supabase
         .from('profiles')
         .select('display_name')
         .eq('user_id', opponentId)
         .maybeSingle();
 
+      clearPvpSearchTimers();
       set({
         pvpQueueStatus: 'matched',
         pvpStatusMessage: '상대와 매칭되었습니다.',
@@ -1533,7 +1928,9 @@ export const useBattleStore = create<BattleState>((set, get) => ({
           playerDeckSnapshot: ownSnapshot ?? deckSnapshot,
           playerRole,
           status: 'pending',
+          mode: 'online',
         },
+        pvpEstimatedWaitSeconds: null,
       });
       void Promise.resolve().then(() => get().acceptPvpMatch());
     }, 2000);
@@ -1542,16 +1939,41 @@ export const useBattleStore = create<BattleState>((set, get) => ({
     const { data: sessionData } = await supabase.auth.getSession();
     const session = sessionData.session;
     clearPvpPolling();
+    clearPvpSearchTimers();
     detachPvpUnloadCleanup();
     if (session) {
       await supabase.from('pvp_queue').delete().eq('user_id', session.user.id);
     }
-    set({ pvpQueueStatus: 'idle', pvpStatusMessage: '', pvpError: null, pvpMatch: null });
+    set({
+      pvpQueueStatus: 'idle',
+      pvpStatusMessage: '',
+      pvpError: null,
+      pvpMatch: null,
+      pvpSearchElapsed: 0,
+      pvpEstimatedWaitSeconds: null,
+    });
     await get().disconnectPvpChannel();
   },
   acceptPvpMatch: async () => {
     const match = get().pvpMatch;
     if (!match || match.status === 'ready') return;
+    if (match.mode === 'ai') {
+      detachPvpUnloadCleanup();
+      clearPvpSearchTimers();
+      set({
+        pvpQueueStatus: 'idle',
+        pvpStatusMessage: 'AI 모의전을 시작합니다.',
+        pvpError: null,
+      });
+      set({
+        battleContext: { type: 'pvp', pvpMatchId: match.matchId, pvpSeed: match.seed },
+        pvpMatch: { ...match, status: 'ready' },
+      });
+      const cardsPool = get().allCardsPool;
+      get().initGame(cardsPool);
+      get().setGameScreen('battle');
+      return;
+    }
     const { data: sessionData } = await supabase.auth.getSession();
     const session = sessionData.session;
     if (!session) {
@@ -1568,11 +1990,11 @@ export const useBattleStore = create<BattleState>((set, get) => ({
     set({ pvpQueueStatus: 'idle', pvpStatusMessage: '' });
 
     const cardsPool = get().allCardsPool;
-    const deck = match.playerRole === 'player1'
-      ? buildDeckFromSnapshot(match.playerDeckSnapshot, cardsPool)
+    const resolvedPlayerDeck = match.playerRole === 'player1'
+      ? resolveDeckSnapshot(match.playerDeckSnapshot, get().playerDeck)
       : get().playerDeck;
-    if (match.playerRole === 'player1') {
-      set({ playerDeck: deck });
+    if (match.playerRole === 'player1' && resolvedPlayerDeck.length > 0) {
+      set({ playerDeck: resolvedPlayerDeck });
     }
 
     await get().connectPvpChannel(match);
@@ -1583,6 +2005,19 @@ export const useBattleStore = create<BattleState>((set, get) => ({
   reportPvpResult: async (result: 'victory' | 'defeat' | 'draw') => {
     const match = get().pvpMatch;
     if (!match) return;
+    if (match.mode === 'ai') {
+      if (result === 'victory') {
+        set(state => ({ pvpWins: (state.pvpWins ?? 0) + 1 }));
+      }
+      triggerCloudSave();
+      set({
+        pvpMatch: { ...match, status: 'completed' },
+        pvpQueueStatus: 'idle',
+        pvpStatusMessage: '',
+      });
+      await get().disconnectPvpChannel();
+      return;
+    }
     const { data: sessionData } = await supabase.auth.getSession();
     const session = sessionData.session;
     if (!session) return;
@@ -1609,6 +2044,13 @@ export const useBattleStore = create<BattleState>((set, get) => ({
     await get().disconnectPvpChannel();
   },
   connectPvpChannel: async (match: PvpMatchState) => {
+    if (match.mode !== 'online') {
+      set({
+        pvpChannel: null,
+        pvpRealtimeConnected: false,
+      });
+      return;
+    }
     const existing = get().pvpChannel;
     if (existing) {
       try {
@@ -1711,8 +2153,8 @@ export const useBattleStore = create<BattleState>((set, get) => ({
     if (state.battleContext.type !== 'pvp') {
       return;
     }
-    if (!state.pvpChannel || !state.pvpMatch) {
-      set({ pvpError: 'PVP 채널이 연결되지 않았습니다.' });
+    const mode = state.pvpMatch?.mode;
+    if (!mode) {
       return;
     }
     const currentRound = state.round;
@@ -1725,6 +2167,23 @@ export const useBattleStore = create<BattleState>((set, get) => ({
     }
     set({ isTurnProcessing: true, pvpError: null });
     get().addLog('플레이어 선언 제출', 'system');
+
+    if (mode === 'ai') {
+      get().stopPvpTurnTimer();
+      set({
+        pvpLocalSubmissionRound: currentRound,
+        pvpLocalReady: true,
+      });
+      ensureAiPvpSubmission(get, set, currentRound);
+      await get().tryResolvePvpRound(currentRound);
+      return;
+    }
+
+    if (!state.pvpChannel || !state.pvpMatch) {
+      set({ pvpError: 'PVP 채널이 연결되지 않았습니다.' });
+      set({ isTurnProcessing: false });
+      return;
+    }
 
     const payload: PvpTurnPayload = {
       matchId: state.pvpMatch.matchId,
@@ -1761,6 +2220,8 @@ export const useBattleStore = create<BattleState>((set, get) => ({
   tryResolvePvpRound: async (round: number) => {
     const state = get();
     if (state.battleContext.type !== 'pvp') return;
+    const mode = state.pvpMatch?.mode;
+    if (!mode) return;
     if (state.round !== round) return;
     if (state.pvpLocalSubmissionRound !== round) return;
     const remote = state.pvpRemoteSubmission;
@@ -1823,7 +2284,7 @@ export const useBattleStore = create<BattleState>((set, get) => ({
       get().addLog(`플레이어 에너지: ${nextPlayerEnergy}`, 'system');
       get().addLog(`적 에너지: ${nextEnemyEnergy}`, 'system');
       get().draw(1);
-      if (after.battleContext.type === 'pvp') {
+      if (after.battleContext.type === 'pvp' && after.pvpMatch) {
         get().enemyDraw(1);
       }
       get().startPvpTurnTimer(true);
@@ -1959,7 +2420,16 @@ export const useBattleStore = create<BattleState>((set, get) => ({
     });
   },
   handleBattleDefeatNavigation: () => {
-    const target = get().postBattleScreen;
+    const current = get();
+    if (current.battleContext.type === 'pvp') {
+      set({
+        battleContext: { type: null, campaignStageId: null, dailyFloorId: null, pvpMatchId: null, pvpSeed: null },
+        postBattleScreen: null,
+      });
+      get().setGameScreen('pvp');
+      return;
+    }
+    const target = current.postBattleScreen;
     if (target === 'daily') {
       set(state => ({
         currentStage: null,
@@ -2031,12 +2501,74 @@ export const useBattleStore = create<BattleState>((set, get) => ({
     const state = get();
     const rehydratedCollection = rehydrateCardsFromPool(state.collection, cards);
     const rehydratedDeck = rehydrateCardsFromPool(state.playerDeck, cards);
-    set({
+
+    let nextPlayerDeck = rehydratedDeck;
+    let nextMatch = state.pvpMatch;
+    let matchChanged = false;
+    let enemyDeckUpdate: Card[] | undefined;
+    let shouldRedrawEnemyHand = false;
+
+    if (state.pvpMatch) {
+      const { opponentDeckSnapshot, playerDeckSnapshot, playerRole, opponentDeckCards } = state.pvpMatch;
+      const resolvedOpponentDeck =
+        Array.isArray(opponentDeckSnapshot) && opponentDeckSnapshot.length > 0
+          ? buildDeckFromSnapshot(opponentDeckSnapshot, cards)
+          : [];
+      if (resolvedOpponentDeck.length > 0) {
+        if (!opponentDeckCards || opponentDeckCards.length === 0) {
+          nextMatch = { ...state.pvpMatch, opponentDeckCards: resolvedOpponentDeck };
+          matchChanged = true;
+        } else if (opponentDeckCards.length !== resolvedOpponentDeck.length) {
+          nextMatch = { ...state.pvpMatch, opponentDeckCards: resolvedOpponentDeck };
+          matchChanged = true;
+        }
+        if (state.battleContext.type === 'pvp' && state.enemyDeck.length === 0) {
+          enemyDeckUpdate = resolvedOpponentDeck;
+          if (state.enemyHand.length === 0) {
+            shouldRedrawEnemyHand = true;
+          }
+        }
+      }
+
+      if (playerRole === 'player1') {
+        const resolvedPlayerDeckSnapshot =
+          Array.isArray(playerDeckSnapshot) && playerDeckSnapshot.length > 0
+            ? buildDeckFromSnapshot(playerDeckSnapshot, cards)
+            : [];
+        if (resolvedPlayerDeckSnapshot.length > 0) {
+          nextPlayerDeck = resolvedPlayerDeckSnapshot;
+        }
+      }
+    }
+
+    const partial: Partial<BattleState> = {
       allCardsPool: cards,
       collection: rehydratedCollection,
-      playerDeck: rehydratedDeck,
-    });
+      playerDeck: nextPlayerDeck,
+    };
+    if (matchChanged && nextMatch) {
+      partial.pvpMatch = nextMatch;
+    }
+    if (enemyDeckUpdate) {
+      partial.enemyDeck = enemyDeckUpdate;
+    }
+
+    set(partial);
     console.log(`[Shop] All cards pool set: ${cards.length} cards`);
+
+    if (shouldRedrawEnemyHand) {
+      const current = get();
+      if (
+        current.battleContext.type === 'pvp' &&
+        current.enemyHand.length === 0 &&
+        current.enemyDeck.length > 0 &&
+        current.round === 1 &&
+        current.gameOver === 'none'
+      ) {
+        current.enemyDrawInitial(5);
+        current.addLog('상대 덱 데이터를 재구성하여 초기 패를 다시 채웠습니다.', 'system');
+      }
+    }
   },
   addCardToDeck: (card: Card) => {
     const state = get();
@@ -2303,6 +2835,7 @@ export const useBattleStore = create<BattleState>((set, get) => ({
   enemyEnergy: 3,
   round: 1,
   roundSeed: Math.floor(Math.random() * 1000000),
+  currentInitiative: null,
   playerDamageTakenThisTurn: 0,
   playerDamageTakenLastTurn: 0,
   enemyDamageTakenThisTurn: 0,
@@ -2357,7 +2890,7 @@ export const useBattleStore = create<BattleState>((set, get) => ({
       return 0;
     }
     
-    const isPvp = state.battleContext.type === 'pvp';
+    const isPvp = state.battleContext.type === 'pvp' && !!state.pvpMatch;
     if (chance < 100) {
       if (isPvp) {
         const counter = state.pvpRandomCounter;
@@ -2683,7 +3216,8 @@ export const useBattleStore = create<BattleState>((set, get) => ({
       
       // VFX: 패배 이펙트
       triggerVFX('defeat', 'center');
-      if (state.battleContext.type === 'pvp') {
+      triggerVFX('defeat', 'player');
+      if (state.battleContext.type === 'pvp' && state.pvpMatch) {
         get().stopPvpTurnTimer(true);
         void get().reportPvpResult('defeat');
       }
@@ -2704,7 +3238,8 @@ export const useBattleStore = create<BattleState>((set, get) => ({
       
       // VFX: 승리 이펙트
       triggerVFX('victory', 'center');
-      if (state.battleContext.type === 'pvp') {
+      triggerVFX('defeat', 'enemy');
+      if (state.battleContext.type === 'pvp' && state.pvpMatch) {
         get().stopPvpTurnTimer(true);
         void get().reportPvpResult('victory');
       }
@@ -2939,30 +3474,85 @@ export const useBattleStore = create<BattleState>((set, get) => ({
     const state = get();
     console.log(`[InitGame] 🔄 Starting - BEFORE: playerHp: ${state.playerHp}, enemyHp: ${state.enemyHp}, gameOver: ${state.gameOver}, hand: ${state.hand.length}, enemyHand: ${state.enemyHand.length}`);
     let deck = [...state.playerDeck];
+    const matchState = state.pvpMatch;
+    const isOnlinePvp = state.battleContext.type === 'pvp' && !!matchState && matchState.mode === 'online';
+    const isAiPvp = state.battleContext.type === 'pvp' && !!matchState && matchState.mode === 'ai';
+    const isAnyPvp = isOnlinePvp || isAiPvp;
+    const baseSeed = isAnyPvp && matchState ? matchState.seed : Math.floor(Math.random() * 1000000);
+    const playerPhase = matchState ? (matchState.playerRole === 'player1' ? 1 : 2) : 1;
+    const enemyPhase = matchState ? (playerPhase === 1 ? 2 : 1) : 2;
     
     // playerDeck이 비어있거나 20장이 아니면 랜덤 구성
     if (deck.length !== 20) {
       console.warn('[Battle] playerDeck is invalid, generating random deck');
-      deck = [...cards].sort(() => Math.random() - 0.5).slice(0, 20);
+      if (isOnlinePvp) {
+        const fallbackSeed = generateRoundSeed(baseSeed, 0, playerPhase + 10);
+        deck = shuffleWithSeed(cards, fallbackSeed).slice(0, 20);
+      } else {
+        deck = [...cards].sort(() => Math.random() - 0.5).slice(0, 20);
+      }
     }
     
     // 덱 셔플
-    deck = deck.sort(() => Math.random() - 0.5);
+    if (isOnlinePvp) {
+      const playerSeed = generateRoundSeed(baseSeed, 0, playerPhase);
+      deck = shuffleWithSeed(deck, playerSeed);
+    } else {
+      deck = deck.sort(() => Math.random() - 0.5);
+    }
     
     // 적 덱: 스테이지별로 구성
     const currentStage = state.currentStage;
     let enemyDeck: Card[];
-    const isPvp = state.battleContext.type === 'pvp' && !!state.pvpMatch;
-    if (isPvp) {
-      enemyDeck = state.pvpMatch?.opponentDeckCards?.length ? [...state.pvpMatch.opponentDeckCards] : [];
+    if (isAnyPvp) {
+      enemyDeck = matchState?.opponentDeckCards?.length ? [...matchState.opponentDeckCards] : [];
+      let shouldUpdateMatchDeck = false;
+      if (enemyDeck.length === 0 && matchState?.opponentDeckSnapshot?.length) {
+        const snapshot = matchState.opponentDeckSnapshot;
+        const pools: Card[][] = [cards, state.collection, state.playerDeck];
+        for (const pool of pools) {
+          if (Array.isArray(pool) && pool.length > 0) {
+            const rebuilt = buildDeckFromSnapshot(snapshot, pool);
+            if (rebuilt.length > 0) {
+              enemyDeck = rebuilt;
+              break;
+            }
+          }
+        }
+        if (enemyDeck.length === 0 && state.playerDeck.length > 0) {
+          enemyDeck = state.playerDeck.map((card, index) => ({
+            ...card,
+            id: `${normalizeCardId(card.id)}__pvp_fallback__${index}`,
+          }));
+        }
+        shouldUpdateMatchDeck = enemyDeck.length > 0;
+      }
+      if (isOnlinePvp && enemyDeck.length > 0) {
+        const enemySeed = generateRoundSeed(baseSeed, 0, enemyPhase);
+        enemyDeck = shuffleWithSeed(enemyDeck, enemySeed);
+        shouldUpdateMatchDeck = true;
+      }
+      if (shouldUpdateMatchDeck && matchState) {
+        const deckForMatch = enemyDeck;
+        set(current => {
+          if (!current.pvpMatch || current.pvpMatch.matchId !== matchState.matchId) {
+            return {};
+          }
+          return {
+            pvpMatch: {
+              ...current.pvpMatch,
+              opponentDeckCards: deckForMatch,
+            },
+          };
+        });
+      }
     } else if (currentStage) {
       enemyDeck = getEnemyDeckForStage(currentStage, cards, state.campaignStages);
     } else {
       enemyDeck = getBasicEnemyDeck(cards);
     }
-    
-    const baseSeed = isPvp ? state.pvpMatch!.seed : Math.floor(Math.random() * 1000000);
-    const initialSeed = isPvp ? generateRoundSeed(baseSeed, 1) : baseSeed;
+
+    const initialSeed = isAnyPvp ? generateRoundSeed(baseSeed, 1) : baseSeed;
     
     // 🔴 setTimeout 타이머 모두 취소 (이전 게임의 타이머가 새 게임에 영향을 주지 않도록)
     if (enemyTurnTimer1 !== null) {
@@ -3000,6 +3590,7 @@ export const useBattleStore = create<BattleState>((set, get) => ({
       enemyHand: [], // 🔴 적 핸드 초기화 추가
       energy: 3, enemyEnergy: 3, round: 1, 
       roundSeed: initialSeed,
+    currentInitiative: null,
       playerHp: 100, playerMaxHp: 100, 
       enemyHp: 100, enemyMaxHp: 100,
       playerStatus: { ...initialEntityStatus },
@@ -3019,7 +3610,7 @@ export const useBattleStore = create<BattleState>((set, get) => ({
       pvpRemoteSubmission: null,
       pvpLocalReady: false,
       pvpOpponentReady: false,
-      pvpTurnTimeLeft: isPvp ? (get().pvpTurnDuration || DEFAULT_PVP_TURN_DURATION) : null,
+      pvpTurnTimeLeft: isAnyPvp ? (get().pvpTurnDuration || DEFAULT_PVP_TURN_DURATION) : null,
       pvpTurnTimerActive: false,
     });
     
@@ -3088,8 +3679,9 @@ export const useBattleStore = create<BattleState>((set, get) => ({
     // console.log('[Battle] Starting initial draw(5)');
     get().drawInitial(5);
     get().enemyDrawInitial(5);
-    if (isPvp) {
-      get().addLog(`적이 5장을 드로우했습니다.`, 'system');
+    if (isAnyPvp) {
+      const opponentLabel = matchState?.mode === 'ai' ? 'AI 상대' : '적';
+      get().addLog(`${opponentLabel}가 5장을 드로우했습니다.`, 'system');
       get().startPvpTurnTimer(true);
     } else {
       get().addLog(`플레이어와 적이 각각 5장씩 드로우`, 'system');
@@ -3179,6 +3771,17 @@ export const useBattleStore = create<BattleState>((set, get) => ({
       const seedB = (current.roundSeed + b.originalIndex) % 1000;
       return seedB - seedA;
     });
+
+    if (combined.length === 0) {
+      set({ currentInitiative: null });
+    } else {
+      const firstActor = combined[0].who;
+      set({ currentInitiative: firstActor });
+      get().addLog(
+        `🎯 이번 라운드 선공: ${firstActor === 'player' ? '플레이어' : '적'}`,
+        'system'
+      );
+    }
     
     get().addLog(`공개: ${combined.length}장 해결 시작 (우선순위 순서)`, 'system');
     await delay(500); // 🎬 공개 단계 대기
@@ -3192,7 +3795,12 @@ export const useBattleStore = create<BattleState>((set, get) => ({
     await delay(300); // 🎬 우선순위 표시 대기
     
     // 🎬 순차 처리 (forEach → for loop)
+    let battleEnded = false;
     for (let idx = 0; idx < combined.length; idx++) {
+      if (get().gameOver !== 'none') {
+        battleEnded = true;
+        break;
+      }
       const entry = combined[idx];
       
       if (entry.who === 'player') {
@@ -3211,6 +3819,10 @@ export const useBattleStore = create<BattleState>((set, get) => ({
           if (!success) {
             get().addLog(`경고: ${entry.card.name} 사용 실패`, 'system');
           }
+          if (get().gameOver !== 'none') {
+            battleEnded = true;
+            break;
+          }
           await delay(600); // 🎬 플레이어 카드 효과 대기
         } else if (actualHandIndex < 0) {
           get().addLog(`경고: ${entry.card.name}이(가) 손패에 없습니다`, 'system');
@@ -3226,17 +3838,22 @@ export const useBattleStore = create<BattleState>((set, get) => ({
           await triggerCardUseAnimation(entry.card, false, -1);
           
           get().playEnemyCard(entry.card);
+          if (get().gameOver !== 'none') {
+            battleEnded = true;
+            break;
+          }
           await delay(600); // 🎬 적 카드 효과 대기
         }
       }
     }
     
-    // 정리
-    await delay(300); // 🎬 정리 전 대기
+    if (get().gameOver !== 'none') {
+      battleEnded = true;
+    }
+
     set({ declarationLocked: false, playerQueue: [], enemyQueue: [], queuedHandIndices: [] });
-    get().addLog('✅ 공개/해결 완료', 'system');
-    
-    // 리플레이 액션 기록
+
+    // 리플레이 액션 기록 (전투 종료 여부와 무관하게 기록)
     const finalState = get();
     get().recordReplayAction({
       round: finalState.round,
@@ -3245,6 +3862,14 @@ export const useBattleStore = create<BattleState>((set, get) => ({
       enemy: eq.map(e => ({ cardId: e.card.id, cardName: e.card.name })),
       resultHp: { player: finalState.playerHp, enemy: finalState.enemyHp }
     });
+
+    if (battleEnded) {
+      return;
+    }
+
+    // 정리
+    await delay(300); // 🎬 정리 전 대기
+    get().addLog('✅ 공개/해결 완료', 'system');
   },
   // 🎬 초기 드로우 (hand를 []로 강제 리셋)
   drawInitial: (count: number) => {
@@ -3258,7 +3883,7 @@ export const useBattleStore = create<BattleState>((set, get) => ({
     
     for (let i = 0; i < count && hand.length + drawn.length < maxHandSize; i++) {
       if (newDeck.length === 0 && newDiscard.length > 0) {
-        newDeck = [...newDiscard].sort(() => Math.random() - 0.5);
+        newDeck = shuffleForCurrentContext(newDiscard);
         newDiscard = [];
         get().addLog(`덱 리셔플: ${newDeck.length}장`, 'system');
       }
@@ -3290,7 +3915,7 @@ export const useBattleStore = create<BattleState>((set, get) => ({
     for (let i = 0; i < count && hand.length + drawn.length < maxHandSize; i++) {
       // 덱이 비었으면 discard pile을 섞어서 덱으로
       if (newDeck.length === 0 && newDiscard.length > 0) {
-        newDeck = [...newDiscard].sort(() => Math.random() - 0.5);
+        newDeck = shuffleForCurrentContext(newDiscard);
         newDiscard = [];
         get().addLog(`덱 리셔플: ${newDeck.length}장`, 'system');
       }
@@ -3338,7 +3963,7 @@ export const useBattleStore = create<BattleState>((set, get) => ({
     
     for (let i = 0; i < count && enemyHand.length + drawn.length < maxHandSize; i++) {
       if (newDeck.length === 0 && newDiscard.length > 0) {
-        newDeck = [...newDiscard].sort(() => Math.random() - 0.5);
+        newDeck = shuffleForCurrentContext(newDiscard);
         newDiscard = [];
         get().addLog(`적 덱 리셔플: ${newDeck.length}장`, 'system');
       }
@@ -3372,7 +3997,7 @@ export const useBattleStore = create<BattleState>((set, get) => ({
     for (let i = 0; i < count && enemyHand.length + drawn.length < maxHandSize; i++) {
       // 덱이 비었으면 discard pile을 섞어서 덱으로
       if (newDeck.length === 0 && newDiscard.length > 0) {
-        newDeck = [...newDiscard].sort(() => Math.random() - 0.5);
+        newDeck = shuffleForCurrentContext(newDiscard);
         newDiscard = [];
         get().addLog(`적 덱 리셔플: ${newDeck.length}장`, 'system');
       }
@@ -3691,7 +4316,7 @@ export const useBattleStore = create<BattleState>((set, get) => ({
             if (resolvedFilter === 'highestCost') {
               return source.reduce((acc, curr) => (curr.cost > acc.cost ? curr : acc), source[0]);
             }
-            return source[Math.floor(Math.random() * source.length)];
+            return source[pickRandomIndex(source.length)]!;
           };
           for (let i = 0; i < count && source.length > 0; i++) {
             const picked = pickCard();
@@ -3716,7 +4341,7 @@ export const useBattleStore = create<BattleState>((set, get) => ({
         }
       } else if (eff.type === 'TurnSkip') {
         const chance = Math.max(0, Math.min(100, Number(eff.chance ?? 0)));
-        const roll = Math.random() * 100;
+        const roll = (isOnlinePvpMatch() ? consumePvpRandom() : Math.random()) * 100;
         if (roll < chance) {
           set({ skipEnemyTurnOnce: true });
           get().addLog(`⏱️ 적의 다음 턴을 건너뜁니다! (확률 ${chance}% 성공)`, 'effect');
@@ -4109,17 +4734,36 @@ export const useBattleStore = create<BattleState>((set, get) => ({
     if (state.gameOver !== 'none') return false;
     if (state.enemyEnergy < card.cost) return false;
 
-    const isPvp = state.battleContext.type === 'pvp';
-    const handIndex = state.enemyHand.findIndex(c => c.id === card.id);
+    const isPvp = state.battleContext.type === 'pvp' && !!state.pvpMatch;
+    const targetBaseId = normalizeCardId(card.id);
+    let handIndex = state.enemyHand.findIndex(c => c.id === card.id);
+    if (handIndex === -1) {
+      handIndex = state.enemyHand.findIndex(c => normalizeCardId(c.id) === targetBaseId);
+    }
     const hasHandCard = handIndex !== -1;
     if (!isPvp && !hasHandCard) return false;
 
     const deckCopy = [...state.enemyDeck];
-    const deckIndex = deckCopy.findIndex(c => c.id === card.id);
+    let deckIndex = deckCopy.findIndex(c => c.id === card.id);
+    if (deckIndex === -1) {
+      deckIndex = deckCopy.findIndex(c => normalizeCardId(c.id) === targetBaseId);
+    }
     if (deckIndex !== -1) {
       deckCopy.splice(deckIndex, 1);
     }
-    const newHand = hasHandCard ? state.enemyHand.filter((_, i) => i !== handIndex) : [...state.enemyHand];
+    let newHand: Card[];
+    if (hasHandCard) {
+      newHand = state.enemyHand.filter((_, i) => i !== handIndex);
+    } else if (isPvp && state.enemyHand.length > 0) {
+      newHand = state.enemyHand.slice(1);
+      console.warn('[PvP] Enemy card not matched in hand, removing top card as fallback', {
+        targetId: card.id,
+        targetBaseId,
+        handSize: state.enemyHand.length,
+      });
+    } else {
+      newHand = [...state.enemyHand];
+    }
     
     // Nullify 체크: 플레이어가 무효화 상태면 카드 무효
     if (state.playerStatus.nullifyCharges > 0) {
@@ -4285,6 +4929,40 @@ export const useBattleStore = create<BattleState>((set, get) => ({
               get().heal('enemy', value);
             }
           }
+        } else if (type === 'Buff') {
+          const stat = (eff as any).stat;
+          const value = Number((eff as any).value ?? 0);
+          const duration = Number((eff as any).duration ?? 1);
+          if (value > 0 && stat === 'attack') {
+            const enemyStatus = { ...state.enemyStatus };
+            enemyStatus.attackBuff = value;
+            set({ enemyStatus });
+            get().addLog(`적 공격력 버프: +${value}% (${duration}턴)`, 'effect');
+            triggerVFX('buff', 'enemy', value);
+          }
+        } else if (type === 'Regen') {
+          const value = Number((eff as any).value ?? 0);
+          const duration = Math.max(1, Number((eff as any).duration ?? 3));
+          const chance = Number((eff as any).chance ?? 100);
+          if (value > 0 && chance > 0) {
+            const targetOverride = (eff as any).target;
+            const target: 'player' | 'enemy' =
+              targetOverride === 'player' || targetOverride === 'enemy' ? targetOverride : 'enemy';
+            if (target === 'enemy') {
+              const enemyStatus = { ...get().enemyStatus };
+              enemyStatus.regen = value;
+              enemyStatus.regenDuration = duration;
+              set({ enemyStatus });
+              get().addLog(`적 지속 회복: 턴 시작 시 ${value} 회복 (${duration}턴)`, 'effect');
+            } else {
+              const playerStatus = { ...get().playerStatus };
+              playerStatus.regen = value;
+              playerStatus.regenDuration = duration;
+              set({ playerStatus });
+              get().addLog(`적 효과: 플레이어에게 지속 회복 부여 (+${value}, ${duration}턴)`, 'effect');
+            }
+            get().applyStatus(target, 'Regen', 1, duration, chance, value);
+          }
         } else if (type === 'ApplyBleed') {
           const stacks = Math.max(1, Number((eff as any).stacks ?? 1));
           const duration = Math.max(1, Number((eff as any).duration ?? 2));
@@ -4292,6 +4970,23 @@ export const useBattleStore = create<BattleState>((set, get) => ({
           get().applyStatus('player', 'Bleed', stacks, duration, 100, damagePerStack);
           get().addLog(`적 출혈 적용: ${stacks}중첩 / ${duration}턴 (스택당 ${damagePerStack})`, 'effect');
           triggerVFX('damage', 'player', stacks);
+        } else if (type === 'Cleanse') {
+          const maxStacks = Number((eff as any).maxStacks ?? 2);
+          const enemyStatus = { ...state.enemyStatus };
+          const removed = enemyStatus.statuses.filter(
+            s => s.key === 'Burn' && (s.stacks || 0) <= maxStacks
+          );
+          enemyStatus.statuses = enemyStatus.statuses.filter(
+            s => !(s.key === 'Burn' && (s.stacks || 0) <= maxStacks)
+          );
+          set({ enemyStatus });
+          if (removed.length > 0) {
+            get().addLog(
+              `적 정화: 화상 ${removed.reduce((sum, s) => sum + (s.stacks || 0), 0)}중첩 제거`,
+              'effect'
+            );
+            triggerVFX('buff', 'enemy', removed.length);
+          }
         } else if (type === 'ReactiveArmor') {
           const charges = Math.max(1, Number((eff as any).charges ?? 1));
           const reflectRatio = Math.min(1, Math.max(0, Number((eff as any).reflectRatio ?? 0.3)));
@@ -4392,7 +5087,7 @@ export const useBattleStore = create<BattleState>((set, get) => ({
               if (resolvedFilter === 'highestCost') {
                 return source.reduce((acc, curr) => (curr.cost > acc.cost ? curr : acc), source[0]);
               }
-              return source[Math.floor(Math.random() * source.length)];
+              return source[pickRandomIndex(source.length)]!;
             };
             for (let i = 0; i < count && source.length > 0; i++) {
               const picked = pickCard();
@@ -4418,7 +5113,7 @@ export const useBattleStore = create<BattleState>((set, get) => ({
           }
         } else if (type === 'TurnSkip') {
           const chance = Math.max(0, Math.min(100, Number((eff as any).chance ?? 0)));
-          const roll = Math.random() * 100;
+          const roll = (isOnlinePvpMatch() ? consumePvpRandom() : Math.random()) * 100;
           if (roll < chance) {
             set({ skipPlayerTurnOnce: true });
             get().addLog(`⚠️ 플레이어 턴이 봉인되었습니다!`, 'effect');
@@ -4620,6 +5315,7 @@ export const useBattleStore = create<BattleState>((set, get) => ({
       energy: newEnergy,
       round: round + 1,
       playerStatus,
+      currentInitiative: null,
     };
     set(updates);
     if (bonusEnergy > 0) {
@@ -4645,7 +5341,7 @@ export const useBattleStore = create<BattleState>((set, get) => ({
   endPlayerTurn: async () => {
     const state = get();
     if (state.gameOver !== 'none' || state.isTurnProcessing) return;
-    if (state.battleContext.type === 'pvp') {
+    if (state.battleContext.type === 'pvp' && state.pvpMatch) {
       await get().submitPvpTurn();
       return;
     }
@@ -4657,6 +5353,10 @@ export const useBattleStore = create<BattleState>((set, get) => ({
     if (state.playerQueue.length > 0) {
       set({ declarationLocked: true });
       await get().revealAndResolve(); // 🎬 비동기 대기
+      if (get().gameOver !== 'none') {
+        set({ isTurnProcessing: false });
+        return;
+      }
     }
     get().addLog(`플레이어 턴 종료`, 'system');
     // 상태이상 처리
@@ -4775,7 +5475,7 @@ export const useBattleStore = create<BattleState>((set, get) => ({
   enemyTurn: async () => {
     const state = get();
     console.log(`[EnemyTurn] 🔍 enemyTurn() called, gameOver: ${state.gameOver}`);
-    if (state.battleContext.type === 'pvp') return;
+    if (state.battleContext.type === 'pvp' && state.pvpMatch) return;
     if (state.gameOver !== 'none') return;
     
     get().addLog(`적 턴 시작`, 'system');
@@ -4941,4 +5641,5 @@ export const useBattleStore = create<BattleState>((set, get) => ({
       }, 500);
     }, 500); // 🎬 드로우 애니메이션 대기
   },
-}));
+  };
+});
