@@ -366,8 +366,11 @@ type OutcomeDialogue = {
   accent: string;
 };
 
-let cardPreview!: HTMLElement;
-let closeCardPreview!: () => void;
+let cardPreview: HTMLElement | null = null;
+let closeCardPreview: () => void = () => {
+  const previewEl = cardPreview ?? document.getElementById('card-preview');
+  previewEl?.classList.remove('active');
+};
 let tooltipRoot!: HTMLElement;
 let hideTooltip!: () => void;
 
@@ -432,9 +435,10 @@ useBattleStore.subscribe((state) => {
   }
 
   if (!isBattleScreen) {
-    if (cardPreview.classList.contains('active')) {
-      closeCardPreview();
-    }
+  const previewEl = cardPreview ?? document.getElementById('card-preview');
+  if (previewEl?.classList.contains('active')) {
+    closeCardPreview();
+  }
     if (tooltipRoot.style.display !== 'none') {
       hideTooltip();
     }
@@ -779,13 +783,26 @@ app.init({
   const logRoot = document.getElementById('log')!;
   const logToggle = document.getElementById('log-toggle')!;
   tooltipRoot = document.getElementById('tooltip')!;
-  cardPreview = document.getElementById('card-preview')!;
-  const cardPreviewImage = document.getElementById('card-preview-image') as HTMLImageElement;
-  const cardPreviewName = document.getElementById('card-preview-name')!;
-  const cardPreviewCost = document.getElementById('card-preview-cost')!;
-  const cardPreviewEffects = document.getElementById('card-preview-effects')!;
-  const cardPreviewKeywords = document.getElementById('card-preview-keywords')!;
-  const cardPreviewClose = document.getElementById('card-preview-close')!;
+  cardPreview = document.getElementById('card-preview');
+  const cardPreviewImage = document.getElementById('card-preview-image') as HTMLImageElement | null;
+  const cardPreviewName = document.getElementById('card-preview-name');
+  const cardPreviewCost = document.getElementById('card-preview-cost');
+  const cardPreviewEffects = document.getElementById('card-preview-effects');
+  const cardPreviewKeywords = document.getElementById('card-preview-keywords');
+  const cardPreviewClose = document.getElementById('card-preview-close');
+
+  const cardPreviewReady =
+    !!cardPreview &&
+    !!cardPreviewImage &&
+    !!cardPreviewName &&
+    !!cardPreviewCost &&
+    !!cardPreviewEffects &&
+    !!cardPreviewKeywords &&
+    !!cardPreviewClose;
+
+  if (!cardPreviewReady) {
+    console.warn('[UI] Card preview elements not found – preview modal disabled');
+  }
   
   // 옵션 & 오디오 컨트롤
   const optionsToggle = document.getElementById('options-toggle')!;
@@ -893,15 +910,17 @@ let currentEnemyPortrait: string | null = null;
   }
   
   // 카드 프리뷰 모달 닫기
-  closeCardPreview = function closeCardPreview() {
-    cardPreview.classList.remove('active');
-  };
-  cardPreviewClose.addEventListener('click', closeCardPreview);
-  cardPreview.addEventListener('click', (e) => {
-    if (e.target === cardPreview) {
-      closeCardPreview();
-    }
-  });
+  if (cardPreviewReady) {
+    closeCardPreview = function closeCardPreview() {
+      cardPreview!.classList.remove('active');
+    };
+    cardPreviewClose!.addEventListener('click', closeCardPreview);
+    cardPreview!.addEventListener('click', (e) => {
+      if (e.target === cardPreview) {
+        closeCardPreview();
+      }
+    });
+  }
   
   // 오디오 컨트롤 초기화
   const audioSettings = audioManager.getSettings();
@@ -999,6 +1018,19 @@ let currentEnemyPortrait: string | null = null;
   
   // 카드 프리뷰 표시
   function showCardPreview(card: typeof store.hand[0]) {
+    if (
+      !cardPreviewReady ||
+      !cardPreview ||
+      !cardPreviewImage ||
+      !cardPreviewName ||
+      !cardPreviewCost ||
+      !cardPreviewEffects ||
+      !cardPreviewKeywords
+    ) {
+      console.warn('[UI] Card preview requested but UI components are missing');
+      return;
+    }
+
     const imagePath = getLoadedCardImage(card);
     if (imagePath) {
       // PixiJS Assets에서 실제 이미지 URL 가져오기
