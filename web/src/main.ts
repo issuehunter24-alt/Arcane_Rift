@@ -173,6 +173,18 @@ let announcementHasBeenShown = false;
 let announcementDismissedPermanently = false;
 let announcementRemindQueued = false;
 
+const PVP_AI_ESTIMATE_MIN_SECONDS = 90;
+const PVP_AI_ESTIMATE_MAX_SECONDS = 120;
+
+function formatTimer(seconds: number): string {
+  const clamped = Math.max(0, Math.floor(seconds));
+  const minutes = Math.floor(clamped / 60)
+    .toString()
+    .padStart(2, '0');
+  const secs = (clamped % 60).toString().padStart(2, '0');
+  return `${minutes}:${secs}`;
+}
+
 function openAnnouncementModal() {
   if (!announcementModal || announcementDismissedPermanently) return;
   if (announcementModal.classList.contains('active')) return;
@@ -416,7 +428,19 @@ useBattleStore.subscribe((state) => {
           ? '상대가 확인되었습니다. 전장으로 이동 중입니다...'
           : '매칭 정보를 불러오는 중입니다...';
 
-  pvpStatusText.textContent = message || defaultMessage;
+  let finalMessage = message || defaultMessage;
+
+  if (status === 'searching') {
+    const elapsed = state.pvpSearchElapsed ?? 0;
+    const estimateMin = state.pvpEstimatedWaitSeconds ?? PVP_AI_ESTIMATE_MIN_SECONDS;
+    const estimateRange = `${formatTimer(estimateMin)}~${formatTimer(PVP_AI_ESTIMATE_MAX_SECONDS)}`;
+    finalMessage = `매칭 대기 ${formatTimer(elapsed)} (예상 ${estimateRange})`;
+    if (elapsed >= estimateMin) {
+      finalMessage += ' · 상대가 없으면 AI 모의전으로 전환됩니다.';
+    }
+  }
+
+  pvpStatusText.textContent = finalMessage;
 
   if (error) {
     pvpErrorText.textContent = error;
@@ -1149,6 +1173,7 @@ let currentEnemyPortrait: string | null = null;
   let gameOver = store.gameOver;
   let playerStatus = store.playerStatus;
   let enemyStatus = store.enemyStatus;
+  let currentInitiative: 'player' | 'enemy' | null = store.currentInitiative ?? null;
   
   // 트윈 애니메이션용 표시 값 (부드럽게 변화)
   let displayEnergy = store.energy;
@@ -1201,11 +1226,21 @@ let currentEnemyPortrait: string | null = null;
     // 애니메이션 효과를 위해 소수점 반올림
     const displayPlayerHpInt = Math.round(displayPlayerHp);
     const displayEnemyHpInt = Math.round(displayEnemyHp);
+    const initiativeLabel = (() => {
+      if (currentInitiative === 'player') {
+        return '<span style="color:#66bb6a;font-weight:bold;">👑 플레이어 선공</span>';
+      }
+      if (currentInitiative === 'enemy') {
+        return '<span style="color:#ff8a65;font-weight:bold;">⚔️ 적 선공</span>';
+      }
+      return '<span style="color:#aaaaaa;">⏳ 선언 대기 중</span>';
+    })();
     
     hud.innerHTML = `
       ${gameOverText}
       <div>${t('battle.round')}: ${round}</div>
       <div style="font-size: 10px; color: #777;">${t('battle.seed')}: ${roundSeed}</div>
+      <div style="margin-top: 4px; font-size: 12px;">${t('battle.initiative')}: ${initiativeLabel}</div>
       <div style="margin-top: 8px; padding: 6px; background: rgba(0,0,0,0.3); border-radius: 4px;">
         <div style="font-weight: bold;">${t('battle.player')}</div>
         <div>${t('battle.hp')}: <span style="font-weight: bold; color: ${displayPlayerHpInt < playerHp * 0.3 ? '#f44336' : '#4CAF50'}">${displayPlayerHpInt}</span>/${playerMaxHp}</div>
@@ -4789,6 +4824,7 @@ let currentEnemyPortrait: string | null = null;
     const backgroundPath = getSpecialBackground('victory', randomVariation);
     const hasReward = state.pendingReward !== null;
     const dialogue = buildVictoryDialogue(state);
+    const isPvpBattle = state.battleContext.type === 'pvp';
     
     victoryScreen.innerHTML = `
       <div class="result-background" style="background-image: url('${backgroundPath}');"></div>
@@ -4800,7 +4836,7 @@ let currentEnemyPortrait: string | null = null;
             <div class="result-subtitle">${escapeHtml(dialogue.subtitle)}</div>
             <div class="result-speaker">${escapeHtml(dialogue.speaker)}</div>
             <div class="result-message">"${escapeHtml(dialogue.message)}"</div>
-            <button class="result-btn" id="victory-continue-btn">${hasReward ? '보상 받기' : '메인 메뉴로'}</button>
+            <button class="result-btn" id="victory-continue-btn">${hasReward ? '보상 받기' : isPvpBattle ? 'PvP 로비로' : '메인 메뉴로'}</button>
           </div>
         </div>
       </div>
@@ -4815,10 +4851,16 @@ let currentEnemyPortrait: string | null = null;
         window.clearTimeout(victoryDefeatTimer);
         victoryDefeatTimer = null;
       }
+      const storeState = useBattleStore.getState();
       if (hasReward) {
-        useBattleStore.getState().setGameScreen('reward');
+        storeState.setGameScreen('reward');
+      } else if (isPvpBattle) {
+        useBattleStore.setState({
+          battleContext: { type: null, campaignStageId: null, dailyFloorId: null, pvpMatchId: null, pvpSeed: null },
+        });
+        storeState.setGameScreen('pvp');
       } else {
-        useBattleStore.getState().setGameScreen('menu');
+        storeState.setGameScreen('menu');
       }
     };
   }
@@ -6172,6 +6214,11 @@ function buildFinaleCardAssets(): string[] {
     roundSeed = s.roundSeed;
     playerMaxHp = s.playerMaxHp;
     enemyMaxHp = s.enemyMaxHp;
+    const nextInitiative = s.currentInitiative ?? null;
+    if (currentInitiative !== nextInitiative) {
+      currentInitiative = nextInitiative;
+      renderHUD();
+    }
     
     // 게임 오버 상태 변화 감지
     if (gameOver !== s.gameOver) {

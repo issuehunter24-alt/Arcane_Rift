@@ -1,5 +1,5 @@
 import { supabase } from './supabaseClient';
-import { useBattleStore } from './store';
+import { useBattleStore, STARTER_COLLECTION_CARD_IDS, STARTER_DECK_CARD_IDS } from './store.js';
 const SAVE_VERSION = 1;
 const SAVE_TABLE = 'saves';
 let currentUserId = null;
@@ -13,6 +13,21 @@ let currentSyncStatus = 'idle';
 let lastSaveTriggers = null;
 let pendingSavedCollection = null;
 let pendingSavedDeck = null;
+function makeSavedEntriesFromCardIds(cardIds) {
+    const counts = new Map();
+    for (const rawId of cardIds) {
+        const key = getCanonicalCardId(rawId);
+        if (!key)
+            continue;
+        counts.set(key, (counts.get(key) ?? 0) + 1);
+    }
+    return Array.from(counts.entries()).map(([cardId, count]) => ({ cardId, count }));
+}
+function cloneSavedEntries(entries) {
+    return entries.map(entry => ({ cardId: entry.cardId, count: entry.count }));
+}
+const STARTER_COLLECTION_ENTRIES = makeSavedEntriesFromCardIds(STARTER_COLLECTION_CARD_IDS);
+const STARTER_DECK_ENTRIES = makeSavedEntriesFromCardIds(STARTER_DECK_CARD_IDS);
 function setCloudSyncStatus(status) {
     if (currentSyncStatus === status) {
         return;
@@ -93,11 +108,19 @@ function getCanonicalCardId(cardId) {
     if (!cardId || typeof cardId !== 'string') {
         return '';
     }
-    const parts = cardId.split('_');
-    if (parts.length <= 6) {
-        return cardId;
+    const canonicalMatch = cardId.match(/^([A-Z]+_[A-Z0-9]+_[A-Z]+_[0-9]+)/);
+    if (canonicalMatch) {
+        return canonicalMatch[1];
     }
-    return parts.slice(0, 6).join('_');
+    const parts = cardId.split('_');
+    const timestampIndex = parts.findIndex(part => /^\d{10,}$/.test(part));
+    if (timestampIndex >= 0) {
+        parts.splice(timestampIndex);
+    }
+    if (parts.length >= 4) {
+        return parts.slice(0, 4).join('_');
+    }
+    return parts.join('_');
 }
 function aggregateCollection(cards) {
     const counts = new Map();
@@ -381,14 +404,23 @@ function applyCloudSave(save) {
         !save.playerDeck[0]?.cardId;
     const collectionEntries = normalizeSavedCollection(save.collection);
     const deckEntries = normalizeSavedDeck(save.playerDeck);
-    if (collectionEntries.length > 0 || deckEntries.length > 0) {
-        applySavedCardData(collectionEntries, deckEntries);
+    let finalCollectionEntries = collectionEntries;
+    let finalDeckEntries = deckEntries;
+    let seededDefaults = false;
+    if (finalCollectionEntries.length === 0 && finalDeckEntries.length === 0) {
+        console.warn('[CloudSave] Empty save detected, seeding starter deck and collection');
+        finalCollectionEntries = cloneSavedEntries(STARTER_COLLECTION_ENTRIES);
+        finalDeckEntries = cloneSavedEntries(STARTER_DECK_ENTRIES);
+        seededDefaults = true;
+    }
+    if (finalCollectionEntries.length > 0 || finalDeckEntries.length > 0) {
+        applySavedCardData(finalCollectionEntries, finalDeckEntries);
     }
     console.log('[CloudSave] Applied save to store', {
         gold: save.gold,
         shards: save.shards,
-        collectionEntries: collectionEntries.length,
-        deckEntries: deckEntries.length,
+        collectionEntries: finalCollectionEntries.length,
+        deckEntries: finalDeckEntries.length,
         currentStage: save.currentStage,
         clears: save.campaignClears,
         pendingForRehydrate: {
@@ -401,8 +433,8 @@ function applyCloudSave(save) {
         if (currentUserId) {
             const convertedSave = {
                 ...save,
-                collection: collectionEntries,
-                playerDeck: deckEntries,
+                collection: finalCollectionEntries,
+                playerDeck: finalDeckEntries,
             };
             persistCloudSave(currentUserId, convertedSave).then(() => {
                 lastSavedJson = JSON.stringify(convertedSave);
@@ -416,6 +448,22 @@ function applyCloudSave(save) {
         window.setTimeout(() => {
             flushSaveImmediately();
         }, 0);
+    }
+    if (seededDefaults && currentUserId) {
+        const seededSave = {
+            ...save,
+            collection: finalCollectionEntries,
+            playerDeck: finalDeckEntries,
+            timestamp: new Date().toISOString(),
+        };
+        persistCloudSave(currentUserId, seededSave).then(() => {
+            lastSavedJson = JSON.stringify(seededSave);
+            pendingSaveJson = '';
+            lastSaveTriggers = extractSaveTriggers(useBattleStore.getState());
+            setCloudSyncStatus('idle');
+        }).catch((error) => {
+            console.error('[CloudSave] Failed to persist seeded starter deck', error);
+        });
     }
 }
 function applyDailyProgressFromSave(save) {
@@ -496,7 +544,15 @@ async function startSync(userId) {
         else {
             console.log('[CloudSave] No save found, creating default snapshot');
             useBattleStore.getState().ensureDailyDungeon();
-            const defaultSave = selectPersistentState(useBattleStore.getState());
+            const starterCollection = cloneSavedEntries(STARTER_COLLECTION_ENTRIES);
+            const starterDeck = cloneSavedEntries(STARTER_DECK_ENTRIES);
+            applySavedCardData(starterCollection, starterDeck);
+            const defaultSave = {
+                ...selectPersistentState(useBattleStore.getState()),
+                collection: starterCollection,
+                playerDeck: starterDeck,
+                timestamp: new Date().toISOString(),
+            };
             await persistCloudSave(userId, defaultSave);
             lastSavedJson = JSON.stringify(defaultSave);
             lastSaveTriggers = extractSaveTriggers(useBattleStore.getState());

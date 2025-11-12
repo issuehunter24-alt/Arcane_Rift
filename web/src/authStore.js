@@ -1,6 +1,6 @@
 import { create } from 'zustand';
 import { supabase } from './supabaseClient';
-import { useBattleStore } from './store';
+import { useBattleStore } from './store.js';
 const defaultNickname = '소환사';
 function normalizeNickname(value) {
     if (!value || typeof value !== 'string') {
@@ -13,11 +13,14 @@ function resolveSessionNickname(session) {
     if (!session) {
         return null;
     }
-    const meta = (session?.user?.user_metadata) ?? {};
+    const meta = session.user?.user_metadata ?? {};
     if (typeof meta !== 'object' || meta === null) {
         return null;
     }
-    return (normalizeNickname(meta.display_name) ?? normalizeNickname(meta.nickname) ?? null);
+    const metaRecord = meta;
+    return (normalizeNickname(metaRecord.display_name) ??
+        normalizeNickname(metaRecord.nickname) ??
+        null);
 }
 export const useAuthStore = create((set, get) => ({
     session: null,
@@ -92,7 +95,10 @@ export const useAuthStore = create((set, get) => ({
             set({ profileNickname: sessionNickname ?? defaultNickname });
             return;
         }
-        const profileNickname = normalizeNickname(data?.display_name) ?? normalizeNickname(data?.nickname) ?? sessionNickname ?? defaultNickname;
+        const profileNickname = normalizeNickname(data?.display_name) ??
+            normalizeNickname(data?.nickname) ??
+            sessionNickname ??
+            defaultNickname;
         set({ profileNickname });
     },
     async signIn(email, password) {

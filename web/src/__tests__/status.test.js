@@ -11,6 +11,8 @@ const makeBlankStatus = () => ({
     attackBuff: 0,
     regen: 0,
     regenDuration: 0,
+    priorityBoost: 0,
+    priorityBoostDuration: 0,
     shockStacks: 0,
     evasionCharges: 0,
     evasionDuration: 0,
@@ -29,6 +31,13 @@ const makeBlankStatus = () => ({
     reactiveArmorDuration: 0,
     energyBoostPending: 0,
     energyBoostDuration: 0,
+    rootDuration: 0,
+    markStacks: 0,
+    markDuration: 0,
+    markDamageAmp: 0,
+    onHitStatuses: [],
+    nullifyTriggerEffects: [],
+    summons: [],
 });
 describe('Status Effects System', () => {
     beforeEach(() => {

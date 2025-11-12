@@ -1,7 +1,7 @@
 import { Application, Assets, Sprite, Container, Text, Graphics } from 'pixi.js';
 import { getCardImagePath, getCardImagePathFallback } from './cardImage';
 import { t, setLocale, getCurrentLocale } from './i18n';
-import { useBattleStore, setVFXCallback, setCardUseAnimationCallback, setHandTrackingResetCallback, setEnemyHandUpdateCallback, getBoostedStageReward, getPvpRankInfo, } from './store';
+import { useBattleStore, setVFXCallback, setCardUseAnimationCallback, setHandTrackingResetCallback, setEnemyHandUpdateCallback, getBoostedStageReward, getPvpRankInfo, } from './store.js';
 import { handleAuthSessionChange } from './cloudSave';
 import { useAuthStore } from './authStore';
 import { loadSampleCards } from './data';
@@ -147,6 +147,16 @@ const announcementCloseButtons = Array.from(document.querySelectorAll('[data-ann
 let announcementHasBeenShown = false;
 let announcementDismissedPermanently = false;
 let announcementRemindQueued = false;
+const PVP_AI_ESTIMATE_MIN_SECONDS = 90;
+const PVP_AI_ESTIMATE_MAX_SECONDS = 120;
+function formatTimer(seconds) {
+    const clamped = Math.max(0, Math.floor(seconds));
+    const minutes = Math.floor(clamped / 60)
+        .toString()
+        .padStart(2, '0');
+    const secs = (clamped % 60).toString().padStart(2, '0');
+    return `${minutes}:${secs}`;
+}
 function openAnnouncementModal() {
     if (!announcementModal || announcementDismissedPermanently)
         return;
@@ -327,8 +337,11 @@ function getDisplayNameFromPortrait(portrait, fallback) {
         return fallback;
     return CHARACTER_NAME_MAP[portrait] ?? fallback;
 }
-let cardPreview;
-let closeCardPreview;
+let cardPreview = null;
+let closeCardPreview = () => {
+    const previewEl = cardPreview ?? document.getElementById('card-preview');
+    previewEl?.classList.remove('active');
+};
 let tooltipRoot;
 let hideTooltip;
 if (cloudSyncOverlay && cloudSyncText) {
@@ -368,7 +381,17 @@ useBattleStore.subscribe((state) => {
             : status === 'matched'
                 ? '상대가 확인되었습니다. 전장으로 이동 중입니다...'
                 : '매칭 정보를 불러오는 중입니다...';
-    pvpStatusText.textContent = message || defaultMessage;
+    let finalMessage = message || defaultMessage;
+    if (status === 'searching') {
+        const elapsed = state.pvpSearchElapsed ?? 0;
+        const estimateMin = state.pvpEstimatedWaitSeconds ?? PVP_AI_ESTIMATE_MIN_SECONDS;
+        const estimateRange = `${formatTimer(estimateMin)}~${formatTimer(PVP_AI_ESTIMATE_MAX_SECONDS)}`;
+        finalMessage = `매칭 대기 ${formatTimer(elapsed)} (예상 ${estimateRange})`;
+        if (elapsed >= estimateMin) {
+            finalMessage += ' · 상대가 없으면 AI 모의전으로 전환됩니다.';
+        }
+    }
+    pvpStatusText.textContent = finalMessage;
     if (error) {
         pvpErrorText.textContent = error;
         pvpErrorText.classList.add('visible');
@@ -386,7 +409,8 @@ useBattleStore.subscribe((state) => {
         pvpOpponentName.textContent = '-';
     }
     if (!isBattleScreen) {
-        if (cardPreview.classList.contains('active')) {
+        const previewEl = cardPreview ?? document.getElementById('card-preview');
+        if (previewEl?.classList.contains('active')) {
             closeCardPreview();
         }
         if (tooltipRoot.style.display !== 'none') {
@@ -712,6 +736,16 @@ app.init({
     const cardPreviewEffects = document.getElementById('card-preview-effects');
     const cardPreviewKeywords = document.getElementById('card-preview-keywords');
     const cardPreviewClose = document.getElementById('card-preview-close');
+    const cardPreviewReady = !!cardPreview &&
+        !!cardPreviewImage &&
+        !!cardPreviewName &&
+        !!cardPreviewCost &&
+        !!cardPreviewEffects &&
+        !!cardPreviewKeywords &&
+        !!cardPreviewClose;
+    if (!cardPreviewReady) {
+        console.warn('[UI] Card preview elements not found – preview modal disabled');
+    }
     // 옵션 & 오디오 컨트롤
     const optionsToggle = document.getElementById('options-toggle');
     const optionsPanel = document.getElementById('options-panel');
@@ -811,15 +845,17 @@ app.init({
         });
     }
     // 카드 프리뷰 모달 닫기
-    closeCardPreview = function closeCardPreview() {
-        cardPreview.classList.remove('active');
-    };
-    cardPreviewClose.addEventListener('click', closeCardPreview);
-    cardPreview.addEventListener('click', (e) => {
-        if (e.target === cardPreview) {
-            closeCardPreview();
-        }
-    });
+    if (cardPreviewReady) {
+        closeCardPreview = function closeCardPreview() {
+            cardPreview.classList.remove('active');
+        };
+        cardPreviewClose.addEventListener('click', closeCardPreview);
+        cardPreview.addEventListener('click', (e) => {
+            if (e.target === cardPreview) {
+                closeCardPreview();
+            }
+        });
+    }
     // 오디오 컨트롤 초기화
     const audioSettings = audioManager.getSettings();
     volumeMaster.value = String(Math.round(audioSettings.masterVolume * 100));
@@ -906,6 +942,16 @@ app.init({
     });
     // 카드 프리뷰 표시
     function showCardPreview(card) {
+        if (!cardPreviewReady ||
+            !cardPreview ||
+            !cardPreviewImage ||
+            !cardPreviewName ||
+            !cardPreviewCost ||
+            !cardPreviewEffects ||
+            !cardPreviewKeywords) {
+            console.warn('[UI] Card preview requested but UI components are missing');
+            return;
+        }
         const imagePath = getLoadedCardImage(card);
         if (imagePath) {
             // PixiJS Assets에서 실제 이미지 URL 가져오기
@@ -1024,6 +1070,7 @@ app.init({
     let gameOver = store.gameOver;
     let playerStatus = store.playerStatus;
     let enemyStatus = store.enemyStatus;
+    let currentInitiative = store.currentInitiative ?? null;
     // 트윈 애니메이션용 표시 값 (부드럽게 변화)
     let displayEnergy = store.energy;
     let displayPlayerHp = store.playerHp;
@@ -1079,10 +1126,20 @@ app.init({
         // 애니메이션 효과를 위해 소수점 반올림
         const displayPlayerHpInt = Math.round(displayPlayerHp);
         const displayEnemyHpInt = Math.round(displayEnemyHp);
+        const initiativeLabel = (() => {
+            if (currentInitiative === 'player') {
+                return '<span style="color:#66bb6a;font-weight:bold;">👑 플레이어 선공</span>';
+            }
+            if (currentInitiative === 'enemy') {
+                return '<span style="color:#ff8a65;font-weight:bold;">⚔️ 적 선공</span>';
+            }
+            return '<span style="color:#aaaaaa;">⏳ 선언 대기 중</span>';
+        })();
         hud.innerHTML = `
       ${gameOverText}
       <div>${t('battle.round')}: ${round}</div>
       <div style="font-size: 10px; color: #777;">${t('battle.seed')}: ${roundSeed}</div>
+      <div style="margin-top: 4px; font-size: 12px;">${t('battle.initiative')}: ${initiativeLabel}</div>
       <div style="margin-top: 8px; padding: 6px; background: rgba(0,0,0,0.3); border-radius: 4px;">
         <div style="font-weight: bold;">${t('battle.player')}</div>
         <div>${t('battle.hp')}: <span style="font-weight: bold; color: ${displayPlayerHpInt < playerHp * 0.3 ? '#f44336' : '#4CAF50'}">${displayPlayerHpInt}</span>/${playerMaxHp}</div>
@@ -2289,14 +2346,14 @@ app.init({
                 costText.visible = false;
                 nameText.visible = false;
                 // 이벤트 설정
-        container.eventMode = 'static';
-        container.cursor = 'default';
-        container.on('pointerenter', () => {
-            container.scale.set(1.1);
-        });
-        container.on('pointerleave', () => {
-            container.scale.set(1.0);
-        });
+                container.eventMode = 'static';
+                container.cursor = 'default';
+                container.on('pointerenter', () => {
+                    container.scale.set(1.1);
+                });
+                container.on('pointerleave', () => {
+                    container.scale.set(1.0);
+                });
                 enemyHandContainer.addChild(container);
                 enemyCardSprites.push({ sprite: pooledCard.sprite, container, index: idx });
             }
@@ -4315,6 +4372,7 @@ app.init({
         const backgroundPath = getSpecialBackground('victory', randomVariation);
         const hasReward = state.pendingReward !== null;
         const dialogue = buildVictoryDialogue(state);
+        const isPvpBattle = state.battleContext.type === 'pvp';
         victoryScreen.innerHTML = `
       <div class="result-background" style="background-image: url('${backgroundPath}');"></div>
       <div class="result-overlay">
@@ -4325,7 +4383,7 @@ app.init({
             <div class="result-subtitle">${escapeHtml(dialogue.subtitle)}</div>
             <div class="result-speaker">${escapeHtml(dialogue.speaker)}</div>
             <div class="result-message">"${escapeHtml(dialogue.message)}"</div>
-            <button class="result-btn" id="victory-continue-btn">${hasReward ? '보상 받기' : '메인 메뉴로'}</button>
+            <button class="result-btn" id="victory-continue-btn">${hasReward ? '보상 받기' : isPvpBattle ? 'PvP 로비로' : '메인 메뉴로'}</button>
           </div>
         </div>
       </div>
@@ -4338,11 +4396,18 @@ app.init({
                 window.clearTimeout(victoryDefeatTimer);
                 victoryDefeatTimer = null;
             }
+            const storeState = useBattleStore.getState();
             if (hasReward) {
-                useBattleStore.getState().setGameScreen('reward');
+                storeState.setGameScreen('reward');
+            }
+            else if (isPvpBattle) {
+                useBattleStore.setState({
+                    battleContext: { type: null, campaignStageId: null, dailyFloorId: null, pvpMatchId: null, pvpSeed: null },
+                });
+                storeState.setGameScreen('pvp');
             }
             else {
-                useBattleStore.getState().setGameScreen('menu');
+                storeState.setGameScreen('menu');
             }
         };
     }
@@ -4713,7 +4778,7 @@ app.init({
             background: 'intro_04.webp',
             cards: [
                 { asset: 'cards/Lucian_Special_Epic.webp', x: 40, y: 47, rotation: -10, scale: 1.06, delay: 40, glow: 'cyan' },
-                { asset: 'cards/Seraphine_Attack_Rare.webp', x: 58, y: 44, rotation: 9, scale: 1.04, delay: 180, glow: 'violet' },
+                { asset: 'cards/Seraphina_Attack_Rare.webp', x: 58, y: 44, rotation: 9, scale: 1.04, delay: 180, glow: 'violet' },
                 { asset: 'cards/Darius_Attack_Epic.webp', x: 51, y: 61, rotation: 6, scale: 0.98, delay: 280, glow: 'amber' },
             ],
         },
@@ -5559,6 +5624,11 @@ app.init({
         roundSeed = s.roundSeed;
         playerMaxHp = s.playerMaxHp;
         enemyMaxHp = s.enemyMaxHp;
+        const nextInitiative = s.currentInitiative ?? null;
+        if (currentInitiative !== nextInitiative) {
+            currentInitiative = nextInitiative;
+            renderHUD();
+        }
         // 게임 오버 상태 변화 감지
         if (gameOver !== s.gameOver) {
             console.log(`[GameOver] State changed: ${gameOver} → ${s.gameOver}`);

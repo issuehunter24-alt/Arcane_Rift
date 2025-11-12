@@ -167,11 +167,19 @@ function getCanonicalCardId(cardId: string | null | undefined): string {
   if (!cardId || typeof cardId !== 'string') {
     return '';
   }
-  const parts = cardId.split('_');
-  if (parts.length <= 6) {
-    return cardId;
+  const canonicalMatch = cardId.match(/^([A-Z]+_[A-Z0-9]+_[A-Z]+_[0-9]+)/);
+  if (canonicalMatch) {
+    return canonicalMatch[1]!;
   }
-  return parts.slice(0, 6).join('_');
+  const parts = cardId.split('_');
+  const timestampIndex = parts.findIndex(part => /^\d{10,}$/.test(part));
+  if (timestampIndex >= 0) {
+    parts.splice(timestampIndex);
+  }
+  if (parts.length >= 4) {
+    return parts.slice(0, 4).join('_');
+  }
+  return parts.join('_');
 }
 
 function aggregateCollection(cards: Card[]): SavedCollectionEntry[] {
