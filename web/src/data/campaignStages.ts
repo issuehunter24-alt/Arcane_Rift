@@ -1,149 +1,347 @@
 import type { CampaignStage, DialogueLine } from '../types/campaign';
 
 export const campaignStageData = [
-    { 
-      id: 1, name: '입문', theme: 'Neutral', recommendedPower: 100, 
+    {
+      id: 1, name: '새벽의 회귀', theme: 'Neutral', recommendedPower: 100,
       firstReward: { gold: 200, shards: 2 }, repeatReward: { gold: 100, shards: 1 }, cleared: false,
       story: {
-        description: '세라피나가 벨몬트 가문의 전통 카드 배틀을 처음 배우는 날. 하인 Lucian이 친절하게 기본 규칙을 가르쳐준다.',
+        description: '벨몬트 저택의 새벽, 회귀한 세라피나가 루시안과 미라 앞에서 덱을 재정비하며 새로운 다짐을 세운다.',
         backgroundImage: 'backgrounds/stage_01_training_1.png'
       },
-      characterImage: 'characters/seraphina_belmont.png', // 주인공 세라피나
-      enemyImage: 'characters/lucian_rosegarden.png', // 적 루시안
+      characterImage: 'characters/seraphina_belmont.png',
+      enemyImage: 'characters/lucian_rosegarden.png',
       cutscene: {
         preBattle: [
           {
-            speaker: 'Lucian',
-            text: '세라피나 아가씨, 벨몬트 가문의 훈련장에 오신 것을 진심으로 환영합니다.',
+            speaker: 'Seraphina',
+            text: '(속삭임) 다시... 돌아왔다.',
             emotion: 'normal',
-            characterImage: 'characters/lucian_rosegarden'
+            characterImage: 'characters/seraphina_belmont.png',
+          },
+          {
+            speaker: 'Mira',
+            text: '아가씨? 악몽이라도 보셨어요?',
+            emotion: 'sad',
+            characterImage: 'characters/mira.png',
           },
           {
             speaker: 'Seraphina',
-            text: '여기서 제가 어떤 시험을 치르게 될지 솔직히 조금 긴장돼요.',
-            emotion: 'normal',
-            characterImage: 'characters/seraphina_belmont'
-          },
-          {
-            speaker: 'Lucian',
-            text: '이곳은 가문의 전술을 몸에 익히는 첫 관문입니다. 카드 한 장, 움직임 한 번까지 모두 실전에 맞춰 설계돼 있죠.',
-            emotion: 'normal',
-            characterImage: 'characters/lucian_rosegarden'
-          },
-          {
-            speaker: 'Lucian',
-            text: '안개, 지면, 장애물까지 완벽히 통제된 환경입니다. 여기서 안정적인 호흡을 만들어내면 그다음부터는 훨씬 수월해집니다.',
-            emotion: 'normal',
-            characterImage: 'characters/lucian_rosegarden'
-          },
-          {
-            speaker: 'Seraphina',
-            text: '공기부터가 긴장감을 주네요. 하지만 이런 곳에서 시작한다면 금세 적응할 수 있을 것 같아요.',
+            text: '괜찮아, 미라. 이번에는 더 좋아. [빛 카드: 미세 점등]',
             emotion: 'determined',
-            characterImage: 'characters/seraphina_belmont'
+            characterImage: 'characters/seraphina_belmont.png',
+          },
+          {
+            speaker: 'Mira',
+            text: '손등 문양이... 살아나요.',
+            emotion: 'surprised',
+            characterImage: 'characters/mira.png',
+          },
+          {
+            speaker: 'Seraphina',
+            text: '내 마력 회로가 깨어났다는 신호야. 오늘부터 규칙을 다시 세울 거야.',
+            emotion: 'determined',
+            characterImage: 'characters/seraphina_belmont.png',
           },
           {
             speaker: 'Lucian',
-            text: '카이 님도 이 훈련장에서 기초를 다졌습니다. 오늘은 그분이 걸었던 첫걸음을 그대로 밟아보는 셈이지요.',
+            text: '은빛 새벽에 계획을 세우는 자가 결국 이긴다. 네 말이었지, 세라피나.',
+            emotion: 'normal',
+            characterImage: 'characters/lucian_rosegarden.png',
+          },
+          {
+            speaker: 'Seraphina',
+            text: '초심자 덱은 핵 카드를 유지하고, 보조 슬롯은 증언 봉인, 정서 정렬, 문양 봉합으로 바꿔.',
+            emotion: 'determined',
+            characterImage: 'characters/seraphina_belmont.png',
+          },
+          {
+            speaker: 'Lucian',
+            text: '전생의 약혼 서약은 어떻게 할 건가요?',
+            emotion: 'normal',
+            characterImage: 'characters/lucian_rosegarden.png',
+          },
+          {
+            speaker: 'Seraphina',
+            text: '내가 끊어. 내 흐름은 내가 지킨다. [어둠 카드: 기억 봉인]',
+            emotion: 'determined',
+            characterImage: 'characters/seraphina_belmont.png',
+          },
+          {
+            speaker: 'Mira',
+            text: '두려우시면...',
+            emotion: 'sad',
+            characterImage: 'characters/mira.png',
+          },
+          {
+            speaker: 'Seraphina',
+            text: '두려움은 남겨둬야 해. 경계가 되어주니까.',
+            emotion: 'determined',
+            characterImage: 'characters/seraphina_belmont.png',
+          },
+          {
+            speaker: 'Lucian',
+            text: '덱 이름은 정했습니까?',
+            emotion: 'normal',
+            characterImage: 'characters/lucian_rosegarden.png',
+          },
+          {
+            speaker: 'Seraphina',
+            text: '이 덱의 이름은 해일. 작은 물결부터 모아 큰 파동을 만든다.',
+            emotion: 'determined',
+            characterImage: 'characters/seraphina_belmont.png',
+          },
+          {
+            speaker: 'Seraphina',
+            text: '마력 충전 두 번, 진실 시전 한 번. 첫 다짐은 나 자신에게.',
+            emotion: 'determined',
+            characterImage: 'characters/seraphina_belmont.png',
+          },
+          {
+            speaker: 'Lucian',
+            text: '그럼 훈련장으로 가시죠.',
             emotion: 'happy',
-            characterImage: 'characters/lucian_rosegarden'
-          },
-          {
-            speaker: 'Seraphina',
-            text: '그 길을 따라갈 수 있다면 더 바랄 것이 없겠네요. 어설프더라도 포기하지 않겠습니다.',
-            emotion: 'determined',
-            characterImage: 'characters/seraphina_belmont'
-          },
-          {
-            speaker: 'Lucian',
-            text: '좋습니다. 첫 스테이지에서는 카드 순환과 발놀림만 집중하세요. 승패보다 더 중요한 건 기본입니다.',
-            emotion: 'normal',
-            characterImage: 'characters/lucian_rosegarden'
-          },
-          {
-            speaker: 'Seraphina',
-            text: '네. 오늘 목표는 호흡과 리듬, 그리고 다음 단계로 나아갈 자신감을 만드는 것.',
-            emotion: 'determined',
-            characterImage: 'characters/seraphina_belmont'
-          },
-          {
-            speaker: 'Lucian',
-            text: '바로 그 자세입니다. 이제 시작해볼까요?',
-            emotion: 'happy',
-            characterImage: 'characters/lucian_rosegarden'
+            characterImage: 'characters/lucian_rosegarden.png',
           }
         ],
         postVictory: [
           {
             speaker: 'Lucian',
-            text: '숨이 안정적이었습니다. 첫 승리치고는 자세가 매우 안정됐어요.',
+            text: '회로 안정 확인. 첫 실험 성공이야, 세라피나.',
             emotion: 'happy',
-            characterImage: 'characters/lucian_rosegarden'
+            characterImage: 'characters/lucian_rosegarden.png',
+          },
+          {
+            speaker: 'Mira',
+            text: '카드 문양이 맑아요... 정말 살아난 것 같아요!',
+            emotion: 'happy',
+            characterImage: 'characters/mira.png',
           },
           {
             speaker: 'Seraphina',
-            text: '초반엔 손이 떨렸는데, 호흡을 길게 가져가니 카드가 제자리를 찾더라고요.',
-            emotion: 'happy',
-            characterImage: 'characters/seraphina_belmont'
-          },
-          {
-            speaker: 'Lucian',
-            text: '다음 스테이지부터는 상대가 전술적으로 훨씬 날카로워집니다. 방금 익힌 템포를 잊지 마세요.',
-            emotion: 'normal',
-            characterImage: 'characters/lucian_rosegarden'
-          },
-          {
-            speaker: 'Seraphina',
-            text: '전투를 다시 떠올리면서 움직임을 정리해 둘게요. 그럼 어떤 속도에도 흔들리지 않을 거예요.',
+            text: '(조용히) 회귀의 시작은 복수가 아니라 균형이야.',
             emotion: 'determined',
-            characterImage: 'characters/seraphina_belmont'
+            characterImage: 'characters/seraphina_belmont.png',
           },
           {
             speaker: 'Lucian',
-            text: '훌륭합니다. 지금의 집중력을 다음 스테이지에서도 이어가 봅시다.',
+            text: '맞아. 이제 네 마력은 널 단죄하던 세계를 바꾸기 시작했어.',
             emotion: 'happy',
-            characterImage: 'characters/lucian_rosegarden'
+            characterImage: 'characters/lucian_rosegarden.png',
+          },
+          {
+            speaker: 'Seraphina',
+            text: '오늘의 새벽은, 나의 첫 승리야.',
+            emotion: 'determined',
+            characterImage: 'characters/seraphina_belmont.png',
           }
         ],
         postDefeat: [
           {
             speaker: 'Lucian',
-            text: '처음에는 누구나 발이 꼬이곤 합니다. 중요한 건 어디에서 리듬이 흐트러졌는지 확인하는 것이죠.',
+            text: '처음에는 누구나 발이 꼬이곤 합니다. 어디에서 리듬이 흐트러졌는지 확인해 봅시다.',
             emotion: 'normal',
-            characterImage: 'characters/lucian_rosegarden'
+            characterImage: 'characters/lucian_rosegarden.png',
           },
           {
             speaker: 'Seraphina',
-            text: '카드를 던지는 타이밍을 서두르다가 순서를 놓쳤어요. 다음엔 호흡을 더 길게 잡아야겠어요.',
+            text: '카드를 던지는 타이밍을 서두르다가 순서를 놓쳤어. 다음에는 호흡을 길게 잡을게.',
             emotion: 'sad',
-            characterImage: 'characters/seraphina_belmont'
+            characterImage: 'characters/seraphina_belmont.png',
           },
           {
             speaker: 'Lucian',
-            text: '방금 전투를 차근차근 복기해 봅시다. 다시 서 보면 금세 안정을 되찾게 될 겁니다.',
+            text: '방금 전투를 차근차근 복기하면 금세 안정을 되찾을 거예요.',
             emotion: 'normal',
-            characterImage: 'characters/lucian_rosegarden'
+            characterImage: 'characters/lucian_rosegarden.png',
           },
           {
             speaker: 'Seraphina',
-            text: '좋아요. 실수를 바로잡을 수 있다면 몇 번이고 다시 도전할 수 있어요.',
+            text: '실수를 바로잡을 수 있다면 몇 번이고 다시 도전할 수 있어.',
             emotion: 'determined',
-            characterImage: 'characters/seraphina_belmont'
+            characterImage: 'characters/seraphina_belmont.png',
           },
           {
             speaker: 'Lucian',
             text: '언제든 제가 곁에서 리듬을 맞춰드리겠습니다. 다시 호흡을 가다듬고 도전해 봅시다.',
             emotion: 'happy',
-            characterImage: 'characters/lucian_rosegarden'
+            characterImage: 'characters/lucian_rosegarden.png',
           }
         ]
       }
     },
-    { 
-      id: 2, name: '불의 시련', theme: 'Fire', recommendedPower: 120, 
+    {
+      id: 2, name: '안개 시험', theme: 'Fog', recommendedPower: 120,
       firstReward: { gold: 0, shards: 2 }, repeatReward: { gold: 0, shards: 2 }, cleared: false,
       story: {
-        description: '아리아나가 질투심으로 도전해온다. "카이 님의 약혼자라는 그 시골 소녀... 내 화염 카드의 힘을 봐!" 화산 지대에서 치열한 대결이 펼쳐진다.',
+        description: '벨몬트 안개 훈련장에서 세라피나가 루시안, 가렌, 마르쿠스와 함께 속성 전환을 조율하며 경계심과 믿음을 다듬는다.',
+        backgroundImage: 'backgrounds/stage_01_training_2.png'
+      },
+      characterImage: 'characters/seraphina_belmont.png',
+      enemyImage: 'characters/garen_stone.png',
+      cutscene: {
+        preBattle: [
+          {
+            speaker: 'Lucian',
+            text: '안개는 기억을 흐린다. 흐리면... 넘겨짚게 되지.',
+            emotion: 'normal',
+            characterImage: 'characters/lucian_rosegarden.png',
+          },
+          {
+            speaker: 'Seraphina',
+            text: '(호흡을 고르며) 그러니 먼저 가른다. [바람 카드: 기류 탐지]',
+            emotion: 'determined',
+            characterImage: 'characters/seraphina_belmont.png',
+          },
+          {
+            speaker: 'Mira',
+            text: '앞머리가... 살짝 흔들려요.',
+            emotion: 'surprised',
+            characterImage: 'characters/mira.png',
+          },
+          {
+            speaker: 'Seraphina',
+            text: '바람, 불, 얼음으로 삼연계를 돌려. 기회, 증폭, 결말. 시작한다.',
+            emotion: 'determined',
+            characterImage: 'characters/seraphina_belmont.png',
+          },
+          {
+            speaker: 'Seraphina',
+            text: '[바람 카드: 길 트기] [불 카드: 열기 상승] [얼음 카드: 서리 정밀]',
+            emotion: 'determined',
+            characterImage: 'characters/seraphina_belmont.png',
+          },
+          {
+            speaker: 'Garen',
+            text: '그녀의 박자, 전과 다르다.',
+            emotion: 'surprised',
+            characterImage: 'characters/garen_stone.png',
+          },
+          {
+            speaker: 'Marcus',
+            text: '초침처럼 정확해.',
+            emotion: 'normal',
+            characterImage: 'characters/marcus_belmont.png',
+          },
+          {
+            speaker: 'Lucian',
+            text: '속성 피로가 쌓이기 전에 전환. 대지로 식혀.',
+            emotion: 'normal',
+            characterImage: 'characters/lucian_rosegarden.png',
+          },
+          {
+            speaker: 'Seraphina',
+            text: '[대지 카드: 맥박 안정] 좋아. 안개 너머 함정 문양 해제 완료.',
+            emotion: 'determined',
+            characterImage: 'characters/seraphina_belmont.png',
+          },
+          {
+            speaker: 'Garen',
+            text: '보호는 이제 과잉이겠군.',
+            emotion: 'normal',
+            characterImage: 'characters/garen_stone.png',
+          },
+          {
+            speaker: 'Seraphina',
+            text: '보호는 필요해. 방식만 바뀐 거야. 함께 서요.',
+            emotion: 'determined',
+            characterImage: 'characters/seraphina_belmont.png',
+          },
+          {
+            speaker: 'Marcus',
+            text: '그 말, 작전 명단에 기록하지.',
+            emotion: 'happy',
+            characterImage: 'characters/marcus_belmont.png',
+          },
+          {
+            speaker: 'Mira',
+            text: '(작게 환호) 해냈어요, 아가씨!',
+            emotion: 'happy',
+            characterImage: 'characters/mira.png',
+          },
+          {
+            speaker: 'Seraphina',
+            text: '다음은 화산 지대. 열과 두려움을 대비로 바꾸자.',
+            emotion: 'determined',
+            characterImage: 'characters/seraphina_belmont.png',
+          }
+        ],
+        postVictory: [
+          {
+            speaker: 'Garen',
+            text: '(검을 거두며) 완벽했다. 안개가 아니라 마음을 걷어냈군.',
+            emotion: 'happy',
+            characterImage: 'characters/garen_stone.png',
+          },
+          {
+            speaker: 'Lucian',
+            text: '속성 피로 해제 완료. 감정 흐름은 맑습니다.',
+            emotion: 'happy',
+            characterImage: 'characters/lucian_rosegarden.png',
+          },
+          {
+            speaker: 'Mira',
+            text: '이제 정말 자신을 믿으실 수 있겠죠?',
+            emotion: 'happy',
+            characterImage: 'characters/mira.png',
+          },
+          {
+            speaker: 'Seraphina',
+            text: '믿음은 늘 불안과 함께 오지만, 오늘은 믿어볼게.',
+            emotion: 'determined',
+            characterImage: 'characters/seraphina_belmont.png',
+          },
+          {
+            speaker: 'Garen',
+            text: '훈련 완료. 안개 시험 합격이다.',
+            emotion: 'happy',
+            characterImage: 'characters/garen_stone.png',
+          },
+          {
+            speaker: 'Seraphina',
+            text: '두려움을 걷어내면 안개 속에도 길이 있다.',
+            emotion: 'determined',
+            characterImage: 'characters/seraphina_belmont.png',
+          }
+        ],
+        postDefeat: [
+          {
+            speaker: 'Garen',
+            text: '괜찮나? 바람이 마음대로 불어서 놀랐지? 처음엔 누구나 흔들린다.',
+            emotion: 'normal',
+            characterImage: 'characters/garen_stone.png',
+          },
+          {
+            speaker: 'Seraphina',
+            text: '몸이 가벼워지는 걸 즐기다가 중심을 잃었어. 다시 자세를 다듬어야겠어.',
+            emotion: 'sad',
+            characterImage: 'characters/seraphina_belmont.png',
+          },
+          {
+            speaker: 'Mira',
+            text: '제가 옆에서 바람을 잡아드릴게요!',
+            emotion: 'happy',
+            characterImage: 'characters/mira.png',
+          },
+          {
+            speaker: 'Garen',
+            text: '무릎을 굽히고 손바닥으로 기류를 느껴라. 균형을 잡으면 폭풍도 길들인다.',
+            emotion: 'determined',
+            characterImage: 'characters/garen_stone.png',
+          },
+          {
+            speaker: 'Seraphina',
+            text: '다시 리듬을 맞춰서 돌아올게. 도와줘서 고마워.',
+            emotion: 'determined',
+            characterImage: 'characters/seraphina_belmont.png',
+          }
+        ]
+      }
+    },
+    {
+      id: 3, name: '불의 예고', theme: 'Fire', recommendedPower: 140,
+      firstReward: { gold: 250, shards: 3 }, repeatReward: { gold: 120, shards: 2 }, cleared: false,
+      story: {
+        description: '화산 훈련장에서 세라피나가 과거의 기억을 도구로 삼아 열기를 제압하며 대비를 다듬는다.',
         backgroundImage: 'backgrounds/stage_02_fire_1.png'
       },
       characterImage: 'characters/seraphina_belmont.png',
@@ -151,113 +349,146 @@ export const campaignStageData = [
       cutscene: {
         preBattle: [
           {
-            speaker: 'Ariana',
-            text: '당신이 세라피나? 카이 님 곁에 선다는 그 시골 소녀가 맞는지 두 눈으로 확인하려고 왔어.',
-            emotion: 'angry',
-            characterImage: 'characters/ariana_drake'
+            speaker: 'Seraphina',
+            text: '(손끝이 떨리며) 이 열기, 그날의 재판장을 떠올리게 해.',
+            emotion: 'sad',
+            characterImage: 'characters/seraphina_belmont.png',
+          },
+          {
+            speaker: 'Lucian',
+            text: '기억을 도구로 써. [얼음 카드: 감정 냉각]',
+            emotion: 'determined',
+            characterImage: 'characters/lucian_rosegarden.png',
           },
           {
             speaker: 'Seraphina',
-            text: '맞아요. 저는 세라피나 벨몬트가 될 사람입니다. 당신이 아리아나인가요?',
+            text: '불로 의지를 세우고, 바람으로 분산하고, 얼음으로 봉인한다.',
+            emotion: 'determined',
+            characterImage: 'characters/seraphina_belmont.png',
+          },
+          {
+            speaker: 'Seraphina',
+            text: '[불 카드: 결단 점화] [바람 카드: 기류 분산] [얼음 카드: 봉인 정밀]',
+            emotion: 'determined',
+            characterImage: 'characters/seraphina_belmont.png',
+          },
+          {
+            speaker: '기사단원',
+            text: '용암 기류가... 잠잠해진다?',
+            emotion: 'surprised',
+          },
+          {
+            speaker: '기사단원',
+            text: '속도와 판단이 맞물렸어. 번개 적성도 있겠는걸.',
+            emotion: 'surprised',
+          },
+          {
+            speaker: 'Lucian',
+            text: '화산 에센스 봉인 카드다. 필요할 때만 개방해.',
             emotion: 'normal',
-            characterImage: 'characters/seraphina_belmont'
-          },
-          {
-            speaker: 'Ariana',
-            text: '그래. 카이 님과 함께 성장한 나에게 약혼녀로서의 자격을 증명해보인다고? 말뿐이라면 바로 여기서 끝이야.',
-            emotion: 'angry',
-            characterImage: 'characters/ariana_drake'
+            characterImage: 'characters/lucian_rosegarden.png',
           },
           {
             speaker: 'Seraphina',
-            text: '카이가 어떤 사람인지 누구보다 잘 알고 싶어요. 그러기 위해서라면 당신과의 대결도 피하지 않을 겁니다.',
-            emotion: 'angry',
-            characterImage: 'characters/seraphina_belmont'
+            text: '과열 방지 장치와 쌍으로 묶어둘게. [보조 카드: 문양 봉합 연동]',
+            emotion: 'determined',
+            characterImage: 'characters/seraphina_belmont.png',
           },
           {
-            speaker: 'Ariana',
-            text: '좋아. 이 화산 지대는 나의 무대야. 뜨거운 기류에 집중하지 못하면 그대로 타버릴 거라고!',
-            emotion: 'angry',
-            characterImage: 'characters/ariana_drake'
+            speaker: 'Mira',
+            text: '손끝, 괜찮으세요?',
+            emotion: 'sad',
+            characterImage: 'characters/mira.png',
           },
           {
             speaker: 'Seraphina',
-            text: '숨을 깊게 들이쉬면 유황 향 속에서도 다른 향기를 느낄 수 있네요. 당신이 얼마나 연습했는지 알 것 같아요.',
-            emotion: 'normal',
-            characterImage: 'characters/seraphina_belmont'
+            text: '남아 있는 떨림은 경고야. 기록해. 오버체인은 금지, 속성 피로를 풀고 재시전한다.',
+            emotion: 'determined',
+            characterImage: 'characters/seraphina_belmont.png',
           },
           {
-            speaker: 'Ariana',
-            text: '말은 그럴듯하네. 그럼 화염 장미를 피할 각오라도 되어 있는지 보여봐!',
-            emotion: 'angry',
-            characterImage: 'characters/ariana_drake'
+            speaker: 'Garen',
+            text: '이번엔 불길을 등지지 않았군. 정면으로 다뤘어.',
+            emotion: 'happy',
+            characterImage: 'characters/garen_stone.png',
+          },
+          {
+            speaker: 'Seraphina',
+            text: '두려움은 대비로 바꾸면 내 편이 되니까.',
+            emotion: 'determined',
+            characterImage: 'characters/seraphina_belmont.png',
           }
         ],
         postVictory: [
           {
-            speaker: 'Ariana',
-            text: '불꽃이 꺼져버리다니... 내가 졌다고 인정해야겠네.',
-            emotion: 'sad',
-            characterImage: 'characters/ariana_drake'
+            speaker: 'Lucian',
+            text: '마력 게이지 안정. 과열 없음.',
+            emotion: 'happy',
+            characterImage: 'characters/lucian_rosegarden.png',
+          },
+          {
+            speaker: 'Garen',
+            text: '(웃으며) 이번엔 네가 불을 지배했군.',
+            emotion: 'happy',
+            characterImage: 'characters/garen_stone.png',
+          },
+          {
+            speaker: '기사단원',
+            text: '전생의 악역이 아니라 전장의 조율자 같았습니다.',
+            emotion: 'happy',
           },
           {
             speaker: 'Seraphina',
-            text: '당신의 화염은 정말 아름다웠어요. 저도 그 열기에 사로잡힐 뻔했죠.',
+            text: '(불빛을 바라보며) 불은 언제나 나를 삼키려 했지. 이제는 내가 다뤄서 세상을 비출 거야.',
+            emotion: 'determined',
+            characterImage: 'characters/seraphina_belmont.png',
+          },
+          {
+            speaker: 'Lucian',
+            text: '그게 진짜 회귀자의 불꽃이지.',
             emotion: 'happy',
-            characterImage: 'characters/seraphina_belmont'
-          },
-          {
-            speaker: 'Ariana',
-            text: '흥... 인정은 하지만 마음까지 내주진 않을 거야. 다음엔 더 뜨겁게 불태울 테니까.',
-            emotion: 'angry',
-            characterImage: 'characters/ariana_drake'
-          },
-          {
-            speaker: 'Seraphina',
-            text: '언제든 좋아요. 당신과 다시 맞붙을 수 있다면 저도 더 성장해 있을 테니까요.',
-            emotion: 'happy',
-            characterImage: 'characters/seraphina_belmont'
-          },
-          {
-            speaker: 'Ariana',
-            text: '그 말, 꼭 기억해. 카이 님 옆에 설 자격을 진짜 증명할 때까지 끝내주지 않을 거야.',
-            emotion: 'angry',
-            characterImage: 'characters/ariana_drake'
+            characterImage: 'characters/lucian_rosegarden.png',
           }
         ],
         postDefeat: [
           {
-            speaker: 'Ariana',
-            text: '봐, 이게 나와 카이 님이 쌓아온 실력이야. 아직 불꽃에 몸을 맡길 준비가 안 된 거지.',
-            emotion: 'happy',
-            characterImage: 'characters/ariana_drake'
+            speaker: 'Lucian',
+            text: '과열을 허용하면 감정이 타버립니다. 냉각 루틴부터 다시 정리합시다.',
+            emotion: 'normal',
+            characterImage: 'characters/lucian_rosegarden.png',
           },
           {
             speaker: 'Seraphina',
-            text: '화염의 리듬을 따라가지 못했어요... 다시 연습해서 돌아오겠습니다.',
+            text: '열기를 견디지 못했어. 기억이 흔들리면 손이 따라주지 않네.',
             emotion: 'sad',
-            characterImage: 'characters/seraphina_belmont'
+            characterImage: 'characters/seraphina_belmont.png',
           },
           {
-            speaker: 'Ariana',
-            text: '그 용기가 있다면 언젠가 다시 만나겠지. 그때는 오늘보다 뜨거운 전장을 준비해둘게.',
-            emotion: 'angry',
-            characterImage: 'characters/ariana_drake'
+            speaker: 'Mira',
+            text: '초기화 장치를 준비할게요. 다시 시도해요!',
+            emotion: 'happy',
+            characterImage: 'characters/mira.png',
+          },
+          {
+            speaker: 'Garen',
+            text: '불을 등지지 말고 정면으로 바라봐라. 공기의 흐름을 먼저 읽어라.',
+            emotion: 'determined',
+            characterImage: 'characters/garen_stone.png',
           },
           {
             speaker: 'Seraphina',
-            text: '기다려 주세요. 다음에는 저도 불꽃을 친구로 만들고 돌아올게요.',
+            text: '경고 고마워. 과열 장치를 점검하고 다시 돌아올게.',
             emotion: 'determined',
-            characterImage: 'characters/seraphina_belmont'
+            characterImage: 'characters/seraphina_belmont.png',
           }
         ]
       }
     },
-    { 
-      id: 3, name: '얼음 요새', theme: 'Ice', recommendedPower: 140, 
-      firstReward: { gold: 250, shards: 3 }, repeatReward: { gold: 120, shards: 2 }, cleared: false,
+    {
+      id: 4, name: '얼음의 이름', theme: 'Ice', recommendedPower: 160,
+      firstReward: { gold: 0, shards: 2 }, repeatReward: { gold: 0, shards: 2 }, cleared: false,
       story: {
-        description: '얼음 속성 마법사 Seraphine Winters와의 대결. 거대한 빙결 성채에서 차가운 마법이 휘몰아친다. 전략적인 플레이가 필요하다.',
+        description: '윈터스 가의 빙결 성채에서 세라피나와 세라핀 윈터스가 투명한 체인을 맺으며 신뢰를 서약한다.',
         backgroundImage: 'backgrounds/stage_03_ice_1.png'
       },
       characterImage: 'characters/seraphina_belmont.png',
@@ -266,106 +497,154 @@ export const campaignStageData = [
         preBattle: [
           {
             speaker: 'Seraphine Winters',
-            text: '빙결 성채에 온 것을 환영해요. 나는 Seraphine Winters, 얼음 마법의 수호자예요.',
+            text: '벨몬트의 문이 여기까지 닿다니. 무슨 일이지?',
             emotion: 'normal',
-            characterImage: 'characters/elena_drake'
+            characterImage: 'characters/seraphine_winters.png',
           },
           {
             speaker: 'Seraphina',
-            text: '저도 Seraphine라는 이름인데, 이렇게 만나게 되다니 신기하네요.',
-            emotion: 'surprised',
-            characterImage: 'characters/seraphina_belmont'
-          },
-          {
-            speaker: 'Seraphine Winters',
-            text: '이름이 같다고 길을 내주진 않아요. 여기서는 감정까지 얼려두지 않으면 한순간에 패배하거든요.',
-            emotion: 'normal',
-            characterImage: 'characters/elena_drake'
-          },
-          {
-            speaker: 'Seraphina',
-            text: '화염 스테이지까지는 감정에 기대어 싸웠어요. 이번엔 조금 다르게 접근해볼게요.',
+            text: '이번 생엔 서로를 믿고 싶어. 증거로 말할게. [빛 카드: 진실 비춤] [얼음 카드: 투명 서명]',
             emotion: 'determined',
-            characterImage: 'characters/seraphina_belmont'
+            characterImage: 'characters/seraphina_belmont.png',
           },
           {
             speaker: 'Seraphine Winters',
-            text: '좋아요. 숨을 들이쉴 때마다 얼음이 폐를 스치고 지나갈 거예요. 그 차가움을 즐겨보세요.',
-            emotion: 'normal',
-            characterImage: 'characters/elena_drake'
+            text: '진실 문양이... 탁하지 않아.',
+            emotion: 'surprised',
+            characterImage: 'characters/seraphine_winters.png',
+          },
+          {
+            speaker: 'Mira',
+            text: '(작게) 아가씨의 감정이 맑을수록 문양이 곧게 열려요.',
+            emotion: 'happy',
+            characterImage: 'characters/mira.png',
           },
           {
             speaker: 'Seraphina',
-            text: '차가움 속에 있는 고요를 느껴볼게요. 그 고요 속에서 제 전략을 찾겠습니다.',
-            emotion: 'normal',
-            characterImage: 'characters/seraphina_belmont'
+            text: '정보 공유 체인을 제안할게. 우리만의 차가운 통로야.',
+            emotion: 'determined',
+            characterImage: 'characters/seraphina_belmont.png',
           },
           {
             speaker: 'Seraphine Winters',
-            text: '바로 그 태도예요. 얼음은 부드러움과 단단함을 동시에 품고 있으니까요. 준비됐다면 시작하죠.',
+            text: '조건은 간단하다. 거짓을 쓰면 균열이 난다.',
+            emotion: 'normal',
+            characterImage: 'characters/seraphine_winters.png',
+          },
+          {
+            speaker: 'Seraphina',
+            text: '좋아. 그 규칙이 오히려 좋아. 손을 내민다.',
+            emotion: 'determined',
+            characterImage: 'characters/seraphina_belmont.png',
+          },
+          {
+            speaker: 'Seraphine Winters',
+            text: '(손을 맞잡으며) 얼음은 차갑지만 깨끗해. 그 위에 꽃이 피지.',
             emotion: 'happy',
-            characterImage: 'characters/elena_drake'
+            characterImage: 'characters/seraphine_winters.png',
+          },
+          {
+            speaker: 'Seraphina',
+            text: '그 꽃을 음모의 조각 위에 얹자. 블랙우드를 추적하려면 네 차가움이 필요해.',
+            emotion: 'determined',
+            characterImage: 'characters/seraphina_belmont.png',
+          },
+          {
+            speaker: 'Seraphine Winters',
+            text: '합의다, 세라피나 벨몬트.',
+            emotion: 'happy',
+            characterImage: 'characters/seraphine_winters.png',
+          },
+          {
+            speaker: 'Seraphina',
+            text: '고마워, 세라핀 윈터스.',
+            emotion: 'happy',
+            characterImage: 'characters/seraphina_belmont.png',
           }
         ],
         postVictory: [
           {
             speaker: 'Seraphine Winters',
-            text: '훌륭하네요. 당신의 전략은 얼음 위에서 춤추듯 유연했어요.',
+            text: '체인 안정. 거짓 반응 0%.',
             emotion: 'happy',
-            characterImage: 'characters/elena_drake'
+            characterImage: 'characters/seraphine_winters.png',
+          },
+          {
+            speaker: 'Mira',
+            text: '서리 문양이 꽃처럼 빛나요.',
+            emotion: 'happy',
+            characterImage: 'characters/mira.png',
           },
           {
             speaker: 'Seraphina',
-            text: '감사합니다. 차가움 속에서도 움직임을 멈추지 않는 게 중요하다는 걸 배웠어요.',
-            emotion: 'happy',
-            characterImage: 'characters/seraphina_belmont'
+            text: '진심은 온도를 바꾸지 않아도 전해지는 법이야.',
+            emotion: 'determined',
+            characterImage: 'characters/seraphina_belmont.png',
           },
           {
             speaker: 'Seraphine Winters',
-            text: '얼음은 감정을 얼리는 것이 아니라, 감정을 투명하게 만드는 힘이랍니다. 그 투명함을 잊지 마세요.',
-            emotion: 'normal',
-            characterImage: 'characters/elena_drake'
+            text: '네가 그걸 깨닫는 데 몇 생이 걸렸지?',
+            emotion: 'happy',
+            characterImage: 'characters/seraphine_winters.png',
           },
           {
             speaker: 'Seraphina',
-            text: '네. 제 마음을 다시 돌아보게 되었어요. 다음 전투에서 꼭 활용할게요.',
+            text: '단 한 번이면 충분했어.',
+            emotion: 'happy',
+            characterImage: 'characters/seraphina_belmont.png',
+          },
+          {
+            speaker: 'Seraphine Winters',
+            text: '이번 생에는 신뢰부터 새로 쌓자.',
             emotion: 'determined',
-            characterImage: 'characters/seraphina_belmont'
+            characterImage: 'characters/seraphine_winters.png',
+          },
+          {
+            speaker: 'Seraphina',
+            text: '차가운 손끝에도 약속은 피어난다.',
+            emotion: 'determined',
+            characterImage: 'characters/seraphina_belmont.png',
           }
         ],
         postDefeat: [
           {
             speaker: 'Seraphine Winters',
-            text: '얼음에 몸이 굳었군요. 아직 호흡이 얼음의 속도에 맞춰지지 않았어요.',
+            text: '감정이 탁해졌어. 문양이 갈라졌다.',
             emotion: 'normal',
-            characterImage: 'characters/elena_drake'
+            characterImage: 'characters/seraphine_winters.png',
           },
           {
             speaker: 'Seraphina',
-            text: '차갑다는 느낌만 생각했더니 손끝이 움직이지 않았어요. 다시 감각을 익혀야겠네요.',
+            text: '얼음 위에서도 마음이 흔들리면 금이 가는구나.',
             emotion: 'sad',
-            characterImage: 'characters/seraphina_belmont'
+            characterImage: 'characters/seraphina_belmont.png',
+          },
+          {
+            speaker: 'Mira',
+            text: '다시 감정을 정리할 시간을 드릴게요.',
+            emotion: 'happy',
+            characterImage: 'characters/mira.png',
           },
           {
             speaker: 'Seraphine Winters',
-            text: '물로 손을 적시고 다시 얼음 위에 올려보세요. 차가움에 익숙해지면 감정도 투명해질 겁니다.',
-            emotion: 'happy',
-            characterImage: 'characters/elena_drake'
+            text: '차갑게 숨을 들이쉬고, 내쉬면서 진실만 남겨라.',
+            emotion: 'determined',
+            characterImage: 'characters/seraphine_winters.png',
           },
           {
             speaker: 'Seraphina',
-            text: '조언 고마워요. 다음에는 고요 속에서 길을 찾아 다시 도전할게요.',
+            text: '차분히 정리해서 다시 오겠어.',
             emotion: 'determined',
-            characterImage: 'characters/seraphina_belmont'
+            characterImage: 'characters/seraphina_belmont.png',
           }
         ]
       }
     },
-    { 
-      id: 4, name: '뇌전의 탑', theme: 'Lightning', recommendedPower: 160, 
-      firstReward: { gold: 0, shards: 2 }, repeatReward: { gold: 0, shards: 2 }, cleared: false,
+    {
+      id: 5, name: '번개의 박자와 바람의 웃음', theme: 'Lightning', recommendedPower: 180,
+      firstReward: { gold: 300, shards: 3 }, repeatReward: { gold: 150, shards: 2 }, cleared: false,
       story: {
-        description: '왕국 기사단의 전기 마법사 Leon Ardenia. "벨몬트 가문의 새 아가씨라고? 흥미롭군. 나의 뇌전 마법을 막아보시지." 번개가 치는 폭풍우 탑에서 강력한 적수를 만난다.',
+        description: '번개 탑 회랑에서 세라피나와 레온이 거리를 둔 채 박동을 맞추며 협력의 리듬을 만든다.',
         backgroundImage: 'backgrounds/stage_04_lightning_1.png'
       },
       characterImage: 'characters/seraphina_belmont.png',
@@ -374,323 +653,281 @@ export const campaignStageData = [
         preBattle: [
           {
             speaker: 'Leon Ardenia',
-            text: '벨몬트 가문의 새 아가씨라... 소문이 궁금해 직접 내려왔지.',
+            text: '벨몬트. 지난 생의 빚을 이번 생에서 갚게 하지.',
             emotion: 'normal',
-            characterImage: 'characters/leon_ardenia'
+            characterImage: 'characters/leon_ardenia.png',
           },
           {
             speaker: 'Seraphina',
-            text: '왕국 기사단의 Leon Ardenia 님, 뵙게 되어 영광입니다. 번개처럼 빠른 전술을 직접 보고 싶었어요.',
-            emotion: 'normal',
-            characterImage: 'characters/seraphina_belmont'
-          },
-          {
-            speaker: 'Leon Ardenia',
-            text: '이 탑은 번개구름이 하루에도 수십 번 지나가는 곳이다. 한 번 방심하면 바로 감전돼서 추락하지.',
-            emotion: 'normal',
-            characterImage: 'characters/leon_ardenia'
-          },
-          {
-            speaker: 'Seraphina',
-            text: '바람과 얼음을 지나온 지금, 번개의 속도에도 적응해보고 싶어요. 저를 시험해 주세요.',
+            text: '(고개 숙이며) 정치적 약속엔 감사해. 하지만 내 마력 흐름을 지키려면 거리가 필요해. [바람 카드: 거리 유지] [번개 카드: 박자 정렬]',
             emotion: 'determined',
-            characterImage: 'characters/seraphina_belmont'
+            characterImage: 'characters/seraphina_belmont.png',
           },
           {
             speaker: 'Leon Ardenia',
-            text: '좋다. 번개는 망설임을 용서하지 않는다. 카드 순서를 머릿속으로 세 번 외운 뒤 그대로 실행해라.',
-            emotion: 'normal',
-            characterImage: 'characters/leon_ardenia'
+            text: '거리를 둔다면서 동맹을 말하나?',
+            emotion: 'surprised',
+            characterImage: 'characters/leon_ardenia.png',
           },
           {
             speaker: 'Seraphina',
-            text: '호흡을 맞추고, 마음을 가볍게... 번개의 박자를 따라가겠습니다.',
-            emotion: 'normal',
-            characterImage: 'characters/seraphina_belmont'
+            text: '검과 카드가 부딪히지 않도록 호흡만 맞추자.',
+            emotion: 'determined',
+            characterImage: 'characters/seraphina_belmont.png',
           },
           {
             speaker: 'Leon Ardenia',
-            text: '그 의지를 번개보다 빠르게 보여줘라. 망설임이 보이면 바로 떨어뜨릴 것이다.',
-            emotion: 'angry',
-            characterImage: 'characters/leon_ardenia'
+            text: '(검집에 손을 올리며) 솔직해서 더 낫군.',
+            emotion: 'happy',
+            characterImage: 'characters/leon_ardenia.png',
+          },
+          {
+            speaker: 'Mira',
+            text: '(작게) 심장 뛰는 소리가 탑과 맞춰져요.',
+            emotion: 'surprised',
+            characterImage: 'characters/mira.png',
+          },
+          {
+            speaker: 'Seraphina',
+            text: '(미라에게) 박동을 번개 박자에 싱크. 과열 금지.',
+            emotion: 'determined',
+            characterImage: 'characters/seraphina_belmont.png',
+          },
+          {
+            speaker: 'Leon Ardenia',
+            text: '그럼 검의 길 대신 협력의 길을 걷자.',
+            emotion: 'happy',
+            characterImage: 'characters/leon_ardenia.png',
+          },
+          {
+            speaker: 'Seraphina',
+            text: '(카드를 내밀며) [번개 카드: 동맹 문양 각인]',
+            emotion: 'determined',
+            characterImage: 'characters/seraphina_belmont.png',
+          },
+          {
+            speaker: 'Leon Ardenia',
+            text: '오늘의 결투는 미루자. 대신 증거의 결투를 준비하지.',
+            emotion: 'normal',
+            characterImage: 'characters/leon_ardenia.png',
+          },
+          {
+            speaker: 'Seraphina',
+            text: '(미소) 그 결투는 내가 원하는 무대야. 진실이 심판하는 무대.',
+            emotion: 'happy',
+            characterImage: 'characters/seraphina_belmont.png',
           }
         ],
         postVictory: [
           {
             speaker: 'Leon Ardenia',
-            text: '...대단하군. 내 뇌전의 궤적을 정확히 읽어낸 자는 처음이네.',
-            emotion: 'surprised',
-            characterImage: 'characters/leon_ardenia'
+            text: '(검집에 검을 꽂으며) 완패는 아니겠지? 박자만큼은 맞았으니까.',
+            emotion: 'happy',
+            characterImage: 'characters/leon_ardenia.png',
           },
           {
             speaker: 'Seraphina',
-            text: '손끝이 아직 찌릿하지만, 번개의 길을 머릿속으로 따라가니 보이더라고요.',
+            text: '(미소) 맞아, 이건 결투가 아니라 조율이었어.',
             emotion: 'happy',
-            characterImage: 'characters/seraphina_belmont'
+            characterImage: 'characters/seraphina_belmont.png',
+          },
+          {
+            speaker: 'Mira',
+            text: '(웃으며) 탑의 공기가 달라졌어요.',
+            emotion: 'happy',
+            characterImage: 'characters/mira.png',
           },
           {
             speaker: 'Leon Ardenia',
-            text: '벨몬트 가문이 좋은 선택을 했군. 다음에 만날 땐 기사단의 전술을 전부 가르쳐줄 수도 있겠다.',
-            emotion: 'happy',
-            characterImage: 'characters/leon_ardenia'
+            text: '(엄숙히) 오늘의 협력, 잊지 않겠다.',
+            emotion: 'determined',
+            characterImage: 'characters/leon_ardenia.png',
           },
           {
             speaker: 'Seraphina',
-            text: '그날을 기대할게요. 오늘 배운 속도를 기억해 두겠습니다.',
+            text: '번개는 충돌하지 않아도 울리지. 그게 협력의 리듬이야.',
             emotion: 'determined',
-            characterImage: 'characters/seraphina_belmont'
+            characterImage: 'characters/seraphina_belmont.png',
+          },
+          {
+            speaker: 'Leon Ardenia',
+            text: '서로 다른 박동이 같은 하늘을 울릴 때, 그것이 승리다.',
+            emotion: 'determined',
+            characterImage: 'characters/leon_ardenia.png',
           }
         ],
         postDefeat: [
           {
             speaker: 'Leon Ardenia',
-            text: '망설였군. 번개는 단 한 번의 주저도 허용하지 않는다.',
+            text: '박동이 흐트러졌다. 번개는 기다려주지 않는다.',
             emotion: 'normal',
-            characterImage: 'characters/leon_ardenia'
+            characterImage: 'characters/leon_ardenia.png',
           },
           {
             speaker: 'Seraphina',
-            text: '속도를 따라가려다 보니 손이 먼저 움직여 버렸어요... 순서를 놓쳤습니다.',
+            text: '거리를 맞추다 보니 박자를 놓쳤어.',
             emotion: 'sad',
-            characterImage: 'characters/seraphina_belmont'
+            characterImage: 'characters/seraphina_belmont.png',
+          },
+          {
+            speaker: 'Mira',
+            text: '호흡을 다시 맞춰봐요!',
+            emotion: 'happy',
+            characterImage: 'characters/mira.png',
           },
           {
             speaker: 'Leon Ardenia',
-            text: '카드를 뽑기 전에 박자를 세어라. "하나, 둘, 번개." 그 리듬을 뼛속에 새기면 된다.',
-            emotion: 'normal',
-            characterImage: 'characters/leon_ardenia'
+            text: '심장 박동을 세 번 세고, 네 번째에 번개를 붙여라.',
+            emotion: 'determined',
+            characterImage: 'characters/leon_ardenia.png',
           },
           {
             speaker: 'Seraphina',
-            text: '다시 리듬을 맞춰서 도전하겠습니다. 번개의 속도를 제 것으로 만들고 싶어요.',
+            text: '리듬을 새로 잡아서 돌아올게.',
             emotion: 'determined',
-            characterImage: 'characters/seraphina_belmont'
+            characterImage: 'characters/seraphina_belmont.png',
           }
         ]
       }
     },
-    { 
-      id: 5, name: '바람의 신전', theme: 'Wind', recommendedPower: 180, 
-      firstReward: { gold: 300, shards: 3 }, repeatReward: { gold: 150, shards: 2 }, cleared: false,
-      story: {
-        description: '구름 위에 떠있는 고대 천공 신전. 벨몬트 가문의 여동생 Iris가 언니의 실력을 테스트한다. 바람이 불고 하늘빛이 아름다운 환상적인 장소에서의 시험.',
-        backgroundImage: 'backgrounds/stage_05_wind_1.png'
-      },
-      characterImage: 'characters/seraphina_belmont.png',
-      enemyImage: 'characters/iris_belmont.png',
-      cutscene: {
-        preBattle: [
-          {
-            speaker: 'Iris Belmont',
-            text: '언니! 구름 위까지 올라온 거야? 여기까지 오는 걸 보고 싶었어!',
-            emotion: 'happy',
-            characterImage: 'characters/iris_belmont'
-          },
-          {
-            speaker: 'Seraphina',
-            text: 'Iris, 너다운 환영이네. 바람이 기분 좋게 불어와서 긴장이 조금 풀려.',
-            emotion: 'happy',
-            characterImage: 'characters/seraphina_belmont'
-          },
-          {
-            speaker: 'Iris Belmont',
-            text: '이 신전은 우리 집안에서 가장 자유로운 곳이야. 하지만 방심하면 바로 아래로 떨어지니까 집중해야 해!',
-            emotion: 'normal',
-            characterImage: 'characters/iris_belmont'
-          },
-          {
-            speaker: 'Seraphina',
-            text: '알겠어. 바람처럼 가볍게, 하지만 중심은 놓치지 않을게.',
-            emotion: 'determined',
-            characterImage: 'characters/seraphina_belmont'
-          },
-          {
-            speaker: 'Iris Belmont',
-            text: '언니가 가문에 와준 게 너무 좋아. 그래서 언니가 얼마나 멋진지 직접 확인하고 싶었어!',
-            emotion: 'happy',
-            characterImage: 'characters/iris_belmont'
-          },
-          {
-            speaker: 'Seraphina',
-            text: '그러면 언니가 얼마나 멋진지 보여줄 시간인가 보네? 기대해줘.',
-            emotion: 'happy',
-            characterImage: 'characters/seraphina_belmont'
-          },
-          {
-            speaker: 'Iris Belmont',
-            text: '좋아! 바람처럼 빠르게 움직여보자! 졸릴 틈도 없이 몰아붙일 거야!',
-            emotion: 'angry',
-            characterImage: 'characters/iris_belmont'
-          }
-        ],
-        postVictory: [
-          {
-            speaker: 'Iris Belmont',
-            text: '와... 역시 언니야! 바람을 가로질러 춤추는 것 같았어!',
-            emotion: 'happy',
-            characterImage: 'characters/iris_belmont'
-          },
-          {
-            speaker: 'Seraphina',
-            text: '너 덕분에 움직임이 더 부드러워졌어. 네가 만들어 준 공중의 흐름이 길을 보여주더라.',
-            emotion: 'happy',
-            characterImage: 'characters/seraphina_belmont'
-          },
-          {
-            speaker: 'Iris Belmont',
-            text: '그럼 다음에는 더 높이 날아보자! 언니가 점점 가벼워지는 느낌이 나!',
-            emotion: 'happy',
-            characterImage: 'characters/iris_belmont'
-          },
-          {
-            speaker: 'Seraphina',
-            text: '응. 언젠가 가족 모두가 같은 하늘을 보며 웃을 수 있도록 더 연습할게.',
-            emotion: 'determined',
-            characterImage: 'characters/seraphina_belmont'
-          }
-        ],
-        postDefeat: [
-          {
-            speaker: 'Iris Belmont',
-            text: '괜찮아? 바람이 마음대로 불어서 놀랐지? 처음엔 누구나 흔들려.',
-            emotion: 'surprised',
-            characterImage: 'characters/iris_belmont'
-          },
-          {
-            speaker: 'Seraphina',
-            text: '몸이 가벼워지는 걸 즐기다가 중심을 잃어버렸어. 다시 자세를 다듬어야겠어.',
-            emotion: 'sad',
-            characterImage: 'characters/seraphina_belmont'
-          },
-          {
-            speaker: 'Iris Belmont',
-            text: '그럼 내가 옆에서 바람을 잡아줄게! 언니가 익숙해질 때까지 같이 연습하자!',
-            emotion: 'happy',
-            characterImage: 'characters/iris_belmont'
-          },
-          {
-            speaker: 'Seraphina',
-            text: '고마워, Iris. 다시 한 번 하늘을 가르는 느낌을 배우고 올게.',
-            emotion: 'determined',
-            characterImage: 'characters/seraphina_belmont'
-          }
-        ]
-      }
-    },
-    { 
-      id: 6, name: '화염과 빙설', theme: 'FireIce', recommendedPower: 210,
+    {
+      id: 6, name: '열과 냉의 무게', theme: 'Balance', recommendedPower: 210,
       firstReward: { gold: 320, shards: 3 }, repeatReward: { gold: 160, shards: 2 }, cleared: false,
       story: {
-        description: '화염 마법사 Ariana와 얼음 마법사 Seraphine이 동시에 설계한 이중 속성 훈련장. 반쪽은 불길이, 다른 반쪽은 얼음이 뒤덮어 급격한 온도 변화를 견뎌야 한다.',
-        backgroundImage: 'backgrounds/stage_06_fire_ice_1.webp'
+        description: '벨몬트 저택 연회장에서 세라피나가 아리아나와의 대화를 균형 잡힌 감정으로 이끌며 열과 냉을 동시에 조율한다.',
+        backgroundImage: 'backgrounds/stage_06_fire_ice_1.png'
       },
       characterImage: 'characters/seraphina_belmont.png',
       enemyImage: 'characters/ariana_drake.png',
       cutscene: {
         preBattle: [
           {
-            speaker: 'Ariana',
-            text: '드디어 두 속성을 동시에 다루는 시험이야. 반쪽은 내 화염, 반대편은 Seraphine이 얼려놨어.',
-            emotion: 'happy',
-            characterImage: 'characters/ariana_drake'
+            speaker: 'Seraphina',
+            text: '(속으로) 여긴 전생의 무대였지. 내 오만이 시작된 곳.',
+            emotion: 'sad',
+            characterImage: 'characters/seraphina_belmont.png',
+          },
+          {
+            speaker: 'Mira',
+            text: '아가씨, 긴장되시죠?',
+            emotion: 'sad',
+            characterImage: 'characters/mira.png',
           },
           {
             speaker: 'Seraphina',
-            text: '숨을 들이쉬면 뜨겁고, 내쉬면 얼어붙는 느낌이에요... 하지만 이 대비가 분명 도움이 되겠죠.',
-            emotion: 'surprised',
-            characterImage: 'characters/seraphina_belmont'
-          },
-          {
-            speaker: 'Seraphine Winters',
-            text: '목표는 단순 승리가 아니에요. 두 속성 사이에서 균형을 잡으며 카드 순서를 조정하는 감각을 익히는 겁니다.',
-            emotion: 'normal',
-            characterImage: 'characters/seraphine_winters'
-          },
-          {
-            speaker: 'Ariana',
-            text: '뜨거워졌다가 곧바로 차가워질 거야. 그때 망설이면 카드가 부서져버려. 온도뿐 아니라 마음의 속도도 함께 조절해봐.',
-            emotion: 'angry',
-            characterImage: 'characters/ariana_drake'
-          },
-          {
-            speaker: 'Seraphina',
-            text: '감정을 억누르지 않고 흐름에 맞추겠습니다. 두 분의 조언을 몸에 새겨서 균형을 잡아 볼게요.',
+            text: '이번엔 감정이 아니라 균형으로 답하겠어.',
             emotion: 'determined',
-            characterImage: 'characters/seraphina_belmont'
-          },
-          {
-            speaker: 'Seraphine Winters',
-            text: '호흡을 절반마다 나눠 생각하세요. 들이쉬면서 화염을, 내쉬면서 얼음을 손에 얹는다고 상상하면 흐름을 잡을 수 있어요.',
-            emotion: 'happy',
-            characterImage: 'characters/seraphine_winters'
+            characterImage: 'characters/seraphina_belmont.png',
           },
           {
             speaker: 'Ariana',
-            text: '좋아, 그럼 비밀 열기를 풀어볼까? 불꽃이 꺼지기 전에 따라와 봐.',
+            text: '또다시 무대의 중심에 서셨네요, 벨몬트 영애.',
+            emotion: 'angry',
+            characterImage: 'characters/ariana_drake.png',
+          },
+          {
+            speaker: 'Seraphina',
+            text: '중심이 아니라 균형 위에 서는 거야.',
+            emotion: 'determined',
+            characterImage: 'characters/seraphina_belmont.png',
+          },
+          {
+            speaker: 'Seraphina',
+            text: '[불 카드: 감정 점화] [얼음 카드: 냉정 확립]',
+            emotion: 'determined',
+            characterImage: 'characters/seraphina_belmont.png',
+          },
+          {
+            speaker: 'Ariana',
+            text: '불과 얼음? 상극이라 했잖아.',
+            emotion: 'angry',
+            characterImage: 'characters/ariana_drake.png',
+          },
+          {
+            speaker: 'Seraphina',
+            text: '상극이라서 안정돼. 감정과 진실이 서로를 지탱해. 대화, 가능할까?',
+            emotion: 'determined',
+            characterImage: 'characters/seraphina_belmont.png',
+          },
+          {
+            speaker: 'Ariana',
+            text: '네 화염이 식었다면, 해보지.',
+            emotion: 'normal',
+            characterImage: 'characters/ariana_drake.png',
+          },
+          {
+            speaker: 'Lucian',
+            text: '전생의 열기가 아니라 조율의 불꽃... 훌륭하군.',
             emotion: 'happy',
-            characterImage: 'characters/ariana_drake'
+            characterImage: 'characters/lucian_rosegarden.png',
+          },
+          {
+            speaker: 'Seraphina',
+            text: '이번엔, 무게를 잴 줄 알게 됐으니까.',
+            emotion: 'determined',
+            characterImage: 'characters/seraphina_belmont.png',
           }
         ],
         postVictory: [
           {
             speaker: 'Ariana',
-            text: '화염이 얼음과 함께 춤췄어. 이제 네 에너지가 흔들리지 않고 이어지는 게 보이네.',
-            emotion: 'happy',
-            characterImage: 'characters/ariana_drake'
-          },
-          {
-            speaker: 'Seraphine Winters',
-            text: '열과 냉기를 번갈아 다루는 손놀림이 훨씬 매끄러워졌어요. 다음엔 그 흐름에 회복 카드도 섞어보죠.',
-            emotion: 'happy',
-            characterImage: 'characters/seraphine_winters'
+            text: '이번엔 내가 졌어. 불길이 아니라 균형이라니.',
+            emotion: 'sad',
+            characterImage: 'characters/ariana_drake.png',
           },
           {
             speaker: 'Seraphina',
-            text: '화염이 달아오를 때마다 얼음이 바로 식혀주는 느낌이었어요. 두 분의 조언 덕분입니다.',
-            emotion: 'happy',
-            characterImage: 'characters/seraphina_belmont'
+            text: '지고 이길 문제가 아니야. 오늘은 서로 다치지 않았잖아.',
+            emotion: 'determined',
+            characterImage: 'characters/seraphina_belmont.png',
           },
           {
-            speaker: 'Ariana',
-            text: '우릴 상대로 버텨냈으니 앞으로 다른 속성 조합도 거뜬할 거야. 기념으로 불꽃차 한 잔 마시자.',
+            speaker: 'Lucian',
+            text: '감정 진폭 0, 정서 안정 100%. 완벽한 승리야.',
             emotion: 'happy',
-            characterImage: 'characters/ariana_drake'
+            characterImage: 'characters/lucian_rosegarden.png',
+          },
+          {
+            speaker: 'Seraphina',
+            text: '뜨거운 말 대신 차가운 침묵으로 평화를 얻었어. 이게 진짜 승리야.',
+            emotion: 'determined',
+            characterImage: 'characters/seraphina_belmont.png',
           }
         ],
         postDefeat: [
           {
             speaker: 'Ariana',
-            text: '불길이 높아지면 얼음이 금방 녹아버려. 그 전에 온도를 낮춰야지.',
+            text: '아직 불과 얼음이 서로를 찢고 있어. 균형이 부족했어.',
             emotion: 'angry',
-            characterImage: 'characters/ariana_drake'
+            characterImage: 'characters/ariana_drake.png',
           },
           {
             speaker: 'Seraphina',
-            text: '화염을 따라가느라 얼음의 호흡을 놓쳤어요. 두 흐름을 동시에 느끼는 게 쉽지 않네요.',
+            text: '감정을 제대로 다듬지 못했어. 다시 균형을 연습할게.',
             emotion: 'sad',
-            characterImage: 'characters/seraphina_belmont'
+            characterImage: 'characters/seraphina_belmont.png',
           },
           {
-            speaker: 'Seraphine Winters',
-            text: '먼저 손끝을 얼음에 담갔다가 불꽃에 가져다 대보세요. 감각을 번갈아 자극하면 균형이 쉬워집니다.',
+            speaker: 'Lucian',
+            text: '열을 두 번, 냉기를 한 번 호흡해. 균형부터 다시 맞추자.',
             emotion: 'normal',
-            characterImage: 'characters/seraphine_winters'
+            characterImage: 'characters/lucian_rosegarden.png',
           },
           {
             speaker: 'Ariana',
-            text: '다시 도전해. 얼음이 숨을 고르게 해줄 거야. 내가 바로 앞에서 지켜보고 있을게.',
-            emotion: 'happy',
-            characterImage: 'characters/ariana_drake'
+            text: '준비되면 다시 맞붙자. 이번엔 내가 균형을 시험할 거야.',
+            emotion: 'determined',
+            characterImage: 'characters/ariana_drake.png',
           }
         ]
       }
     },
-    { 
-      id: 7, name: '폭풍의 전장', theme: 'Storm', recommendedPower: 240,
+    {
+      id: 7, name: '폭풍 노트', theme: 'Storm', recommendedPower: 240,
       firstReward: { gold: 330, shards: 3 }, repeatReward: { gold: 170, shards: 2 }, cleared: false,
       story: {
-        description: '거대한 태풍의 눈을 재현한 전장. 사방에서 몰아치는 바람과 번개 사이에서 균형과 버티기를 동시에 시험한다.',
-        backgroundImage: 'backgrounds/stage_07_storm_1.webp'
+        description: '폭풍 훈련장에서 세라피나가 기사단과 호흡을 맞추며 바람과 번개, 대지의 리듬을 하나의 합주로 엮는다.',
+        backgroundImage: 'backgrounds/stage_07_storm_1.png'
       },
       characterImage: 'characters/seraphina_belmont.png',
       enemyImage: 'characters/garen_stone.png',
@@ -698,395 +935,1604 @@ export const campaignStageData = [
         preBattle: [
           {
             speaker: 'Garen Stone',
-            text: '바람이 속삭이는군. 태풍의 중심에서 버틸 준비는 됐나?',
-            emotion: 'normal',
-            characterImage: 'characters/garen_stone'
-          },
-          {
-            speaker: 'Iris Belmont',
-            text: '언니, 여기서는 발끝까지 힘을 줘야 해! 바람이 장난 아니거든!',
-            emotion: 'happy',
-            characterImage: 'characters/iris_belmont'
+            text: '기사단 대열, 세라피나 측에 합류!',
+            emotion: 'angry',
+            characterImage: 'characters/garen_stone.png',
           },
           {
             speaker: 'Seraphina',
-            text: '공기가 끊임없이 흔들려요. 방금 배운 화염과 얼음의 호흡이 여기에서도 도움이 될까요?',
+            text: '좋아, 리듬을 잡아! [바람 카드: 기류 제어] [번개 카드: 가속 루프] [대지 카드: 방어 공명]',
+            emotion: 'determined',
+            characterImage: 'characters/seraphina_belmont.png',
+          },
+          {
+            speaker: 'Lucian',
+            text: '폭풍 속성 3연계, 안정률 82%.',
+            emotion: 'normal',
+            characterImage: 'characters/lucian_rosegarden.png',
+          },
+          {
+            speaker: 'Seraphina',
+            text: '조금 더. 이건 단순한 훈련이 아니라 신뢰의 시험이야.',
+            emotion: 'determined',
+            characterImage: 'characters/seraphina_belmont.png',
+          },
+          {
+            speaker: 'Mira',
+            text: '가렌님, 좌측 방패라인 불안정!',
             emotion: 'surprised',
-            characterImage: 'characters/seraphina_belmont'
+            characterImage: 'characters/mira.png',
+          },
+          {
+            speaker: 'Seraphina',
+            text: '내가 막을게. [대지 카드: 보호문양 각성]',
+            emotion: 'determined',
+            characterImage: 'characters/seraphina_belmont.png',
           },
           {
             speaker: 'Garen Stone',
-            text: '바람은 곧 균형이다. 앞뒤로 쏠리지 말고, 카드 한 장마다 중심을 다시 세워라.',
-            emotion: 'angry',
-            characterImage: 'characters/garen_stone'
-          },
-          {
-            speaker: 'Iris Belmont',
-            text: '바람에 몸을 맡기고 따라가면 돼. 그러다 중요한 순간에 힘을 주면 멋지게 날 수 있어!',
+            text: '이번엔 내가 아니라 네가 우리를 지켜줬군.',
             emotion: 'happy',
-            characterImage: 'characters/iris_belmont'
+            characterImage: 'characters/garen_stone.png',
           },
           {
             speaker: 'Seraphina',
-            text: '흔들리는 감정을 그대로 메모하겠습니다. 오늘은 바람과 친구가 되어볼게요.',
+            text: '신뢰의 폭풍은 함께 맞을 때 안정되지.',
             emotion: 'determined',
-            characterImage: 'characters/seraphina_belmont'
+            characterImage: 'characters/seraphina_belmont.png',
           }
         ],
         postVictory: [
           {
             speaker: 'Garen Stone',
-            text: '폭풍 속에서 중심을 잃지 않았다. 대지 위에서도 버틸 힘이 생겼군.',
-            emotion: 'surprised',
-            characterImage: 'characters/garen_stone'
-          },
-          {
-            speaker: 'Iris Belmont',
-            text: '언니, 진짜 멋졌어! 바람이 언니 말을 듣는 것 같았어!',
+            text: '훈련 종료. 대열 유지율 100%. 완벽했어.',
             emotion: 'happy',
-            characterImage: 'characters/iris_belmont'
+            characterImage: 'characters/garen_stone.png',
           },
           {
             speaker: 'Seraphina',
-            text: '폭풍 속에서도 마음을 적어두니까 두려움이 줄었어요. 다음은 땅에서 버티는 법을 다시 다져보겠습니다.',
+            text: '이번 폭풍은 나 혼자 이긴 게 아니야.',
             emotion: 'happy',
-            characterImage: 'characters/seraphina_belmont'
+            characterImage: 'characters/seraphina_belmont.png',
           },
           {
-            speaker: 'Garen Stone',
-            text: '좋다. 곧 대지의 숨결을 다시 확인하게 될 것이다.',
-            emotion: 'normal',
-            characterImage: 'characters/garen_stone'
+            speaker: 'Lucian',
+            text: '집단 공명 성공. 전생엔 없던 데이터야.',
+            emotion: 'happy',
+            characterImage: 'characters/lucian_rosegarden.png',
+          },
+          {
+            speaker: 'Mira',
+            text: '폭풍이 잦아드니까 하늘이 맑아요.',
+            emotion: 'happy',
+            characterImage: 'characters/mira.png',
+          },
+          {
+            speaker: 'Seraphina',
+            text: '폭풍이 지나가면 남는 건 믿음뿐이야.',
+            emotion: 'determined',
+            characterImage: 'characters/seraphina_belmont.png',
           }
         ],
         postDefeat: [
           {
             speaker: 'Garen Stone',
-            text: '바람에 몸을 맡기기만 하면 안 된다. 중심이 없으면 바로 날아가 버린다.',
+            text: '대열이 흔들렸다. 중심을 놓치면 폭풍에 휩쓸린다.',
             emotion: 'angry',
-            characterImage: 'characters/garen_stone'
+            characterImage: 'characters/garen_stone.png',
           },
           {
             speaker: 'Seraphina',
-            text: '순간적으로 흔들렸어요. 바람과 싸우려다 더 크게 밀렸습니다.',
+            text: '폭풍을 버티지 못했어. 내가 리듬을 흘렸나 봐.',
             emotion: 'sad',
-            characterImage: 'characters/seraphina_belmont'
+            characterImage: 'characters/seraphina_belmont.png',
           },
           {
-            speaker: 'Iris Belmont',
-            text: '다시 해보자! 내가 옆에서 바람을 읽는 법을 알려줄게!',
+            speaker: 'Mira',
+            text: '다시 불러볼게요. 바람이 우리 편이 되도록!',
             emotion: 'happy',
-            characterImage: 'characters/iris_belmont'
+            characterImage: 'characters/mira.png',
           },
           {
-            speaker: 'Garen Stone',
-            text: '무릎을 굽히고, 손바닥으로 기류를 느껴라. 균형을 잡으면 폭풍도 길들인다.',
+            speaker: 'Lucian',
+            text: '공명 수치를 조정하자. 호흡을 맞추고 다시 연결해.',
             emotion: 'normal',
-            characterImage: 'characters/garen_stone'
+            characterImage: 'characters/lucian_rosegarden.png',
+          },
+          {
+            speaker: 'Seraphina',
+            text: '응, 폭풍과 다시 친구가 되어올게.',
+            emotion: 'determined',
+            characterImage: 'characters/seraphina_belmont.png',
           }
         ]
       }
     },
-    { 
-      id: 8, name: '정예 부대', theme: 'Elite', recommendedPower: 280, 
+    {
+      id: 8, name: '어둠의 복도', theme: 'Shadow', recommendedPower: 280,
       firstReward: { gold: 340, shards: 3 }, repeatReward: { gold: 170, shards: 2 }, cleared: false,
       story: {
-        description: '벨몬트 가문의 정예 부대가 사용하는 비밀 훈련소. 전술, 협력, 리더십을 동시에 요구하는 고난도 시험이다.',
-        backgroundImage: 'backgrounds/stage_08_elite_1.webp'
-      },
-      characterImage: 'characters/seraphina_belmont.png',
-      enemyImage: 'characters/marcus_belmont.png',
-      cutscene: {
-        preBattle: [
-          {
-            speaker: 'Marcus Belmont',
-            text: '정예 부대를 지휘하려면 감정에 휘둘려선 안 된다. 네가 그 자격이 있는지 확인하겠다.',
-            emotion: 'angry',
-            characterImage: 'characters/marcus_belmont'
-          },
-          {
-            speaker: 'Seraphina',
-            text: 'Marcus 님, 이 시험을 통과해 벨몬트 가문의 신뢰를 더 얻고 싶습니다.',
-            emotion: 'determined',
-            characterImage: 'characters/seraphina_belmont'
-          },
-          {
-            speaker: 'Lucian',
-            text: '전투 도중에도 동료에게 명령을 내리고, 동시에 카드 순환을 예측해야 합니다. 머릿속에서 상황을 계속 정리하세요.',
-            emotion: 'normal',
-            characterImage: 'characters/lucian_rosegarden'
-          },
-          {
-            speaker: 'Marcus Belmont',
-            text: '정예는 실패를 두려워하지 않지만, 이유 없는 패배도 용납하지 않는다. 한 장 한 장 목적을 가지고 쓰도록 해라.',
-            emotion: 'normal',
-            characterImage: 'characters/marcus_belmont'
-          },
-          {
-            speaker: 'Seraphina',
-            text: '카드마다 역할을 정의하고 전선을 지키겠습니다. 모두를 보호할 움직임을 찾을게요.',
-            emotion: 'determined',
-            characterImage: 'characters/seraphina_belmont'
-          },
-          {
-            speaker: 'Marcus Belmont',
-            text: '좋다. 지금부터는 감정이 아닌 판단으로 싸워라.',
-            emotion: 'normal',
-            characterImage: 'characters/marcus_belmont'
-          }
-        ],
-        postVictory: [
-          {
-            speaker: 'Marcus Belmont',
-            text: '명령이 끊기지 않았다. 정예 병사들도 네 지휘를 따를 만하겠군.',
-            emotion: 'surprised',
-            characterImage: 'characters/marcus_belmont'
-          },
-          {
-            speaker: 'Lucian',
-            text: '방금 전투는 "전술 목표 → 카드 배치 → 후속 대응"이 또렷했습니다.',
-            emotion: 'happy',
-            characterImage: 'characters/lucian_rosegarden'
-          },
-          {
-            speaker: 'Seraphina',
-            text: '이번엔 감정이 아닌 팀의 움직임에 집중했어요. 정말 큰 도움이 되었습니다.',
-            emotion: 'happy',
-            characterImage: 'characters/seraphina_belmont'
-          },
-          {
-            speaker: 'Marcus Belmont',
-            text: '다음에 다시 시험할 것이다. 그때도 방심하지 마라.',
-            emotion: 'normal',
-            characterImage: 'characters/marcus_belmont'
-          }
-        ],
-        postDefeat: [
-          {
-            speaker: 'Marcus Belmont',
-            text: '명령이 흐트러졌다. 정예 부대는 혼란을 용납하지 않는다.',
-            emotion: 'angry',
-            characterImage: 'characters/marcus_belmont'
-          },
-          {
-            speaker: 'Seraphina',
-            text: '전술을 미리 준비했는데 상황에 맞춰 수정하지 못했어요... 다시 구성하겠습니다.',
-            emotion: 'sad',
-            characterImage: 'characters/seraphina_belmont'
-          },
-          {
-            speaker: 'Lucian',
-            text: '방금 흔들렸던 지점을 다시 짚어보세요. 패턴을 찾으면 곧바로 개선됩니다.',
-            emotion: 'normal',
-            characterImage: 'characters/lucian_rosegarden'
-          },
-          {
-            speaker: 'Marcus Belmont',
-            text: '다시 준비해 와라. 다음엔 내가 더 많은 변수를 던질 것이다.',
-            emotion: 'normal',
-            characterImage: 'characters/marcus_belmont'
-          }
-        ]
-      }
-    },
-    { 
-      id: 9, name: '보스 전초전', theme: 'Shadow Corridor', recommendedPower: 320,
-      firstReward: { gold: 360, shards: 4 }, repeatReward: { gold: 180, shards: 2 }, cleared: false,
-      story: {
-        description: '최종 보스 방으로 이어지는 어두운 복도. 빛이 거의 들지 않는 긴 통로에서 집중력과 인내심을 시험한다.',
-        backgroundImage: 'backgrounds/stage_09_corridor_1.webp'
+        description: '벨몬트 지하 서고에서 세라피나가 숨겨진 문양과 기록을 밝혀내며 과거의 단죄 진실을 손에 넣는다.',
+        backgroundImage: 'backgrounds/stage_09_corridor_1.png'
       },
       characterImage: 'characters/seraphina_belmont.png',
       enemyImage: 'characters/darius_blackwood.png',
       cutscene: {
         preBattle: [
           {
-            speaker: 'Darius Blackwood',
-            text: '마지막 문을 지키는 자로서 다시 한 번 묻지. 어둠을 지나갈 용기가 있는가?',
-            emotion: 'normal',
-            characterImage: 'characters/darius_blackwood'
-          },
-          {
             speaker: 'Seraphina',
-            text: '심장이 빨리 뛰지만... 여기서 물러설 수는 없어요. 떨림을 인정하면서도 전진하겠습니다.',
+            text: '(촛불을 들며) 여긴... 한 번도 온 적 없는 곳이야.',
             emotion: 'sad',
-            characterImage: 'characters/seraphina_belmont'
+            characterImage: 'characters/seraphina_belmont.png',
           },
           {
-            speaker: 'Darius Blackwood',
-            text: '두려움이 생기면 이름을 붙여라. 이름 붙은 공포는 더 이상 괴물이 아니다.',
+            speaker: 'Lucian',
+            text: '전생엔 네가 여길 두려워했지.',
             emotion: 'normal',
-            characterImage: 'characters/darius_blackwood'
+            characterImage: 'characters/lucian_rosegarden.png',
           },
           {
             speaker: 'Seraphina',
-            text: '이 감정을 "떨림"이라 부르겠습니다. 그 떨림이 저를 앞으로 밀어주는 힘이 되도록 하겠습니다.',
+            text: '이번엔 빛을 두려워하지 않아. [빛 카드: 조사] [어둠 카드: 흔적 추적]',
             emotion: 'determined',
-            characterImage: 'characters/seraphina_belmont'
+            characterImage: 'characters/seraphina_belmont.png',
           },
           {
-            speaker: 'Darius Blackwood',
-            text: '좋다. 복도 끝에서 빛이 보일 때까지, 마음을 놓지 말아라.',
-            emotion: 'angry',
-            characterImage: 'characters/darius_blackwood'
+            speaker: 'Mira',
+            text: '문양이 반응해요! 이건... 블랙우드의 인장이에요!',
+            emotion: 'surprised',
+            characterImage: 'characters/mira.png',
+          },
+          {
+            speaker: 'Seraphina',
+            text: '그렇다면 진실을 꺼내자. [감정 역추적 카드 발동]',
+            emotion: 'determined',
+            characterImage: 'characters/seraphina_belmont.png',
+          },
+          {
+            speaker: 'Lucian',
+            text: '전생의 단죄 명령서... 원본이다.',
+            emotion: 'surprised',
+            characterImage: 'characters/lucian_rosegarden.png',
+          },
+          {
+            speaker: 'Seraphina',
+            text: '(손을 움켜쥔다) 이걸로 모든 걸 다시 쓸 수 있어.',
+            emotion: 'determined',
+            characterImage: 'characters/seraphina_belmont.png',
           }
         ],
         postVictory: [
           {
-            speaker: 'Darius Blackwood',
-            text: '어둠 속에서 흔들리지 않았다. 네 안의 빛을 믿었군.',
-            emotion: 'surprised',
-            characterImage: 'characters/darius_blackwood'
+            speaker: 'Lucian',
+            text: '증거 확보 완료. 네 손으로 진실을 밝혔어.',
+            emotion: 'happy',
+            characterImage: 'characters/lucian_rosegarden.png',
           },
           {
             speaker: 'Seraphina',
-            text: '두려움에 이름을 붙이니 흐려졌어요. 덕분에 마지막 문까지 도달할 수 있었습니다.',
-            emotion: 'happy',
-            characterImage: 'characters/seraphina_belmont'
+            text: '어둠은 무섭지 않아. 이제 나는 그 언어를 읽을 수 있어.',
+            emotion: 'determined',
+            characterImage: 'characters/seraphina_belmont.png',
           },
           {
-            speaker: 'Darius Blackwood',
-            text: '자, 다음은 드레이크 저택이다. 그곳에서 또 다른 시험을 맞이하게 될 것이다.',
-            emotion: 'normal',
-            characterImage: 'characters/darius_blackwood'
+            speaker: 'Mira',
+            text: '그럼 전생의 단죄도 오늘로 끝이겠네요.',
+            emotion: 'happy',
+            characterImage: 'characters/mira.png',
+          },
+          {
+            speaker: 'Seraphina',
+            text: '그래. 이번엔 진실이 판결을 내릴 차례야.',
+            emotion: 'determined',
+            characterImage: 'characters/seraphina_belmont.png',
           }
         ],
         postDefeat: [
           {
-            speaker: 'Darius Blackwood',
-            text: '어둠이 고개를 들었다. 그때 넌 숨을 멈췄지.',
+            speaker: 'Lucian',
+            text: '문양이 닫혔어. 감정이 흔들리면 길이 숨는다.',
             emotion: 'normal',
-            characterImage: 'characters/darius_blackwood'
+            characterImage: 'characters/lucian_rosegarden.png',
           },
           {
             speaker: 'Seraphina',
-            text: '맞아요... 호흡을 잊고 말았어요. 다시 어둠 속 호흡부터 다듬어 오겠습니다.',
+            text: '빛을 두려워하지 않겠다면서... 아직 흔들리는구나.',
             emotion: 'sad',
-            characterImage: 'characters/seraphina_belmont'
+            characterImage: 'characters/seraphina_belmont.png',
           },
           {
-            speaker: 'Darius Blackwood',
-            text: '눈을 감고, 한 걸음마다 "빛"이라고 속삭여라. 어둠은 그 단어를 두려워한다.',
-            emotion: 'normal',
-            characterImage: 'characters/darius_blackwood'
-          },
-          {
-            speaker: 'Darius Blackwood',
-            text: '다시 오거라. 문은 언제나 여기서 기다릴 것이다.',
+            speaker: 'Mira',
+            text: '천천히 다시 해봐요. 촛불부터 높이 들게요.',
             emotion: 'happy',
-            characterImage: 'characters/darius_blackwood'
+            characterImage: 'characters/mira.png',
+          },
+          {
+            speaker: 'Seraphina',
+            text: '그래. 감정을 다시 정리해서 진실을 찾아올게.',
+            emotion: 'determined',
+            characterImage: 'characters/seraphina_belmont.png',
           }
         ]
       }
     },
-    { 
-      id: 10, name: '드레이크 저택', theme: 'Estate', recommendedPower: 200,
+    {
+      id: 9, name: '정원의 약속', theme: 'Garden', recommendedPower: 320,
+      firstReward: { gold: 360, shards: 4 }, repeatReward: { gold: 180, shards: 2 }, cleared: false,
+      story: {
+        description: '벨몬트 정원에서 세라피나와 카이가 정직한 약속을 나누며 신뢰를 새롭게 재정의한다.',
+        backgroundImage: 'backgrounds/stage_29_wind_final.png'
+      },
+      characterImage: 'characters/seraphina_belmont.png',
+      enemyImage: 'characters/kai_drake.png',
+      cutscene: {
+        preBattle: [
+          {
+            speaker: 'Seraphina',
+            text: '(손바닥에 흙을 쥐며) 여긴... 마지막으로 웃던 곳이야.',
+            emotion: 'sad',
+            characterImage: 'characters/seraphina_belmont.png',
+          },
+          {
+            speaker: 'Mira',
+            text: '정원이 다시 살아났어요.',
+            emotion: 'happy',
+            characterImage: 'characters/mira.png',
+          },
+          {
+            speaker: 'Seraphina',
+            text: '[빛 카드: 성장 자극] [대지 카드: 영양 순환]',
+            emotion: 'determined',
+            characterImage: 'characters/seraphina_belmont.png',
+          },
+          {
+            speaker: 'Kai Drake',
+            text: '정원에서 다시 만나게 될 줄이야.',
+            emotion: 'happy',
+            characterImage: 'characters/kai_drake.png',
+          },
+          {
+            speaker: 'Seraphina',
+            text: '이번엔 거래보다 신뢰로 시작하고 싶어.',
+            emotion: 'determined',
+            characterImage: 'characters/seraphina_belmont.png',
+          },
+          {
+            speaker: 'Kai Drake',
+            text: '정략이 아닌 협력이라... 흥미롭군.',
+            emotion: 'normal',
+            characterImage: 'characters/kai_drake.png',
+          },
+          {
+            speaker: 'Seraphina',
+            text: '그리고 정직으로 끝내고 싶어. [정원 카드: 서명 문양 활성화]',
+            emotion: 'determined',
+            characterImage: 'characters/seraphina_belmont.png',
+          },
+          {
+            speaker: 'Kai Drake',
+            text: '정직한 약속이라... 쉽지 않겠지만 아름답군.',
+            emotion: 'happy',
+            characterImage: 'characters/kai_drake.png',
+          },
+          {
+            speaker: 'Seraphina',
+            text: '아름답기에 위험하지. 하지만 그게 나의 길이야.',
+            emotion: 'determined',
+            characterImage: 'characters/seraphina_belmont.png',
+          }
+        ],
+        postVictory: [
+          {
+            speaker: 'Kai Drake',
+            text: '정원에 남은 건 향기와 신뢰뿐이군.',
+            emotion: 'happy',
+            characterImage: 'characters/kai_drake.png',
+          },
+          {
+            speaker: 'Mira',
+            text: '감정 안정 수치, 완벽해요!',
+            emotion: 'happy',
+            characterImage: 'characters/mira.png',
+          },
+          {
+            speaker: 'Seraphina',
+            text: '사랑보다 깊은 게 있다면 아마도 믿음일 거야.',
+            emotion: 'determined',
+            characterImage: 'characters/seraphina_belmont.png',
+          },
+          {
+            speaker: 'Kai Drake',
+            text: '오늘의 약속은 내일의 동맹보다 값지다.',
+            emotion: 'determined',
+            characterImage: 'characters/kai_drake.png',
+          },
+          {
+            speaker: 'Seraphina',
+            text: '이건 단순한 회복이 아니라 시작이야.',
+            emotion: 'determined',
+            characterImage: 'characters/seraphina_belmont.png',
+          }
+        ],
+        postDefeat: [
+          {
+            speaker: 'Kai Drake',
+            text: '아직 마음이 흔들린다. 정직한 약속을 준비해와.',
+            emotion: 'normal',
+            characterImage: 'characters/kai_drake.png',
+          },
+          {
+            speaker: 'Seraphina',
+            text: '정원의 향기에 취해 집중을 놓쳤어. 다시 차분히 준비할게.',
+            emotion: 'sad',
+            characterImage: 'characters/seraphina_belmont.png',
+          },
+          {
+            speaker: 'Mira',
+            text: '정원 기록을 정리해둘게요. 다음엔 더 안정적으로 시작해요!',
+            emotion: 'happy',
+            characterImage: 'characters/mira.png',
+          },
+          {
+            speaker: 'Seraphina',
+            text: '그래. 신뢰를 제대로 만들고 돌아올게.',
+            emotion: 'determined',
+            characterImage: 'characters/seraphina_belmont.png',
+          }
+        ]
+      }
+    },
+    {
+      id: 10, name: '중급의 문', theme: 'Trial', recommendedPower: 200,
       firstReward: { gold: 380, shards: 4 }, repeatReward: { gold: 190, shards: 2 }, cleared: false,
       story: {
-        description: '드레이크 가문의 정원에서 치르는 친선 배틀. 따뜻한 환대 속에서 엘레나와의 호흡을 맞추며 신뢰를 쌓는다.',
-        backgroundImage: 'backgrounds/stage_10_final_boss_1.webp'
+        description: '왕립 시험장에서 세라피나가 연동 제한 속에서도 침착하게 검증을 통과하며 책임의 무게를 받아든다.',
+        backgroundImage: 'backgrounds/stage_11_training_advanced.png'
+      },
+      characterImage: 'characters/seraphina_belmont.png',
+      enemyImage: 'characters/marcus_belmont.png',
+      cutscene: {
+        preBattle: [
+          {
+            speaker: 'Lucian',
+            text: '규정 확인. 연동 제한 10장.',
+            emotion: 'normal',
+            characterImage: 'characters/lucian_rosegarden.png',
+          },
+          {
+            speaker: 'Seraphina',
+            text: '전생엔 자만했지. 이번엔 철저하게 검증받을 거야.',
+            emotion: 'determined',
+            characterImage: 'characters/seraphina_belmont.png',
+          },
+          {
+            speaker: 'Seraphina',
+            text: '[불 카드: 긴장 완화] [바람 카드: 순응 회로 정렬] [빛 카드: 집중 강화]',
+            emotion: 'determined',
+            characterImage: 'characters/seraphina_belmont.png',
+          },
+          {
+            speaker: 'Examiner',
+            text: '마력 흐름 안정 확인. 다음 과제—위기 시뮬레이션.',
+            emotion: 'normal',
+          },
+          {
+            speaker: 'Seraphina',
+            text: '준비됐어. [대지 카드: 방어막 전개] [번개 카드: 판단력 상승]',
+            emotion: 'determined',
+            characterImage: 'characters/seraphina_belmont.png',
+          },
+          {
+            speaker: 'Marcus Belmont',
+            text: '(감탄) 동생이 아니라 동료로서 인정해야겠군.',
+            emotion: 'surprised',
+            characterImage: 'characters/marcus_belmont.png',
+          },
+          {
+            speaker: 'Lucian',
+            text: '시험형 연동 체계 완성. 훌륭해.',
+            emotion: 'happy',
+            characterImage: 'characters/lucian_rosegarden.png',
+          },
+          {
+            speaker: 'Seraphina',
+            text: '시험이 공포가 아니라 검증이 되는 순간을 만들 거야.',
+            emotion: 'determined',
+            characterImage: 'characters/seraphina_belmont.png',
+          }
+        ],
+        postVictory: [
+          {
+            speaker: 'Examiner',
+            text: '만점. 완벽한 연동이었다.',
+            emotion: 'happy',
+          },
+          {
+            speaker: 'Marcus Belmont',
+            text: '이제 넌 우리 중 하나야, 세라피나.',
+            emotion: 'happy',
+            characterImage: 'characters/marcus_belmont.png',
+          },
+          {
+            speaker: 'Mira',
+            text: '드디어 정규 작전 명단이에요!',
+            emotion: 'happy',
+            characterImage: 'characters/mira.png',
+          },
+          {
+            speaker: 'Seraphina',
+            text: '이번엔 자격이 아니라 책임으로 오른 자리야.',
+            emotion: 'determined',
+            characterImage: 'characters/seraphina_belmont.png',
+          },
+          {
+            speaker: 'Lucian',
+            text: '검증을 통과한 자는 두 번 쓰러지지 않는다.',
+            emotion: 'happy',
+            characterImage: 'characters/lucian_rosegarden.png',
+          },
+          {
+            speaker: 'Seraphina',
+            text: '이 문을 통과한 이상, 다시는 뒤돌아가지 않겠어.',
+            emotion: 'determined',
+            characterImage: 'characters/seraphina_belmont.png',
+          }
+        ],
+        postDefeat: [
+          {
+            speaker: 'Examiner',
+            text: '연동이 끊겼다. 다시 준비하고 오도록.',
+            emotion: 'normal',
+          },
+          {
+            speaker: 'Seraphina',
+            text: '집중이 흐트러지면 시험은 다시 공포가 되지... 더 준비할게.',
+            emotion: 'sad',
+            characterImage: 'characters/seraphina_belmont.png',
+          },
+          {
+            speaker: 'Marcus Belmont',
+            text: '실패를 기록으로 남겨라. 다음엔 그 기록이 너를 지켜줄 것이다.',
+            emotion: 'determined',
+            characterImage: 'characters/marcus_belmont.png',
+          },
+          {
+            speaker: 'Lucian',
+            text: '데이터를 정리해줄게. 균형을 맞춰서 다시 도전하자.',
+            emotion: 'normal',
+            characterImage: 'characters/lucian_rosegarden.png',
+          },
+          {
+            speaker: 'Seraphina',
+            text: '응, 검증을 두려워하지 않도록 더 연습할게.',
+            emotion: 'determined',
+            characterImage: 'characters/seraphina_belmont.png',
+          }
+        ]
+      }
+    },
+    {
+      id: 11, name: '불꽃과 균형', theme: 'Performance', recommendedPower: 220,
+      firstReward: { gold: 400, shards: 4 }, repeatReward: { gold: 200, shards: 2 }, cleared: false,
+      story: {
+        description: '왕립 원소 시연장에서 세라피나가 전속성 연동을 균형 있게 조율하며 관중 앞에서 새로운 온도를 증명한다.',
+        backgroundImage: 'backgrounds/stage_12_fire_master.png'
       },
       characterImage: 'characters/seraphina_belmont.png',
       enemyImage: 'characters/elena_drake.png',
       cutscene: {
         preBattle: [
           {
-            speaker: 'Elena Drake',
-            text: '세라피나, 드레이크 저택에 온 걸 환영해요. 정원에서 직접 실력을 보고 싶었어요.',
-            emotion: 'happy',
-            characterImage: 'characters/elena_drake'
+            speaker: 'Seraphina',
+            text: '(심호흡) 전생엔 이 무대에서 오만했지. 이번엔 마음부터 정돈해야 해.',
+            emotion: 'sad',
+            characterImage: 'characters/seraphina_belmont.png',
+          },
+          {
+            speaker: 'Lucian',
+            text: '시연 체계 완료. 네 번째 속성 연동 준비 됐어.',
+            emotion: 'normal',
+            characterImage: 'characters/lucian_rosegarden.png',
           },
           {
             speaker: 'Seraphina',
-            text: '엘레나 님, 이렇게 초대해 주셔서 감사합니다. 저도 가문의 일원이 되려면 더 많은 걸 배워야 하니까요.',
-            emotion: 'happy',
-            characterImage: 'characters/seraphina_belmont'
-          },
-          {
-            speaker: 'Kai Drake',
-            text: '둘 다 너무 긴장하지 마. 가족끼리 하는 연습일 뿐이니까.',
-            emotion: 'happy',
-            characterImage: 'characters/kai_drake'
-          },
-          {
-            speaker: 'Elena Drake',
-            text: '카이가 옆에 있으니 안심했겠지만, 난 너의 집중력을 시험할 거야. 정원은 온화하지만 전투는 다를 테니.',
-            emotion: 'angry',
-            characterImage: 'characters/elena_drake'
-          },
-          {
-            speaker: 'Seraphina',
-            text: '알겠습니다. 오늘 느낀 감정을 마음에 깊이 새겨두고 싶어요. 언젠가 이 순간을 떠올리며 미소 짓고 싶거든요.',
+            text: '좋아. [불 카드: 집중 점화] [얼음 카드: 균형 진동] [빛 카드: 시야 정렬] [바람 카드: 마력 분산]',
             emotion: 'determined',
-            characterImage: 'characters/seraphina_belmont'
+            characterImage: 'characters/seraphina_belmont.png',
           },
           {
-            speaker: 'Kai Drake',
-            text: '두 사람 모두 즐겁게 싸워줘. 내가 응원하고 있을게.',
+            speaker: 'Elena Drake',
+            text: '...저 표정, 전엔 본 적이 없었는데.',
+            emotion: 'surprised',
+            characterImage: 'characters/elena_drake.png',
+          },
+          {
+            speaker: 'Seraphina',
+            text: '(속삭이며) 이번 불꽃은 증명이 아니라 평정이야.',
+            emotion: 'determined',
+            characterImage: 'characters/seraphina_belmont.png',
+          },
+          {
+            speaker: 'Lucian',
+            text: '연동 성공률 98%. 피로도 1중첩, 안정적이야!',
             emotion: 'happy',
-            characterImage: 'characters/kai_drake'
+            characterImage: 'characters/lucian_rosegarden.png',
+          },
+          {
+            speaker: 'Seraphina',
+            text: '불꽃이 춤추는 건 더 이상 두려움 때문이 아니야.',
+            emotion: 'determined',
+            characterImage: 'characters/seraphina_belmont.png',
+          }
+        ],
+        postVictory: [
+          {
+            speaker: 'Lucian',
+            text: '전속성 오버체인 성공, 에너지 낭비 0%.',
+            emotion: 'happy',
+            characterImage: 'characters/lucian_rosegarden.png',
+          },
+          {
+            speaker: 'Elena Drake',
+            text: '축하해. 이제 넌 불이 아닌 평화를 다루는 자야.',
+            emotion: 'happy',
+            characterImage: 'characters/elena_drake.png',
+          },
+          {
+            speaker: 'Seraphina',
+            text: '이건 전생엔 얻지 못한, 진짜 온도야.',
+            emotion: 'determined',
+            characterImage: 'characters/seraphina_belmont.png',
+          },
+          {
+            speaker: 'Lucian',
+            text: '균형 위에서 타오르는 불은 세계를 태우지 않는다.',
+            emotion: 'happy',
+            characterImage: 'characters/lucian_rosegarden.png',
+          }
+        ],
+        postDefeat: [
+          {
+            speaker: 'Lucian',
+            text: '연동이 흔들렸어. 균형이 잡히지 않으면 폭주한다.',
+            emotion: 'normal',
+            characterImage: 'characters/lucian_rosegarden.png',
+          },
+          {
+            speaker: 'Seraphina',
+            text: '불꽃이 다시 날 삼켜버렸어... 마음부터 정리해야겠어.',
+            emotion: 'sad',
+            characterImage: 'characters/seraphina_belmont.png',
+          },
+          {
+            speaker: 'Elena Drake',
+            text: '숨을 고르고 다시 시작해. 이번 무대는 네가 선택한 거잖아.',
+            emotion: 'determined',
+            characterImage: 'characters/elena_drake.png',
+          },
+          {
+            speaker: 'Seraphina',
+            text: '응, 평정부터 되찾고 돌아올게.',
+            emotion: 'determined',
+            characterImage: 'characters/seraphina_belmont.png',
+          }
+        ]
+      }
+    },
+    {
+      id: 12, name: '땅의 마력 조율', theme: 'Earth', recommendedPower: 240,
+      firstReward: { gold: 450, shards: 4 }, repeatReward: { gold: 220, shards: 2 }, cleared: false,
+      story: {
+        description: '기사단 훈련장에서 세라피나가 대지의 파동을 동료들과 공유하며 함께 버티는 방패를 완성한다.',
+        backgroundImage: 'backgrounds/stage_16_earth_master.png'
+      },
+      characterImage: 'characters/seraphina_belmont.png',
+      enemyImage: 'characters/garen_stone.png',
+      cutscene: {
+        preBattle: [
+          {
+            speaker: 'Garen Stone',
+            text: '오늘은 방어의 날이다. 마력의 흐름을 공유하는 걸 잊지 마.',
+            emotion: 'angry',
+            characterImage: 'characters/garen_stone.png',
+          },
+          {
+            speaker: 'Seraphina',
+            text: '알겠어. 이번엔 나 혼자가 아니니까.',
+            emotion: 'determined',
+            characterImage: 'characters/seraphina_belmont.png',
+          },
+          {
+            speaker: 'Seraphina',
+            text: '[대지 카드: 맥박 개방] [빛 카드: 팀 공명] [바람 카드: 리듬 조율]',
+            emotion: 'determined',
+            characterImage: 'characters/seraphina_belmont.png',
+          },
+          {
+            speaker: 'Mira',
+            text: '대지의 결이 모두 이어졌어요.',
+            emotion: 'happy',
+            characterImage: 'characters/mira.png',
+          },
+          {
+            speaker: 'Garen Stone',
+            text: '전엔 불안정하던 파동이 지금은 하나야.',
+            emotion: 'happy',
+            characterImage: 'characters/garen_stone.png',
+          },
+          {
+            speaker: 'Seraphina',
+            text: '마력은 나의 것이 아니라 모두의 것이니까.',
+            emotion: 'determined',
+            characterImage: 'characters/seraphina_belmont.png',
+          },
+          {
+            speaker: 'Garen Stone',
+            text: '오늘부로 이 방패에 네 이름을 새긴다. [대지 카드: 동료 보호 문양 각인]',
+            emotion: 'happy',
+            characterImage: 'characters/garen_stone.png',
+          },
+          {
+            speaker: 'Seraphina',
+            text: '그 믿음, 절대 잃지 않을게.',
+            emotion: 'determined',
+            characterImage: 'characters/seraphina_belmont.png',
+          }
+        ],
+        postVictory: [
+          {
+            speaker: 'Garen Stone',
+            text: '방패의 색이 변했다. 이제 우리도 네 흐름 안에 있군.',
+            emotion: 'happy',
+            characterImage: 'characters/garen_stone.png',
+          },
+          {
+            speaker: 'Mira',
+            text: '대지 안정률 100%. 모두 살아남았어요.',
+            emotion: 'happy',
+            characterImage: 'characters/mira.png',
+          },
+          {
+            speaker: 'Seraphina',
+            text: '혼자 이기면 고독이 남지만, 함께 이기면 평화가 남아.',
+            emotion: 'determined',
+            characterImage: 'characters/seraphina_belmont.png',
+          },
+          {
+            speaker: 'Lucian',
+            text: '오늘의 승리는 단단함의 정의를 새로 썼다.',
+            emotion: 'happy',
+            characterImage: 'characters/lucian_rosegarden.png',
+          },
+          {
+            speaker: 'Seraphina',
+            text: '대지는 나를 지탱하고, 나는 모두를 지켜.',
+            emotion: 'determined',
+            characterImage: 'characters/seraphina_belmont.png',
+          }
+        ],
+        postDefeat: [
+          {
+            speaker: 'Garen Stone',
+            text: '파동이 끊겼다. 공유를 잊으면 방패가 무너진다.',
+            emotion: 'angry',
+            characterImage: 'characters/garen_stone.png',
+          },
+          {
+            speaker: 'Seraphina',
+            text: '내가 모든 결을 감당하려 했어... 함께 나눠야 하는데.',
+            emotion: 'sad',
+            characterImage: 'characters/seraphina_belmont.png',
+          },
+          {
+            speaker: 'Mira',
+            text: '다시 연결해봐요. 우리가 옆에 있어요!',
+            emotion: 'happy',
+            characterImage: 'characters/mira.png',
+          },
+          {
+            speaker: 'Seraphina',
+            text: '응. 이번엔 처음부터 함께 호흡 맞춰 돌아올게.',
+            emotion: 'determined',
+            characterImage: 'characters/seraphina_belmont.png',
+          }
+        ]
+      }
+    },
+    {
+      id: 13, name: '불의 도전', theme: 'Challenge', recommendedPower: 260,
+      firstReward: { gold: 500, shards: 5 }, repeatReward: { gold: 250, shards: 3 }, cleared: false,
+      story: {
+        description: '불꽃 서클 결투장에서 세라피나가 복수 대신 치유를 선택하며 아리아나와의 관계를 다시 쌓는다.',
+        backgroundImage: 'backgrounds/stage_17_fire_challenge.png'
+      },
+      characterImage: 'characters/seraphina_belmont.png',
+      enemyImage: 'characters/ariana_drake.png',
+      cutscene: {
+        preBattle: [
+          {
+            speaker: 'Ariana',
+            text: '또 도망치진 않겠지, 세라피나 벨몬트?',
+            emotion: 'angry',
+            characterImage: 'characters/ariana_drake.png',
+          },
+          {
+            speaker: 'Seraphina',
+            text: '아니. 이번엔 맞서서, 다르게 끝낼 거야. [불 카드: 결의 점화] [바람 카드: 회피 궤도] [빛 카드: 치유 잔류]',
+            emotion: 'determined',
+            characterImage: 'characters/seraphina_belmont.png',
+          },
+          {
+            speaker: 'Ariana',
+            text: '왜 반격하지 않아?!',
+            emotion: 'angry',
+            characterImage: 'characters/ariana_drake.png',
+          },
+          {
+            speaker: 'Seraphina',
+            text: '증오로는 아무것도 얻지 못해. 나는 이 싸움을 이기지 않겠어. [얼음 카드: 상처 봉합]',
+            emotion: 'determined',
+            characterImage: 'characters/seraphina_belmont.png',
+          },
+          {
+            speaker: 'Ariana',
+            text: '치료했다고? 날 이기고 싶지 않은 거야?',
+            emotion: 'surprised',
+            characterImage: 'characters/ariana_drake.png',
+          },
+          {
+            speaker: 'Seraphina',
+            text: '이제 우리 둘 다 패배하지 않길 바랄 뿐이야.',
+            emotion: 'determined',
+            characterImage: 'characters/seraphina_belmont.png',
+          }
+        ],
+        postVictory: [
+          {
+            speaker: 'Ariana',
+            text: '언제 이렇게 강해졌지, 너?',
+            emotion: 'surprised',
+            characterImage: 'characters/ariana_drake.png',
+          },
+          {
+            speaker: 'Seraphina',
+            text: '강함은 싸움이 아니라 선택에서 생기니까.',
+            emotion: 'determined',
+            characterImage: 'characters/seraphina_belmont.png',
+          },
+          {
+            speaker: 'Lucian',
+            text: '분노 해제 성공. 피로도 0.',
+            emotion: 'happy',
+            characterImage: 'characters/lucian_rosegarden.png',
+          },
+          {
+            speaker: 'Ariana',
+            text: '언젠가 진짜 친구가 될지도 모르겠네.',
+            emotion: 'happy',
+            characterImage: 'characters/ariana_drake.png',
+          },
+          {
+            speaker: 'Seraphina',
+            text: '불을 이겼다는 건 나 자신을 이겼다는 뜻이야.',
+            emotion: 'determined',
+            characterImage: 'characters/seraphina_belmont.png',
+          }
+        ],
+        postDefeat: [
+          {
+            speaker: 'Ariana',
+            text: '아직도 불꽃을 증오로 쓰고 있어? 그럼 싸움은 계속 될 거야.',
+            emotion: 'angry',
+            characterImage: 'characters/ariana_drake.png',
+          },
+          {
+            speaker: 'Seraphina',
+            text: '미안... 다시 마음을 다잡고 올게.',
+            emotion: 'sad',
+            characterImage: 'characters/seraphina_belmont.png',
+          },
+          {
+            speaker: 'Ariana',
+            text: '다시 도전해. 이번엔 정말 친구가 될 기회일지도 몰라.',
+            emotion: 'determined',
+            characterImage: 'characters/ariana_drake.png',
+          },
+          {
+            speaker: 'Seraphina',
+            text: '그래. 선택을 바꿔서 돌아올게.',
+            emotion: 'determined',
+            characterImage: 'characters/seraphina_belmont.png',
+          }
+        ]
+      }
+    },
+    {
+      id: 14, name: '우정의 서약', theme: 'Bond', recommendedPower: 280,
+      firstReward: { gold: 550, shards: 5 }, repeatReward: { gold: 280, shards: 3 }, cleared: false,
+      story: {
+        description: '벨몬트 시녀실에서 세라피나가 하인들과 감정 네트워크를 공유하며 서로를 지키는 우정을 선언한다.',
+        backgroundImage: 'backgrounds/stage_18_friendship.png'
+      },
+      characterImage: 'characters/seraphina_belmont.png',
+      enemyImage: 'characters/mira.png',
+      cutscene: {
+        preBattle: [
+          {
+            speaker: 'Seraphina',
+            text: '이 작전 이후, 여러분을 방패로 쓰지 않겠습니다.',
+            emotion: 'determined',
+            characterImage: 'characters/seraphina_belmont.png',
+          },
+          {
+            speaker: 'Mira',
+            text: '그러면 누가 전선을 막아요?',
+            emotion: 'surprised',
+            characterImage: 'characters/mira.png',
+          },
+          {
+            speaker: 'Seraphina',
+            text: '우리가 함께 막아요. 우정으로요. [감정 공유 카드: 전체 전송] [정보 보호 카드: 봉인 설정]',
+            emotion: 'determined',
+            characterImage: 'characters/seraphina_belmont.png',
+          },
+          {
+            speaker: 'Servant',
+            text: '모두의 카드가 반응해요!',
+            emotion: 'happy',
+          },
+          {
+            speaker: 'Mira',
+            text: '우리 이름을 카드에 새길게요. [우정 촉매 카드: 모든 이름 각인]',
+            emotion: 'happy',
+            characterImage: 'characters/mira.png',
+          },
+          {
+            speaker: 'Seraphina',
+            text: '그 말, 기억할게.',
+            emotion: 'determined',
+            characterImage: 'characters/seraphina_belmont.png',
+          }
+        ],
+        postVictory: [
+          {
+            speaker: 'Mira',
+            text: '감정 공명률 99%. 성공이에요!',
+            emotion: 'happy',
+            characterImage: 'characters/mira.png',
+          },
+          {
+            speaker: 'Seraphina',
+            text: '내 이름보다 여러분의 이름이 더 빛나.',
+            emotion: 'determined',
+            characterImage: 'characters/seraphina_belmont.png',
+          },
+          {
+            speaker: 'Lucian',
+            text: '정보망은 어떤 마법보다 단단하다.',
+            emotion: 'happy',
+            characterImage: 'characters/lucian_rosegarden.png',
+          },
+          {
+            speaker: 'Seraphina',
+            text: '서로의 마음을 엮으면 그것이 진짜 마력이야.',
+            emotion: 'determined',
+            characterImage: 'characters/seraphina_belmont.png',
+          },
+          {
+            speaker: 'Mira',
+            text: '오늘의 승리는 우리 모두의 이름이었어요.',
+            emotion: 'happy',
+            characterImage: 'characters/mira.png',
+          }
+        ],
+        postDefeat: [
+          {
+            speaker: 'Mira',
+            text: '감정이 흔들렸어요. 다시 손을 잡을까요?',
+            emotion: 'sad',
+            characterImage: 'characters/mira.png',
+          },
+          {
+            speaker: 'Seraphina',
+            text: '내가 너무 앞서갔어. 함께 해야 하는데.',
+            emotion: 'sad',
+            characterImage: 'characters/seraphina_belmont.png',
+          },
+          {
+            speaker: 'Servant',
+            text: '다시 시도해요! 이번엔 우리가 먼저 손을 내밀게요.',
+            emotion: 'happy',
+          },
+          {
+            speaker: 'Seraphina',
+            text: '응. 우정부터 다시 맞추자.',
+            emotion: 'determined',
+            characterImage: 'characters/seraphina_belmont.png',
+          }
+        ]
+      }
+    },
+    {
+      id: 15, name: '그림자와 이름', theme: 'Revelation', recommendedPower: 300,
+      firstReward: { gold: 600, shards: 5 }, repeatReward: { gold: 300, shards: 3 }, cleared: false,
+      story: {
+        description: '벨몬트 비밀 극장에서 세라피나가 다리우스의 음모 기록을 복원하고 엘레나와 함께 진실을 선언한다.',
+        backgroundImage: 'backgrounds/stage_37_ancient.png'
+      },
+      characterImage: 'characters/seraphina_belmont.png',
+      enemyImage: 'characters/darius_blackwood.png',
+      cutscene: {
+        preBattle: [
+          {
+            speaker: 'Lucian',
+            text: '감정 흔적 감지. 다리우스의 흔적이야.',
+            emotion: 'normal',
+            characterImage: 'characters/lucian_rosegarden.png',
+          },
+          {
+            speaker: 'Seraphina',
+            text: '그 이름, 아직 남아 있었구나. [빛 카드: 진실 비춤] [어둠 카드: 그림자 기록 복원]',
+            emotion: 'determined',
+            characterImage: 'characters/seraphina_belmont.png',
+          },
+          {
+            speaker: 'Elena Drake',
+            text: '이건... 전생의 약혼식 전날 회의잖아.',
+            emotion: 'surprised',
+            characterImage: 'characters/elena_drake.png',
+          },
+          {
+            speaker: 'Seraphina',
+            text: '다리우스가 조종했어. 단죄는 조작이었어. [증언 봉인 카드: 증거 저장]',
+            emotion: 'determined',
+            characterImage: 'characters/seraphina_belmont.png',
+          },
+          {
+            speaker: 'Elena Drake',
+            text: '난 그때 널 믿지 못했지. 미안해.',
+            emotion: 'sad',
+            characterImage: 'characters/elena_drake.png',
+          },
+          {
+            speaker: 'Seraphina',
+            text: '미안함 대신 진실을 선택해줘. 그게 나의 구원이야.',
+            emotion: 'determined',
+            characterImage: 'characters/seraphina_belmont.png',
           }
         ],
         postVictory: [
           {
             speaker: 'Elena Drake',
-            text: '생각보다 훨씬 강하네. 우리 가문에 잘 어울리는 열정이야.',
-            emotion: 'surprised',
-            characterImage: 'characters/elena_drake'
+            text: '이제, 나도 네 편이야.',
+            emotion: 'happy',
+            characterImage: 'characters/elena_drake.png',
+          },
+          {
+            speaker: 'Lucian',
+            text: '데이터 복원 100%. 감정 왜곡 해제.',
+            emotion: 'happy',
+            characterImage: 'characters/lucian_rosegarden.png',
           },
           {
             speaker: 'Seraphina',
-            text: '엘레나 님의 매너 덕분에 전투가 즐거웠어요. 오늘 승부를 "따뜻한 전투"로 기억하겠습니다.',
-            emotion: 'happy',
-            characterImage: 'characters/seraphina_belmont'
-          },
-          {
-            speaker: 'Kai Drake',
-            text: '두 사람 모두 정말 잘했어. 이런 장면을 더 자주 보고 싶다니까.',
-            emotion: 'happy',
-            characterImage: 'characters/kai_drake'
+            text: '어둠의 이름을 밝혀냈으니 이제 우리는 같은 하늘 아래야.',
+            emotion: 'determined',
+            characterImage: 'characters/seraphina_belmont.png',
           },
           {
             speaker: 'Elena Drake',
-            text: '다음에는 내가 준비한 티타임에서 전략을 이야기해보자. 가족이 될 사람에게 꼭 보여주고 싶은 게 많거든.',
-            emotion: 'happy',
-            characterImage: 'characters/elena_drake'
+            text: '진실은 늦게 오지만 결코 길을 잃지 않지.',
+            emotion: 'determined',
+            characterImage: 'characters/elena_drake.png',
+          },
+          {
+            speaker: 'Seraphina',
+            text: '그리고 그 길 끝엔 용서가 기다리고 있어.',
+            emotion: 'determined',
+            characterImage: 'characters/seraphina_belmont.png',
           }
         ],
         postDefeat: [
           {
-            speaker: 'Elena Drake',
-            text: '긴장이 아직 남아있네. 정원에서는 숨을 크게 쉬어도 괜찮아.',
+            speaker: 'Lucian',
+            text: '기록이 흐릿해졌어. 감정을 정리하지 않으면 진실이 숨는다.',
             emotion: 'normal',
-            characterImage: 'characters/elena_drake'
+            characterImage: 'characters/lucian_rosegarden.png',
           },
           {
             speaker: 'Seraphina',
-            text: '정원의 향기에 취해 집중을 놓쳤어요. 다시 한 번 차분하게 해보고 싶습니다.',
+            text: '망설임이 남았어... 하지만 다시 기록을 복원할 거야.',
             emotion: 'sad',
-            characterImage: 'characters/seraphina_belmont'
-          },
-          {
-            speaker: 'Kai Drake',
-            text: '실패도 괜찮아. 이 순간을 기억해두면 언젠가 웃으며 이야기할 수 있을 거야.',
-            emotion: 'happy',
-            characterImage: 'characters/kai_drake'
+            characterImage: 'characters/seraphina_belmont.png',
           },
           {
             speaker: 'Elena Drake',
-            text: '다시 정원에 올 때까지 실력을 더 다듬어봐. 우리 저택은 언제든 환영이야.',
+            text: '천천히 해도 돼. 이번엔 내가 기다릴 테니.',
             emotion: 'happy',
-            characterImage: 'characters/elena_drake'
+            characterImage: 'characters/elena_drake.png',
+          },
+          {
+            speaker: 'Seraphina',
+            text: '고마워. 준비를 마치고 다시 돌아올게.',
+            emotion: 'determined',
+            characterImage: 'characters/seraphina_belmont.png',
           }
         ]
       }
     },
-    { 
-      id: 11, name: '중급 시험', theme: 'Lucian2', recommendedPower: 220, 
-      firstReward: { gold: 400, shards: 4 }, repeatReward: { gold: 200, shards: 2 }, cleared: false,
+    {
+      id: 16, name: '정예의 문지기', theme: 'Elite', recommendedPower: 320,
+      firstReward: { gold: 650, shards: 6 }, repeatReward: { gold: 325, shards: 3 }, cleared: false,
       story: {
-        description: '세라피나의 실력 향상을 확인하는 재검증 배틀. 첫 배틀보다 훨씬 강해진 Lucian과 싸워 중급 마법사 수준을 증명한다.',
-        backgroundImage: 'backgrounds/stage_11_training_advanced.webp'
+        description: '왕립 정예 기사단 오디션장에서 세라피나가 전술과 진실 판별을 동시에 수행하며 정문을 두드린다.',
+        backgroundImage: 'backgrounds/stage_20_elite_advanced.png'
+      },
+      characterImage: 'characters/seraphina_belmont.png',
+      enemyImage: 'characters/garen_stone.png',
+      cutscene: {
+        preBattle: [
+          {
+            speaker: 'Garen Stone',
+            text: '정예 기사단의 문은 쉽게 열리지 않는다.',
+            emotion: 'angry',
+            characterImage: 'characters/garen_stone.png',
+          },
+          {
+            speaker: 'Seraphina',
+            text: '그래서 두드리러 왔죠. 이번엔 정면으로요.',
+            emotion: 'determined',
+            characterImage: 'characters/seraphina_belmont.png',
+          },
+          {
+            speaker: 'Seraphina',
+            text: '[불 카드: 에너지 집중] [대지 카드: 충격 완화] [번개 카드: 반응 속도 강화]',
+            emotion: 'determined',
+            characterImage: 'characters/seraphina_belmont.png',
+          },
+          {
+            speaker: 'Examiner A',
+            text: '속도와 안정이 동시에? 흥미롭군.',
+            emotion: 'surprised',
+          },
+          {
+            speaker: 'Examiner B',
+            text: '균형 감각이 탁월해. 마지막 절차로 거짓 판별을 진행한다.',
+            emotion: 'normal',
+          },
+          {
+            speaker: 'Seraphina',
+            text: '[어둠 카드: 거짓 분해] 진실 외엔 통과시키지 않겠습니다.',
+            emotion: 'determined',
+            characterImage: 'characters/seraphina_belmont.png',
+          },
+          {
+            speaker: 'Lucian',
+            text: '완벽해. 거짓 신호 제로.',
+            emotion: 'happy',
+            characterImage: 'characters/lucian_rosegarden.png',
+          },
+          {
+            speaker: 'Garen Stone',
+            text: '통과다. 이제 문 밖이 아니라 문을 지키는 자다.',
+            emotion: 'happy',
+            characterImage: 'characters/garen_stone.png',
+          }
+        ],
+        postVictory: [
+          {
+            speaker: 'Examiner A',
+            text: '정예 배치 승인. 훌륭한 검증이었다.',
+            emotion: 'happy',
+          },
+          {
+            speaker: 'Lucian',
+            text: '기록 완료. 벨몬트 세라피나, 합격.',
+            emotion: 'happy',
+            characterImage: 'characters/lucian_rosegarden.png',
+          },
+          {
+            speaker: 'Garen Stone',
+            text: '문을 열었으니 이제 등을 맡길 수 있겠군.',
+            emotion: 'happy',
+            characterImage: 'characters/garen_stone.png',
+          },
+          {
+            speaker: 'Seraphina',
+            text: '지키는 건 가장 어려운 전투니까요.',
+            emotion: 'determined',
+            characterImage: 'characters/seraphina_belmont.png',
+          },
+          {
+            speaker: 'Mira',
+            text: '문을 연 자가 세상을 바꿉니다!',
+            emotion: 'happy',
+            characterImage: 'characters/mira.png',
+          },
+          {
+            speaker: 'Seraphina',
+            text: '오늘의 승리는 문이 아니라 신뢰를 통과한 거예요.',
+            emotion: 'determined',
+            characterImage: 'characters/seraphina_belmont.png',
+          }
+        ],
+        postDefeat: [
+          {
+            speaker: 'Examiner A',
+            text: '연동이 끊겼다. 다시 준비하고 오도록.',
+            emotion: 'normal',
+          },
+          {
+            speaker: 'Seraphina',
+            text: '긴장을 못 이겨 손이 떨렸어요. 기록을 정리하고 돌아올게요.',
+            emotion: 'sad',
+            characterImage: 'characters/seraphina_belmont.png',
+          },
+          {
+            speaker: 'Garen Stone',
+            text: '문은 준비된 자만 통과한다. 훈련을 반복해라.',
+            emotion: 'angry',
+            characterImage: 'characters/garen_stone.png',
+          },
+          {
+            speaker: 'Lucian',
+            text: '데이터는 남아있어. 균형을 조정하고 다시 도전하자.',
+            emotion: 'normal',
+            characterImage: 'characters/lucian_rosegarden.png',
+          },
+          {
+            speaker: 'Seraphina',
+            text: '네, 다음 번엔 떨림 대신 결심을 들고 오겠습니다.',
+            emotion: 'determined',
+            characterImage: 'characters/seraphina_belmont.png',
+          }
+        ]
+      }
+    },
+    {
+      id: 17, name: '연동 예고', theme: 'Signal', recommendedPower: 340,
+      firstReward: { gold: 700, shards: 6 }, repeatReward: { gold: 350, shards: 3 }, cleared: false,
+      story: {
+        description: '왕립 공연장 리허설에서 세라피나가 음악과 빛에 진실을 숨겨 다가올 폭로를 예고한다.',
+        backgroundImage: 'backgrounds/stage_21_fusion.png'
+      },
+      characterImage: 'characters/seraphina_belmont.png',
+      enemyImage: 'characters/leon_ardenia.png',
+      cutscene: {
+        preBattle: [
+          {
+            speaker: 'Lucian',
+            text: '블랙우드 정보를 무대 암호로 숨긴다... 참 대담하군.',
+            emotion: 'normal',
+            characterImage: 'characters/lucian_rosegarden.png',
+          },
+          {
+            speaker: 'Seraphina',
+            text: '진실은 사람들 앞에서 밝힐 때 가장 빛나니까.',
+            emotion: 'determined',
+            characterImage: 'characters/seraphina_belmont.png',
+          },
+          {
+            speaker: 'Seraphina',
+            text: '[빛 카드: 무대 조명 제어] [바람 카드: 음향 흐름 동기화] [번개 카드: 타이밍 보정]',
+            emotion: 'determined',
+            characterImage: 'characters/seraphina_belmont.png',
+          },
+          {
+            speaker: 'Elena Drake',
+            text: '리허설이라지만 긴장되네.',
+            emotion: 'sad',
+            characterImage: 'characters/elena_drake.png',
+          },
+          {
+            speaker: 'Leon Ardenia',
+            text: '오늘은 적이 아니라 파트너로 호흡하지.',
+            emotion: 'happy',
+            characterImage: 'characters/leon_ardenia.png',
+          },
+          {
+            speaker: 'Seraphina',
+            text: '좋아요. 그 말, 무대 위에서 꼭 지켜줘요.',
+            emotion: 'determined',
+            characterImage: 'characters/seraphina_belmont.png',
+          },
+          {
+            speaker: 'Seraphina',
+            text: '이건 단순한 공연이 아니라 진실을 보낼 신호야.',
+            emotion: 'determined',
+            characterImage: 'characters/seraphina_belmont.png',
+          }
+        ],
+        postVictory: [
+          {
+            speaker: 'Elena Drake',
+            text: '암호 해석 확인. 완벽했어요.',
+            emotion: 'happy',
+            characterImage: 'characters/elena_drake.png',
+          },
+          {
+            speaker: 'Leon Ardenia',
+            text: '연동 예행 연습, 전부 매끄러웠다.',
+            emotion: 'happy',
+            characterImage: 'characters/leon_ardenia.png',
+          },
+          {
+            speaker: 'Lucian',
+            text: '진실을 음악으로 숨기는 자... 천재군.',
+            emotion: 'happy',
+            characterImage: 'characters/lucian_rosegarden.png',
+          },
+          {
+            speaker: 'Seraphina',
+            text: '음악은 진실을 가장 조용히 전하는 언어니까요.',
+            emotion: 'happy',
+            characterImage: 'characters/seraphina_belmont.png',
+          },
+          {
+            speaker: 'Elena Drake',
+            text: '오늘의 리허설은 내일의 폭로다.',
+            emotion: 'determined',
+            characterImage: 'characters/elena_drake.png',
+          },
+          {
+            speaker: 'Seraphina',
+            text: '예고는 이미 승리의 서막이었어.',
+            emotion: 'determined',
+            characterImage: 'characters/seraphina_belmont.png',
+          }
+        ],
+        postDefeat: [
+          {
+            speaker: 'Lucian',
+            text: '조명이 흔들렸어. 암호가 노출될 뻔했다.',
+            emotion: 'normal',
+            characterImage: 'characters/lucian_rosegarden.png',
+          },
+          {
+            speaker: 'Seraphina',
+            text: '내 박자가 흐트러졌어... 다시 균형을 맞출게.',
+            emotion: 'sad',
+            characterImage: 'characters/seraphina_belmont.png',
+          },
+          {
+            speaker: 'Leon Ardenia',
+            text: '연습이니까 괜찮다. 다음엔 내 검으로 박자를 잡아주지.',
+            emotion: 'happy',
+            characterImage: 'characters/leon_ardenia.png',
+          },
+          {
+            speaker: 'Seraphina',
+            text: '고마워. 진실을 숨길 악보를 다시 꿰매서 돌아올게.',
+            emotion: 'determined',
+            characterImage: 'characters/seraphina_belmont.png',
+          }
+        ]
+      }
+    },
+    {
+      id: 18, name: '약혼자의 대련', theme: 'Dance', recommendedPower: 360,
+      firstReward: { gold: 720, shards: 7 }, repeatReward: { gold: 360, shards: 4 }, cleared: false,
+      story: {
+        description: '궁정 무도회장에서 세라피나와 레온이 검과 카드로 화해의 춤을 추며 악몽을 음악으로 바꾼다.',
+        backgroundImage: 'backgrounds/stage_39_cooperation.png'
+      },
+      characterImage: 'characters/seraphina_belmont.png',
+      enemyImage: 'characters/leon_ardenia.png',
+      cutscene: {
+        preBattle: [
+          {
+            speaker: 'Leon Ardenia',
+            text: '이번엔 내가 단죄자가 아닌, 검무의 파트너로 서겠다.',
+            emotion: 'normal',
+            characterImage: 'characters/leon_ardenia.png',
+          },
+          {
+            speaker: 'Seraphina',
+            text: '검은 검답게, 카드는 카드답게 춤춰볼까요.',
+            emotion: 'determined',
+            characterImage: 'characters/seraphina_belmont.png',
+          },
+          {
+            speaker: 'Seraphina',
+            text: '[번개 카드: 리듬 동기화] [바람 카드: 회피 궤도 조율]',
+            emotion: 'determined',
+            characterImage: 'characters/seraphina_belmont.png',
+          },
+          {
+            speaker: 'Lucian',
+            text: '동기화율 97%. 충돌 없음.',
+            emotion: 'happy',
+            characterImage: 'characters/lucian_rosegarden.png',
+          },
+          {
+            speaker: 'Mira',
+            text: '전생의 악몽이... 춤으로 바뀌었어요.',
+            emotion: 'happy',
+            characterImage: 'characters/mira.png',
+          },
+          {
+            speaker: 'Leon Ardenia',
+            text: '오늘은 승부가 아니라 존중이다.',
+            emotion: 'happy',
+            characterImage: 'characters/leon_ardenia.png',
+          }
+        ],
+        postVictory: [
+          {
+            speaker: 'Leon Ardenia',
+            text: '이번 무도회, 진짜 아름다웠다.',
+            emotion: 'happy',
+            characterImage: 'characters/leon_ardenia.png',
+          },
+          {
+            speaker: 'Seraphina',
+            text: '악몽을 무용으로 바꿀 수 있다면, 회귀도 가치가 있어요.',
+            emotion: 'determined',
+            characterImage: 'characters/seraphina_belmont.png',
+          },
+          {
+            speaker: 'Lucian',
+            text: '전생 데이터와 감정 패턴 완전 분리 확인.',
+            emotion: 'happy',
+            characterImage: 'characters/lucian_rosegarden.png',
+          },
+          {
+            speaker: 'Seraphina',
+            text: '검은 이제 심판의 상징이 아니라 화해의 악보야.',
+            emotion: 'determined',
+            characterImage: 'characters/seraphina_belmont.png',
+          },
+          {
+            speaker: 'Leon Ardenia',
+            text: '오늘의 춤, 기억하겠어. 진심으로.',
+            emotion: 'determined',
+            characterImage: 'characters/leon_ardenia.png',
+          }
+        ],
+        postDefeat: [
+          {
+            speaker: 'Leon Ardenia',
+            text: '박자가 엇나갔다. 심호흡부터 다시.',
+            emotion: 'normal',
+            characterImage: 'characters/leon_ardenia.png',
+          },
+          {
+            speaker: 'Seraphina',
+            text: '과거가 잠깐 끼어들었어... 하지만 다시 춤출 수 있어.',
+            emotion: 'sad',
+            characterImage: 'characters/seraphina_belmont.png',
+          },
+          {
+            speaker: 'Lucian',
+            text: '동기화 데이터를 조정해 둘게. 다음엔 더 매끄럽게 연결하자.',
+            emotion: 'normal',
+            characterImage: 'characters/lucian_rosegarden.png',
+          },
+          {
+            speaker: 'Seraphina',
+            text: '응. 화해의 악보를 완성해서 돌아올게.',
+            emotion: 'determined',
+            characterImage: 'characters/seraphina_belmont.png',
+          }
+        ]
+      }
+    },
+    {
+      id: 19, name: '기사단 종결', theme: 'Command', recommendedPower: 380,
+      firstReward: { gold: 800, shards: 8 }, repeatReward: { gold: 400, shards: 4 }, cleared: false,
+      story: {
+        description: '기사단 훈련장의 밤, 세라피나가 지휘 카드로 전원을 묶어 블랙우드 작전의 마지막 단락을 선언한다.',
+        backgroundImage: 'backgrounds/stage_08_elite_2.png'
+      },
+      characterImage: 'characters/seraphina_belmont.png',
+      enemyImage: 'characters/garen_stone.png',
+      cutscene: {
+        preBattle: [
+          {
+            speaker: 'Seraphina',
+            text: '이 자리는 전생의 재판장이었지. 이번엔 단죄가 아니라 협력의 자리로 만들 거야. [지휘 카드: 대열 정렬]',
+            emotion: 'determined',
+            characterImage: 'characters/seraphina_belmont.png',
+          },
+          {
+            speaker: 'Seraphina',
+            text: '[감정 공유 카드: 전체 전송] 블랙우드 작전, 지금부터 공유한다.',
+            emotion: 'determined',
+            characterImage: 'characters/seraphina_belmont.png',
+          },
+          {
+            speaker: 'Lucian',
+            text: '작전 정보 전파 완료.',
+            emotion: 'normal',
+            characterImage: 'characters/lucian_rosegarden.png',
+          },
+          {
+            speaker: 'Garen Stone',
+            text: '기사단 전원, 세라피나 명령에 따른다!',
+            emotion: 'angry',
+            characterImage: 'characters/garen_stone.png',
+          },
+          {
+            speaker: 'Mira',
+            text: '전생엔 누가 아가씨를 단죄했는데... 이제는 모두가 따르고 있어요.',
+            emotion: 'happy',
+            characterImage: 'characters/mira.png',
+          },
+          {
+            speaker: 'Seraphina',
+            text: '세상은 반복되지 않아. 우리가 변했으니까.',
+            emotion: 'determined',
+            characterImage: 'characters/seraphina_belmont.png',
+          }
+        ],
+        postVictory: [
+          {
+            speaker: 'Garen Stone',
+            text: '명예 인장 수여! 기사단, 전원 생존!',
+            emotion: 'happy',
+            characterImage: 'characters/garen_stone.png',
+          },
+          {
+            speaker: 'Soldiers',
+            text: '벨몬트 경 만세!',
+            emotion: 'happy',
+          },
+          {
+            speaker: 'Seraphina',
+            text: '영광은 나의 것이 아니라 모두의 이름으로 남아요.',
+            emotion: 'determined',
+            characterImage: 'characters/seraphina_belmont.png',
+          },
+          {
+            speaker: 'Lucian',
+            text: '역사는 단죄로 끝나지 않는다. 오늘은 연대의 서사다.',
+            emotion: 'happy',
+            characterImage: 'characters/lucian_rosegarden.png',
+          },
+          {
+            speaker: 'Seraphina',
+            text: '이 밤은 전생의 마지막 장이 아니라 새로운 서문이야.',
+            emotion: 'determined',
+            characterImage: 'characters/seraphina_belmont.png',
+          }
+        ],
+        postDefeat: [
+          {
+            speaker: 'Garen Stone',
+            text: '대열이 흐트러졌다. 지휘를 다시 세워라.',
+            emotion: 'angry',
+            characterImage: 'characters/garen_stone.png',
+          },
+          {
+            speaker: 'Seraphina',
+            text: '단죄가 아닌 연대를 보여주고 싶었는데... 아직 부족하구나.',
+            emotion: 'sad',
+            characterImage: 'characters/seraphina_belmont.png',
+          },
+          {
+            speaker: 'Lucian',
+            text: '데이터를 남겨둘게. 한 번 더 조율하면 된다.',
+            emotion: 'normal',
+            characterImage: 'characters/lucian_rosegarden.png',
+          },
+          {
+            speaker: 'Seraphina',
+            text: '응. 다시 대열을 정렬해서 돌아올게.',
+            emotion: 'determined',
+            characterImage: 'characters/seraphina_belmont.png',
+          }
+        ]
+      }
+    },
+    {
+      id: 20, name: '석화의 틈', theme: 'Petrify', recommendedPower: 400,
+      firstReward: { gold: 900, shards: 9 }, repeatReward: { gold: 450, shards: 5 }, cleared: false,
+      story: {
+        description: '석화 지대의 균열 속에서 세라피나가 블랙우드의 봉인 흔적을 찾아 진실을 흡수한다.',
+        backgroundImage: 'backgrounds/stage_24_petrification.png'
+      },
+      characterImage: 'characters/seraphina_belmont.png',
+      enemyImage: 'characters/darius_blackwood.png',
+      cutscene: {
+        preBattle: [
+          {
+            speaker: 'Lucian',
+            text: '다리우스의 봉인 마법 잔재가 남아 있어.',
+            emotion: 'normal',
+            characterImage: 'characters/lucian_rosegarden.png',
+          },
+          {
+            speaker: 'Seraphina',
+            text: '그럼 부수자. 이번엔 두려움 없이. [대지 카드: 진동 탐지] [바람 카드: 균열 해체]',
+            emotion: 'determined',
+            characterImage: 'characters/seraphina_belmont.png',
+          },
+          {
+            speaker: 'Seraphina',
+            text: '[빛 카드: 치유 봉합] [얼음 카드: 안정화]',
+            emotion: 'determined',
+            characterImage: 'characters/seraphina_belmont.png',
+          },
+          {
+            speaker: 'Mira',
+            text: '이건... 전생의 단죄 기록이에요!',
+            emotion: 'surprised',
+            characterImage: 'characters/mira.png',
+          },
+          {
+            speaker: 'Seraphina',
+            text: '블랙우드의 조작 흔적이군. [봉인 카드: 증거 흡수]',
+            emotion: 'determined',
+            characterImage: 'characters/seraphina_belmont.png',
+          },
+          {
+            speaker: 'Lucian',
+            text: '완료. 이걸로 진실이 완전히 드러났어.',
+            emotion: 'happy',
+            characterImage: 'characters/lucian_rosegarden.png',
+          }
+        ],
+        postVictory: [
+          {
+            speaker: 'Seraphina',
+            text: '거짓의 돌도 결국 금이 가면 무너지는 법이지.',
+            emotion: 'determined',
+            characterImage: 'characters/seraphina_belmont.png',
+          },
+          {
+            speaker: 'Lucian',
+            text: '봉인 해제 완료. 진실 복원 100%.',
+            emotion: 'happy',
+            characterImage: 'characters/lucian_rosegarden.png',
+          },
+          {
+            speaker: 'Mira',
+            text: '석화 해제 성공! 모두 움직여요!',
+            emotion: 'happy',
+            characterImage: 'characters/mira.png',
+          },
+          {
+            speaker: 'Seraphina',
+            text: '이제 거짓의 돌벽은 완전히 무너졌어.',
+            emotion: 'determined',
+            characterImage: 'characters/seraphina_belmont.png',
+          }
+        ],
+        postDefeat: [
+          {
+            speaker: 'Lucian',
+            text: '균열을 잡지 못했다. 봉인이 재생 중이야.',
+            emotion: 'normal',
+            characterImage: 'characters/lucian_rosegarden.png',
+          },
+          {
+            speaker: 'Seraphina',
+            text: '손끝이 다시 굳어버렸어... 조금만 더 연습하면 될 거야.',
+            emotion: 'sad',
+            characterImage: 'characters/seraphina_belmont.png',
+          },
+          {
+            speaker: 'Mira',
+            text: '다음엔 제가 먼저 균열을 밝혀드릴게요!',
+            emotion: 'happy',
+            characterImage: 'characters/mira.png',
+          },
+          {
+            speaker: 'Seraphina',
+            text: '응. 이번엔 거짓을 남김없이 흡수해서 돌아올게.',
+            emotion: 'determined',
+            characterImage: 'characters/seraphina_belmont.png',
+          }
+        ]
+      }
+    },
+    // Chapter 3: 최종 시련 (Stage 21-29) - TODO: Stage 30은 이미 추가됨
+    {
+      id: 21, name: '원소 연동의 밤', theme: 'Harmony', recommendedPower: 420,
+      firstReward: { gold: 950, shards: 9 }, repeatReward: { gold: 475, shards: 5 }, cleared: false,
+      story: {
+        description: '벨몬트 돔에서 세라피나가 일곱 속성을 합주처럼 조율하며 진실을 암호화한다.',
+        backgroundImage: 'backgrounds/stage_21_fusion.png'
       },
       characterImage: 'characters/seraphina_belmont.png',
       enemyImage: 'characters/lucian_rosegarden.png',
@@ -1094,1349 +2540,233 @@ export const campaignStageData = [
         preBattle: [
           {
             speaker: 'Lucian',
-            text: '아가씨, 초급 시험 이후로 정말 빠르게 성장하고 계십니다. 이제는 중급 마법사 수준을 검증할 차례지요.',
-            emotion: 'normal',
-            characterImage: 'characters/lucian_rosegarden'
+            text: '(흥분) 일곱 속성 전 연동이라니... 실전에서 성공한 적은 없었어.',
+            emotion: 'happy',
+            characterImage: 'characters/lucian_rosegarden.png',
           },
           {
             speaker: 'Seraphina',
-            text: '그동안 배운 것들을 체계적으로 정리해봤어요. 오늘 그 결과를 보여드릴게요.',
+            text: '(눈을 감고) 이번엔 음악처럼 조율할 거야. 불은 리듬, 얼음은 템포, 빛은 멜로디.',
             emotion: 'determined',
-            characterImage: 'characters/seraphina_belmont'
+            characterImage: 'characters/seraphina_belmont.png',
+          },
+          {
+            speaker: 'Seraphina',
+            text: '[불 카드: 공명 진동] [얼음 카드: 파형 정렬] [바람 카드: 순환 루프] [대지 카드: 중심 고정] [번개 카드: 리듬 상승] [빛 카드: 화음 확장] [어둠 카드: 잔향 필터]',
+            emotion: 'determined',
+            characterImage: 'characters/seraphina_belmont.png',
+          },
+          {
+            speaker: 'Mira',
+            text: '와... 마력이 노래처럼 들려요!',
+            emotion: 'happy',
+            characterImage: 'characters/mira.png',
           },
           {
             speaker: 'Lucian',
-            text: '이번 시험에서는 속성과 카드 순환, 그리고 위기 대처 능력을 동시에 보겠습니다. 마음가짐도 단단히 준비하세요.',
-            emotion: 'normal',
-            characterImage: 'characters/lucian_rosegarden'
+            text: '(기록하며) 이건 마력 조율을 넘어선 감정 합주야.',
+            emotion: 'happy',
+            characterImage: 'characters/lucian_rosegarden.png',
           },
           {
             speaker: 'Seraphina',
-            text: '네. 어떤 감정이 오더라도 흔들리지 않도록 다잡겠습니다. 그것이 제가 성장하는 방법이니까요.',
-            emotion: 'normal',
-            characterImage: 'characters/seraphina_belmont'
-          },
-          {
-            speaker: 'Lucian',
-            text: '좋습니다. 제 손에 들린 이 카드는 가문 내에서도 위험하다고 알려진 기술입니다. 완벽히 대응해보세요.',
-            emotion: 'angry',
-            characterImage: 'characters/lucian_rosegarden'
-          },
-          {
-            speaker: 'Seraphina',
-            text: '기대하고 있을게요. 당신에게 배운 것을 실전으로 보여줄 수 있다면 더할 나위 없겠죠.',
+            text: '암호 삽입 완료. 진실은 이 곡 안에 숨었어.',
             emotion: 'determined',
-            characterImage: 'characters/seraphina_belmont'
+            characterImage: 'characters/seraphina_belmont.png',
           }
         ],
         postVictory: [
           {
             speaker: 'Lucian',
-            text: '대단합니다! 섬세한 카드 운용과 침착한 판단력... 이 정도면 중급 마법사로 인정해도 되겠네요.',
+            text: '(숨을 고르며) 연동율 100%. 폭주 제로.',
             emotion: 'happy',
-            characterImage: 'characters/lucian_rosegarden'
+            characterImage: 'characters/lucian_rosegarden.png',
+          },
+          {
+            speaker: 'Elena Drake',
+            text: '감정 동조까지 완벽했어.',
+            emotion: 'happy',
+            characterImage: 'characters/elena_drake.png',
           },
           {
             speaker: 'Seraphina',
-            text: '처음으로 전투 중에 감정이 흔들리지 않았어요. 대신 상황을 차분히 분석했죠.',
-            emotion: 'happy',
-            characterImage: 'characters/seraphina_belmont'
-          },
-          {
-            speaker: 'Lucian',
-            text: '그 집중력은 훗날 큰 자산이 될 겁니다. 다음 시험에서도 그 침착함을 기대하겠습니다.',
-            emotion: 'happy',
-            characterImage: 'characters/lucian_rosegarden'
-          },
-          {
-            speaker: 'Seraphina',
-            text: '앞으로도 계속 성장하는 모습을 보여드릴게요. 그 다짐을 잊지 않겠습니다.',
+            text: '진실은 큰소리로 외치지 않아도 돼. 이렇게 조용히 스며드는 게 좋아.',
             emotion: 'determined',
-            characterImage: 'characters/seraphina_belmont'
+            characterImage: 'characters/seraphina_belmont.png',
+          },
+          {
+            speaker: 'Mira',
+            text: '아가씨의 노래는 모두를 하나로 만들었어요.',
+            emotion: 'happy',
+            characterImage: 'characters/mira.png',
+          },
+          {
+            speaker: 'Seraphina',
+            text: '오늘의 곡명은 평화. 그리고 그것이 나의 첫 연동 승리야.',
+            emotion: 'determined',
+            characterImage: 'characters/seraphina_belmont.png',
           }
         ],
         postDefeat: [
           {
             speaker: 'Lucian',
-            text: '아직 약간의 흔들림이 보입니다. 특히 긴급 상황에서 카드 선택이 지연됐죠.',
+            text: '파형이 흔들렸어. 다시 악보를 정리하자.',
             emotion: 'normal',
-            characterImage: 'characters/lucian_rosegarden'
+            characterImage: 'characters/lucian_rosegarden.png',
           },
           {
             speaker: 'Seraphina',
-            text: '맞아요... 머리로는 이해했는데 손이 따라주지 않았어요. 다시 반복해보겠습니다.',
+            text: '속성이 서로 충돌했어... 다시 리듬을 맞출게.',
             emotion: 'sad',
-            characterImage: 'characters/seraphina_belmont'
+            characterImage: 'characters/seraphina_belmont.png',
           },
           {
-            speaker: 'Lucian',
-            text: '실패 또한 복기해 두세요. 두려움을 솔직히 인정하면 다음엔 더 빨리 극복할 수 있습니다.',
+            speaker: 'Elena Drake',
+            text: '차분히. 이번엔 내가 호흡을 맞춰줄게.',
             emotion: 'happy',
-            characterImage: 'characters/lucian_rosegarden'
+            characterImage: 'characters/elena_drake.png',
           },
           {
             speaker: 'Seraphina',
-            text: '조언 고마워요. 감정을 정확히 다잡고 다시 도전하겠습니다.',
+            text: '고마워. 다시 곡을 완성해서 돌아올게.',
             emotion: 'determined',
-            characterImage: 'characters/seraphina_belmont'
-          }
-        ]
-      }
-    },
-    { 
-      id: 12, name: '화염 마스터', theme: 'Fire2', recommendedPower: 240, 
-      firstReward: { gold: 450, shards: 4 }, repeatReward: { gold: 220, shards: 2 }, cleared: false,
-      story: {
-        description: '화염 마법의 정수를 담은 신성한 성소에서의 대결. 더욱 강렬하고 집중된 불의 에너지.',
-        backgroundImage: 'backgrounds/stage_12_fire_master.webp'
-      },
-      characterImage: 'characters/seraphina_belmont.png',
-      enemyImage: 'characters/ariana_drake.png',
-      cutscene: {
-        preBattle: [
-          {
-            speaker: 'Ariana',
-            text: 'Stage 11에서 보여준 성장, 정말 놀라웠어. 하지만 지금은 순수한 화염의 본질을 다루는 시험이야.',
-            emotion: 'happy',
-            characterImage: 'characters/ariana_drake'
-          },
-          {
-            speaker: 'Seraphina',
-            text: 'Lucian도 제 실력이 중급 마법사 수준이라고 인정해줬어요. 지금은 그걸 증명해야겠죠.',
-            emotion: 'normal',
-            characterImage: 'characters/seraphina_belmont'
-          },
-          {
-            speaker: 'Ariana',
-            text: '불꽃은 감정과 연결되어 있어. 집중하지 못하면 곧바로 폭주하지. 마음을 안정시키고 플로우를 느껴봐.',
-            emotion: 'normal',
-            characterImage: 'characters/ariana_drake'
-          },
-          {
-            speaker: 'Seraphina',
-            text: '카이와 약속했어요. 감정에 휩쓸리지 않고 끝까지 흔들리지 않겠다고.',
-            emotion: 'determined',
-            characterImage: 'characters/seraphina_belmont'
-          },
-          {
-            speaker: 'Ariana',
-            text: '좋아. 그리고 오늘은 단순한 공격만 시험하는 게 아니야. 화염으로 보호하고 치유하는 법도 익혀야 해.',
-            emotion: 'normal',
-            characterImage: 'characters/ariana_drake'
-          },
-          {
-            speaker: 'Seraphina',
-            text: '준비됐어요. 불꽃이 제 편이 되도록 만들어보겠습니다.',
-            emotion: 'angry',
-            characterImage: 'characters/seraphina_belmont'
-          }
-        ],
-        postVictory: [
-          {
-            speaker: 'Ariana',
-            text: '훌륭해. 공격과 방어, 회복까지 균형 있게 불을 다루기 시작했네.',
-            emotion: 'happy',
-            characterImage: 'characters/ariana_drake'
-          },
-          {
-            speaker: 'Seraphina',
-            text: '불의 흐름이 손끝까지 이어지는 게 느껴졌어요. 감정을 억누르는 대신 조화시키는 게 맞았네요.',
-            emotion: 'happy',
-            characterImage: 'characters/seraphina_belmont'
-          },
-          {
-            speaker: 'Ariana',
-            text: '이제 다른 속성 마스터들도 기다리고 있어. 그들과의 협력도 염두에 둬.',
-            emotion: 'normal',
-            characterImage: 'characters/ariana_drake'
-          },
-          {
-            speaker: 'Seraphina',
-            text: '네. 오늘 깨달은 균형을 잊지 않을게요.',
-            emotion: 'happy',
-            characterImage: 'characters/seraphina_belmont'
-          }
-        ],
-        postDefeat: [
-          {
-            speaker: 'Ariana',
-            text: '감정이 조금 흔들렸어. 불길이 흐트러지는 게 보였지?',
-            emotion: 'normal',
-            characterImage: 'characters/ariana_drake'
-          },
-          {
-            speaker: 'Seraphina',
-            text: '맞아요... 마지막에 화염을 제어하지 못했어요.',
-            emotion: 'sad',
-            characterImage: 'characters/seraphina_belmont'
-          },
-          {
-            speaker: 'Ariana',
-            text: '괜찮아. 다시 한 번 호흡을 고르고 네 안의 불꽃과 협력해봐.',
-            emotion: 'happy',
-            characterImage: 'characters/ariana_drake'
-          }
-        ]
-      }
-    },
-    { 
-      id: 13, name: '얼음 마스터', theme: 'Ice2', recommendedPower: 260, 
-      firstReward: { gold: 500, shards: 5 }, repeatReward: { gold: 250, shards: 3 }, cleared: false,
-      story: {
-        description: '얼음 마법의 극한을 보여주는 성전. 더욱 차가운 신비로운 얼음의 세계.',
-        backgroundImage: 'backgrounds/stage_13_ice_master.webp'
-      },
-      characterImage: 'characters/seraphina_belmont.png',
-      enemyImage: 'characters/seraphine_winters.png',
-      cutscene: {
-        preBattle: [
-          {
-            speaker: 'Seraphine Winters',
-            text: '불꽃을 다듬었다고 해서 얼음이 받아줄 거라고 생각하지 마. 차가운 집중력을 증명해봐.',
-            emotion: 'normal',
-            characterImage: 'characters/seraphine_winters'
-          },
-          {
-            speaker: 'Seraphina',
-            text: 'Ariana가 균형을 배우라고 했어요. 이번엔 감정보다 이성을 우선해볼게요.',
-            emotion: 'normal',
-            characterImage: 'characters/seraphina_belmont'
-          },
-          {
-            speaker: 'Seraphine Winters',
-            text: '얼음은 시간이야. 숨을 천천히 고르고, 상대의 흐름을 읽어. 서두르면 균열이 생기지.',
-            emotion: 'normal',
-            characterImage: 'characters/seraphine_winters'
-          },
-          {
-            speaker: 'Seraphina',
-            text: 'Lucian에게 배운 분석력을 총동원하겠어요. 각 카드의 순서를 더 치밀하게 잡아볼게요.',
-            emotion: 'determined',
-            characterImage: 'characters/seraphina_belmont'
-          },
-          {
-            speaker: 'Seraphine Winters',
-            text: '좋아. 네가 진정한 드레이크 가문 며느리가 되려면 감정을 얼릴 줄도 알아야 해.',
-            emotion: 'normal',
-            characterImage: 'characters/seraphine_winters'
-          },
-          {
-            speaker: 'Seraphina',
-            text: '이번엔 제가 주도권을 가지고 조종해보겠습니다.',
-            emotion: 'angry',
-            characterImage: 'characters/seraphina_belmont'
-          }
-        ],
-        postVictory: [
-          {
-            speaker: 'Seraphine Winters',
-            text: '의외네. 감정이 흔들리는 순간을 잘 봉인했어.',
-            emotion: 'surprised',
-            characterImage: 'characters/seraphine_winters'
-          },
-          {
-            speaker: 'Seraphina',
-            text: '얼음 속에서 불꽃이 쉬고 있는 느낌이었어요. 두 속성이 싸우기보다 함께 춤추는 것 같았죠.',
-            emotion: 'happy',
-            characterImage: 'characters/seraphina_belmont'
-          },
-          {
-            speaker: 'Seraphine Winters',
-            text: '그 감각을 잃지 마. 곧 번개와 바람이 동시에 너를 흔들 거야.',
-            emotion: 'normal',
-            characterImage: 'characters/seraphine_winters'
-          },
-          {
-            speaker: 'Seraphina',
-            text: '다음 시련도 차분하게 맞이하겠습니다.',
-            emotion: 'normal',
-            characterImage: 'characters/seraphina_belmont'
-          }
-        ],
-        postDefeat: [
-          {
-            speaker: 'Seraphine Winters',
-            text: '급했다. 마지막 한 수에서 허점을 보였어.',
-            emotion: 'normal',
-            characterImage: 'characters/seraphine_winters'
-          },
-          {
-            speaker: 'Seraphina',
-            text: '얼음이 손에서 미끄러지는 기분이었어요... 다시 호흡을 정돈할게요.',
-            emotion: 'sad',
-            characterImage: 'characters/seraphina_belmont'
-          },
-          {
-            speaker: 'Seraphine Winters',
-            text: '눈을 감고, 한겨울의 공기를 떠올려봐. 감각부터 되살리는 거야.',
-            emotion: 'normal',
-            characterImage: 'characters/seraphine_winters'
-          }
-        ]
-      }
-    },
-    { 
-      id: 14, name: '번개 마스터', theme: 'Lightning2', recommendedPower: 280, 
-      firstReward: { gold: 550, shards: 5 }, repeatReward: { gold: 280, shards: 3 }, cleared: false,
-      story: {
-        description: '번개 마법의 절정을 보여주는 성역. 끝없이 치는 번개와 강력한 전기 에너지.',
-        backgroundImage: 'backgrounds/stage_14_lightning_master.webp'
-      },
-      characterImage: 'characters/seraphina_belmont.png',
-      enemyImage: 'characters/leon_ardenia.png',
-      cutscene: {
-        preBattle: [
-          {
-            speaker: 'Leon Ardenia',
-            text: '얼음에서 무사히 돌아왔군. 하지만 번개는 기다려주지 않아. 순간의 판단이 전부지.',
-            emotion: 'normal',
-            characterImage: 'characters/leon_ardenia'
-          },
-          {
-            speaker: 'Seraphina',
-            text: 'Leon 님, 지난 번보다 더 빠르게 대응하겠습니다.',
-            emotion: 'normal',
-            characterImage: 'characters/seraphina_belmont'
-          },
-          {
-            speaker: 'Leon Ardenia',
-            text: '카이는 지금도 너의 성장 보고를 기다리고 있지. 약혼자에게 보여줄만한 속도를 가져봐.',
-            emotion: 'normal',
-            characterImage: 'characters/leon_ardenia'
-          },
-          {
-            speaker: 'Seraphina',
-            text: '카이에 대한 믿음이 제 번개가 될 거예요. 주저하지 않겠습니다.',
-            emotion: 'determined',
-            characterImage: 'characters/seraphina_belmont'
-          },
-          {
-            speaker: 'Leon Ardenia',
-            text: '그 반짝임을 증명해봐. 늦으면 그대로 감전이야.',
-            emotion: 'angry',
-            characterImage: 'characters/leon_ardenia'
-          }
-        ],
-        postVictory: [
-          {
-            speaker: 'Leon Ardenia',
-            text: '이번엔 내 번개를 따라잡았군. 예상보다 훨씬 빠른 반응이었어.',
-            emotion: 'surprised',
-            characterImage: 'characters/leon_ardenia'
-          },
-          {
-            speaker: 'Seraphina',
-            text: '번개의 선로를 그리면서 싸우니까 흐름이 보였어요.',
-            emotion: 'happy',
-            characterImage: 'characters/seraphina_belmont'
-          },
-          {
-            speaker: 'Leon Ardenia',
-            text: '다음은 바람. 번개와 바람이 만날 때 생기는 소용돌이를 기억해둬.',
-            emotion: 'normal',
-            characterImage: 'characters/leon_ardenia'
-          }
-        ],
-        postDefeat: [
-          {
-            speaker: 'Leon Ardenia',
-            text: '망설였지. 번개는 생각보다 빨라.',
-            emotion: 'normal',
-            characterImage: 'characters/leon_ardenia'
-          },
-          {
-            speaker: 'Seraphina',
-            text: '반응이 늦었어요... 다시 속도를 다듬겠습니다.',
-            emotion: 'sad',
-            characterImage: 'characters/seraphina_belmont'
-          },
-          {
-            speaker: 'Leon Ardenia',
-            text: '심호흡 후, 세 번의 맥박을 떠올려. 네 박자 중 하나라도 놓치면 번개가 도망간다.',
-            emotion: 'normal',
-            characterImage: 'characters/leon_ardenia'
+            characterImage: 'characters/seraphina_belmont.png',
           }
         ]
       }
     },
     {
-      id: 15, name: '바람 마스터', theme: 'Wind2', recommendedPower: 300,
-      firstReward: { gold: 600, shards: 5 }, repeatReward: { gold: 300, shards: 3 }, cleared: false,
-      story: {
-        description: '하늘 위에 떠 있는 바람 성궁. 아이리스가 고급 바람 제어법과 순환 전술을 전수한다.',
-        backgroundImage: 'backgrounds/stage_15_wind_master.webp'
-      },
-      characterImage: 'characters/seraphina_belmont.png',
-      enemyImage: 'characters/iris_belmont.png',
-      cutscene: {
-        preBattle: [
-          {
-            speaker: 'Iris Belmont',
-            text: '언니! 이번엔 바람의 성궁이야. 여기서는 공기까지 내 뜻대로 부릴 수 있어!',
-            emotion: 'happy',
-            characterImage: 'characters/iris_belmont'
-          },
-          {
-            speaker: 'Seraphina',
-            text: '구름 위에서 느꼈던 자유로움이 다시 떠오르네요. 하지만 이번엔 훨씬 섬세해야 할 것 같아요.',
-            emotion: 'happy',
-            characterImage: 'characters/seraphina_belmont'
-          },
-          {
-            speaker: 'Leon Ardenia',
-            text: '번개와 바람은 함께 흐를 때 가장 강하다. 네가 만든 속도를 바람이 증폭시키도록 유도해라.',
-            emotion: 'normal',
-            characterImage: 'characters/leon_ardenia'
-          },
-          {
-            speaker: 'Seraphina',
-            text: '카이가 들려준 약속을 떠올리며 한 장 한 장 집중하겠습니다. 감정과 전술을 함께 다듬고 싶어요.',
-            emotion: 'determined',
-            characterImage: 'characters/seraphina_belmont'
-          },
-          {
-            speaker: 'Iris Belmont',
-            text: '그럼 시작하자! 바람이 언니 편이 되도록 내가 조금은 밀어줄게!',
-            emotion: 'happy',
-            characterImage: 'characters/iris_belmont'
-          }
-        ],
-        postVictory: [
-          {
-            speaker: 'Iris Belmont',
-            text: '언니, 바람이 언니를 밀어주는 게 느껴졌어! 진짜로 날아다니는 것 같았다니까!',
-            emotion: 'happy',
-            characterImage: 'characters/iris_belmont'
-          },
-          {
-            speaker: 'Leon Ardenia',
-            text: '번개에서 다듬은 리듬이 바람과 함께 어울렸군. 다음 단계로 넘어갈 준비가 됐다.',
-            emotion: 'happy',
-            characterImage: 'characters/leon_ardenia'
-          },
-          {
-            speaker: 'Seraphina',
-            text: '숨이 가빠질 때마다 바람이 도와주더라고요. 오늘 전투를 "바람과의 협력"으로 기억하겠습니다.',
-            emotion: 'happy',
-            characterImage: 'characters/seraphina_belmont'
-          },
-          {
-            speaker: 'Iris Belmont',
-            text: '언니 최고! 이제 진짜 바람 마스터라고 불러도 되겠다!',
-            emotion: 'happy',
-            characterImage: 'characters/iris_belmont'
-          }
-        ],
-        postDefeat: [
-          {
-            speaker: 'Iris Belmont',
-            text: '바람이 갑자기 방향을 틀었지? 그럴 땐 같이 돌지 말고, 잠깐 멈춰서 중심부터 잡아야 해.',
-            emotion: 'normal',
-            characterImage: 'characters/iris_belmont'
-          },
-          {
-            speaker: 'Seraphina',
-            text: '맞아요... 서두르다가 흐름을 잃었어요. 다시 균형부터 맞춰보겠습니다.',
-            emotion: 'sad',
-            characterImage: 'characters/seraphina_belmont'
-          },
-          {
-            speaker: 'Leon Ardenia',
-            text: '번개를 다룰 때처럼 맥박을 세어라. 세 번째 박자에서 바람을 타면 늦지 않는다.',
-            emotion: 'normal',
-            characterImage: 'characters/leon_ardenia'
-          },
-          {
-            speaker: 'Iris Belmont',
-            text: '다시 하자! 바람은 언제든 친구가 되어줄 거야!',
-            emotion: 'happy',
-            characterImage: 'characters/iris_belmont'
-          }
-        ]
-      }
-    },
-    { 
-      id: 16, name: '대지 마스터', theme: 'Storm2', recommendedPower: 320, 
-      firstReward: { gold: 650, shards: 6 }, repeatReward: { gold: 325, shards: 3 }, cleared: false,
-      story: {
-        description: '대지와 폭풍의 힘이 만나는 거대한 지하 동굴. 강력한 대지의 에너지.',
-        backgroundImage: 'backgrounds/stage_16_earth_master.webp'
-      },
-      characterImage: 'characters/seraphina_belmont.png',
-      enemyImage: 'characters/garen_stone.png',
-      cutscene: {
-        preBattle: [
-          {
-            speaker: 'Garen Stone',
-            text: '바람을 타고 내려온 기분이 어떤가. 하지만 땅 위에서는 그 속도가 무력해질 수 있다.',
-            emotion: 'normal',
-            characterImage: 'characters/garen_stone'
-          },
-          {
-            speaker: 'Seraphina',
-            text: 'Garen 님, 이번엔 제 방어 개념을 다듬고 싶어요.',
-            emotion: 'normal',
-            characterImage: 'characters/seraphina_belmont'
-          },
-          {
-            speaker: 'Garen Stone',
-            text: '대지는 버티는 법을 가르치지. 잠깐의 방심도 허용하지 않아. 카드 하나를 두 번 생각하고 써라.',
-            emotion: 'angry',
-            characterImage: 'characters/garen_stone'
-          },
-          {
-            speaker: 'Seraphina',
-            text: 'Marcus 님과의 재대결 전에 꼭 필요하겠네요. 제 뿌리를 더 깊게 박겠습니다.',
-            emotion: 'determined',
-            characterImage: 'characters/seraphina_belmont'
-          }
-        ],
-        postVictory: [
-          {
-            speaker: 'Garen Stone',
-            text: '네가 만든 방패가 내 저주를 버텼다. 꽤나 단단해졌군.',
-            emotion: 'surprised',
-            characterImage: 'characters/garen_stone'
-          },
-          {
-            speaker: 'Seraphina',
-            text: '대지와 바람이 함께 호흡하는 상상을 했어요. 덕분에 움직임이 끊기지 않았죠.',
-            emotion: 'happy',
-            characterImage: 'characters/seraphina_belmont'
-          },
-          {
-            speaker: 'Garen Stone',
-            text: '다음 불 시험에서 그 단단함을 유지할 수 있겠지?',
-            emotion: 'normal',
-            characterImage: 'characters/garen_stone'
-          }
-        ],
-        postDefeat: [
-          {
-            speaker: 'Garen Stone',
-            text: '뿌리가 얕았다. 쉽게 흔들렸어.',
-            emotion: 'normal',
-            characterImage: 'characters/garen_stone'
-          },
-          {
-            speaker: 'Seraphina',
-            text: '지탱하는 법을 잊어버렸어요... 다시 가다듬을게요.',
-            emotion: 'sad',
-            characterImage: 'characters/seraphina_belmont'
-          },
-          {
-            speaker: 'Garen Stone',
-            text: '무릎을 굽혀 땅을 만지고. 그 힘을 다시 느껴라.',
-            emotion: 'normal',
-            characterImage: 'characters/garen_stone'
-          }
-        ]
-      }
-    },
-    {
-      id: 17, name: '불의 도전', theme: 'Fire3', recommendedPower: 340,
-      firstReward: { gold: 700, shards: 6 }, repeatReward: { gold: 350, shards: 3 }, cleared: false,
-      story: {
-        description: '화염의 원천을 직접 마주하는 고난도 도장. Ariana가 세라피나에게 감정과 불꽃을 합치는 방법을 시험한다.',
-        backgroundImage: 'backgrounds/stage_17_fire_challenge.webp'
-      },
-      characterImage: 'characters/seraphina_belmont.png',
-      enemyImage: 'characters/ariana_drake.png',
-      cutscene: {
-        preBattle: [
-          {
-            speaker: 'Ariana',
-            text: '장식 없는 불길이야. 마음이 흔들리면 그대로 타버릴 거야. 준비됐어?',
-            emotion: 'normal',
-            characterImage: 'characters/ariana_drake'
-          },
-          {
-            speaker: 'Seraphina',
-            text: '화염 마스터 시험 이후 매일 감정을 정리했어요. 오늘은 그 다짐을 불꽃 위에 올려보겠습니다.',
-            emotion: 'determined',
-            characterImage: 'characters/seraphina_belmont'
-          },
-          {
-            speaker: 'Ariana',
-            text: '감정을 숨기면 불꽃이 폭주해. 솔직함만 남겨. 기쁨이든 두려움이든 모두 불길에 맡겨봐.',
-            emotion: 'angry',
-            characterImage: 'characters/ariana_drake'
-          },
-          {
-            speaker: 'Seraphina',
-            text: '그렇다면 감사함을 불러올게요. 여러분이 있기에 제가 여기까지 왔으니까요.',
-            emotion: 'happy',
-            characterImage: 'characters/seraphina_belmont'
-          },
-          {
-            speaker: 'Ariana',
-            text: '좋아. 그 따뜻함을 불꽃에 태워. 그리고 내 화염을 능가하는 장면을 보여줘.',
-            emotion: 'happy',
-            characterImage: 'characters/ariana_drake'
-          }
-        ],
-        postVictory: [
-          {
-            speaker: 'Ariana',
-            text: '내 불꽃이 밀렸네. 감정이 정확히 흐르고 있었어.',
-            emotion: 'surprised',
-            characterImage: 'characters/ariana_drake'
-          },
-          {
-            speaker: 'Seraphina',
-            text: '감정에 이름을 붙여 불꽃에 실으니 길이 보였어요. 진심의 힘을 다시 느꼈습니다.',
-            emotion: 'happy',
-            characterImage: 'characters/seraphina_belmont'
-          },
-          {
-            speaker: 'Ariana',
-            text: '곧 Mira와 맞붙게 될 거야. 불꽃으로 따뜻함을 전하는 것도 잊지 마.',
-            emotion: 'happy',
-            characterImage: 'characters/ariana_drake'
-          }
-        ],
-        postDefeat: [
-          {
-            speaker: 'Ariana',
-            text: '감정을 숨겼지? 불꽃은 거짓을 알고 바로 폭발해.',
-            emotion: 'angry',
-            characterImage: 'characters/ariana_drake'
-          },
-          {
-            speaker: 'Seraphina',
-            text: '네... 두려움을 밀어냈어요. 그대로 인정하고 다시 마주하겠습니다.',
-            emotion: 'sad',
-            characterImage: 'characters/seraphina_belmont'
-          },
-          {
-            speaker: 'Ariana',
-            text: '다시 도전해. 이번엔 가장 솔직한 마음부터 불러와.',
-            emotion: 'normal',
-            characterImage: 'characters/ariana_drake'
-          }
-        ]
-      }
-    },
-    {
-      id: 18, name: '우정의 시험', theme: 'Friendship', recommendedPower: 360,
-      firstReward: { gold: 720, shards: 7 }, repeatReward: { gold: 360, shards: 4 }, cleared: false,
-      story: {
-        description: '세라피나와 시녀 Mira가 서로의 신뢰를 확인하는 시험. 서로를 지탱하는 힘을 보여준다.',
-        backgroundImage: 'backgrounds/stage_18_friendship.webp'
-      },
-      characterImage: 'characters/seraphina_belmont.png',
-      enemyImage: 'characters/mira.png',
-      cutscene: {
-        preBattle: [
-          {
-            speaker: 'Mira',
-            text: '아가씨, 이번엔 제가 상대해보고 싶어요. 항상 뒤에서만 지켜봤거든요.',
-            emotion: 'happy',
-            characterImage: 'characters/mira'
-          },
-          {
-            speaker: 'Seraphina',
-            text: 'Mira, 네가 없다면 여기까지 못 왔을 거야. 함께 싸울 수 있다면 정말 기뻐.',
-            emotion: 'happy',
-            characterImage: 'characters/seraphina_belmont'
-          },
-          {
-            speaker: 'Mira',
-            text: '이번 전투에서 제가 얼마나 성장했는지 보여드릴게요. 언젠가 아가씨 곁에서 함께 전장을 누비고 싶어요.',
-            emotion: 'determined',
-            characterImage: 'characters/mira'
-          },
-          {
-            speaker: 'Seraphina',
-            text: '그 마음을 오래 기억하자. 오늘의 우정은 다음 장을 여는 기념이 될 거야.',
-            emotion: 'happy',
-            characterImage: 'characters/seraphina_belmont'
-          },
-          {
-            speaker: 'Mira',
-            text: '그럼 시작할게요! 제가 준비한 지원 마법, 모두 보여드릴게요!',
-            emotion: 'happy',
-            characterImage: 'characters/mira'
-          }
-        ],
-        postVictory: [
-          {
-            speaker: 'Mira',
-            text: '역시 아가씨는 최고예요! 그래도 제 지원이 조금은 도움이 됐죠?',
-            emotion: 'happy',
-            characterImage: 'characters/mira'
-          },
-          {
-            speaker: 'Seraphina',
-            text: '당연하지. 카드가 완벽한 타이밍으로 연결됐어. 네 이름을 마음속에 크게 새겨둘게.',
-            emotion: 'happy',
-            characterImage: 'characters/seraphina_belmont'
-          },
-          {
-            speaker: 'Mira',
-            text: '앞으로도 계속 곁에서 돕겠습니다! 언제든 불러주세요!',
-            emotion: 'happy',
-            characterImage: 'characters/mira'
-          }
-        ],
-        postDefeat: [
-          {
-            speaker: 'Mira',
-            text: '죄송해요... 제가 긴장해서 카드가 꼬였어요.',
-            emotion: 'sad',
-            characterImage: 'characters/mira'
-          },
-          {
-            speaker: 'Seraphina',
-            text: '괜찮아. 우리 우정은 실패도 함께 견딜 거야. 다시 연습하면 더 빛날 거야.',
-            emotion: 'happy',
-            characterImage: 'characters/seraphina_belmont'
-          },
-          {
-            speaker: 'Mira',
-            text: '네! 다음엔 더 침착하게 지원할게요. 꼭 다시 도전하고 싶습니다!',
-            emotion: 'determined',
-            characterImage: 'characters/mira'
-          }
-        ]
-      }
-    },
-    { 
-      id: 19, name: '어둠 시험', theme: 'Shadow2', recommendedPower: 380, 
-      firstReward: { gold: 800, shards: 8 }, repeatReward: { gold: 400, shards: 4 }, cleared: false,
-      story: {
-        description: '어둠 마법을 시험하는 어두운 미궁. 깊고 어두운 지하 미로.',
-        backgroundImage: 'backgrounds/stage_19_shadow.webp'
-      },
-      characterImage: 'characters/seraphina_belmont.png',
-      enemyImage: 'characters/darius_blackwood.png',
-      cutscene: {
-        preBattle: [
-          {
-            speaker: 'Darius Blackwood',
-            text: '또 만나게 됐군. 이번엔 어둠 속의 속삭임을 견딜 수 있겠나?',
-            emotion: 'normal',
-            characterImage: 'characters/darius_blackwood'
-          },
-          {
-            speaker: 'Seraphina',
-            text: '전보다 덜 무섭네요. 하지만 여전히 긴장돼요.',
-            emotion: 'sad',
-            characterImage: 'characters/seraphina_belmont'
-          },
-          {
-            speaker: 'Darius Blackwood',
-            text: '두려움은 약점이자 힘이다. 인정하고 끌어안으면 네 힘이 된다.',
-            emotion: 'angry',
-            characterImage: 'characters/darius_blackwood'
-          },
-          {
-            speaker: 'Seraphina',
-            text: '어둠 속에서 길을 비추는 빛을 제가 만들겠습니다.',
-            emotion: 'determined',
-            characterImage: 'characters/seraphina_belmont'
-          }
-        ],
-        postVictory: [
-          {
-            speaker: 'Darius Blackwood',
-            text: '네 그림자가 허공에서 춤췄다. 두려움을 잘 활용했군.',
-            emotion: 'surprised',
-            characterImage: 'characters/darius_blackwood'
-          },
-          {
-            speaker: 'Seraphina',
-            text: '두려움을 숨기려고만 했는데... 인정하니까 오히려 힘이 됐어요.',
-            emotion: 'happy',
-            characterImage: 'characters/seraphina_belmont'
-          },
-          {
-            speaker: 'Darius Blackwood',
-            text: '계속 그렇게 스스로를 직면해라. 엘리트 2차에서도 도움이 될 것이다.',
-            emotion: 'normal',
-            characterImage: 'characters/darius_blackwood'
-          }
-        ],
-        postDefeat: [
-          {
-            speaker: 'Darius Blackwood',
-            text: '두려움을 외면했다. 그래서 어둠에 삼켜진 거야.',
-            emotion: 'normal',
-            characterImage: 'characters/darius_blackwood'
-          },
-          {
-            speaker: 'Seraphina',
-            text: '맞아요... 끝까지 인정하지 못했어요.',
-            emotion: 'sad',
-            characterImage: 'characters/seraphina_belmont'
-          },
-          {
-            speaker: 'Darius Blackwood',
-            text: '눈을 감고, 네 안의 어둠을 하나씩 손가락으로 짚어봐. 그게 첫걸음이다.',
-            emotion: 'normal',
-            characterImage: 'characters/darius_blackwood'
-          }
-        ]
-      }
-    },
-    { 
-      id: 20, name: '정예 2차', theme: 'Elite2', recommendedPower: 400, 
-      firstReward: { gold: 900, shards: 9 }, repeatReward: { gold: 450, shards: 5 }, cleared: false,
-      story: {
-        description: '벨몬트 가문 정예 부대의 본부. 더욱 엄격하고 강력한 훈련 시설.',
-        backgroundImage: 'backgrounds/stage_20_elite_advanced.webp'
-      },
-      characterImage: 'characters/seraphina_belmont.png',
-      enemyImage: 'characters/marcus_belmont.png',
-      cutscene: {
-        preBattle: [
-          {
-            speaker: 'Marcus Belmont',
-            text: '다시 나를 상대할 자격이 생겼군. 이번에도 네가 긴장을 풀었다면 용서하지 않겠다.',
-            emotion: 'angry',
-            characterImage: 'characters/marcus_belmont'
-          },
-          {
-            speaker: 'Seraphina',
-            text: 'Marcus 님이 인정하는 며느리가 되고 싶어요. 그러려면 이번 시험을 반드시 통과해야죠.',
-            emotion: 'determined',
-            characterImage: 'characters/seraphina_belmont'
-          },
-          {
-            speaker: 'Marcus Belmont',
-            text: '전술과 팀워크, 그리고 리더십. 모두 보여줘라. 정예 부대는 단독 승부가 아니다.',
-            emotion: 'normal',
-            characterImage: 'characters/marcus_belmont'
-          },
-          {
-            speaker: 'Seraphina',
-            text: '카이와 함께 꾸릴 미래를 생각하며 싸울게요. 벨몬트 가문에 도움이 되는 사람이 되겠습니다.',
-            emotion: 'normal',
-            characterImage: 'characters/seraphina_belmont'
-          }
-        ],
-        postVictory: [
-          {
-            speaker: 'Marcus Belmont',
-            text: '...좋다. 이 정도의 판단력이라면 정예 부대를 이끌어도 손색없겠군.',
-            emotion: 'happy',
-            characterImage: 'characters/marcus_belmont'
-          },
-          {
-            speaker: 'Seraphina',
-            text: '감사합니다. 여러분의 힘을 믿으면서 싸웠어요.',
-            emotion: 'happy',
-            characterImage: 'characters/seraphina_belmont'
-          },
-          {
-            speaker: 'Marcus Belmont',
-            text: '다음부터는 가문의 외부와도 맞서야 한다. 각오를 다져라.',
-            emotion: 'normal',
-            characterImage: 'characters/marcus_belmont'
-          }
-        ],
-        postDefeat: [
-          {
-            speaker: 'Marcus Belmont',
-            text: '실수가 반복됐다. 지휘관 자격은 그런 허점을 허용하지 않는다.',
-            emotion: 'normal',
-            characterImage: 'characters/marcus_belmont'
-          },
-          {
-            speaker: 'Seraphina',
-            text: '명심하겠습니다... 다시 체계를 정비할게요.',
-            emotion: 'sad',
-            characterImage: 'characters/seraphina_belmont'
-          },
-          {
-            speaker: 'Marcus Belmont',
-            text: '각 카드가 팀원이라 생각하고, 서로의 빈틈을 메우도록 설계해라.',
-            emotion: 'normal',
-            characterImage: 'characters/marcus_belmont'
-          }
-        ]
-      }
-    },
-    // Chapter 3: 최종 시련 (Stage 21-29) - TODO: Stage 30은 이미 추가됨
-    { 
-      id: 21, name: '원소 융합', theme: 'Fusion', recommendedPower: 420, 
-      firstReward: { gold: 950, shards: 9 }, repeatReward: { gold: 475, shards: 5 }, cleared: false,
-      story: {
-        description: '모든 원소가 융합되는 신비로운 장소. 다양한 마법 에너지가 뒤섞인 특별한 공간.',
-        backgroundImage: 'backgrounds/stage_21_fusion.webp'
-      },
-      characterImage: 'characters/seraphina_belmont.png',
-      cutscene: {
-        preBattle: [
-          {
-            speaker: 'Lucian',
-            text: '세라피나, 지금부터는 우리가 가르친 모든 속성을 동시에 다뤄야 한다.',
-            emotion: 'normal',
-            characterImage: 'characters/lucian_rosegarden'
-          },
-          {
-            speaker: 'Ariana',
-            text: '불길이 지나가는 경로 위에 얼음이 깔리고, 번개가 그 사이를 파고들 거야. 네가 조율해봐.',
-            emotion: 'normal',
-            characterImage: 'characters/ariana_drake'
-          },
-          {
-            speaker: 'Seraphina',
-            text: '모두가 제게 가르쳐준 것을 한 번에 엮어내는군요. 숨이 막힐 정도로 긴장돼요.',
-            emotion: 'sad',
-            characterImage: 'characters/seraphina_belmont'
-          },
-          {
-            speaker: 'Leon Ardenia',
-            text: '긴장감도 리듬이다. 그 박자를 네가 지휘해라.',
-            emotion: 'normal',
-            characterImage: 'characters/leon_ardenia'
-          },
-          {
-            speaker: 'Seraphina',
-            text: '좋아요. 지금까지 배운 모든 지식을 한 장의 악보라고 생각하겠습니다.',
-            emotion: 'determined',
-            characterImage: 'characters/seraphina_belmont'
-          }
-        ],
-        postVictory: [
-          {
-            speaker: 'Lucian',
-            text: '대단합니다! 네 카드 순환이 모든 속성을 끊김 없이 이어냈어요.',
-            emotion: 'happy',
-            characterImage: 'characters/lucian_rosegarden'
-          },
-          {
-            speaker: 'Seraphina',
-            text: '모두의 목소리가 한 번에 들리는 것 같았어요. 서로 다른 에너지가 화음이 됐죠.',
-            emotion: 'happy',
-            characterImage: 'characters/seraphina_belmont'
-          },
-          {
-            speaker: 'Ariana',
-            text: '이제 카이와의 대결에서도 흔들리지 않겠지. 약혼자의 속내까지 읽을 준비해 둬.',
-            emotion: 'normal',
-            characterImage: 'characters/ariana_drake'
-          }
-        ],
-        postDefeat: [
-          {
-            speaker: 'Lucian',
-            text: '흐름이 한 번 끊어졌습니다. 다시 연결 고리를 정리해보죠.',
-            emotion: 'normal',
-            characterImage: 'characters/lucian_rosegarden'
-          },
-          {
-            speaker: 'Seraphina',
-            text: '속성이 서로 싸우기만 했어요... 어떻게 하나로 묶어야 할까요?',
-            emotion: 'sad',
-            characterImage: 'characters/seraphina_belmont'
-          },
-          {
-            speaker: 'Leon Ardenia',
-            text: '하나씩 들어. 불, 얼음, 번개... 각자에 귀 기울이며 다시 조율해라.',
-            emotion: 'normal',
-            characterImage: 'characters/leon_ardenia'
-          }
-        ]
-      }
-    },
-    { 
-      id: 22, name: '약혼자 시험', theme: 'Kai1', recommendedPower: 450, 
+      id: 22, name: '정예 본대 담판', theme: 'Alliance', recommendedPower: 450,
       firstReward: { gold: 1000, shards: 10 }, repeatReward: { gold: 500, shards: 6 }, cleared: false,
       story: {
-        description: '드레이크 가문의 연회장에서 약혼자 Kai와 치르는 첫 공식 대결. 감정과 실력이 동시에 시험된다.',
-        backgroundImage: 'backgrounds/stage_22_kai.webp'
-      },
-      characterImage: 'characters/seraphina_belmont.png',
-      enemyImage: 'characters/kai_drake.png',
-      cutscene: {
-        preBattle: [
-          {
-            speaker: 'Kai Drake',
-            text: '세라피나, 이렇게 마주 서니 결혼식 때보다 더 떨리는군. 각오됐나?',
-            emotion: 'happy',
-            characterImage: 'characters/kai_drake'
-          },
-          {
-            speaker: 'Seraphina',
-            text: 'Kai 님도 긴장하셨나요? 저도 당신의 전술을 정면으로 확인하고 싶어요.',
-            emotion: 'happy',
-            characterImage: 'characters/seraphina_belmont'
-          },
-          {
-            speaker: 'Kai Drake',
-            text: '이 연회장은 우리 가문이 중요한 결정을 내릴 때마다 쓰인 곳이야. 오늘은 우리의 미래를 비춰주겠지.',
-            emotion: 'normal',
-            characterImage: 'characters/kai_drake'
-          },
-          {
-            speaker: 'Seraphina',
-            text: '당신과 함께라면 어떤 평가도 두렵지 않아요. 이번 대결이 우리의 새로운 출발이 되길 바랍니다.',
-            emotion: 'determined',
-            characterImage: 'characters/seraphina_belmont'
-          },
-          {
-            speaker: 'Kai Drake',
-            text: '좋아. 서로의 힘을 숨기지 말자. 이 승부가 우리를 더 강하게 만들 거야.',
-            emotion: 'happy',
-            characterImage: 'characters/kai_drake'
-          }
-        ],
-        postVictory: [
-          {
-            speaker: 'Kai Drake',
-            text: '...대단하다. 네 카드가 내 리듬까지 읽어냈어.',
-            emotion: 'surprised',
-            characterImage: 'characters/kai_drake'
-          },
-          {
-            speaker: 'Seraphina',
-            text: 'Kai 님의 움직임도 완벽했어요. 서로를 더 잘 알게 된 기분입니다.',
-            emotion: 'happy',
-            characterImage: 'characters/seraphina_belmont'
-          },
-          {
-            speaker: 'Kai Drake',
-            text: '이제 진짜로 같은 방향을 바라볼 수 있겠지. 다음 전장에서는 어깨를 나란히 하자.',
-            emotion: 'happy',
-            characterImage: 'characters/kai_drake'
-          }
-        ],
-        postDefeat: [
-          {
-            speaker: 'Kai Drake',
-            text: '괜찮아. 이 승부는 서로를 알아가기 위한 과정일 뿐이야.',
-            emotion: 'normal',
-            characterImage: 'characters/kai_drake'
-          },
-          {
-            speaker: 'Seraphina',
-            text: '조금 더 차분히 대응했어야 했어요. 다시 준비해서 도전하겠습니다.',
-            emotion: 'sad',
-            characterImage: 'characters/seraphina_belmont'
-          },
-          {
-            speaker: 'Kai Drake',
-            text: '전술을 정리하고 다시 맞서자. 우리 둘의 성장 이야기니까.',
-            emotion: 'happy',
-            characterImage: 'characters/kai_drake'
-          }
-        ]
-      }
-    },
-    { 
-      id: 23, name: '기사단 최종', theme: 'Lightning3', recommendedPower: 470, 
-      firstReward: { gold: 1050, shards: 10 }, repeatReward: { gold: 525, shards: 6 }, cleared: false,
-      story: {
-        description: '왕국 기사단의 최종 시험장. 번개가 치는 기사단 본부의 전투장.',
-        backgroundImage: 'backgrounds/stage_23_knights.webp'
-      },
-      characterImage: 'characters/seraphina_belmont.png',
-      enemyImage: 'characters/leon_ardenia.png',
-      cutscene: {
-        preBattle: [
-          {
-            speaker: 'Leon Ardenia',
-            text: '기사단의 최종 시험이다. 번개 속에서 동료를 지휘할 수 있겠느냐?',
-            emotion: 'angry',
-            characterImage: 'characters/leon_ardenia'
-          },
-          {
-            speaker: 'Seraphina',
-            text: '네, 카이와 함께한 전략을 카드에 옮겨놨어요. 기사단의 규율도 익혔고요.',
-            emotion: 'normal',
-            characterImage: 'characters/seraphina_belmont'
-          },
-          {
-            speaker: 'Leon Ardenia',
-            text: '속도와 규율, 두 마리 토끼를 동시에 잡아야 한다. 흔들리면 기사단은 무너진다.',
-            emotion: 'normal',
-            characterImage: 'characters/leon_ardenia'
-          },
-          {
-            speaker: 'Seraphina',
-            text: '제 덱은 이미 팀 단위로 움직이도록 설계했어요. 시험해 보세요.',
-            emotion: 'determined',
-            characterImage: 'characters/seraphina_belmont'
-          }
-        ],
-        postVictory: [
-          {
-            speaker: 'Leon Ardenia',
-            text: '좋다. 네 지휘에 기사단이 흔들리지 않았다. 진정한 리더십을 보여줬다.',
-            emotion: 'happy',
-            characterImage: 'characters/leon_ardenia'
-          },
-          {
-            speaker: 'Seraphina',
-            text: '모두가 알려준 전략 덕분이에요. 번개 속에서도 길을 잃지 않았습니다.',
-            emotion: 'happy',
-            characterImage: 'characters/seraphina_belmont'
-          },
-          {
-            speaker: 'Leon Ardenia',
-            text: '이제 석화 마법의 심연으로 들어갈 차례다. 무거움 속에서도 균형을 잃지 마라.',
-            emotion: 'normal',
-            characterImage: 'characters/leon_ardenia'
-          }
-        ],
-        postDefeat: [
-          {
-            speaker: 'Leon Ardenia',
-            text: '지휘가 흔들렸다. 카드 순환에서 손실이 컸다.',
-            emotion: 'normal',
-            characterImage: 'characters/leon_ardenia'
-          },
-          {
-            speaker: 'Seraphina',
-            text: '죄송합니다... 다시 전술을 재정비하겠습니다.',
-            emotion: 'sad',
-            characterImage: 'characters/seraphina_belmont'
-          },
-          {
-            speaker: 'Leon Ardenia',
-            text: '동료가 쓰러지는 것을 상상하고, 빈틈을 메우는 카드부터 준비해라.',
-            emotion: 'normal',
-            characterImage: 'characters/leon_ardenia'
-          }
-        ]
-      }
-    },
-    { 
-      id: 24, name: '석화 완전', theme: 'Storm3', recommendedPower: 490, 
-      firstReward: { gold: 1100, shards: 11 }, repeatReward: { gold: 550, shards: 6 }, cleared: false,
-      story: {
-        description: '석화 마법의 완전한 형태를 보여주는 깊은 동굴. 모든 것이 돌로 변한 공간.',
-        backgroundImage: 'backgrounds/stage_24_petrification.webp'
-      },
-      characterImage: 'characters/seraphina_belmont.png',
-      enemyImage: 'characters/garen_stone.png',
-      cutscene: {
-        preBattle: [
-          {
-            speaker: 'Garen Stone',
-            text: '이번엔 네 움직임 자체를 돌로 굳히겠다. 그럼에도 버틸 수 있겠나?',
-            emotion: 'angry',
-            characterImage: 'characters/garen_stone'
-          },
-          {
-            speaker: 'Seraphina',
-            text: '석화의 완전한 형태... 다시는 움직일 수 없게 만드는 힘이라 들었어요.',
-            emotion: 'sad',
-            characterImage: 'characters/seraphina_belmont'
-          },
-          {
-            speaker: 'Garen Stone',
-            text: '그래서 더 정확한 대응이 필요하지. 가문의 적에게 이 힘을 뺏기면 안 된다.',
-            emotion: 'normal',
-            characterImage: 'characters/garen_stone'
-          },
-          {
-            speaker: 'Seraphina',
-            text: '대지와 바람의 균형으로 대응하겠습니다. 움직임이 멈추지 않도록.',
-            emotion: 'determined',
-            characterImage: 'characters/seraphina_belmont'
-          }
-        ],
-        postVictory: [
-          {
-            speaker: 'Garen Stone',
-            text: '석화의 틈을 찾아냈군. 네 카드가 돌조차 움직이게 했다.',
-            emotion: 'surprised',
-            characterImage: 'characters/garen_stone'
-          },
-          {
-            speaker: 'Seraphina',
-            text: '움직임을 포기하지 않았어요. 작은 틈이라도 흐름을 유지하면 돌도 갈라지니까요.',
-            emotion: 'happy',
-            characterImage: 'characters/seraphina_belmont'
-          },
-          {
-            speaker: 'Garen Stone',
-            text: '어둠 속에서도 길을 찾을 수 있는 눈을 갖춰라. 다음은 어둠 통달이다.',
-            emotion: 'normal',
-            characterImage: 'characters/garen_stone'
-          }
-        ],
-        postDefeat: [
-          {
-            speaker: 'Garen Stone',
-            text: '멈췄다. 완전히 굳어버렸어.',
-            emotion: 'normal',
-            characterImage: 'characters/garen_stone'
-          },
-          {
-            speaker: 'Seraphina',
-            text: '숨조차 쉴 수 없었어요... 다시 흐름을 만들게요.',
-            emotion: 'sad',
-            characterImage: 'characters/seraphina_belmont'
-          },
-          {
-            speaker: 'Garen Stone',
-            text: '심장에 귀를 대고 박동을 찾아라. 움직임은 그곳에서 시작된다.',
-            emotion: 'normal',
-            characterImage: 'characters/garen_stone'
-          }
-        ]
-      }
-    },
-    { 
-      id: 25, name: '심연 통달', theme: 'ShadowMaster', recommendedPower: 510, 
-      firstReward: { gold: 1150, shards: 11 }, repeatReward: { gold: 575, shards: 6 }, cleared: false,
-      story: {
-        description: '어둠의 심연이 그대로 펼쳐진 전투장. Darius가 심연의 모든 힘을 개방해 시험한다.',
-        backgroundImage: 'backgrounds/stage_25_shadow_master.webp'
-      },
-      characterImage: 'characters/seraphina_belmont.png',
-      enemyImage: 'characters/darius_blackwood.png',
-      cutscene: {
-        preBattle: [
-          {
-            speaker: 'Darius Blackwood',
-            text: '심연의 속삭임이 들리나? 오늘은 그 목소리를 있는 그대로 마주해야 한다.',
-            emotion: 'normal',
-            characterImage: 'characters/darius_blackwood'
-          },
-          {
-            speaker: 'Seraphina',
-            text: '두려움도, 차가운 공포도 느껴집니다. 하지만 도망치지 않겠습니다.',
-            emotion: 'determined',
-            characterImage: 'characters/seraphina_belmont'
-          },
-          {
-            speaker: 'Darius Blackwood',
-            text: '좋다. 감정을 억누르지 말고 정면으로 마주해라. 심연은 진실을 먹고 자라지.',
-            emotion: 'normal',
-            characterImage: 'characters/darius_blackwood'
-          },
-          {
-            speaker: 'Seraphina',
-            text: '제가 쌓아온 빛과 동료들의 목소리를 심연 속에서도 잊지 않을게요.',
-            emotion: 'happy',
-            characterImage: 'characters/seraphina_belmont'
-          }
-        ],
-        postVictory: [
-          {
-            speaker: 'Darius Blackwood',
-            text: '심연이 너를 인정했다. 네 마음을 삼키지 못했지.',
-            emotion: 'happy',
-            characterImage: 'characters/darius_blackwood'
-          },
-          {
-            speaker: 'Seraphina',
-            text: '두려움을 받아들이니 경계가 명확해졌어요. 어둠 속에서도 길을 찾을 수 있습니다.',
-            emotion: 'happy',
-            characterImage: 'characters/seraphina_belmont'
-          },
-          {
-            speaker: 'Darius Blackwood',
-            text: '이제 가문의 심장부로 나아가라. 정예 부대가 너를 기다리고 있다.',
-            emotion: 'normal',
-            characterImage: 'characters/darius_blackwood'
-          }
-        ],
-        postDefeat: [
-          {
-            speaker: 'Darius Blackwood',
-            text: '심연의 속삭임에 휘둘렸군. 다시 마음을 다져라.',
-            emotion: 'angry',
-            characterImage: 'characters/darius_blackwood'
-          },
-          {
-            speaker: 'Seraphina',
-            text: '목소리에 휩쓸렸어요... 하지만 다시 길을 찾겠습니다.',
-            emotion: 'sad',
-            characterImage: 'characters/seraphina_belmont'
-          }
-        ]
-      }
-    },
-    { 
-      id: 26, name: '정예 본대', theme: 'Elite3', recommendedPower: 530, 
-      firstReward: { gold: 1200, shards: 12 }, repeatReward: { gold: 600, shards: 7 }, cleared: false,
-      story: {
-        description: '벨몬트 가문 정예 부대의 최종 본부. 모든 정예가 모이는 최고의 시설.',
-        backgroundImage: 'backgrounds/stage_26_elite_final.webp'
+        description: '왕립 회의실에서 각 가문 대표와 여론을 조율하며 정예 본대 연합을 성사시킨다.',
+        backgroundImage: 'backgrounds/stage_26_elite_final.png'
       },
       characterImage: 'characters/seraphina_belmont.png',
       enemyImage: 'characters/marcus_belmont.png',
       cutscene: {
         preBattle: [
           {
-            speaker: 'Marcus Belmont',
-            text: '정예 본대의 사령관들이 모두 모였다. 네가 이들을 설득할 수 있을까?',
+            speaker: 'Elena Drake',
+            text: '각 가문은 모두 신뢰를 원하지만 먼저 의심부터 하지.',
             emotion: 'normal',
-            characterImage: 'characters/marcus_belmont'
+            characterImage: 'characters/elena_drake.png',
           },
           {
             speaker: 'Seraphina',
-            text: '이번엔 전투뿐 아니라 설득과 협력까지 요구되는군요.',
-            emotion: 'normal',
-            characterImage: 'characters/seraphina_belmont'
-          },
-          {
-            speaker: 'Marcus Belmont',
-            text: '그래. 카이와 함께 가문을 이끌려면 이들의 신뢰를 얻어야 한다.',
-            emotion: 'normal',
-            characterImage: 'characters/marcus_belmont'
-          },
-          {
-            speaker: 'Seraphina',
-            text: '전략뿐 아니라 진심까지 담아 싸우겠습니다.',
+            text: '그래서 오늘은 의심부터 정리하죠.',
             emotion: 'determined',
-            characterImage: 'characters/seraphina_belmont'
+            characterImage: 'characters/seraphina_belmont.png',
+          },
+          {
+            speaker: 'Seraphina',
+            text: '[협상 카드: 감정 안정화] [정보 코덱스 카드: 진술 정리] [신뢰 봉인 카드: 서명 활성화]',
+            emotion: 'determined',
+            characterImage: 'characters/seraphina_belmont.png',
+          },
+          {
+            speaker: 'Kai Drake',
+            text: '네 방식은 부드럽지만 강하군.',
+            emotion: 'happy',
+            characterImage: 'characters/kai_drake.png',
+          },
+          {
+            speaker: 'Seraphina',
+            text: '부드러움은 결심을 가리지 않아요.',
+            emotion: 'determined',
+            characterImage: 'characters/seraphina_belmont.png',
+          },
+          {
+            speaker: 'Leon Ardenia',
+            text: '복수가 아닌 생존이라면 나도 동참하겠다.',
+            emotion: 'determined',
+            characterImage: 'characters/leon_ardenia.png',
+          },
+          {
+            speaker: 'Elena Drake',
+            text: '드레이크 가도 서명할게.',
+            emotion: 'happy',
+            characterImage: 'characters/elena_drake.png',
+          },
+          {
+            speaker: 'Lucian',
+            text: '정예 본대 공조 승인.',
+            emotion: 'happy',
+            characterImage: 'characters/lucian_rosegarden.png',
+          },
+          {
+            speaker: 'Seraphina',
+            text: '좋아요. 오늘부로 진실 작전 시작이에요.',
+            emotion: 'determined',
+            characterImage: 'characters/seraphina_belmont.png',
           }
         ],
         postVictory: [
           {
-            speaker: 'Marcus Belmont',
-            text: '정예 본대가 고개를 끄덕였다. 네 진심이 통했다.',
+            speaker: 'Leon Ardenia',
+            text: '전쟁 대신 회의로 결론 내다니, 이게 진짜 힘이지.',
             emotion: 'happy',
-            characterImage: 'characters/marcus_belmont'
+            characterImage: 'characters/leon_ardenia.png',
           },
           {
             speaker: 'Seraphina',
-            text: '이제 가문 전체가 하나가 되는 느낌이에요. 모두의 힘을 느꼈어요.',
-            emotion: 'happy',
-            characterImage: 'characters/seraphina_belmont'
+            text: '검보다 카드가 세상을 바꿀 수도 있잖아요.',
+            emotion: 'determined',
+            characterImage: 'characters/seraphina_belmont.png',
           },
           {
-            speaker: 'Marcus Belmont',
-            text: '곧 드레이크 자매가 기다리고 있다. 감정과 전략이 동시에 필요할 거다.',
-            emotion: 'normal',
-            characterImage: 'characters/marcus_belmont'
+            speaker: 'Lucian',
+            text: '협상 카드 효율 102%. 역사적인 수치야.',
+            emotion: 'happy',
+            characterImage: 'characters/lucian_rosegarden.png',
+          },
+          {
+            speaker: 'Elena Drake',
+            text: '오늘의 담판은 피 한 방울 흘리지 않은 전투였어.',
+            emotion: 'determined',
+            characterImage: 'characters/elena_drake.png',
+          },
+          {
+            speaker: 'Seraphina',
+            text: '이건 전쟁의 종이 아니라 새로운 시작의 서명이에요.',
+            emotion: 'determined',
+            characterImage: 'characters/seraphina_belmont.png',
           }
         ],
         postDefeat: [
           {
             speaker: 'Marcus Belmont',
-            text: '정예 본대는 빈틈을 허용하지 않는다. 한 명이라도 설득하지 못하면 실패다.',
-            emotion: 'normal',
-            characterImage: 'characters/marcus_belmont'
+            text: '의심을 지우지 못했다. 다시 준비해라.',
+            emotion: 'angry',
+            characterImage: 'characters/marcus_belmont.png',
           },
           {
             speaker: 'Seraphina',
-            text: '더 많은 카드를 준비해야겠어요. 각자의 요구를 맞추기 위해.',
+            text: '아직 감정이 뒤엉켰어. 정리해서 돌아올게.',
             emotion: 'sad',
-            characterImage: 'characters/seraphina_belmont'
+            characterImage: 'characters/seraphina_belmont.png',
           },
           {
-            speaker: 'Marcus Belmont',
-            text: '정보를 모아라. 상대의 성향을 파악하는 것이 첫걸음이다.',
+            speaker: 'Leon Ardenia',
+            text: '자료를 더 모아라. 담판은 정보가 무기다.',
             emotion: 'normal',
-            characterImage: 'characters/marcus_belmont'
+            characterImage: 'characters/leon_ardenia.png',
+          },
+          {
+            speaker: 'Seraphina',
+            text: '응. 다시 설득의 자리로 돌아오겠어.',
+            emotion: 'determined',
+            characterImage: 'characters/seraphina_belmont.png',
           }
         ]
       }
     },
-    { 
-      id: 27, name: '드레이크 자매', theme: 'Sisters', recommendedPower: 550, 
-      firstReward: { gold: 1250, shards: 12 }, repeatReward: { gold: 625, shards: 7 }, cleared: false,
+    {
+      id: 23, name: '드레이크 자매 결속', theme: 'Sisterhood', recommendedPower: 470,
+      firstReward: { gold: 1050, shards: 10 }, repeatReward: { gold: 525, shards: 6 }, cleared: false,
       story: {
-        description: '드레이크 자매 Elena와 Ariana가 함께 있는 특별한 공간. 따뜻하면서도 경쟁적인 분위기.',
-        backgroundImage: 'backgrounds/stage_27_sisters.webp'
+        description: '드레이크 구름 정원에서 세라피나와 엘레나가 두려움과 사과를 나누며 용서를 맺는다.',
+        backgroundImage: 'backgrounds/stage_27_sisters.png'
       },
       characterImage: 'characters/seraphina_belmont.png',
       enemyImage: 'characters/elena_drake.png',
@@ -2444,453 +2774,593 @@ export const campaignStageData = [
         preBattle: [
           {
             speaker: 'Elena Drake',
-            text: '형수님! 우리 자매가 힘을 합쳤어요. 절대 만만하지 않을걸요?',
-            emotion: 'happy',
-            characterImage: 'characters/elena_drake'
-          },
-          {
-            speaker: 'Ariana',
-            text: 'Elena와 내가 합을 맞추는 건 드문 일이야. 네가 우리 가족이 될 자격이 있는지 확인하려고.',
-            emotion: 'normal',
-            characterImage: 'characters/ariana_drake'
+            text: '지난 생의 일들, 아직도 네 눈을 보면 떠올라.',
+            emotion: 'sad',
+            characterImage: 'characters/elena_drake.png',
           },
           {
             speaker: 'Seraphina',
-            text: '두 사람의 순환을 맞추려면 엄청난 집중이 필요하겠네요. 하지만 가족으로서 받아들이고 싶어요.',
-            emotion: 'happy',
-            characterImage: 'characters/seraphina_belmont'
+            text: '나도 그래. 하지만 이번엔 그 기억을 심장에 묻어둘게. [빛 카드: 감정 정화] [바람 카드: 대화 채널 개방]',
+            emotion: 'determined',
+            characterImage: 'characters/seraphina_belmont.png',
           },
           {
             speaker: 'Elena Drake',
-            text: '그럼 우리 드레이크 자매의 콤비네이션을 버텨보세요! 특히 내가 더 귀엽다는 걸 잊지 말고요!',
-            emotion: 'happy',
-            characterImage: 'characters/elena_drake'
-          },
-          {
-            speaker: 'Ariana',
-            text: 'Elena, 진지하게 하자. 하지만 네 말대로 그녀가 우리의 리듬을 이해하길 바랄게.',
-            emotion: 'angry',
-            characterImage: 'characters/ariana_drake'
-          }
-        ],
-        postVictory: [
-          {
-            speaker: 'Elena Drake',
-            text: '우와! 형수님, 정말 멋있어요! 우리 둘을 동시에 상대하다니!',
-            emotion: 'happy',
-            characterImage: 'characters/elena_drake'
-          },
-          {
-            speaker: 'Ariana',
-            text: '네가 우리 가족의 리듬을 이해한 게 느껴졌어. 이제 진짜 드레이크 가문의 일원이야.',
-            emotion: 'happy',
-            characterImage: 'characters/ariana_drake'
+            text: '무서웠어. 내가 널 단죄하던 순간조차 두려웠지.',
+            emotion: 'sad',
+            characterImage: 'characters/elena_drake.png',
           },
           {
             speaker: 'Seraphina',
-            text: '고마워요. 앞으로도 서로 기대며 나아갑시다.',
-            emotion: 'happy',
-            characterImage: 'characters/seraphina_belmont'
-          }
-        ],
-        postDefeat: [
+            text: '이제 두려움을 나눴으니 용서도 나눌 수 있겠지? [감정 공유 카드: 서명 결속]',
+            emotion: 'determined',
+            characterImage: 'characters/seraphina_belmont.png',
+          },
           {
             speaker: 'Elena Drake',
-            text: '괜찮아요? 우리 콤비네이션이 너무 셌던 건가요?',
+            text: '“누구도 혼자 단죄받지 않는다.” 이 문장, 네가 쓴 거지?',
             emotion: 'surprised',
-            characterImage: 'characters/elena_drake'
+            characterImage: 'characters/elena_drake.png',
           },
           {
             speaker: 'Seraphina',
-            text: '둘의 연결을 읽지 못했어요... 조금 더 경청해야겠네요.',
-            emotion: 'sad',
-            characterImage: 'characters/seraphina_belmont'
-          },
-          {
-            speaker: 'Ariana',
-            text: '대화를 더 많이 나눠보자. 가족은 마음을 공유하는 데서 시작하니까.',
-            emotion: 'normal',
-            characterImage: 'characters/ariana_drake'
-          }
-        ]
-      }
-    },
-    { 
-      id: 28, name: '다중 전술', theme: 'Multi', recommendedPower: 570, 
-      firstReward: { gold: 1300, shards: 13 }, repeatReward: { gold: 650, shards: 7 }, cleared: false,
-      story: {
-        description: '다양한 전술이 결합된 복합 전투장. 여러 전략이 동시에 펼쳐지는 공간.',
-        backgroundImage: 'backgrounds/stage_28_multi_tactics.webp'
-      },
-      characterImage: 'characters/seraphina_belmont.png',
-      cutscene: {
-        preBattle: [
-          {
-            speaker: 'Lucian',
-            text: '이번 전장은 우리가 가르친 모든 전략이 동시에 등장한다. 매 순간 우선순위를 재정비해야 한다.',
-            emotion: 'normal',
-            characterImage: 'characters/lucian_rosegarden'
-          },
-          {
-            speaker: 'Marcus Belmont',
-            text: '정예 부대, 기사단, 드레이크 자매까지 모두 다른 전술을 펼칠 것이다. 혼란을 통제해라.',
-            emotion: 'normal',
-            characterImage: 'characters/marcus_belmont'
-          },
-          {
-            speaker: 'Seraphina',
-            text: '마치 전쟁터 전체를 지휘하는 기분이네요. 하지만 지금까지 배운 것들을 믿겠습니다.',
+            text: '그리고 이제 우리가 함께 완성했어.',
             emotion: 'determined',
-            characterImage: 'characters/seraphina_belmont'
-          },
-          {
-            speaker: 'Kai Drake',
-            text: '내가 후방에서 지원할게. 정보가 들어오면 곧바로 카드 선택에 반영해.',
-            emotion: 'normal',
-            characterImage: 'characters/kai_drake'
+            characterImage: 'characters/seraphina_belmont.png',
           }
         ],
         postVictory: [
           {
             speaker: 'Lucian',
-            text: '모든 전술 변화를 정확히 읽어냈어요. 정말 훌륭합니다!',
+            text: '감정 회복률 100%. 완전 공명 성공.',
             emotion: 'happy',
-            characterImage: 'characters/lucian_rosegarden'
+            characterImage: 'characters/lucian_rosegarden.png',
+          },
+          {
+            speaker: 'Elena Drake',
+            text: '오늘은 처음으로 편히 숨 쉴 수 있었어.',
+            emotion: 'happy',
+            characterImage: 'characters/elena_drake.png',
           },
           {
             speaker: 'Seraphina',
-            text: '정보를 정리하고 순위를 매기는 연습을 계속한 덕분이에요. 혼란도 패턴으로 바꿀 수 있었어요.',
-            emotion: 'happy',
-            characterImage: 'characters/seraphina_belmont'
+            text: '이 공기는 우리가 만든 용서의 바람이야.',
+            emotion: 'determined',
+            characterImage: 'characters/seraphina_belmont.png',
           },
           {
-            speaker: 'Kai Drake',
-            text: '곧 바람 최종 시험이야. 감각을 유지해.',
-            emotion: 'normal',
-            characterImage: 'characters/kai_drake'
+            speaker: 'Elena Drake',
+            text: '오늘의 승리는 화해 그 자체였어.',
+            emotion: 'determined',
+            characterImage: 'characters/elena_drake.png',
+          },
+          {
+            speaker: 'Seraphina',
+            text: '용기는 칼날이 아니라 손끝에서 피어난다.',
+            emotion: 'determined',
+            characterImage: 'characters/seraphina_belmont.png',
           }
         ],
         postDefeat: [
           {
-            speaker: 'Marcus Belmont',
-            text: '우선순위가 무너졌다. 한 곳에 집중하느라 다른 전술을 놓쳤다.',
+            speaker: 'Elena Drake',
+            text: '아직 마음이 굳어 있네. 조금만 더 천천히 갈까?',
             emotion: 'normal',
-            characterImage: 'characters/marcus_belmont'
+            characterImage: 'characters/elena_drake.png',
           },
           {
             speaker: 'Seraphina',
-            text: '맞아요... 한 가지에 매달렸어요. 다시 균형을 맞춰볼게요.',
+            text: '응... 마음을 다시 가다듬고 올게.',
             emotion: 'sad',
-            characterImage: 'characters/seraphina_belmont'
+            characterImage: 'characters/seraphina_belmont.png',
           },
           {
             speaker: 'Lucian',
-            text: '데이터를 다시 정리해보고, 카드 순환 시뮬레이션을 함께 하죠.',
+            text: '감정 데이터를 정리해둘게. 다음엔 더 부드럽게 연결하자.',
             emotion: 'normal',
-            characterImage: 'characters/lucian_rosegarden'
+            characterImage: 'characters/lucian_rosegarden.png',
+          },
+          {
+            speaker: 'Seraphina',
+            text: '고마워. 이번엔 진짜 화해를 완성해볼게.',
+            emotion: 'determined',
+            characterImage: 'characters/seraphina_belmont.png',
           }
         ]
       }
     },
-    { 
-      id: 29, name: '여동생 결전', theme: 'IrisFinal', recommendedPower: 590, 
-      firstReward: { gold: 1400, shards: 14 }, repeatReward: { gold: 700, shards: 8 }, cleared: false,
+    {
+      id: 24, name: '다중 전술 전선', theme: 'Strategy', recommendedPower: 490,
+      firstReward: { gold: 1100, shards: 11 }, repeatReward: { gold: 550, shards: 6 }, cleared: false,
       story: {
-        description: '바람의 최고 신전에서 여동생 Iris와 치르는 마지막 시험. 가족의 약속을 확인하는 자리.',
-        backgroundImage: 'backgrounds/stage_29_wind_final.webp'
+        description: '왕립 지휘 센터에서 여러 전선을 하나의 악보처럼 묶어 혼돈 속 질서를 만든다.',
+        backgroundImage: 'backgrounds/stage_28_multi_tactics.png'
       },
       characterImage: 'characters/seraphina_belmont.png',
-      enemyImage: 'characters/iris_belmont.png',
+      enemyImage: 'characters/marcus_belmont.png',
       cutscene: {
         preBattle: [
           {
-            speaker: 'Iris Belmont',
-            text: '언니! 이제 진짜 마지막이야. 내가 얼마나 성장했는지 보여줄게!',
-            emotion: 'happy',
-            characterImage: 'characters/iris_belmont'
-          },
-          {
-            speaker: 'Seraphina',
-            text: 'Iris, 네 바람은 언제나 따뜻했어. 이번엔 그 힘을 정면으로 느껴볼게.',
-            emotion: 'happy',
-            characterImage: 'characters/seraphina_belmont'
-          },
-          {
-            speaker: 'Iris Belmont',
-            text: '가문을 지킬 힘을 갖고 싶어. 언니가 인정해준다면 더할 나위 없겠지?',
-            emotion: 'determined',
-            characterImage: 'characters/iris_belmont'
-          },
-          {
-            speaker: 'Seraphina',
-            text: '서로의 미래를 걸고 싸우자. 오늘 승부는 우리 둘의 약속이 될 거야.',
-            emotion: 'determined',
-            characterImage: 'characters/seraphina_belmont'
-          }
-        ],
-        postVictory: [
-          {
-            speaker: 'Iris Belmont',
-            text: '역시 언니야! 내 바람이 언니를 더 높은 곳으로 끌어올릴 수 있으면 좋겠어.',
-            emotion: 'happy',
-            characterImage: 'characters/iris_belmont'
-          },
-          {
-            speaker: 'Seraphina',
-            text: '너의 응원 덕분에 여기까지 왔어. 다음 전투는 가주님과의 대결이야.',
-            emotion: 'happy',
-            characterImage: 'characters/seraphina_belmont'
-          },
-          {
-            speaker: 'Iris Belmont',
-            text: '할아버지도 분명 기뻐하실 거야. 나중에 같이 축하하자!',
-            emotion: 'happy',
-            characterImage: 'characters/iris_belmont'
-          }
-        ],
-        postDefeat: [
-          {
-            speaker: 'Iris Belmont',
-            text: '괜찮아 언니! 아직 시간이 많아. 내가 계속 응원할게!',
-            emotion: 'happy',
-            characterImage: 'characters/iris_belmont'
-          },
-          {
-            speaker: 'Seraphina',
-            text: '고마워, Iris. 다시 준비하고 더 강해져서 돌아올게.',
-            emotion: 'determined',
-            characterImage: 'characters/seraphina_belmont'
-          }
-        ]
-      }
-    },
-    { 
-      id: 30, name: '가주 최종', theme: 'ElderFinal', recommendedPower: 650, 
-      firstReward: { gold: 1500, shards: 15 }, repeatReward: { gold: 750, shards: 9 }, cleared: false,
-      story: {
-        description: '벨몬트 가문의 왕좌실. 가주 Elder Belmont와 치르는 최종 결전. 모든 시련의 종착점.',
-        backgroundImage: 'backgrounds/stage_30_final_boss.webp'
-      },
-      characterImage: 'characters/seraphina_belmont.png',
-      enemyImage: 'characters/elder_belmont.png',
-      cutscene: {
-        preBattle: [
-          {
-            speaker: 'Elder Belmont',
-            text: '세라피나, 여기까지 올라온 것만으로도 대단하다. 그러나 마지막 시험이 남았다.',
+            speaker: 'Lucian',
+            text: '다중 전선 링크 준비 완료. 오버로드 주의.',
             emotion: 'normal',
-            characterImage: 'characters/elder_belmont'
+            characterImage: 'characters/lucian_rosegarden.png',
           },
           {
             speaker: 'Seraphina',
-            text: '가주님, 오늘의 승부로 제가 이 가문의 일원임을 증명하겠습니다.',
+            text: '각 부대의 흐름을 하나의 리듬으로 묶자. [패턴 노트 카드: 흐름 설계] [보호막 오케스트라 카드: 방어 공유]',
             emotion: 'determined',
-            characterImage: 'characters/seraphina_belmont'
+            characterImage: 'characters/seraphina_belmont.png',
           },
           {
-            speaker: 'Elder Belmont',
-            text: '벨몬트의 역사가 담긴 모든 속성, 모든 전술이 나의 카드에 깃들어 있다. 그 흐름을 이겨내 보아라.',
+            speaker: 'Seraphina',
+            text: '[마력 리셋 카드: 피로 해소] 전선에 숨 쉴 틈을 만들어.',
+            emotion: 'determined',
+            characterImage: 'characters/seraphina_belmont.png',
+          },
+          {
+            speaker: 'Garen Stone',
+            text: '명령 확인!',
             emotion: 'angry',
-            characterImage: 'characters/elder_belmont'
+            characterImage: 'characters/garen_stone.png',
+          },
+          {
+            speaker: 'Elena Drake',
+            text: '전선 안정!',
+            emotion: 'happy',
+            characterImage: 'characters/elena_drake.png',
+          },
+          {
+            speaker: 'Kai Drake',
+            text: '보급 라인 확보 완료!',
+            emotion: 'happy',
+            characterImage: 'characters/kai_drake.png',
+          },
+          {
+            speaker: 'Lucian',
+            text: '다중 전선이 하나의 흐름처럼 움직인다.',
+            emotion: 'happy',
+            characterImage: 'characters/lucian_rosegarden.png',
           },
           {
             speaker: 'Seraphina',
-            text: '선대의 유산을 이어받아 새로운 장을 열겠습니다. 가문의 미래를 걸고 싸울게요.',
+            text: '전쟁도 음악처럼, 조율이 중요하니까.',
             emotion: 'determined',
-            characterImage: 'characters/seraphina_belmont'
+            characterImage: 'characters/seraphina_belmont.png',
           }
         ],
         postVictory: [
           {
-            speaker: 'Elder Belmont',
-            text: '훌륭하다. 벨몬트 가문은 너를 며느리가 아닌 진정한 가족으로써 받아들인다.',
+            speaker: 'Lucian',
+            text: '전체 동기율 100%.',
             emotion: 'happy',
-            characterImage: 'characters/elder_belmont'
+            characterImage: 'characters/lucian_rosegarden.png',
+          },
+          {
+            speaker: 'Garen Stone',
+            text: '전선 피해 0%. 완벽한 승리야.',
+            emotion: 'happy',
+            characterImage: 'characters/garen_stone.png',
           },
           {
             speaker: 'Seraphina',
-            text: '감사합니다. 앞으로도 가문과 왕국을 위해 힘을 다하겠습니다.',
-            emotion: 'happy',
-            characterImage: 'characters/seraphina_belmont'
+            text: '혼돈 속에서도 질서를 만들 수 있다는 걸 보여줬어.',
+            emotion: 'determined',
+            characterImage: 'characters/seraphina_belmont.png',
           },
           {
-            speaker: 'Elder Belmont',
-            text: '이제 새로운 위협이 다가온다. 하지만 너라면 충분히 맞설 수 있다.',
-            emotion: 'normal',
-            characterImage: 'characters/elder_belmont'
+            speaker: 'Elena Drake',
+            text: '오늘의 악보는 전쟁이 아닌 조율이었어.',
+            emotion: 'determined',
+            characterImage: 'characters/elena_drake.png',
+          },
+          {
+            speaker: 'Seraphina',
+            text: '혼돈을 이겼다는 건 마음을 이겼다는 뜻이야.',
+            emotion: 'determined',
+            characterImage: 'characters/seraphina_belmont.png',
           }
         ],
         postDefeat: [
           {
-            speaker: 'Elder Belmont',
-            text: '아직 한 걸음 부족하다. 다시 수련하여 올라오거라.',
-            emotion: 'normal',
-            characterImage: 'characters/elder_belmont'
+            speaker: 'Marcus Belmont',
+            text: '우선순위가 무너졌다. 전선을 다시 정렬해라.',
+            emotion: 'angry',
+            characterImage: 'characters/marcus_belmont.png',
           },
           {
             speaker: 'Seraphina',
-            text: '포기하지 않겠습니다. 가문의 기대에 부응하도록 더 단단해지겠습니다.',
+            text: '한 곳에 집중하다 다른 전술을 놓쳤어.',
+            emotion: 'sad',
+            characterImage: 'characters/seraphina_belmont.png',
+          },
+          {
+            speaker: 'Lucian',
+            text: '데이터를 다시 정리하고 카드 순환 시뮬레이션을 하자.',
+            emotion: 'normal',
+            characterImage: 'characters/lucian_rosegarden.png',
+          },
+          {
+            speaker: 'Seraphina',
+            text: '응. 이번엔 모든 전선을 같은 악보 위에 올려볼게.',
             emotion: 'determined',
-            characterImage: 'characters/seraphina_belmont'
+            characterImage: 'characters/seraphina_belmont.png',
           }
         ]
       }
     },
-    { 
-      id: 31, name: '결혼식', theme: 'Wedding', recommendedPower: 680, 
-      firstReward: { gold: 1500, shards: 15 }, repeatReward: { gold: 750, shards: 9 }, cleared: false,
+    {
+      id: 25, name: '정예 재편 회의', theme: 'Logistics', recommendedPower: 510,
+      firstReward: { gold: 1150, shards: 11 }, repeatReward: { gold: 575, shards: 6 }, cleared: false,
       story: {
-        description: '세라피나와 카이의 결혼식이 열리는 아름다운 장소. 축하와 기쁨이 가득한 공간.',
-        backgroundImage: 'backgrounds/stage_31_wedding.webp'
+        description: '왕립 회의실에서 세라피나가 인력·정보·여론을 재정비해 동맹 구조를 완성한다.',
+        backgroundImage: 'backgrounds/stage_32_politics.png'
+      },
+      characterImage: 'characters/seraphina_belmont.png',
+      enemyImage: 'characters/marcus_belmont.png',
+      cutscene: {
+        preBattle: [
+          {
+            speaker: 'Seraphina',
+            text: '이제 각 동맹 구조를 재정비해야 해요.',
+            emotion: 'determined',
+            characterImage: 'characters/seraphina_belmont.png',
+          },
+          {
+            speaker: 'Lucian',
+            text: '인력 분배, 정보 공유, 여론 대비... 세 축이 필요하죠.',
+            emotion: 'normal',
+            characterImage: 'characters/lucian_rosegarden.png',
+          },
+          {
+            speaker: 'Seraphina',
+            text: '[협상 카드: 균형 수치 조정] [보증 표 카드: 신뢰 강화] [언론 스케치 카드: 여론 예측]',
+            emotion: 'determined',
+            characterImage: 'characters/seraphina_belmont.png',
+          },
+          {
+            speaker: 'Kai Drake',
+            text: '이제야 진짜 리더가 된 것 같군.',
+            emotion: 'happy',
+            characterImage: 'characters/kai_drake.png',
+          },
+          {
+            speaker: 'Seraphina',
+            text: '리더가 아니라 조율자일 뿐이에요. 다만 책임은 기꺼이 질게요.',
+            emotion: 'determined',
+            characterImage: 'characters/seraphina_belmont.png',
+          },
+          {
+            speaker: 'Elena Drake',
+            text: '그 말이야말로 리더의 언어야.',
+            emotion: 'happy',
+            characterImage: 'characters/elena_drake.png',
+          },
+          {
+            speaker: 'Lucian',
+            text: '회의 결과, 벨몬트 체계 중심 유지. 동맹 강화 완료.',
+            emotion: 'happy',
+            characterImage: 'characters/lucian_rosegarden.png',
+          },
+          {
+            speaker: 'Seraphina',
+            text: '더 이상 각자의 길이 아니야. 함께 걸을 시간이지.',
+            emotion: 'determined',
+            characterImage: 'characters/seraphina_belmont.png',
+          }
+        ],
+        postVictory: [
+          {
+            speaker: 'Lucian',
+            text: '구조 재정비 완료. 여론 안정률 상승.',
+            emotion: 'happy',
+            characterImage: 'characters/lucian_rosegarden.png',
+          },
+          {
+            speaker: 'Kai Drake',
+            text: '드디어 완성됐군, 벨몬트 네트워크.',
+            emotion: 'happy',
+            characterImage: 'characters/kai_drake.png',
+          },
+          {
+            speaker: 'Seraphina',
+            text: '구조를 고치는 건 전투보다 어렵네요. 하지만...',
+            emotion: 'determined',
+            characterImage: 'characters/seraphina_belmont.png',
+          },
+          {
+            speaker: 'Elena Drake',
+            text: '그래도 당신은 즐기고 있잖아.',
+            emotion: 'happy',
+            characterImage: 'characters/elena_drake.png',
+          },
+          {
+            speaker: 'Seraphina',
+            text: '정비 끝의 고요는 다음 도약의 신호야.',
+            emotion: 'determined',
+            characterImage: 'characters/seraphina_belmont.png',
+          },
+          {
+            speaker: 'Lucian',
+            text: '오늘의 회의는 내일의 평화를 설계했다.',
+            emotion: 'happy',
+            characterImage: 'characters/lucian_rosegarden.png',
+          }
+        ],
+        postDefeat: [
+          {
+            speaker: 'Marcus Belmont',
+            text: '전선 정비가 미흡했다. 다시 구조를 짜라.',
+            emotion: 'angry',
+            characterImage: 'characters/marcus_belmont.png',
+          },
+          {
+            speaker: 'Seraphina',
+            text: '자료가 부족했어... 더 모아서 돌아올게.',
+            emotion: 'sad',
+            characterImage: 'characters/seraphina_belmont.png',
+          },
+          {
+            speaker: 'Kai Drake',
+            text: '필요하면 내 상단에서 지원할게.',
+            emotion: 'happy',
+            characterImage: 'characters/kai_drake.png',
+          },
+          {
+            speaker: 'Seraphina',
+            text: '고마워. 다음엔 흔들리지 않는 회의를 만들게.',
+            emotion: 'determined',
+            characterImage: 'characters/seraphina_belmont.png',
+          }
+        ]
+      }
+    },
+    {
+      id: 26, name: '결혼식 시뮬', theme: 'Ceremony', recommendedPower: 530,
+      firstReward: { gold: 1200, shards: 12 }, repeatReward: { gold: 600, shards: 7 }, cleared: false,
+      story: {
+        description: '왕립 웨딩홀 시뮬레이션에서 세라피나가 단죄 없는 의식을 연습하며 축복과 안전 절차를 검증한다.',
+        backgroundImage: 'backgrounds/stage_31_wedding.png'
       },
       characterImage: 'characters/seraphina_belmont.png',
       enemyImage: 'characters/ariana_drake.png',
       cutscene: {
         preBattle: [
           {
-            speaker: 'Ariana',
-            text: '드디어 결혼식이야! 하지만 그 전에 마지막으로 실전을 점검하자. 행사장에서 돌발 상황이 생기면 어쩔 건데?',
+            speaker: 'Lucian',
+            text: '(점검) 이번 실험은 단죄 없는 의식을 검증하는 게 목적이지.',
             emotion: 'normal',
-            characterImage: 'characters/ariana_drake'
+            characterImage: 'characters/lucian_rosegarden.png',
           },
           {
             speaker: 'Seraphina',
-            text: '축제라고 해서 방심할 수 없죠. 오늘은 축하와 보호, 두 가지를 동시에 생각해야 해요.',
+            text: '(고개 끄덕이며) 전생의 악몽을 끝낼 거야. 이번엔 축복만 남기자.',
+            emotion: 'determined',
+            characterImage: 'characters/seraphina_belmont.png',
+          },
+          {
+            speaker: 'Seraphina',
+            text: '[축복 시퀀스 카드: 진동 설정] [안전 설계 카드: 긴급 루트 확보] [비상 루트 카드: 방출 통로 생성]',
+            emotion: 'determined',
+            characterImage: 'characters/seraphina_belmont.png',
+          },
+          {
+            speaker: 'Mira',
+            text: '감정 포화 0%. 정서 안정 유지 중이에요!',
             emotion: 'happy',
-            characterImage: 'characters/seraphina_belmont'
+            characterImage: 'characters/mira.png',
+          },
+          {
+            speaker: 'Seraphina',
+            text: '(속삭임) 이번 생엔 단죄가 아닌 축복이 울리게 하겠어.',
+            emotion: 'determined',
+            characterImage: 'characters/seraphina_belmont.png',
+          },
+          {
+            speaker: 'Seraphina',
+            text: '[빛 카드: 치유 확장] [감정 앵커 카드: 중심 고정]',
+            emotion: 'determined',
+            characterImage: 'characters/seraphina_belmont.png',
+          },
+          {
+            speaker: 'Iris Belmont',
+            text: '연동 안전 매뉴얼 완성. 이제 어떤 결혼식도 폭주하지 않아요.',
+            emotion: 'happy',
+            characterImage: 'characters/iris_belmont.png',
           },
           {
             speaker: 'Ariana',
-            text: '신부가 직접 재난 대응 훈련을 한다니 역시 너다운 발상이다. 좋아, 화려한 연출과 안전을 동시에 잡아봐.',
+            text: '...이건 진짜 아름다운 전투네.',
             emotion: 'happy',
-            characterImage: 'characters/ariana_drake'
-          },
-          {
-            speaker: 'Seraphina',
-            text: '카이와 함께할 미래이니만큼 완벽하게 준비할게요.',
-            emotion: 'determined',
-            characterImage: 'characters/seraphina_belmont'
+            characterImage: 'characters/ariana_drake.png',
           }
         ],
         postVictory: [
           {
-            speaker: 'Ariana',
-            text: '멋졌어! 네 덱이 축복과 방어를 동시에 보여줬어. 결혼식에서도 빛날 거야.',
+            speaker: 'Lucian',
+            text: '시뮬 결과, 전 항목 안정. 성공률 100%.',
             emotion: 'happy',
-            characterImage: 'characters/ariana_drake'
+            characterImage: 'characters/lucian_rosegarden.png',
+          },
+          {
+            speaker: 'Iris Belmont',
+            text: '단죄 루프가 완전히 사라졌어요.',
+            emotion: 'happy',
+            characterImage: 'characters/iris_belmont.png',
           },
           {
             speaker: 'Seraphina',
-            text: '고마워. 모두가 안심하고 웃을 수 있는 시간을 만들고 싶었어요.',
-            emotion: 'happy',
-            characterImage: 'characters/seraphina_belmont'
+            text: '이제 결혼식은 두려움의 무대가 아니야.',
+            emotion: 'determined',
+            characterImage: 'characters/seraphina_belmont.png',
           },
           {
             speaker: 'Ariana',
-            text: '그 마음 잊지 마. 이제 정치 무대에서도 같은 마음으로 나아가자.',
-            emotion: 'normal',
-            characterImage: 'characters/ariana_drake'
+            text: '당신이 만든 매뉴얼, 사랑보다 따뜻하네요.',
+            emotion: 'happy',
+            characterImage: 'characters/ariana_drake.png',
+          },
+          {
+            speaker: 'Seraphina',
+            text: '축복이 안전할 때 사랑도 진짜로 존재해요.',
+            emotion: 'determined',
+            characterImage: 'characters/seraphina_belmont.png',
           }
         ],
         postDefeat: [
           {
-            speaker: 'Ariana',
-            text: '괜찮아? 긴장했나 보네. 신부도 숨을 고를 시간이 필요해.',
-            emotion: 'surprised',
-            characterImage: 'characters/ariana_drake'
+            speaker: 'Lucian',
+            text: '앵커가 미끄러졌어. 축복 회로를 다시 맞추자.',
+            emotion: 'normal',
+            characterImage: 'characters/lucian_rosegarden.png',
           },
           {
             speaker: 'Seraphina',
-            text: '예상보다 준비할 게 많아서 정신이 없었어요... 다시 정리할게요.',
+            text: '전생의 기억이 잠깐 날 끌어당겼어... 조율하고 다시 올게.',
             emotion: 'sad',
-            characterImage: 'characters/seraphina_belmont'
+            characterImage: 'characters/seraphina_belmont.png',
           },
           {
             speaker: 'Ariana',
-            text: '천천히 해. 오늘은 축복받아야 할 날이니까.',
+            text: '괜찮아. 리허설은 모든 실수를 품고 있어.',
             emotion: 'happy',
-            characterImage: 'characters/ariana_drake'
+            characterImage: 'characters/ariana_drake.png',
+          },
+          {
+            speaker: 'Seraphina',
+            text: '고마워. 축복이 단단해지면 다시 설게.',
+            emotion: 'determined',
+            characterImage: 'characters/seraphina_belmont.png',
           }
         ]
       }
     },
-    { 
-      id: 32, name: '정치 음모', theme: 'Aldric', recommendedPower: 700, 
-      firstReward: { gold: 1600, shards: 16 }, repeatReward: { gold: 800, shards: 9 }, cleared: false,
+    {
+      id: 27, name: '지도 위의 음모', theme: 'Investigation', recommendedPower: 550,
+      firstReward: { gold: 1250, shards: 12 }, repeatReward: { gold: 625, shards: 7 }, cleared: false,
       story: {
-        description: '정치적 음모가 벌어지는 왕국 의회. 어둡고 음침한 정치의 장.',
-        backgroundImage: 'backgrounds/stage_32_politics.webp'
+        description: '왕립 전술실에서 세라피나가 블랙우드의 이동 경로를 추적해 음모를 증거로 전환한다.',
+        backgroundImage: 'backgrounds/stage_35_conspiracy.png'
       },
       characterImage: 'characters/seraphina_belmont.png',
+      enemyImage: 'characters/leon_ardenia.png',
       cutscene: {
         preBattle: [
           {
-            speaker: 'Advisor Aldric',
-            text: '세라피나, 가문 내외의 귀족들이 너를 주시하고 있다. 단순한 전투 실력으로는 부족하지.',
-            emotion: 'normal'
-          },
-          {
-            speaker: 'Seraphina',
-            text: '정치 무대는 카드 배틀보다 더 복잡하다고 들었어요. 하지만 도망치지 않겠습니다.',
-            emotion: 'determined',
-            characterImage: 'characters/seraphina_belmont'
-          },
-          {
-            speaker: 'Advisor Aldric',
-            text: '상대의 이해관계를 읽고, 때로는 거래하고, 때로는 압박해야 한다. 카드 한 장으로도 협상을 이끌어야 하지.',
-            emotion: 'normal'
-          },
-          {
-            speaker: 'Seraphina',
-            text: '모두의 목소리를 듣고 조율하겠습니다. 가문의 이름을 지키기 위해.',
+            speaker: 'Lucian',
+            text: '지도 위의 모든 경로가 한 지점으로 모이고 있어.',
             emotion: 'normal',
-            characterImage: 'characters/seraphina_belmont'
+            characterImage: 'characters/lucian_rosegarden.png',
+          },
+          {
+            speaker: 'Seraphina',
+            text: '(궤적을 짚으며) 이 노선, 블랙우드의 이동 루트야.',
+            emotion: 'determined',
+            characterImage: 'characters/seraphina_belmont.png',
+          },
+          {
+            speaker: 'Seraphina',
+            text: '[정보 실타래 카드: 경로 추적] [경로 실루엣 카드: 지도 투사] [음모 추적 카드: 감정 반응 분석]',
+            emotion: 'determined',
+            characterImage: 'characters/seraphina_belmont.png',
+          },
+          {
+            speaker: 'Mira',
+            text: '약혼식장으로 이어지네요!',
+            emotion: 'surprised',
+            characterImage: 'characters/mira.png',
+          },
+          {
+            speaker: 'Seraphina',
+            text: '역시... 전생의 단죄는 연출이었어. 루시안, 봉인해.',
+            emotion: 'determined',
+            characterImage: 'characters/seraphina_belmont.png',
+          },
+          {
+            speaker: 'Lucian',
+            text: '[봉인 카드: 증거 보존] 완료. 데이터 잠금 유지.',
+            emotion: 'happy',
+            characterImage: 'characters/lucian_rosegarden.png',
+          },
+          {
+            speaker: 'Leon',
+            text: '바로 특수부대에 전달하겠다.',
+            emotion: 'determined',
+            characterImage: 'characters/leon_ardenia.png',
+          },
+          {
+            speaker: 'Seraphina',
+            text: '이 지도, 이제 음모가 아니라 정의의 설계도가 될 거야.',
+            emotion: 'determined',
+            characterImage: 'characters/seraphina_belmont.png',
           }
         ],
         postVictory: [
           {
-            speaker: 'Advisor Aldric',
-            text: '놀랍군. 갈등을 유연하게 흡수하면서도 주도권을 놓치지 않았어.',
-            emotion: 'normal'
+            speaker: 'Lucian',
+            text: '증거 봉인 완료. 모든 경로 기록 확보.',
+            emotion: 'happy',
+            characterImage: 'characters/lucian_rosegarden.png',
+          },
+          {
+            speaker: 'Leon',
+            text: '분석이 완벽해. 블랙우드의 동선을 틀어막았어.',
+            emotion: 'happy',
+            characterImage: 'characters/leon_ardenia.png',
           },
           {
             speaker: 'Seraphina',
-            text: '각자의 요구를 카드에 반영하니 협상이 훨씬 수월했어요.',
-            emotion: 'happy',
-            characterImage: 'characters/seraphina_belmont'
+            text: '이제 이 지도는 거짓이 아니라 미래를 위한 표식이야.',
+            emotion: 'determined',
+            characterImage: 'characters/seraphina_belmont.png',
           },
           {
-            speaker: 'Advisor Aldric',
-            text: '하지만 음모는 반복될 것이다. 마음을 단단히 해둬라.',
-            emotion: 'normal'
+            speaker: 'Mira',
+            text: '거짓의 길 위에서도 결국 진실은 방향을 잃지 않네요.',
+            emotion: 'happy',
+            characterImage: 'characters/mira.png',
+          },
+          {
+            speaker: 'Seraphina',
+            text: '오늘의 승리는 나침반이 아니라 우리의 마음이 알려줬어.',
+            emotion: 'determined',
+            characterImage: 'characters/seraphina_belmont.png',
           }
         ],
         postDefeat: [
           {
-            speaker: 'Advisor Aldric',
-            text: '협상 테이블에서 감정이 앞섰군. 그 틈을 상대가 노렸다.',
-            emotion: 'normal'
+            speaker: 'Lucian',
+            text: '투사 값이 흔들렸어. 데이터가 더 필요해.',
+            emotion: 'normal',
+            characterImage: 'characters/lucian_rosegarden.png',
           },
           {
             speaker: 'Seraphina',
-            text: '말이 꼬였어요... 다시 데이터와 감정을 정리하겠습니다.',
+            text: '내가 망설여서 길이 닫혔어... 증거를 더 모아 돌아올게.',
             emotion: 'sad',
-            characterImage: 'characters/seraphina_belmont'
+            characterImage: 'characters/seraphina_belmont.png',
           },
           {
-            speaker: 'Advisor Aldric',
-            text: '정보를 다시 모으고 접근 방식을 바꿔라. 정치의 핵심은 준비다.',
-            emotion: 'normal'
+            speaker: 'Leon',
+            text: '추가 보고를 확보하겠다. 그때 다시 경로를 열자.',
+            emotion: 'determined',
+            characterImage: 'characters/leon_ardenia.png',
+          },
+          {
+            speaker: 'Seraphina',
+            text: '알겠어. 모든 선이 분명해지면 다시 오지.',
+            emotion: 'determined',
+            characterImage: 'characters/seraphina_belmont.png',
           }
         ]
       }
     },
-    { 
-      id: 33, name: '하인 최종', theme: 'MiraFinal', recommendedPower: 720,
-      firstReward: { gold: 1700, shards: 17 }, repeatReward: { gold: 850, shards: 9 }, cleared: false,
+    {
+      id: 28, name: '하인 연대', theme: 'Support', recommendedPower: 570,
+      firstReward: { gold: 1300, shards: 13 }, repeatReward: { gold: 650, shards: 7 }, cleared: false,
       story: {
-        description: '세라피나의 충성스러운 시녀 Mira와의 마지막 시험. 서로의 신뢰와 우정을 확인하는 전용 수련장.',
-        backgroundImage: 'backgrounds/stage_33_mira_final.webp'
+        description: '벨몬트 하인 회의실에서 세라피나가 정보 공유와 응급 지원 네트워크를 구축한다.',
+        backgroundImage: 'backgrounds/stage_18_friendship.png'
       },
       characterImage: 'characters/seraphina_belmont.png',
       enemyImage: 'characters/mira.png',
@@ -2898,345 +3368,518 @@ export const campaignStageData = [
         preBattle: [
           {
             speaker: 'Mira',
-            text: '아가씨, 오늘은 제가 끝까지 함께했던 훈련을 모두 펼쳐 마지막 시험을 부탁드리고 싶어요.',
+            text: '작전용 다과회 개시! 오늘은 우리도 감시자예요.',
             emotion: 'happy',
-            characterImage: 'characters/mira'
+            characterImage: 'characters/mira.png',
           },
           {
             speaker: 'Seraphina',
-            text: '나를 위해 이렇게 오래 준비했다니... 이번엔 서로가 얼마나 성장했는지 확인해 보자.',
-            emotion: 'happy',
-            characterImage: 'characters/seraphina_belmont'
-          },
-          {
-            speaker: 'Mira',
-            text: '처음엔 아가씨 곁을 지키겠다는 각오뿐이었지만, 이제는 제 힘으로도 도움이 되고 싶어요.',
+            text: '좋아, 이번엔 내 대신 너희가 눈과 귀가 되어줘.',
             emotion: 'determined',
-            characterImage: 'characters/mira'
+            characterImage: 'characters/seraphina_belmont.png',
           },
           {
             speaker: 'Seraphina',
-            text: '네가 있어서 여기까지 올 수 있었어. 이번 전투는 나도 너에게 전력을 다해 보답할게.',
+            text: '[은신 메모 카드: 관찰 모드 활성화] [지원 채널 카드: 통신 연동] [응급 회복 차 카드: 긴급 회복 준비]',
             emotion: 'determined',
-            characterImage: 'characters/seraphina_belmont'
+            characterImage: 'characters/seraphina_belmont.png',
+          },
+          {
+            speaker: 'Servant',
+            text: '정보 수집 완료! 내통자 반응 없음!',
+            emotion: 'happy',
+          },
+          {
+            speaker: 'Servant',
+            text: '감정 파형 정상입니다!',
+            emotion: 'happy',
+          },
+          {
+            speaker: 'Seraphina',
+            text: '역시 내 사람들이야. 벨몬트의 힘은 화려함이 아니라 진심이었지.',
+            emotion: 'determined',
+            characterImage: 'characters/seraphina_belmont.png',
           },
           {
             speaker: 'Mira',
-            text: '그럼, 우리의 마지막 장면을 가장 아름다운 페이지로 장식해봐요!',
+            text: '그럼 이번에도 우리가 승리예요!',
             emotion: 'happy',
-            characterImage: 'characters/mira'
+            characterImage: 'characters/mira.png',
+          },
+          {
+            speaker: 'Seraphina',
+            text: '인정. 오늘은 하인 연대의 이름으로 남겠군.',
+            emotion: 'happy',
+            characterImage: 'characters/seraphina_belmont.png',
           }
         ],
         postVictory: [
           {
-            speaker: 'Mira',
-            text: '역시 아가씨예요! 제 모든 장치와 메모를 전부 다 읽고 움직이셨어요!',
+            speaker: 'Lucian',
+            text: '연대 시스템 정상 작동. 침투 흔적 없음.',
             emotion: 'happy',
-            characterImage: 'characters/mira'
+            characterImage: 'characters/lucian_rosegarden.png',
+          },
+          {
+            speaker: 'Mira',
+            text: '내통자 탐지율 100%! 완벽해요!',
+            emotion: 'happy',
+            characterImage: 'characters/mira.png',
           },
           {
             speaker: 'Seraphina',
-            text: '네가 만들어 준 훈련 덕분에 마음이 더 단단해졌어. 이제 어디서든 네가 자랑스러워질 만큼 강해졌다고 자신 있게 말할게.',
-            emotion: 'happy',
-            characterImage: 'characters/seraphina_belmont'
+            text: '이 집이 나를 지켜주는 게 아니라, 우리가 서로를 지켜주는 거야.',
+            emotion: 'determined',
+            characterImage: 'characters/seraphina_belmont.png',
           },
           {
-            speaker: 'Mira',
-            text: '앞으로도 계속 곁에 있을게요. 이번 경험은 제가 평생 간직할 거예요!',
+            speaker: 'Servants',
+            text: '벨몬트의 이름 아래, 함께 웃는다!',
             emotion: 'happy',
-            characterImage: 'characters/mira'
+          },
+          {
+            speaker: 'Seraphina',
+            text: '바로 이것이 진짜 가문의 방패야.',
+            emotion: 'determined',
+            characterImage: 'characters/seraphina_belmont.png',
           }
         ],
         postDefeat: [
           {
             speaker: 'Mira',
-            text: '괜찮으세요? 제가 너무 무리한 조건을 만든 건 아닌지 걱정돼요...',
-            emotion: 'sad',
-            characterImage: 'characters/mira'
-          },
-          {
-            speaker: 'Seraphina',
-            text: '아니야. 네가 준비한 과정을 제대로 마주하고 싶어. 다시 한 번 도전하게 해줘.',
-            emotion: 'determined',
-            characterImage: 'characters/seraphina_belmont'
-          },
-          {
-            speaker: 'Mira',
-            text: '그럼 준비 과정을 조금 손봐서 다시 맞춰둘게요. 아가씨가 웃을 때까지 계속 함께할게요!',
-            emotion: 'happy',
-            characterImage: 'characters/mira'
-          }
-        ]
-      }
-    },
-    { 
-      id: 34, name: '갈등', theme: 'Marcus2', recommendedPower: 740, 
-      firstReward: { gold: 1800, shards: 18 }, repeatReward: { gold: 900, shards: 10 }, cleared: false,
-      story: {
-        description: '가문 내부의 갈등이 표면화되는 긴장된 공간. 대립과 화해가 공존하는 곳.',
-        backgroundImage: 'backgrounds/stage_34_conflict.webp'
-      },
-      characterImage: 'characters/seraphina_belmont.png',
-      enemyImage: 'characters/marcus_belmont.png',
-      cutscene: {
-        preBattle: [
-          {
-            speaker: 'Marcus Belmont',
-            text: '정치 무대를 다녀오더니 가문의 일부가 너를 의심하고 있다. 그들의 마음을 직접 돌려세워라.',
+            text: '회의 기록을 조금 더 정리해볼까요?',
             emotion: 'normal',
-            characterImage: 'characters/marcus_belmont'
+            characterImage: 'characters/mira.png',
           },
           {
             speaker: 'Seraphina',
-            text: '가문을 지키겠다는 제 마음은 변함없어요. 설득이 필요하다면 카드로라도 보여드릴게요.',
-            emotion: 'determined',
-            characterImage: 'characters/seraphina_belmont'
-          },
-          {
-            speaker: 'Marcus Belmont',
-            text: '갈등을 덮어두면 더 큰 균열이 생긴다. 정면으로 부딪혀라.',
-            emotion: 'angry',
-            characterImage: 'characters/marcus_belmont'
-          }
-        ],
-        postVictory: [
-          {
-            speaker: 'Marcus Belmont',
-            text: '좋다. 갈등을 도망치지 않고 받아들였군. 모두 고개를 끄덕였다.',
-            emotion: 'happy',
-            characterImage: 'characters/marcus_belmont'
-          },
-          {
-            speaker: 'Seraphina',
-            text: '서로의 불안을 인정하고 함께 해결하자고 말했어요. 이제 좀 더 솔직해질 수 있을 것 같아요.',
-            emotion: 'happy',
-            characterImage: 'characters/seraphina_belmont'
-          }
-        ],
-        postDefeat: [
-          {
-            speaker: 'Marcus Belmont',
-            text: '갈등을 피하려 했다. 그런 태도는 불신을 키운다.',
-            emotion: 'normal',
-            characterImage: 'characters/marcus_belmont'
-          },
-          {
-            speaker: 'Seraphina',
-            text: '맞아요... 다시 마음을 가다듬겠습니다.',
+            text: '조금 흔들렸네... 하지만 곧 다시 맞춰볼 수 있어.',
             emotion: 'sad',
-            characterImage: 'characters/seraphina_belmont'
+            characterImage: 'characters/seraphina_belmont.png',
           },
           {
-            speaker: 'Marcus Belmont',
-            text: '눈을 마주 보고, 서로의 두려움을 말하게 해라.',
-            emotion: 'normal',
-            characterImage: 'characters/marcus_belmont'
-          }
-        ]
-      }
-    },
-    { 
-      id: 35, name: '음모 공격', theme: 'Conspiracy', recommendedPower: 760, 
-      firstReward: { gold: 1900, shards: 19 }, repeatReward: { gold: 950, shards: 11 }, cleared: false,
-      story: {
-        description: '정치적 음모가 실행되는 어두운 본거지. 배신과 음모가 얽힌 공간.',
-        backgroundImage: 'backgrounds/stage_35_conspiracy.webp'
-      },
-      characterImage: 'characters/seraphina_belmont.png',
-      cutscene: {
-        preBattle: [
-          {
-            speaker: 'Leon Ardenia',
-            text: '음모 세력이 직접 움직이기 시작했다. 정치적 공격과 물리적 위협이 동시에 올 것이다.',
-            emotion: 'angry',
-            characterImage: 'characters/leon_ardenia'
-          },
-          {
-            speaker: 'Advisor Aldric',
-            text: '정보에 따르면 그들은 네 약혼을 빌미로 삼아 가문을 흔들려 한다. 준비됐나?',
-            emotion: 'normal'
-          },
-          {
-            speaker: 'Seraphina',
-            text: '이제 도망치지 않아요. 제가 직접 음모의 고리를 끊어낼게요.',
-            emotion: 'determined',
-            characterImage: 'characters/seraphina_belmont'
-          }
-        ],
-        postVictory: [
-          {
-            speaker: 'Leon Ardenia',
-            text: '훌륭했다. 공격과 음모를 동시에 차단했어.',
+            speaker: 'Servant',
+            text: '다음엔 우리가 먼저 체크리스트를 준비할게요!',
             emotion: 'happy',
-            characterImage: 'characters/leon_ardenia'
-          },
-          {
-            speaker: 'Advisor Aldric',
-            text: '네 대응 덕분에 귀족들의 불만도 누그러졌지. 이제 마법 연구 사고에 대비하자.',
-            emotion: 'normal'
-          }
-        ],
-        postDefeat: [
-          {
-            speaker: 'Leon Ardenia',
-            text: '정보가 부족했다. 우리가 놓친 연계가 있었어.',
-            emotion: 'normal',
-            characterImage: 'characters/leon_ardenia'
           },
           {
             speaker: 'Seraphina',
-            text: '다시 자료를 모으고 전략을 재구성할게요.',
-            emotion: 'sad',
-            characterImage: 'characters/seraphina_belmont'
-          },
-          {
-            speaker: 'Advisor Aldric',
-            text: '이번엔 내가 더 많은 자료를 제공하마. 다시 준비하자.',
-            emotion: 'normal'
-          }
-        ]
-      }
-    },
-    { 
-      id: 36, name: '마법 사고', theme: 'Thorne', recommendedPower: 780, 
-      firstReward: { gold: 2000, shards: 20 }, repeatReward: { gold: 1000, shards: 12 }, cleared: false,
-      story: {
-        description: '마법 실험이 잘못되어 사고가 난 마법 연구소. 위험한 마법 에너지가 넘치는 곳.',
-        backgroundImage: 'backgrounds/stage_36_magic_lab.webp'
-      },
-      characterImage: 'characters/seraphina_belmont.png',
-      cutscene: {
-        preBattle: [
-          {
-            speaker: 'Archmage Thorne',
-            text: '연구소에서 폭주한 마법 에너지가 가문 전체를 위협하고 있다. 통제해야 한다.',
-            emotion: 'normal'
-          },
-          {
-            speaker: 'Seraphina',
-            text: '사고의 원인을 파악하고 봉인하겠습니다. 제가 배운 모든 속성을 활용해볼게요.',
+            text: '그래. 연대는 반복할수록 더 단단해지니까.',
             emotion: 'determined',
-            characterImage: 'characters/seraphina_belmont'
-          },
-          {
-            speaker: 'Archmage Thorne',
-            text: '마법식을 변경하고 에너지 흐름을 재조정해야 한다. 각 단계에서 빠른 판단이 필요하다.',
-            emotion: 'normal'
-          }
-        ],
-        postVictory: [
-          {
-            speaker: 'Archmage Thorne',
-            text: '잘했다. 제어 불능의 흐름을 안정시켰군.',
-            emotion: 'normal'
-          },
-          {
-            speaker: 'Seraphina',
-            text: '이제 마법 연구가 다시 안전해졌어요. 모두의 노력이 헛되지 않았습니다.',
-            emotion: 'happy',
-            characterImage: 'characters/seraphina_belmont'
-          }
-        ],
-        postDefeat: [
-          {
-            speaker: 'Archmage Thorne',
-            text: '마법식을 한 단계 놓쳤다. 흐름이 역류했어.',
-            emotion: 'normal'
-          },
-          {
-            speaker: 'Seraphina',
-            text: '다시 계산해볼게요. 안정화 순서를 조정해야겠어요.',
-            emotion: 'sad',
-            characterImage: 'characters/seraphina_belmont'
+            characterImage: 'characters/seraphina_belmont.png',
           }
         ]
       }
     },
     {
-      id: 37, name: '고대 마법', theme: 'AncientMagic', recommendedPower: 800,
-      firstReward: { gold: 2100, shards: 21 }, repeatReward: { gold: 1050, shards: 12 }, cleared: false,
+      id: 29, name: '갈등 공개 회의', theme: 'Forum', recommendedPower: 590,
+      firstReward: { gold: 1400, shards: 14 }, repeatReward: { gold: 700, shards: 8 }, cleared: false,
       story: {
-        description: '고대 문헌에 전해지는 비밀 마법을 재현하는 봉인된 전당. 모든 속성을 조합해야 하는 복합 시험.',
-        backgroundImage: 'backgrounds/stage_37_ancient.webp'
+        description: '왕립 공개 회의장에서 각 파벌의 감정을 표면 위로 끌어올리고 해결안을 기록한다.',
+        backgroundImage: 'backgrounds/stage_32_politics.png'
       },
       characterImage: 'characters/seraphina_belmont.png',
+      enemyImage: 'characters/leon_ardenia.png',
       cutscene: {
         preBattle: [
           {
-            speaker: 'Archmage Thorne',
-            text: '사고 수습을 잘해냈군. 이제 고대의 마법식 자체를 네 손으로 재현할 차례다.',
-            emotion: 'normal'
-          },
-          {
-            speaker: 'Seraphine Winters',
-            text: '화염과 얼음을 동시에 다루던 언니의 감각이 필요해요. 네가 중심이 되어 흐름을 묶어주세요.',
+            speaker: 'Leon Ardenia',
+            text: '(낮은 목소리) 여기서 모든 감정이 터질 거야. 준비됐나?',
             emotion: 'normal',
-            characterImage: 'characters/seraphine_winters'
+            characterImage: 'characters/leon_ardenia.png',
           },
           {
             speaker: 'Seraphina',
-            text: '모든 속성이 서로 어긋나지 않도록 호흡을 맞춰볼게. 우리가 함께라면 해낼 수 있어.',
+            text: '감추지 말아야 해. 진실은 시끄럽게 태어나니까.',
             emotion: 'determined',
-            characterImage: 'characters/seraphina_belmont'
+            characterImage: 'characters/seraphina_belmont.png',
           },
           {
-            speaker: 'Archmage Thorne',
-            text: '마법식이 무너지면 다시 폭주가 일어난다. 침착함을 잃지 마라.',
-            emotion: 'normal'
+            speaker: 'Seraphina',
+            text: '[감정 이름표 카드: 감정 식별] [공감 시트 카드: 감정 흐름 공유] [해결 설계 카드: 의견 교차]',
+            emotion: 'determined',
+            characterImage: 'characters/seraphina_belmont.png',
           },
           {
-            speaker: 'Seraphine Winters',
-            text: '고대 마법의 리듬을 같이 불러볼게요. 하나, 둘, 셋... 이제 시작이에요!',
+            speaker: 'Noble',
+            text: '당신 때문에 가문이 위험에 빠졌소!',
+            emotion: 'angry',
+          },
+          {
+            speaker: 'Seraphina',
+            text: '그래요, 제 책임이었어요. 인정하는 순간이 시작이에요.',
+            emotion: 'determined',
+            characterImage: 'characters/seraphina_belmont.png',
+          },
+          {
+            speaker: 'Garen Stone',
+            text: '솔직한 답변이다. 그게 새로운 신뢰의 초석이지.',
             emotion: 'happy',
-            characterImage: 'characters/seraphine_winters'
+            characterImage: 'characters/garen_stone.png',
+          },
+          {
+            speaker: 'Seraphina',
+            text: '모든 감정을 기록으로 남겨요.',
+            emotion: 'determined',
+            characterImage: 'characters/seraphina_belmont.png',
           }
         ],
         postVictory: [
           {
-            speaker: 'Archmage Thorne',
-            text: '완벽하다. 네가 짜 올린 흐름이라면 고대 마법도 안전하게 쓰일 수 있겠지.',
-            emotion: 'happy'
+            speaker: 'Lucian',
+            text: '여론 안정 지수가 올라갔어. 감정 폭주 없음.',
+            emotion: 'happy',
+            characterImage: 'characters/lucian_rosegarden.png',
           },
           {
-            speaker: 'Seraphine Winters',
-            text: '언니와 호흡을 맞추니 마법이 춤을 추는 것 같았어요. 이 순간은 영원히 잊지 않을게요.',
+            speaker: 'Leon Ardenia',
+            text: '오늘은 말이 무기가 아니었지.',
             emotion: 'happy',
-            characterImage: 'characters/seraphine_winters'
+            characterImage: 'characters/leon_ardenia.png',
           },
           {
             speaker: 'Seraphina',
-            text: '모두의 도움이 있었기에 가능한 일이었어요. 이제 이 힘으로 더 많은 사람을 지킬 수 있겠죠.',
-            emotion: 'happy',
-            characterImage: 'characters/seraphina_belmont'
+            text: '말은 상처를 줄 수도 있지만, 오늘은 서로를 꿰맸어요.',
+            emotion: 'determined',
+            characterImage: 'characters/seraphina_belmont.png',
+          },
+          {
+            speaker: 'Elena Drake',
+            text: '감정의 무게를 나누는 건 어떤 결투보다 어려운 용기야.',
+            emotion: 'determined',
+            characterImage: 'characters/elena_drake.png',
+          },
+          {
+            speaker: 'Seraphina',
+            text: '그 용기가 오늘의 승리를 만들었죠.',
+            emotion: 'determined',
+            characterImage: 'characters/seraphina_belmont.png',
           }
         ],
         postDefeat: [
           {
-            speaker: 'Archmage Thorne',
-            text: '마법식이 흔들렸다. 다시 호흡을 정렬해라.',
-            emotion: 'normal'
+            speaker: 'Noble',
+            text: '회의장이 폭발했네! 준비가 덜 된 거야!',
+            emotion: 'angry',
           },
           {
-            speaker: 'Seraphine',
-            text: '순간 감각이 어긋났어... 다시 흐름을 정리해볼게.',
+            speaker: 'Seraphina',
+            text: '내가 목소리를 제대로 이끌지 못했어요... 사실을 다시 정리해서 돌아올게요.',
             emotion: 'sad',
-            characterImage: 'characters/seraphina_belmont'
+            characterImage: 'characters/seraphina_belmont.png',
           },
           {
-            speaker: 'Seraphine Winters',
-            text: '언니, 같이 호흡을 세어볼까요? 천천히 맞춰가요.',
-            emotion: 'happy',
-            characterImage: 'characters/seraphine_winters'
+            speaker: 'Leon Ardenia',
+            text: '필요하면 내가 중재 인원을 더 붙이겠다.',
+            emotion: 'determined',
+            characterImage: 'characters/leon_ardenia.png',
+          },
+          {
+            speaker: 'Seraphina',
+            text: '고마워요. 다음엔 모두가 들을 수 있게 할게요.',
+            emotion: 'determined',
+            characterImage: 'characters/seraphina_belmont.png',
           }
         ]
       }
     },
-    { 
-      id: 38, name: '라이벌 화해', theme: 'Ariana4', recommendedPower: 820, 
-      firstReward: { gold: 2200, shards: 22 }, repeatReward: { gold: 1100, shards: 13 }, cleared: false,
+    {
+      id: 30, name: '음모 개시', theme: 'Counterplot', recommendedPower: 650,
+      firstReward: { gold: 1500, shards: 15 }, repeatReward: { gold: 750, shards: 9 }, cleared: false,
       story: {
-        description: '라이벌 Ariana와의 화해가 이루어지는 특별한 공간. 경쟁에서 우정으로.',
-        backgroundImage: 'backgrounds/stage_38_reconciliation.webp'
+        description: '왕도 중앙 광장에서 세라피나가 언론을 상대로 사실을 공표하며 블랙우드의 음모를 되돌린다.',
+        backgroundImage: 'backgrounds/stage_35_conspiracy.png'
+      },
+      characterImage: 'characters/seraphina_belmont.png',
+      enemyImage: 'characters/leon_ardenia.png',
+      cutscene: {
+        preBattle: [
+          {
+            speaker: 'Lucian',
+            text: '(긴급) 여론이 폭주 중이야! 기자들이 몰려오고 있어!',
+            emotion: 'angry',
+            characterImage: 'characters/lucian_rosegarden.png',
+          },
+          {
+            speaker: 'Seraphina',
+            text: '좋아, 진실로 상대하자.',
+            emotion: 'determined',
+            characterImage: 'characters/seraphina_belmont.png',
+          },
+          {
+            speaker: 'Seraphina',
+            text: '[언론 대응 카드: 사실 공표] [마력 큐 카드: 연설 박자 조정] [보호망 명령 카드: 네트워크 재정렬]',
+            emotion: 'determined',
+            characterImage: 'characters/seraphina_belmont.png',
+          },
+          {
+            speaker: 'Seraphina',
+            text: '진실은 늦게 와도 거짓보다 오래 남아.',
+            emotion: 'determined',
+            characterImage: 'characters/seraphina_belmont.png',
+          },
+          {
+            speaker: 'Seraphina',
+            text: '[빛 카드: 공명 확장]',
+            emotion: 'determined',
+            characterImage: 'characters/seraphina_belmont.png',
+          }
+        ],
+        postVictory: [
+          {
+            speaker: 'Lucian',
+            text: '여론 반전 완료. 긍정 반응 80포인트 상승.',
+            emotion: 'happy',
+            characterImage: 'characters/lucian_rosegarden.png',
+          },
+          {
+            speaker: 'Elena Drake',
+            text: '이제 모두가 당신 말을 듣고 있어.',
+            emotion: 'happy',
+            characterImage: 'characters/elena_drake.png',
+          },
+          {
+            speaker: 'Seraphina',
+            text: '진실은 어떤 공포보다 빠르게 사람을 움직여.',
+            emotion: 'determined',
+            characterImage: 'characters/seraphina_belmont.png',
+          },
+          {
+            speaker: 'Leon Ardenia',
+            text: '오늘의 연설은 전투보다 강력했어.',
+            emotion: 'determined',
+            characterImage: 'characters/leon_ardenia.png',
+          },
+          {
+            speaker: 'Seraphina',
+            text: '오늘 진실이 세상을 설득했어요.',
+            emotion: 'determined',
+            characterImage: 'characters/seraphina_belmont.png',
+          }
+        ],
+        postDefeat: [
+          {
+            speaker: 'Lucian',
+            text: '군중이 우리 목소리를 덮었어. 더 명확한 자료가 필요해.',
+            emotion: 'normal',
+            characterImage: 'characters/lucian_rosegarden.png',
+          },
+          {
+            speaker: 'Seraphina',
+            text: '내 목소리가 흔들렸어... 사실을 다시 정렬해서 돌아올게.',
+            emotion: 'sad',
+            characterImage: 'characters/seraphina_belmont.png',
+          },
+          {
+            speaker: 'Leon Ardenia',
+            text: '증인을 더 모으자. 광장을 다시 열 준비를 해두겠다.',
+            emotion: 'determined',
+            characterImage: 'characters/leon_ardenia.png',
+          },
+          {
+            speaker: 'Seraphina',
+            text: '고마워. 다음엔 진실이 잡음 없이 도착하게 할게.',
+            emotion: 'determined',
+            characterImage: 'characters/seraphina_belmont.png',
+          }
+        ]
+      }
+    },
+    {
+      id: 31, name: '마법 사고', theme: 'Accident', recommendedPower: 680,
+      firstReward: { gold: 1500, shards: 15 }, repeatReward: { gold: 750, shards: 9 }, cleared: false,
+      story: {
+        description: '왕립 연구소에서 폭주한 마법 에너지를 세라피나가 진정시키며 책임의 무게를 확인한다.',
+        backgroundImage: 'backgrounds/stage_36_magic_lab.png'
+      },
+      characterImage: 'characters/seraphina_belmont.png',
+      enemyImage: 'characters/lucian_rosegarden.png',
+      cutscene: {
+        preBattle: [
+          {
+            speaker: 'Researcher',
+            text: '폭주 반응입니다! 블랙우드가 남긴 장치가 다시 가동하고 있어요!',
+            emotion: 'angry',
+          },
+          {
+            speaker: 'Lucian',
+            text: '코어 반응 속도 초당 12%. 위험 수치입니다!',
+            emotion: 'angry',
+            characterImage: 'characters/lucian_rosegarden.png',
+          },
+          {
+            speaker: 'Seraphina',
+            text: '진정해. 공명 구조를 분리하면 돼. [마력 스위치 카드: 순환 분리] [상승 제어 카드: 반응 억제]',
+            emotion: 'determined',
+            characterImage: 'characters/seraphina_belmont.png',
+          },
+          {
+            speaker: 'Seraphina',
+            text: '[에너지 증폭 카드: 제어 안정화]',
+            emotion: 'determined',
+            characterImage: 'characters/seraphina_belmont.png',
+          },
+          {
+            speaker: 'Researcher',
+            text: '폭주 억제 확인!',
+            emotion: 'happy',
+          },
+          {
+            speaker: 'Lucian',
+            text: '폭발 위험 해제. 정말 아슬아슬했어.',
+            emotion: 'happy',
+            characterImage: 'characters/lucian_rosegarden.png',
+          },
+          {
+            speaker: 'Seraphina',
+            text: '진짜 위험한 건 두려움이야. 우리는 침착하게 다룰 수 있어.',
+            emotion: 'determined',
+            characterImage: 'characters/seraphina_belmont.png',
+          }
+        ],
+        postVictory: [
+          {
+            speaker: 'Lucian',
+            text: '시스템 안정. 피해자 없음.',
+            emotion: 'happy',
+            characterImage: 'characters/lucian_rosegarden.png',
+          },
+          {
+            speaker: 'Researcher',
+            text: '악역이라는 소문이 전부 틀렸네요... 감사합니다.',
+            emotion: 'happy',
+          },
+          {
+            speaker: 'Seraphina',
+            text: '나는 평판이 아니라 책임을 선택했을 뿐이야.',
+            emotion: 'determined',
+            characterImage: 'characters/seraphina_belmont.png',
+          },
+          {
+            speaker: 'Mira',
+            text: '오늘 사고가 아가씨 이름을 신뢰로 다시 썼어요.',
+            emotion: 'happy',
+            characterImage: 'characters/mira.png',
+          },
+          {
+            speaker: 'Seraphina',
+            text: '이번엔 그 신뢰가 오래 남을 거야.',
+            emotion: 'determined',
+            characterImage: 'characters/seraphina_belmont.png',
+          }
+        ],
+        postDefeat: [
+          {
+            speaker: 'Lucian',
+            text: '제어 루틴이 미끄러졌어. 처음부터 다시 맞추자.',
+            emotion: 'normal',
+            characterImage: 'characters/lucian_rosegarden.png',
+          },
+          {
+            speaker: 'Seraphina',
+            text: '잠시 두려움에 흔들렸어... 손을 다시 안정시키고 돌아올게.',
+            emotion: 'sad',
+            characterImage: 'characters/seraphina_belmont.png',
+          }
+        ]
+      }
+    },
+    {
+      id: 32, name: '고대 연동', theme: 'Ancient', recommendedPower: 700,
+      firstReward: { gold: 1600, shards: 16 }, repeatReward: { gold: 800, shards: 9 }, cleared: false,
+      story: {
+        description: '고대 도서관에서 세라피나가 선조들의 연동석을 해석해 역마력의 약점을 찾아낸다.',
+        backgroundImage: 'backgrounds/stage_37_ancient.png'
+      },
+      characterImage: 'characters/seraphina_belmont.png',
+      enemyImage: 'characters/lucian_rosegarden.png',
+      cutscene: {
+        preBattle: [
+          {
+            speaker: 'Lucian',
+            text: '이 기록석은 수백 년 전 건데 아직도 맥동하고 있어.',
+            emotion: 'surprised',
+            characterImage: 'characters/lucian_rosegarden.png',
+          },
+          {
+            speaker: 'Seraphina',
+            text: '마력의 언어는 변하지 않아. 박자를 읽으면 답이 보여.',
+            emotion: 'determined',
+            characterImage: 'characters/seraphina_belmont.png',
+          },
+          {
+            speaker: 'Seraphina',
+            text: '[악보 해석 카드: 리듬 분석] [공동 마력동조 카드: 협력 연동] [박자석 카드: 고대 패턴 복원]',
+            emotion: 'determined',
+            characterImage: 'characters/seraphina_belmont.png',
+          },
+          {
+            speaker: 'Lucian',
+            text: '봐! 블랙우드 역마력의 약점이야!',
+            emotion: 'happy',
+            characterImage: 'characters/lucian_rosegarden.png',
+          },
+          {
+            speaker: 'Seraphine Winters',
+            text: '차가움을 느끼면서 흐름을 붙잡아. 감정은 따라올 거야.',
+            emotion: 'happy',
+            characterImage: 'characters/seraphine_winters.png',
+          },
+          {
+            speaker: 'Seraphina',
+            text: '[빛 카드: 감정 정화] 고마워요, 선조님들.',
+            emotion: 'determined',
+            characterImage: 'characters/seraphina_belmont.png',
+          }
+        ],
+        postVictory: [
+          {
+            speaker: 'Lucian',
+            text: '공명 완료. 기록석이 잠들었어.',
+            emotion: 'happy',
+            characterImage: 'characters/lucian_rosegarden.png',
+          },
+          {
+            speaker: 'Seraphina',
+            text: '해독한 약점을 모든 동맹에게 보내. 과거가 다음 승리를 줬어.',
+            emotion: 'determined',
+            characterImage: 'characters/seraphina_belmont.png',
+          },
+          {
+            speaker: 'Seraphine Winters',
+            text: '잊힌 노래도 누군가 들어주면 돌아오죠.',
+            emotion: 'happy',
+            characterImage: 'characters/seraphine_winters.png',
+          },
+          {
+            speaker: 'Seraphina',
+            text: '그리고 나는 계속 들을 거야.',
+            emotion: 'determined',
+            characterImage: 'characters/seraphina_belmont.png',
+          }
+        ],
+        postDefeat: [
+          {
+            speaker: 'Lucian',
+            text: '패턴이 무너졌어. 박자를 다시 맞추자.',
+            emotion: 'normal',
+            characterImage: 'characters/lucian_rosegarden.png',
+          },
+          {
+            speaker: 'Seraphina',
+            text: '리듬을 놓쳤어... 정렬해서 다시 올게.',
+            emotion: 'sad',
+            characterImage: 'characters/seraphina_belmont.png',
+          }
+        ]
+      }
+    },
+    {
+      id: 33, name: '라이벌 화해', theme: 'Reconciliation', recommendedPower: 720,
+      firstReward: { gold: 1700, shards: 17 }, repeatReward: { gold: 850, shards: 9 }, cleared: false,
+      story: {
+        description: '불꽃 서클 경기장에서 세라피나와 아리아나가 서로의 마음을 공개하며 진정한 라이벌로 거듭난다.',
+        backgroundImage: 'backgrounds/stage_17_fire_challenge.png'
       },
       characterImage: 'characters/seraphina_belmont.png',
       enemyImage: 'characters/ariana_drake.png',
@@ -3244,726 +3887,1494 @@ export const campaignStageData = [
         preBattle: [
           {
             speaker: 'Ariana',
-            text: '우리는 늘 경쟁했지. 하지만 이제는 서로를 누구보다 잘 이해하게 된 것 같아.',
-            emotion: 'happy',
-            characterImage: 'characters/ariana_drake'
+            text: '여전히 네가 싫다고 말하고 싶지만... 솔직히 이제 모르겠어.',
+            emotion: 'sad',
+            characterImage: 'characters/ariana_drake.png',
           },
           {
             speaker: 'Seraphina',
-            text: '라이벌이 있었기에 여기까지 올 수 있었어. 오늘은 서로의 마음을 확인하자.',
+            text: '그럼 그냥 "싫지 않다"고만 해. 그게 시작이야.',
             emotion: 'happy',
-            characterImage: 'characters/seraphina_belmont'
+            characterImage: 'characters/seraphina_belmont.png',
+          },
+          {
+            speaker: 'Seraphina',
+            text: '[감정 채널 강화 카드: 교감 개방] [기류 공유 카드: 호흡 동기화] [화해 인장 카드: 감정 봉인]',
+            emotion: 'determined',
+            characterImage: 'characters/seraphina_belmont.png',
           },
           {
             speaker: 'Ariana',
-            text: '좋아! 전력으로 부딪혀서 진심을 보여줘.',
-            emotion: 'angry',
-            characterImage: 'characters/ariana_drake'
+            text: '불과 얼음이 함께 춤추는 건 처음이야.',
+            emotion: 'happy',
+            characterImage: 'characters/ariana_drake.png',
+          },
+          {
+            speaker: 'Seraphina',
+            text: '다르다고 멀어질 필요는 없어. 다른 빛이 세상을 더 환하게 하니까.',
+            emotion: 'determined',
+            characterImage: 'characters/seraphina_belmont.png',
+          },
+          {
+            speaker: 'Seraphina',
+            text: '[불·얼 체인: 동행 문양 형성]',
+            emotion: 'determined',
+            characterImage: 'characters/seraphina_belmont.png',
           }
         ],
         postVictory: [
           {
             speaker: 'Ariana',
-            text: '멋졌어. 경쟁에서 시작했지만, 이제는 진짜 동료야.',
+            text: '네가 이렇게 멋있게 바뀔 줄 누가 알았겠어.',
             emotion: 'happy',
-            characterImage: 'characters/ariana_drake'
+            characterImage: 'characters/ariana_drake.png',
           },
           {
             speaker: 'Seraphina',
-            text: '고마워. 앞으로도 서로의 등을 맡기자.',
+            text: '라이벌이 칭찬하니까 기분이 묘하네.',
             emotion: 'happy',
-            characterImage: 'characters/seraphina_belmont'
+            characterImage: 'characters/seraphina_belmont.png',
+          },
+          {
+            speaker: 'Lucian',
+            text: '감정 채널 안정. 긴장도 완전히 해소됐어.',
+            emotion: 'happy',
+            characterImage: 'characters/lucian_rosegarden.png',
+          },
+          {
+            speaker: 'Ariana',
+            text: '다음엔 적이 아니라 친구로 만나자.',
+            emotion: 'determined',
+            characterImage: 'characters/ariana_drake.png',
+          },
+          {
+            speaker: 'Seraphina',
+            text: '그래. 이번 생엔 경쟁보다 동행이 먼저야.',
+            emotion: 'determined',
+            characterImage: 'characters/seraphina_belmont.png',
           }
         ],
         postDefeat: [
           {
             speaker: 'Ariana',
-            text: '괜찮아. 우리가 공유한 시간은 변하지 않아.',
-            emotion: 'happy',
-            characterImage: 'characters/ariana_drake'
+            text: '이봐, 주저앉지 마. 여긴 우리 둘만의 무대야.',
+            emotion: 'surprised',
+            characterImage: 'characters/ariana_drake.png',
           },
           {
             speaker: 'Seraphina',
-            text: '조금만 더 다듬어볼게요. 진심을 제대로 전달하고 싶어요.',
+            text: '아직 가면을 쓰려 했어... 부수고 다시 올게.',
             emotion: 'sad',
-            characterImage: 'characters/seraphina_belmont'
+            characterImage: 'characters/seraphina_belmont.png',
           }
         ]
       }
     },
-    { 
-      id: 39, name: '협력 배틀', theme: 'Kai2', recommendedPower: 840, 
-      firstReward: { gold: 2300, shards: 23 }, repeatReward: { gold: 1150, shards: 13 }, cleared: false,
+    {
+      id: 34, name: '협력 듀오', theme: 'Duet', recommendedPower: 740,
+      firstReward: { gold: 1800, shards: 18 }, repeatReward: { gold: 900, shards: 10 }, cleared: false,
       story: {
-        description: '약혼자 카이와 함께하는 협력 배틀. 부부가 함께 싸우는 특별한 공간.',
-        backgroundImage: 'backgrounds/stage_39_cooperation.webp'
+        description: '궁정 무도회장에서 세라피나와 카이가 칼과 카드로 호흡을 맞추며 연합 선봉 듀오로 탄생한다.',
+        backgroundImage: 'backgrounds/stage_39_cooperation.png'
       },
       characterImage: 'characters/seraphina_belmont.png',
       enemyImage: 'characters/kai_drake.png',
       cutscene: {
         preBattle: [
           {
-            speaker: 'Kai Drake',
-            text: '이전에는 서로를 시험했지만, 이제는 진짜 협력할 차례다. 우리 둘의 리듬을 맞춰보자.',
-            emotion: 'happy',
-            characterImage: 'characters/kai_drake'
+            speaker: 'Kai',
+            text: '네가 이 추위 속에서도 이렇게 침착할 줄은 몰랐군.',
+            emotion: 'determined',
+            characterImage: 'characters/kai_drake.png',
           },
           {
             speaker: 'Seraphina',
-            text: '같이 싸우는 건 언제나 든든해요. 서로의 빈틈을 메우면서 전투를 설계해볼게요.',
+            text: '상단 정보 덕분이죠. 이번엔 정말 쓸모가 있었어요.',
             emotion: 'happy',
-            characterImage: 'characters/seraphina_belmont'
+            characterImage: 'characters/seraphina_belmont.png',
           },
           {
-            speaker: 'Kai Drake',
-            text: '내 카드와 네 카드가 동시에 발동되는 상황도 있을 거야. 순서를 머릿속으로 그리고 있어.',
-            emotion: 'normal',
-            characterImage: 'characters/kai_drake'
+            speaker: 'Seraphina',
+            text: '[공전 링크 카드: 동기화 강화] [전술 공유판 카드: 명령 일체화] [협공 신호 카드: 연계 활성화]',
+            emotion: 'determined',
+            characterImage: 'characters/seraphina_belmont.png',
+          },
+          {
+            speaker: 'Lucian',
+            text: '(무전) 전선 안정! 1차 돌파 성공!',
+            emotion: 'happy',
+            characterImage: 'characters/lucian_rosegarden.png',
+          },
+          {
+            speaker: 'Kai',
+            text: '사랑이 아니어도, 우정만으로도 충분하네.',
+            emotion: 'happy',
+            characterImage: 'characters/kai_drake.png',
+          },
+          {
+            speaker: 'Seraphina',
+            text: '우정이 더 오래 남죠. 사랑은 계절이고, 신뢰는 땅이니까요.',
+            emotion: 'happy',
+            characterImage: 'characters/seraphina_belmont.png',
           }
         ],
         postVictory: [
           {
-            speaker: 'Kai Drake',
-            text: '완벽했어. 우리 둘의 조합이라면 어떤 전장에서도 통하겠어.',
+            speaker: 'Kai',
+            text: '파트너로서 완벽했어.',
             emotion: 'happy',
-            characterImage: 'characters/kai_drake'
+            characterImage: 'characters/kai_drake.png',
           },
           {
             speaker: 'Seraphina',
-            text: '앞으로도 서로에게 기대며 싸워요. 우리의 미래를 위해.',
+            text: '거래 성립, 동맹 갱신이에요.',
             emotion: 'happy',
-            characterImage: 'characters/seraphina_belmont'
+            characterImage: 'characters/seraphina_belmont.png',
+          },
+          {
+            speaker: 'Lucian',
+            text: '협공 효율 110%. 실전 최고치 기록.',
+            emotion: 'happy',
+            characterImage: 'characters/lucian_rosegarden.png',
+          },
+          {
+            speaker: 'Seraphina',
+            text: '마음의 형태가 달라도 박자는 맞출 수 있어요.',
+            emotion: 'determined',
+            characterImage: 'characters/seraphina_belmont.png',
+          },
+          {
+            speaker: 'Kai',
+            text: '그게 우리식 연동이지.',
+            emotion: 'determined',
+            characterImage: 'characters/kai_drake.png',
           }
         ],
         postDefeat: [
           {
-            speaker: 'Kai Drake',
-            text: '괜찮아. 호흡이 맞지 않았던 부분을 찾아보자.',
-            emotion: 'normal',
-            characterImage: 'characters/kai_drake'
+            speaker: 'Kai',
+            text: '또 혼자서 날 지키려 했잖아.',
+            emotion: 'sad',
+            characterImage: 'characters/kai_drake.png',
           },
           {
             speaker: 'Seraphina',
-            text: '다시 리허설해볼게요. 서로의 카드를 더 잘 이해해야겠어요.',
+            text: '오래된 습관이라서 그래... 듀오를 믿고 다시 맞춰볼게.',
             emotion: 'sad',
-            characterImage: 'characters/seraphina_belmont'
+            characterImage: 'characters/seraphina_belmont.png',
           }
         ]
       }
     },
-    { 
-      id: 40, name: '어둠 교단', theme: 'Cult', recommendedPower: 860, 
-      firstReward: { gold: 2500, shards: 25 }, repeatReward: { gold: 1250, shards: 15 }, cleared: false,
+    {
+      id: 35, name: '교단 전초전', theme: 'Vanguard', recommendedPower: 760,
+      firstReward: { gold: 1900, shards: 19 }, repeatReward: { gold: 950, shards: 11 }, cleared: false,
       story: {
-        description: '어둠의 교단이 모이는 어두운 성소. 위험하고 신비로운 어둠의 본거지.',
-        backgroundImage: 'backgrounds/stage_40_cult.webp'
+        description: '왕립 전초기지에서 세라피나가 레온과 함께 역마력 교단의 전진 기점을 차단한다.',
+        backgroundImage: 'backgrounds/stage_40_cult.png'
       },
       characterImage: 'characters/seraphina_belmont.png',
+      enemyImage: 'characters/leon_ardenia.png',
       cutscene: {
         preBattle: [
           {
-            speaker: 'Dark Cult Leader',
-            text: '벨몬트의 새 며느리여, 네가 가문의 힘을 약화시킬 기회라고 생각했는데... 직접 확인해볼까?',
-            emotion: 'normal'
+            speaker: 'Garen',
+            text: '이번이 시작이자 예고다. 방심하지 마라.',
+            emotion: 'angry',
+            characterImage: 'characters/garen_stone.png',
           },
           {
             speaker: 'Seraphina',
-            text: '어둠 교단의 음모는 여기서 끝낼 거예요.',
-            emotion: 'angry',
-            characterImage: 'characters/seraphina_belmont'
+            text: '첫 신호탄은 내가 쏠게. [연동 신호탄 카드: 전면 개시]',
+            emotion: 'determined',
+            characterImage: 'characters/seraphina_belmont.png',
           },
           {
-            speaker: 'Dark Cult Leader',
-            text: '너는 아직 어둠의 깊이를 모른다. 우리 의식이 완성되면 가문도, 왕국도 손아귀에 들어오지.',
-            emotion: 'angry'
+            speaker: 'Lucian',
+            text: '정보 흐름 확보! 방어 격자 가동!',
+            emotion: 'determined',
+            characterImage: 'characters/lucian_rosegarden.png',
+          },
+          {
+            speaker: 'Seraphina',
+            text: '[감정 역추적 카드: 기록 복원]',
+            emotion: 'determined',
+            characterImage: 'characters/seraphina_belmont.png',
+          },
+          {
+            speaker: 'Elena',
+            text: '이게 다리우스의 서명이야... 전부 계획된 거였군!',
+            emotion: 'angry',
+            characterImage: 'characters/elena_drake.png',
+          },
+          {
+            speaker: 'Seraphina',
+            text: '이제 증거를 봉인해. [봉인 카드: 결정적 증거 저장]',
+            emotion: 'determined',
+            characterImage: 'characters/seraphina_belmont.png',
           }
         ],
         postVictory: [
           {
-            speaker: 'Dark Cult Leader',
-            text: '크윽... 네가 이 정도일 줄이야... 하지만 우리는 또 다른 계획을 준비했다...',
-            emotion: 'sad'
+            speaker: 'Lucian',
+            text: '작전 성공. 장부 회수 완료.',
+            emotion: 'happy',
+            characterImage: 'characters/lucian_rosegarden.png',
+          },
+          {
+            speaker: 'Garen',
+            text: '첫 전투, 완벽한 출발이다.',
+            emotion: 'happy',
+            characterImage: 'characters/garen_stone.png',
           },
           {
             speaker: 'Seraphina',
-            text: '무슨 계획이든 막아낼 거예요. 가문과 왕국을 위해.',
+            text: '전생의 어둠을 이제 정면으로 바라볼 수 있네요.',
             emotion: 'determined',
-            characterImage: 'characters/seraphina_belmont'
+            characterImage: 'characters/seraphina_belmont.png',
+          },
+          {
+            speaker: 'Elena',
+            text: '오늘의 불길은 진실의 횃불이었어.',
+            emotion: 'determined',
+            characterImage: 'characters/elena_drake.png',
+          },
+          {
+            speaker: 'Seraphina',
+            text: '이제 교단의 그림자도 두렵지 않아요.',
+            emotion: 'determined',
+            characterImage: 'characters/seraphina_belmont.png',
           }
         ],
         postDefeat: [
           {
-            speaker: 'Dark Cult Leader',
-            text: '네 마음 속에도 어둠이 있다. 그걸 끌어낼 수만 있다면...',
-            emotion: 'happy'
+            speaker: 'Lucian',
+            text: '정보가 부족했어. 링크를 다시 맞추자.',
+            emotion: 'angry',
+            characterImage: 'characters/lucian_rosegarden.png',
           },
           {
             speaker: 'Seraphina',
-            text: '다시 마음을 다잡겠어요. 어둠이 제 마음을 흔들게 두지 않겠습니다.',
+            text: '자료를 더 모으고 전략을 재정비할게.',
             emotion: 'sad',
-            characterImage: 'characters/seraphina_belmont'
+            characterImage: 'characters/seraphina_belmont.png',
+          }
+        ]
+      }
+    },
+    {
+      id: 36, name: '침공 개시', theme: 'Assault', recommendedPower: 780,
+      firstReward: { gold: 2000, shards: 20 }, repeatReward: { gold: 1000, shards: 12 }, cleared: false,
+      story: {
+        description: '블랙우드 요새 외곽. 세라피나가 전군을 연동해 심장을 향한 총공격을 개시한다.',
+        backgroundImage: 'backgrounds/stage_41_invasion.png'
+      },
+      characterImage: 'characters/seraphina_belmont.png',
+      enemyImage: 'characters/darius_blackwood.png',
+      cutscene: {
+        preBattle: [
+          {
+            speaker: 'Garen',
+            text: '목표, 블랙우드 요새! 모든 부대 대기 완료!',
+            emotion: 'determined',
+            characterImage: 'characters/garen_stone.png',
+          },
+          {
+            speaker: 'Seraphina',
+            text: '이번엔 우리가 심장을 노린다. [전선 지도 카드: 위치 동기화] [연동 호출 카드: 전군 연결] [마력 중계 카드: 통신 확장]',
+            emotion: 'determined',
+            characterImage: 'characters/seraphina_belmont.png',
+          },
+          {
+            speaker: 'Lucian',
+            text: '(무전) 전선 간섭률 0%! 완전 동기화 성공!',
+            emotion: 'happy',
+            characterImage: 'characters/lucian_rosegarden.png',
+          },
+          {
+            speaker: 'Elena',
+            text: '너의 명령을 기다린다, 세라피나!',
+            emotion: 'determined',
+            characterImage: 'characters/elena_drake.png',
+          },
+          {
+            speaker: 'Seraphina',
+            text: '전진!',
+            emotion: 'determined',
+            characterImage: 'characters/seraphina_belmont.png',
+          }
+        ],
+        postVictory: [
+          {
+            speaker: 'Lucian',
+            text: '요새 외벽 붕괴. 초기 돌입 성공!',
+            emotion: 'happy',
+            characterImage: 'characters/lucian_rosegarden.png',
+          },
+          {
+            speaker: 'Garen',
+            text: '부상자 없음. 타이밍 완벽했어.',
+            emotion: 'happy',
+            characterImage: 'characters/garen_stone.png',
+          },
+          {
+            speaker: 'Seraphina',
+            text: '전생의 두려움 대신 이번엔 리듬이 있었어.',
+            emotion: 'determined',
+            characterImage: 'characters/seraphina_belmont.png',
+          },
+          {
+            speaker: 'Elena',
+            text: '오늘의 함성은 복수가 아니라 진실이었어.',
+            emotion: 'determined',
+            characterImage: 'characters/elena_drake.png',
+          },
+          {
+            speaker: 'Seraphina',
+            text: '우린 전쟁을 춤으로 바꾸고 있어.',
+            emotion: 'determined',
+            characterImage: 'characters/seraphina_belmont.png',
+          }
+        ],
+        postDefeat: [
+          {
+            speaker: 'Lucian',
+            text: '동기화가 풀렸어. 그리드를 다시 짜야 해.',
+            emotion: 'normal',
+            characterImage: 'characters/lucian_rosegarden.png',
+          },
+          {
+            speaker: 'Seraphina',
+            text: '두려움이 잠깐 스며들었어... 박자를 다시 맞추고 돌아올게.',
+            emotion: 'sad',
+            characterImage: 'characters/seraphina_belmont.png',
+          }
+        ]
+      }
+    },
+    {
+      id: 37, name: '석화 타락 정화', theme: 'Purification', recommendedPower: 800,
+      firstReward: { gold: 2100, shards: 21 }, repeatReward: { gold: 1050, shards: 12 }, cleared: false,
+      story: {
+        description: '블랙우드 성 내부. 타락과 석화가 번진 기사들을 세라피나가 연동 정화로 되살린다.',
+        backgroundImage: 'backgrounds/stage_42_corrupted_stone.png'
+      },
+      characterImage: 'characters/seraphina_belmont.png',
+      enemyImage: 'characters/garen_stone.png',
+      cutscene: {
+        preBattle: [
+          {
+            speaker: 'Lucian',
+            text: '이건 단순한 마법이 아니야... 타락과 석화가 동시에 진행 중이야.',
+            emotion: 'surprised',
+            characterImage: 'characters/lucian_rosegarden.png',
+          },
+          {
+            speaker: 'Garen',
+            text: '내 팔이... 다시 굳어간다!',
+            emotion: 'sad',
+            characterImage: 'characters/garen_stone.png',
+          },
+          {
+            speaker: 'Seraphina',
+            text: '절대 잃게 두지 않아. [정화 물결 카드: 타락 제거] [심장 공명 카드: 맥동 복원] [석화 해동 강화 카드: 조직 회복]',
+            emotion: 'determined',
+            characterImage: 'characters/seraphina_belmont.png',
+          },
+          {
+            speaker: 'Garen',
+            text: '움직여! 내 팔이 살아났다!',
+            emotion: 'happy',
+            characterImage: 'characters/garen_stone.png',
+          },
+          {
+            speaker: 'Seraphina',
+            text: '그래서 함께 싸워야 한다고 했잖아요. [대지 카드: 보호 결계]',
+            emotion: 'determined',
+            characterImage: 'characters/seraphina_belmont.png',
+          }
+        ],
+        postVictory: [
+          {
+            speaker: 'Lucian',
+            text: '타락 반응 0%. 석화 완전 해제.',
+            emotion: 'happy',
+            characterImage: 'characters/lucian_rosegarden.png',
+          },
+          {
+            speaker: 'Garen',
+            text: '이젠 네가 나를 지켜줬군.',
+            emotion: 'happy',
+            characterImage: 'characters/garen_stone.png',
+          },
+          {
+            speaker: 'Seraphina',
+            text: '서로를 지킬 수 있다면 그게 진짜 전우죠.',
+            emotion: 'happy',
+            characterImage: 'characters/seraphina_belmont.png',
+          },
+          {
+            speaker: 'Elena',
+            text: '오늘의 정화는 승리보다 깊은 빛이었어.',
+            emotion: 'determined',
+            characterImage: 'characters/elena_drake.png',
+          },
+          {
+            speaker: 'Seraphina',
+            text: '우린 함께 살아남는 법을 배웠어요.',
+            emotion: 'determined',
+            characterImage: 'characters/seraphina_belmont.png',
+          }
+        ],
+        postDefeat: [
+          {
+            speaker: 'Lucian',
+            text: '타락 수치가 급등했어. 정화 파동을 다시 세팅해.',
+            emotion: 'angry',
+            characterImage: 'characters/lucian_rosegarden.png',
+          },
+          {
+            speaker: 'Seraphina',
+            text: '흐름이 엇나갔어... 다시 정렬해서 돌아올게.',
+            emotion: 'sad',
+            characterImage: 'characters/seraphina_belmont.png',
+          },
+          {
+            speaker: 'Elena',
+            text: '박자를 같이 세자. 다음엔 맞출 수 있어.',
+            emotion: 'determined',
+            characterImage: 'characters/elena_drake.png',
+          }
+        ]
+      }
+    },
+    {
+      id: 38, name: '그림자 공명', theme: 'ShadowCore', recommendedPower: 820,
+      firstReward: { gold: 2200, shards: 22 }, repeatReward: { gold: 1100, shards: 13 }, cleared: false,
+      story: {
+        description: '블랙우드 본관 그림자 홀. 세라피나가 공명 전투로 다리우스의 거짓 그림자를 찢는다.',
+        backgroundImage: 'backgrounds/stage_43_absolute_darkness.png'
+      },
+      characterImage: 'characters/seraphina_belmont.png',
+      enemyImage: 'characters/darius_blackwood.png',
+      cutscene: {
+        preBattle: [
+          {
+            speaker: 'Darius',
+            text: '또 회귀자 놀음인가? 이번엔 누굴 속이려 하지?',
+            emotion: 'angry',
+            characterImage: 'characters/darius_blackwood.png',
+          },
+          {
+            speaker: 'Seraphina',
+            text: '감춘 진실을 드러내러 왔어. [공명 고리 강화 카드: 주파수 통제] [감정 필터 업그레이드 카드: 왜곡 차단] [그림자 싱크 카드: 거짓 파동 분리]',
+            emotion: 'determined',
+            characterImage: 'characters/seraphina_belmont.png',
+          },
+          {
+            speaker: 'Lucian',
+            text: '감정 왜곡 60% 해제! 조금만 더!',
+            emotion: 'determined',
+            characterImage: 'characters/lucian_rosegarden.png',
+          },
+          {
+            speaker: 'Seraphina',
+            text: '[빛 카드: 진실 방출]',
+            emotion: 'determined',
+            characterImage: 'characters/seraphina_belmont.png',
+          },
+          {
+            speaker: 'Darius',
+            text: '이게... 불가능한데...',
+            emotion: 'surprised',
+            characterImage: 'characters/darius_blackwood.png',
+          }
+        ],
+        postVictory: [
+          {
+            speaker: 'Lucian',
+            text: '증거 확보. 음성 재현 완료.',
+            emotion: 'happy',
+            characterImage: 'characters/lucian_rosegarden.png',
+          },
+          {
+            speaker: 'Elena',
+            text: '그가 단죄의 주범이었어.',
+            emotion: 'sad',
+            characterImage: 'characters/elena_drake.png',
+          },
+          {
+            speaker: 'Seraphina',
+            text: '이제 그림자도 거짓말을 멈췄네요.',
+            emotion: 'determined',
+            characterImage: 'characters/seraphина_belmont.png',
+          },
+          {
+            speaker: 'Lucian',
+            text: '진실은 빛으로도, 그림자로도 울린다.',
+            emotion: 'determined',
+            characterImage: 'characters/lucian_rosegarden.png',
+          },
+          {
+            speaker: 'Seraphina',
+            text: '이건 복수가 아니라 해방이에요.',
+            emotion: 'determined',
+            characterImage: 'characters/seraphina_belmont.png',
+          }
+        ],
+        postDefeat: [
+          {
+            speaker: 'Darius',
+            text: '그림자가 널 붙잡고 있다. 끊어내지 못하겠군.',
+            emotion: 'angry',
+            characterImage: 'characters/darius_blackwood.png',
+          },
+          {
+            speaker: 'Seraphina',
+            text: '공명이 흔들렸어... 파동을 다시 나눠서 돌아올게.',
+            emotion: 'sad',
+            characterImage: 'characters/seraphina_belmont.png',
+          },
+          {
+            speaker: 'Lucian',
+            text: '필터 값을 재계산하고 다시 들어가자.',
+            emotion: 'normal',
+            characterImage: 'characters/lucian_rosegarden.png',
+          }
+        ]
+      }
+    },
+    {
+      id: 39, name: '엘레나 구출', theme: 'Rescue', recommendedPower: 840,
+      firstReward: { gold: 2300, shards: 23 }, repeatReward: { gold: 1150, shards: 13 }, cleared: false,
+      story: {
+        description: '교단 지하 감옥. 세라피나가 엘레나를 감정 공명과 생명 연동으로 되찾는다.',
+        backgroundImage: 'backgrounds/stage_44_corruption_prison.png'
+      },
+      characterImage: 'characters/seraphina_belmont.png',
+      enemyImage: 'characters/darius_blackwood.png',
+      cutscene: {
+        preBattle: [
+          {
+            speaker: 'Darius',
+            text: '진실을 원했지? 그럼 함께 묻혀라!',
+            emotion: 'angry',
+            characterImage: 'characters/darius_blackwood.png',
+          },
+          {
+            speaker: 'Seraphina',
+            text: '엘레나! 버텨요! [감정 노래 카드: 심리 공명] [회복 화환 카드: 생명 흐름 연결] [안정 고리 카드: 결박 해제]',
+            emotion: 'determined',
+            characterImage: 'characters/seraphina_belmont.png',
+          },
+          {
+            speaker: 'Elena',
+            text: '...세라피나... 네가 나를 구했어.',
+            emotion: 'sad',
+            characterImage: 'characters/elena_drake.png',
+          },
+          {
+            speaker: 'Seraphina',
+            text: '이번 생에선, 내가 네 편이에요. 끝까지.',
+            emotion: 'happy',
+            characterImage: 'characters/seraphina_belmont.png',
+          },
+          {
+            speaker: 'Lucian',
+            text: '(기록) 감정 회복률 95%. 생명 흐름 안정.',
+            emotion: 'happy',
+            characterImage: 'characters/lucian_rosegarden.png',
+          }
+        ],
+        postVictory: [
+          {
+            speaker: 'Lucian',
+            text: '대상 생명 안정. 모든 지표 정상.',
+            emotion: 'happy',
+            characterImage: 'characters/lucian_rosegarden.png',
+          },
+          {
+            speaker: 'Elena',
+            text: '넌 나의 빛이야, 세라피나.',
+            emotion: 'happy',
+            characterImage: 'characters/elena_drake.png',
+          },
+          {
+            speaker: 'Seraphina',
+            text: '그리고 당신은 나의 증거예요.',
+            emotion: 'happy',
+            characterImage: 'characters/seraphina_belmont.png',
+          },
+          {
+            speaker: 'Lucian',
+            text: '오늘의 구출은 단죄보다 위대했다.',
+            emotion: 'determined',
+            characterImage: 'characters/lucian_rosegarden.png',
+          },
+          {
+            speaker: 'Seraphina',
+            text: '이제 우린, 진실로 서로를 구했어요.',
+            emotion: 'determined',
+            characterImage: 'characters/seraphina_belmont.png',
+          }
+        ],
+        postDefeat: [
+          {
+            speaker: 'Darius',
+            text: '쇠사슬이 다시 잠긴다. 못 빠져나간다.',
+            emotion: 'angry',
+            characterImage: 'characters/darius_blackwood.png',
+          },
+          {
+            speaker: 'Seraphina',
+            text: '연결이 흔들렸어... 생명 흐름을 다시 이어서 올게.',
+            emotion: 'sad',
+            characterImage: 'characters/seraphina_belmont.png',
+          },
+          {
+            speaker: 'Lucian',
+            text: '안정도가 떨어졌어. 첫 박자부터 다시 맞추자.',
+            emotion: 'normal',
+            characterImage: 'characters/lucian_rosegarden.png',
+          },
+          {
+            speaker: 'Elena',
+            text: '난 기다릴게. 꼭 돌아와.',
+            emotion: 'determined',
+            characterImage: 'characters/elena_drake.png',
+          }
+        ]
+      }
+    },
+    {
+      id: 40, name: '교단 심장', theme: 'Sanctum', recommendedPower: 860,
+      firstReward: { gold: 2500, shards: 25 }, repeatReward: { gold: 1250, shards: 15 }, cleared: false,
+      story: {
+        description: '교단 중심부의 심장석 방. 세라피나가 심장 맥동을 봉인해 거짓의 혈류를 끊는다.',
+        backgroundImage: 'backgrounds/stage_45_cult_final.png'
+      },
+      characterImage: 'characters/seraphina_belmont.png',
+      enemyImage: 'characters/darius_blackwood.png',
+      cutscene: {
+        preBattle: [
+          {
+            speaker: 'Lucian',
+            text: '이게 교단의 핵심 장치야. 시간이 없어!',
+            emotion: 'angry',
+            characterImage: 'characters/lucian_rosegarden.png',
+          },
+          {
+            speaker: 'Seraphina',
+            text: '이제 맥박을 멈추자. [심장 봉인 카드: 박동 억제] [연동 증폭 카드: 마력 집중] [시간 지휘 카드: 흐름 역전]',
+            emotion: 'determined',
+            characterImage: 'characters/seraphina_belmont.png',
+          },
+          {
+            speaker: 'Elena',
+            text: '조심해! 과부하가—!',
+            emotion: 'surprised',
+            characterImage: 'characters/elena_drake.png',
+          },
+          {
+            speaker: 'Seraphina',
+            text: '[증거 채록 카드: 기록 완전 보존]',
+            emotion: 'determined',
+            characterImage: 'characters/seraphina_belmont.png',
+          }
+        ],
+        postVictory: [
+          {
+            speaker: 'Lucian',
+            text: '심장석 붕괴 확인. 감정 오염률 0%.',
+            emotion: 'happy',
+            characterImage: 'characters/lucian_rosegarden.png',
+          },
+          {
+            speaker: 'Elena',
+            text: '네가 교단의 심장을 멈추다니...',
+            emotion: 'happy',
+            characterImage: 'characters/elena_drake.png',
+          },
+          {
+            speaker: 'Seraphina',
+            text: '이번엔 죽음이 아니라 정화를 택했어요.',
+            emotion: 'determined',
+            characterImage: 'characters/seraphina_belmont.png',
+          },
+          {
+            speaker: 'Lucian',
+            text: '오늘의 박동은 끝났고, 내일의 리듬이 시작된다.',
+            emotion: 'determined',
+            characterImage: 'characters/lucian_rosegarden.png',
+          },
+          {
+            speaker: 'Seraphina',
+            text: '심장이 멎어야 세계가 다시 숨을 쉬죠.',
+            emotion: 'determined',
+            characterImage: 'characters/seraphina_belmont.png',
+          }
+        ],
+        postDefeat: [
+          {
+            speaker: 'Lucian',
+            text: '반동이 거세! 장치가 우리를 역공격해!',
+            emotion: 'angry',
+            characterImage: 'characters/lucian_rosegarden.png',
+          },
+          {
+            speaker: 'Seraphina',
+            text: '흐름이 역전됐어... 다시 봉인하고 돌아올게.',
+            emotion: 'sad',
+            characterImage: 'characters/seraphina_belmont.png',
+          },
+          {
+            speaker: 'Elena',
+            text: '우리가 둘러서 지킬게. 잠깐만 정비해.',
+            emotion: 'determined',
+            characterImage: 'characters/elena_drake.png',
           }
         ]
       }
     },
     // Chapter 5: 어둠의 전쟁 (Stage 41-50)
-    { 
-      id: 41, name: '어둠 침략', theme: 'Invasion', recommendedPower: 880, 
+    {
+      id: 41, name: '주동자 재판', theme: 'Judgment', recommendedPower: 880,
       firstReward: { gold: 2600, shards: 26 }, repeatReward: { gold: 1300, shards: 15 }, cleared: false,
       story: {
-        description: '어둠의 세력이 침략한 전쟁터. 파괴와 혼돈이 가득한 전쟁의 장.',
-        backgroundImage: 'backgrounds/stage_41_invasion.webp'
+        description: '왕립 재판장에서 세라피나가 잰더의 계략을 증거로 무너뜨려 정의를 세운다.',
+        backgroundImage: 'backgrounds/stage_46_mastermind.png'
       },
       characterImage: 'characters/seraphina_belmont.png',
       cutscene: {
         preBattle: [
           {
-            speaker: 'Leon Ardenia',
-            text: '어둠 교단이 전면 침공을 시작했다. 전선이 무너져 가고 있어.',
+            speaker: 'Xander',
+            text: '넌 정의를 외치지만 결국 감정의 노예일 뿐이야.',
             emotion: 'angry',
-            characterImage: 'characters/leon_ardenia'
           },
           {
             speaker: 'Seraphina',
-            text: '저도 전선에 서겠습니다. 지금까지의 모든 전술을 활용하겠어요.',
+            text: '감정이 없었다면 진실도 없었겠죠. 이제 끝내요.',
             emotion: 'determined',
-            characterImage: 'characters/seraphina_belmont'
+            characterImage: 'characters/seraphina_belmont.png',
           },
           {
-            speaker: 'Darius Blackwood',
-            text: '어둠이 어둠과 싸운다는 것도 흥미롭지. 너의 그림자를 다시 시험해보자.',
-            emotion: 'normal',
-            characterImage: 'characters/darius_blackwood'
+            speaker: 'Seraphina',
+            text: '[설계 붕괴 카드: 구조 역전] [감정 역추적 카드: 동기 복원] [연동 역박 카드: 패턴 반전]',
+            emotion: 'determined',
+            characterImage: 'characters/seraphina_belmont.png',
+          },
+          {
+            speaker: 'Lucian',
+            text: '증거 교차 완료! 허위 기록 전부 해제!',
+            emotion: 'determined',
+            characterImage: 'characters/lucian_rosegarden.png',
+          },
+          {
+            speaker: 'Seraphina',
+            text: '[빛 카드: 진술 고정]',
+            emotion: 'determined',
+            characterImage: 'characters/seraphina_belmont.png',
+          },
+          {
+            speaker: 'Xander',
+            text: '거짓이다! 난 계획대로 했을 뿐이야!',
+            emotion: 'angry',
           }
         ],
         postVictory: [
           {
-            speaker: 'Leon Ardenia',
-            text: '전선이 안정됐다. 네가 시간을 벌어준 덕분이다.',
+            speaker: 'Lucian',
+            text: '판결문 완성. 주동자 구속 완료.',
+            emotion: 'determined',
+            characterImage: 'characters/lucian_rosegarden.png',
+          },
+          {
+            speaker: 'Elena',
+            text: '끝났어.',
             emotion: 'happy',
-            characterImage: 'characters/leon_ardenia'
+            characterImage: 'characters/elena_drake.png',
           },
           {
             speaker: 'Seraphina',
-            text: '이 흐름을 이어가야 해요. 더 큰 전투가 다가오고 있으니까요.',
+            text: '진실은 아무리 늦어도 반드시 증거를 찾아오죠.',
             emotion: 'determined',
-            characterImage: 'characters/seraphina_belmont'
+            characterImage: 'characters/seraphina_belmont.png',
+          },
+          {
+            speaker: 'Lucian',
+            text: '오늘의 법정은 복수가 아닌 정의였다.',
+            emotion: 'determined',
+            characterImage: 'characters/lucian_rosegarden.png',
+          },
+          {
+            speaker: 'Seraphina',
+            text: '그리고 정의는 결국 빛으로 귀환해요.',
+            emotion: 'determined',
+            characterImage: 'characters/seraphina_belmont.png',
           }
         ],
         postDefeat: [
           {
-            speaker: 'Leon Ardenia',
-            text: '전선이 붕괴한다! 다시 정비하자!',
-            emotion: 'angry',
-            characterImage: 'characters/leon_ardenia'
+            speaker: 'Xander',
+            text: '네 빛이 흔들린다. 내 설계는 아직 무너지지 않았다.',
+            emotion: 'happy',
           },
           {
             speaker: 'Seraphina',
-            text: '죄송해요... 다시 전략을 정비하겠습니다.',
+            text: '증거 배치가 흐트러졌어... 다시 정리해서 올게.',
             emotion: 'sad',
-            characterImage: 'characters/seraphina_belmont'
+            characterImage: 'characters/seraphina_belmont.png',
+          },
+          {
+            speaker: 'Lucian',
+            text: '기록을 다시 교차 검증하자. 곧 뒤집을 수 있어.',
+            emotion: 'normal',
+            characterImage: 'characters/lucian_rosegarden.png',
           }
         ]
       }
     },
-    { 
-      id: 42, name: '석화 타락', theme: 'Garen4', recommendedPower: 920, 
+    {
+      id: 42, name: '타락 잔재 정화', theme: 'Restoration', recommendedPower: 920,
       firstReward: { gold: 2800, shards: 28 }, repeatReward: { gold: 1400, shards: 17 }, cleared: false,
       story: {
-        description: '타락한 Garen의 석화 마법이 만든 어둠의 석화 공간. 더욱 어둡고 위험한 석화 영역.',
-        backgroundImage: 'backgrounds/stage_42_corrupted_stone.webp'
+        description: '전투가 끝난 도시에서 세라피나가 남은 타락을 정화해 시민에게 평온을 되찾아준다.',
+        backgroundImage: 'backgrounds/stage_28_multi_tactics.png'
       },
       characterImage: 'characters/seraphina_belmont.png',
-      enemyImage: 'characters/garen_stone.png',
       cutscene: {
         preBattle: [
           {
-            speaker: 'Garen Stone',
-            text: '...어둠이... 내 몸을... 잠식한다...',
-            emotion: 'sad',
-            characterImage: 'characters/garen_stone'
+            speaker: 'Lucian',
+            text: '남은 타락 파동 다수. 감정 오염이 심각해.',
+            emotion: 'angry',
+            characterImage: 'characters/lucian_rosegarden.png',
           },
           {
             speaker: 'Seraphina',
-            text: 'Garen 님! 제정신을 되찾으세요. 제가 도와드릴게요!',
-            emotion: 'sad',
-            characterImage: 'characters/seraphina_belmont'
+            text: '이젠 싸움이 아니라 정화의 시간이에요. [정화 회로 카드: 광역 해방] [감정 동시 카드: 공명 회복] [연동 방패 카드: 마력 차단]',
+            emotion: 'determined',
+            characterImage: 'characters/seraphina_belmont.png',
           },
           {
-            speaker: 'Garen Stone',
-            text: '타락한 석화가 네 몸까지 굳게 만들 것이다... 막을 수 있다면 막아봐라...',
-            emotion: 'angry',
-            characterImage: 'characters/garen_stone'
+            speaker: 'Resident',
+            text: '따뜻해요... 이건 벌이 아니라 위로네요.',
+            emotion: 'happy',
+          },
+          {
+            speaker: 'Seraphina',
+            text: '우리가 지키고 싶었던 세상이 바로 이거야.',
+            emotion: 'determined',
+            characterImage: 'characters/seraphina_belmont.png',
           }
         ],
         postVictory: [
           {
-            speaker: 'Garen Stone',
-            text: '...고맙다... 어둠이 걷혀간다...',
+            speaker: 'Lucian',
+            text: '정화율 100%. 도심 완전 복원.',
             emotion: 'happy',
-            characterImage: 'characters/garen_stone'
+            characterImage: 'characters/lucian_rosegarden.png',
+          },
+          {
+            speaker: 'Garen',
+            text: '마침내 이 도시가 살아 숨 쉰다.',
+            emotion: 'happy',
+            characterImage: 'characters/garen_stone.png',
           },
           {
             speaker: 'Seraphina',
-            text: '다시 돌아오셔서 다행이에요. 이제 다음 전선을 지켜야 합니다.',
+            text: '폭풍이 지나간 자리엔 늘 꽃이 피어요.',
             emotion: 'happy',
-            characterImage: 'characters/seraphina_belmont'
+            characterImage: 'characters/seraphina_belmont.png',
+          },
+          {
+            speaker: 'Elena',
+            text: '오늘의 평화는 피가 아닌 정화로 얻었어.',
+            emotion: 'determined',
+            characterImage: 'characters/elena_drake.png',
+          },
+          {
+            speaker: 'Seraphina',
+            text: '우리가 선택한 온도는 따뜻함이었죠.',
+            emotion: 'determined',
+            characterImage: 'characters/seraphina_belmont.png',
           }
         ],
         postDefeat: [
           {
-            speaker: 'Garen Stone',
-            text: '굳어라... 모두 돌이 되어라...',
+            speaker: 'Lucian',
+            text: '타락 수치가 다시 오르고 있어. 정화 순서를 재정렬해.',
             emotion: 'angry',
-            characterImage: 'characters/garen_stone'
+            characterImage: 'characters/lucian_rosegarden.png',
           },
           {
             speaker: 'Seraphina',
-            text: '안돼요... 아직 놓칠 수 없어. 다시 되찾아드릴게요!',
+            text: '흐름을 다시 정리해서 돌아올게.',
             emotion: 'sad',
-            characterImage: 'characters/seraphina_belmont'
+            characterImage: 'characters/seraphina_belmont.png',
           }
         ]
       }
     },
     {
-      id: 43, name: '어둠 통달', theme: 'Darius3', recommendedPower: 960,
+      id: 43, name: '가문 연합 선언', theme: 'Heritage', recommendedPower: 960,
       firstReward: { gold: 3000, shards: 30 }, repeatReward: { gold: 1500, shards: 18 }, cleared: false,
       story: {
-        description: '어둠의 힘을 온전히 받아들여야 하는 심연의 수련장. 빛과 그림자를 동시에 다루는 고난도 시험.',
-        backgroundImage: 'backgrounds/stage_43_absolute_darkness.webp'
+        description: '벨몬트 대회의실에서 세라피나가 각 가문과 감정을 연동해 새로운 연합을 선포한다.',
+        backgroundImage: 'backgrounds/stage_48_elder_cooperation.png'
       },
       characterImage: 'characters/seraphina_belmont.png',
-      enemyImage: 'characters/darius_blackwood.png',
       cutscene: {
         preBattle: [
           {
-            speaker: 'Darius Blackwood',
-            text: '석화 타락을 정화했다니 인상 깊군. 이제는 어둠 그 자체를 통제할 수 있는지 시험해보자.',
-            emotion: 'normal',
-            characterImage: 'characters/darius_blackwood'
+            speaker: 'Elder Belmont',
+            text: '오늘의 승리는 개인이 아닌 가문의 것이다. 새 연합을 선언하겠다.',
+            emotion: 'determined',
+            characterImage: 'characters/elder_belmont.png',
           },
           {
             speaker: 'Seraphina',
-            text: '어둠을 두려워하지 않으려면 끝까지 바라봐야 한다는 걸 배웠어요. 이번에도 도망치지 않을게요.',
+            text: '그 선언의 무게, 제가 짊어질게요.',
             emotion: 'determined',
-            characterImage: 'characters/seraphina_belmont'
-          },
-          {
-            speaker: 'Darius Blackwood',
-            text: '너의 빛과 나의 그림자를 겹치면 새로운 길이 열린다. 감정이 흔들려도 숨을 고르고 집중해라.',
-            emotion: 'normal',
-            characterImage: 'characters/darius_blackwood'
+            characterImage: 'characters/seraphina_belmont.png',
           },
           {
             speaker: 'Seraphina',
-            text: '모든 감정을 받아들이며 버틸게요. 어둠과 빛이 조화를 이루는 순간을 반드시 찾아보겠습니다.',
+            text: '[유산 공명 카드: 전통 공진] [가문 지휘봉 카드: 명령 일체화] [연동 문장 카드: 서약 각인]',
             emotion: 'determined',
-            characterImage: 'characters/seraphina_belmont'
+            characterImage: 'characters/seraphina_belmont.png',
+          },
+          {
+            speaker: 'Lucian',
+            text: '가문 간 감정 연동이라니, 전례가 없어!',
+            emotion: 'surprised',
+            characterImage: 'characters/lucian_rosegarden.png',
+          },
+          {
+            speaker: 'Elder Belmont',
+            text: '해냈구나, 세라피나. 이제 벨몬트의 뜻이 가문을 이끈다.',
+            emotion: 'happy',
+            characterImage: 'characters/elder_belmont.png',
           }
         ],
         postVictory: [
           {
-            speaker: 'Darius Blackwood',
-            text: '훌륭하다. 어둠이 네 안에서 고요히 숨 쉬는 것이 느껴진다. 이제 어둠도 너의 빛이 되겠지.',
+            speaker: 'Lucian',
+            text: '연합 문장 발효 완료.',
             emotion: 'happy',
-            characterImage: 'characters/darius_blackwood'
+            characterImage: 'characters/lucian_rosegarden.png',
+          },
+          {
+            speaker: 'Elder Belmont',
+            text: '넌 이제 진정한 후계자다.',
+            emotion: 'happy',
+            characterImage: 'characters/elder_belmont.png',
           },
           {
             speaker: 'Seraphina',
-            text: '두려움을 정면으로 바라보니, 어둠 속에서도 방향이 보였어요. 지금이라면 누군가의 그림자도 지켜줄 수 있을 것 같아요.',
+            text: '제 이름보다 소중한 건 가문의 신뢰예요.',
             emotion: 'happy',
-            characterImage: 'characters/seraphina_belmont'
+            characterImage: 'characters/seraphina_belmont.png',
+          },
+          {
+            speaker: 'Garen',
+            text: '오늘의 서약은 피보다 강한 마력이었다.',
+            emotion: 'determined',
+            characterImage: 'characters/garen_stone.png',
+          },
+          {
+            speaker: 'Seraphina',
+            text: '이제 벨몬트의 이름은 모두의 이름이에요.',
+            emotion: 'determined',
+            characterImage: 'characters/seraphina_belmont.png',
           }
         ],
         postDefeat: [
           {
-            speaker: 'Darius Blackwood',
-            text: '어둠이 속삭일 때 마음을 빼앗겼군. 다시 숨을 고르고 들어와라.',
-            emotion: 'normal',
-            characterImage: 'characters/darius_blackwood'
+            speaker: 'Lucian',
+            text: '문장이 흔들렸다. 연동을 다시 정렬해.',
+            emotion: 'angry',
+            characterImage: 'characters/lucian_rosegarden.png',
           },
           {
             speaker: 'Seraphina',
-            text: '틈이 생겼어요... 더 깊이까지 어둠을 받아들이는 연습을 다시 해볼게요.',
+            text: '전통을 더 단단히 붙잡고 돌아올게.',
             emotion: 'sad',
-            characterImage: 'characters/seraphina_belmont'
+            characterImage: 'characters/seraphina_belmont.png',
           }
         ]
       }
     },
-    { 
-      id: 44, name: 'Elena 구출', theme: 'Elena2', recommendedPower: 1000, 
+    {
+      id: 44, name: '가족 연합 결전', theme: 'Unity', recommendedPower: 1000,
       firstReward: { gold: 3200, shards: 32 }, repeatReward: { gold: 1600, shards: 20 }, cleared: false,
       story: {
-        description: '타락한 Elena가 갇혀있는 어둠의 감옥. 구원이 필요한 어둠에 물든 공간.',
-        backgroundImage: 'backgrounds/stage_44_corruption_prison.webp'
+        description: '블랙우드 잔당의 마지막 방어선에서 모든 가족이 연동 결전을 펼친다.',
+        backgroundImage: 'backgrounds/stage_30_final_boss.png'
       },
       characterImage: 'characters/seraphina_belmont.png',
-      enemyImage: 'characters/elena_drake.png',
       cutscene: {
         preBattle: [
           {
-            speaker: 'Elena Drake',
-            text: '형수님... 저는... 어둠이... 어둠이 제 마음을...',
-            emotion: 'sad',
-            characterImage: 'characters/elena_drake'
+            speaker: 'Elder Belmont',
+            text: '모든 가족, 전선 진입!',
+            emotion: 'determined',
+            characterImage: 'characters/elder_belmont.png',
           },
           {
             speaker: 'Seraphina',
-            text: 'Elena! 내가 너를 구해줄게. 다시 함께 웃자.',
-            emotion: 'sad',
-            characterImage: 'characters/seraphina_belmont'
+            text: '이건 복수가 아니라 해방이에요. [가족 연동 악보 카드: 전체 연계] [전선 교대 카드: 마력 흐름 교환] [감정 지휘 카드: 집단 강화]',
+            emotion: 'determined',
+            characterImage: 'characters/seraphina_belmont.png',
+          },
+          {
+            speaker: 'Lucian',
+            text: '(분석) 모든 가족 연동 성공! 마력 손실 0%!',
+            emotion: 'happy',
+            characterImage: 'characters/lucian_rosegarden.png',
+          },
+          {
+            speaker: 'Elena',
+            text: '이건 음악이야. 전투의 화음.',
+            emotion: 'happy',
+            characterImage: 'characters/elena_drake.png',
+          },
+          {
+            speaker: 'Seraphina',
+            text: '마지막 박자—완결!',
+            emotion: 'determined',
+            characterImage: 'characters/seraphina_belmont.png',
           }
         ],
         postVictory: [
           {
-            speaker: 'Elena Drake',
-            text: '형수님... 고마워요. 다시 빛을 볼 수 있게 됐어요.',
+            speaker: 'Lucian',
+            text: '적 세력 전멸. 피해율 최소.',
             emotion: 'happy',
-            characterImage: 'characters/elena_drake'
+            characterImage: 'characters/lucian_rosegarden.png',
+          },
+          {
+            speaker: 'Elder Belmont',
+            text: '오늘의 승리는 역사로 남을 것이다.',
+            emotion: 'happy',
+            characterImage: 'characters/elder_belmont.png',
           },
           {
             speaker: 'Seraphina',
-            text: '다행이야. 모두가 널 기다리고 있어.',
+            text: '가족의 힘이 이렇게 따뜻할 줄, 전생엔 몰랐어요.',
             emotion: 'happy',
-            characterImage: 'characters/seraphina_belmont'
+            characterImage: 'characters/seraphina_belmont.png',
+          },
+          {
+            speaker: 'Elena',
+            text: '오늘의 전투는 혈통이 아닌 신념이었지.',
+            emotion: 'determined',
+            characterImage: 'characters/elena_drake.png',
+          },
+          {
+            speaker: 'Seraphina',
+            text: '가족이란, 끝까지 나를 믿어주는 이름이에요.',
+            emotion: 'determined',
+            characterImage: 'characters/seraphina_belmont.png',
           }
         ],
         postDefeat: [
           {
-            speaker: 'Elena Drake',
-            text: '어둠이... 날... 삼키는...',
+            speaker: 'Lucian',
+            text: '연동 라인이 흔들렸어. 전선을 재정비해.',
             emotion: 'angry',
-            characterImage: 'characters/elena_drake'
+            characterImage: 'characters/lucian_rosegarden.png',
           },
           {
             speaker: 'Seraphina',
-            text: '조금만 더 버텨줘! 곧 구해줄게!',
+            text: '다시 호흡을 맞춰서 돌아올게.',
             emotion: 'sad',
-            characterImage: 'characters/seraphina_belmont'
+            characterImage: 'characters/seraphina_belmont.png',
           }
         ]
       }
     },
     {
-      id: 45, name: '교단 본부', theme: 'CultFinal', recommendedPower: 1050,
+      id: 45, name: '정치 재정비', theme: 'Reform', recommendedPower: 1050,
       firstReward: { gold: 3600, shards: 36 }, repeatReward: { gold: 1800, shards: 22 }, cleared: false,
       story: {
-        description: '어둠 교단의 핵심 본부. 끝없이 울려 퍼지는 주문과 제단이 숨 쉬는 심장부.',
-        backgroundImage: 'backgrounds/stage_45_cult_final.webp'
+        description: '왕립 회의실에서 세라피나가 모든 세력의 복구 계획을 조율해 평화를 제도화한다.',
+        backgroundImage: 'backgrounds/stage_32_politics.png'
       },
       characterImage: 'characters/seraphina_belmont.png',
       cutscene: {
         preBattle: [
           {
-            speaker: 'Dark Cult Leader',
-            text: '네가 여기까지 들어올 줄은 몰랐지. 하지만 본부의 심장은 쉽게 멈추지 않는다.',
-            emotion: 'angry'
+            speaker: 'Lucian',
+            text: '이제 각 세력의 복구 계획을 조율해야 해.',
+            emotion: 'angry',
+            characterImage: 'characters/lucian_rosegarden.png',
           },
           {
             speaker: 'Seraphina',
-            text: '교단의 중심을 정면으로 무너뜨리겠어. 더 이상 피해자가 생기지 않도록.',
+            text: '전쟁의 끝은 행정이죠. [재정비 선언 카드: 제도 리셋] [동맹 지침 카드: 권한 조율] [언론 조율 카드: 여론 균형]',
             emotion: 'determined',
-            characterImage: 'characters/seraphina_belmont'
+            characterImage: 'characters/seraphina_belmont.png',
           },
           {
-            speaker: 'Dark Cult Leader',
-            text: '의식이 완성되면 왕국 전체가 우리 의지에 굴복한다. 너의 빛을 짓밟아 보겠다.',
-            emotion: 'angry'
+            speaker: 'Leon',
+            text: '오늘은 그 누구도 단죄를 외치지 않았군.',
+            emotion: 'happy',
+            characterImage: 'characters/leon_ardenia.png',
+          },
+          {
+            speaker: 'Elena',
+            text: '모두가 각자의 책임을 인정했으니까.',
+            emotion: 'happy',
+            characterImage: 'characters/elena_drake.png',
           },
           {
             speaker: 'Seraphina',
-            text: '어둠이 아무리 커도, 함께 쌓아 올린 다짐과 마음은 꺼지지 않아. 끝까지 버텨서 이곳을 멈춘다.',
+            text: '진짜 평화는 죄를 묻지 않는 데서 시작해요.',
             emotion: 'determined',
-            characterImage: 'characters/seraphina_belmont'
+            characterImage: 'characters/seraphina_belmont.png',
           }
         ],
         postVictory: [
           {
-            speaker: 'Dark Cult Leader',
-            text: '믿을 수가... 없어... 심장이 멈추다니...!',
-            emotion: 'sad'
+            speaker: 'Leon',
+            text: '전쟁보다 회의가 더 피곤하군.',
+            emotion: 'happy',
+            characterImage: 'characters/leon_ardenia.png',
           },
           {
             speaker: 'Seraphina',
-            text: '의식은 끝났어. 이제 왕국은 우리 스스로 지킬 수 있어.',
+            text: '그래도 오늘은 피 대신 웃음으로 마무리했잖아요.',
             emotion: 'happy',
-            characterImage: 'characters/seraphina_belmont'
+            characterImage: 'characters/seraphina_belmont.png',
+          },
+          {
+            speaker: 'Lucian',
+            text: '여론 안정률 98%. 역사적인 수치야.',
+            emotion: 'happy',
+            characterImage: 'characters/lucian_rosegarden.png',
+          },
+          {
+            speaker: 'Elena',
+            text: '오늘의 합의는 단 한 줄의 법보다 강했다.',
+            emotion: 'determined',
+            characterImage: 'characters/elena_drake.png',
+          },
+          {
+            speaker: 'Seraphina',
+            text: '정치는 결국 마음을 다스리는 마법이에요.',
+            emotion: 'determined',
+            characterImage: 'characters/seraphina_belmont.png',
           }
         ],
         postDefeat: [
           {
-            speaker: 'Dark Cult Leader',
-            text: '빛이 흔들린다... 결국 어둠은 다시 숨을 쉰다.',
-            emotion: 'happy'
+            speaker: 'Lucian',
+            text: '협상이 무너졌어. 다시 의제를 잡자.',
+            emotion: 'angry',
+            characterImage: 'characters/lucian_rosegarden.png',
           },
           {
             speaker: 'Seraphina',
-            text: '다시 돌아와서 확실하게 끝내겠어요. 누구도 더 이상 다치지 않게.',
+            text: '틀어진 구조를 고쳐서 다시 시작할게.',
             emotion: 'sad',
-            characterImage: 'characters/seraphina_belmont'
+            characterImage: 'characters/seraphina_belmont.png',
           }
         ]
       }
     },
     {
-      id: 46, name: '주동자', theme: 'Mastermind', recommendedPower: 1100,
+      id: 46, name: '결혼식 본편', theme: 'Blessing', recommendedPower: 1100,
       firstReward: { gold: 3900, shards: 39 }, repeatReward: { gold: 1950, shards: 24 }, cleared: false,
       story: {
-        description: '교단의 배후에서 모든 음모를 지휘하던 주동자 Xander와의 대면. 모든 사건의 실마리가 이어지는 작전 회랑.',
-        backgroundImage: 'backgrounds/stage_46_mastermind.webp'
+        description: '왕립 대성당에서 세라피나가 진짜 축복의 결혼식을 지휘하며 감정 앵커를 안정화한다.',
+        backgroundImage: 'backgrounds/stage_31_wedding.png'
       },
       characterImage: 'characters/seraphina_belmont.png',
+      enemyImage: 'characters/lucian_rosegarden.png',
       cutscene: {
         preBattle: [
           {
-            speaker: 'Mastermind Xander',
-            text: '드디어 만났군, 세라피나. 네가 걸어온 모든 시련은 내가 설계한 장기 말에 불과했다.',
-            emotion: 'normal'
-          },
-          {
-            speaker: 'Seraphina',
-            text: '사람들의 마음을 이용해 자신의 욕망을 채우다니, 이제는 그 고리를 끊을 때야.',
-            emotion: 'angry',
-            characterImage: 'characters/seraphina_belmont'
-          },
-          {
-            speaker: 'Mastermind Xander',
-            text: '네가 밝힌 빛이 강해질수록, 그림자도 함께 자라났지. 그 어둠의 힘을 내가 거둬들이겠다.',
-            emotion: 'angry'
-          },
-          {
-            speaker: 'Seraphina',
-            text: '빛과 어둠 모두를 받아들였기에 더 이상 흔들리지 않아. 네 계획은 여기서 끝이야.',
+            speaker: 'Lucian',
+            text: '모든 안전 설계 완료. 감정 앵커도 안정적이야.',
             emotion: 'determined',
-            characterImage: 'characters/seraphina_belmont'
+            characterImage: 'characters/lucian_rosegarden.png',
+          },
+          {
+            speaker: 'Seraphina',
+            text: '이번엔 축복이 진짜 의미로 울리게 하자. [축복 연동 카드: 감정 순환] [안전 초점 카드: 안정 유지] [감정 앵커 카드: 중심 조율]',
+            emotion: 'happy',
+            characterImage: 'characters/seraphina_belmont.png',
+          },
+          {
+            speaker: 'Bride',
+            text: '손이 떨려요...',
+            emotion: 'surprised',
+          },
+          {
+            speaker: 'Seraphina',
+            text: '괜찮아요. 사랑은 원래 조금 불안정하니까요. 그게 살아 있다는 증거예요.',
+            emotion: 'happy',
+            characterImage: 'characters/seraphina_belmont.png',
+          },
+          {
+            speaker: 'Seraphina',
+            text: '[빛 카드: 치유 확장]',
+            emotion: 'determined',
+            characterImage: 'characters/seraphina_belmont.png',
+          },
+          {
+            speaker: 'Lucian',
+            text: '완벽한 성공. 왜곡 없음.',
+            emotion: 'happy',
+            characterImage: 'characters/lucian_rosegarden.png',
           }
         ],
         postVictory: [
           {
-            speaker: 'Mastermind Xander',
-            text: '불가능해... 모든 가능성을 예측했는데... 네가 그 모든 걸 넘어설 줄은...',
-            emotion: 'sad'
+            speaker: 'Lucian',
+            text: '모든 회로 정상 종료. 감정 안정률 100%.',
+            emotion: 'happy',
+            characterImage: 'characters/lucian_rosegarden.png',
+          },
+          {
+            speaker: 'Elena',
+            text: '오늘의 빛, 정말 따뜻했어요.',
+            emotion: 'happy',
+            characterImage: 'characters/elena_drake.png',
           },
           {
             speaker: 'Seraphina',
-            text: '사람들의 마음을 장기 말로 여긴 순간 너의 패배는 이미 정해졌어. 이제는 우리가 서로의 미래를 선택할 거야.',
+            text: '전생의 결혼식은 단죄였지만 이번엔 축복이었네요.',
+            emotion: 'happy',
+            characterImage: 'characters/seraphina_belmont.png',
+          },
+          {
+            speaker: 'Lucian',
+            text: '사랑을 지킨 마법은 세상에서 가장 강한 주문이야.',
             emotion: 'determined',
-            characterImage: 'characters/seraphina_belmont'
+            characterImage: 'characters/lucian_rosegarden.png',
+          },
+          {
+            speaker: 'Seraphina',
+            text: '오늘의 승리는 누군가의 행복이에요.',
+            emotion: 'happy',
+            characterImage: 'characters/seraphina_belmont.png',
           }
         ],
         postDefeat: [
           {
-            speaker: 'Mastermind Xander',
-            text: '예상대로다. 아직 내 계산 밖은 아니었지. 다시 일어나라, 세라피나.',
-            emotion: 'happy'
+            speaker: 'Lucian',
+            text: '앵커가 흔들린다. 합창 전에 리셋해야 해.',
+            emotion: 'angry',
+            characterImage: 'characters/lucian_rosegarden.png',
           },
           {
             speaker: 'Seraphina',
-            text: '다시 계산을 넘어서는 길을 찾을게. 곧 너를 멈춰 세우겠다.',
+            text: '리듬이 미끄러졌어... 다시 안정시키고 시작할게.',
             emotion: 'sad',
-            characterImage: 'characters/seraphina_belmont'
+            characterImage: 'characters/seraphina_belmont.png',
           }
         ]
       }
     },
-    { 
-      id: 47, name: '타락자들', theme: 'Corrupted', recommendedPower: 1150, 
+    {
+      id: 47, name: '평화의 협약', theme: 'Accord', recommendedPower: 1150,
       firstReward: { gold: 4200, shards: 42 }, repeatReward: { gold: 2100, shards: 28 }, cleared: false,
       story: {
-        description: '모든 타락한 자들이 모이는 회합장. Garen, Darius, Elena가 함께 있는 어둠의 공간.',
-        backgroundImage: 'backgrounds/stage_47_corrupted_gathering.webp'
+        description: '왕국 평화 협약식에서 세라피나가 각국 대표와 마음을 연동해 새 연합을 완성한다.',
+        backgroundImage: 'backgrounds/stage_29_wind_final.png'
       },
       characterImage: 'characters/seraphina_belmont.png',
+      enemyImage: 'characters/leon_ardenia.png',
       cutscene: {
         preBattle: [
           {
-            speaker: 'Garen Stone',
-            text: '세라피나... 다시 한 번 시험하겠다. 이 어둠의 잔재를 지워라.',
-            emotion: 'normal',
-            characterImage: 'characters/garen_stone'
-          },
-          {
-            speaker: 'Darius Blackwood',
-            text: '우리가 타락했던 흔적을 완전히 정화할 수 있는지 보여줘라.',
-            emotion: 'normal',
-            characterImage: 'characters/darius_blackwood'
-          },
-          {
-            speaker: 'Elena Drake',
-            text: '형수님... 다시 한 번 빛으로 이끌어주세요.',
-            emotion: 'sad',
-            characterImage: 'characters/elena_drake'
+            speaker: 'Leon',
+            text: '검 대신 과일바구니라니, 이런 협약식은 처음이군.',
+            emotion: 'happy',
+            characterImage: 'characters/leon_ardenia.png',
           },
           {
             speaker: 'Seraphina',
-            text: '함께 이겨내요. 이번엔 제가 끝까지 지켜드릴게요.',
+            text: '평화는 거창할 필요 없죠. [평화 조약 카드: 상호 서명] [재건 연합 카드: 구조 동기화] [위기 대응 프로토콜 카드: 공동 방어]',
+            emotion: 'happy',
+            characterImage: 'characters/seraphina_belmont.png',
+          },
+          {
+            speaker: 'Lucian',
+            text: '역사적 순간이야. 일곱 개국이 한 덱으로 연결됐어.',
+            emotion: 'surprised',
+            characterImage: 'characters/lucian_rosegarden.png',
+          },
+          {
+            speaker: 'Elena',
+            text: '오늘은 마력이 아닌 마음으로 연동됐네요.',
+            emotion: 'happy',
+            characterImage: 'characters/elena_drake.png',
+          },
+          {
+            speaker: 'Seraphina',
+            text: '마음의 합주가 제일 강한 마법이죠.',
             emotion: 'determined',
-            characterImage: 'characters/seraphina_belmont'
+            characterImage: 'characters/seraphina_belmont.png',
+          },
+          {
+            speaker: 'Seraphina',
+            text: '[빛 카드: 하모니 확장]',
+            emotion: 'determined',
+            characterImage: 'characters/seraphina_belmont.png',
           }
         ],
         postVictory: [
           {
-            speaker: 'Garen Stone',
-            text: '어둠의 잔재가 모두 사라졌다. 네가 우리를 완전히 구해냈다.',
+            speaker: 'Lucian',
+            text: '협약 체결 완료. 모든 서명 유효.',
             emotion: 'happy',
-            characterImage: 'characters/garen_stone'
+            characterImage: 'characters/lucian_rosegarden.png',
           },
           {
-            speaker: 'Darius Blackwood',
-            text: '이제 진정한 동료로서 싸울 수 있겠군.',
+            speaker: 'Leon',
+            text: '전쟁 대신 건배라니, 이게 진짜 승리지.',
             emotion: 'happy',
-            characterImage: 'characters/darius_blackwood'
+            characterImage: 'characters/leon_ardenia.png',
           },
           {
-            speaker: 'Elena Drake',
-            text: '고마워요! 앞으로는 제가 언니를 지켜드릴게요!',
+            speaker: 'Seraphina',
+            text: '피 대신 웃음, 칼 대신 약속. 그게 우리가 만든 새로운 규칙이에요.',
             emotion: 'happy',
-            characterImage: 'characters/elena_drake'
+            characterImage: 'characters/seraphina_belmont.png',
+          },
+          {
+            speaker: 'Elena',
+            text: '오늘의 협약은 문장보다 웃음이 많았어.',
+            emotion: 'happy',
+            characterImage: 'characters/elena_drake.png',
+          },
+          {
+            speaker: 'Seraphina',
+            text: '이게 진짜 평화의 형태예요.',
+            emotion: 'determined',
+            characterImage: 'characters/seraphina_belmont.png',
           }
         ],
         postDefeat: [
           {
-            speaker: 'Garen Stone',
-            text: '아직 어둠이 남아 있다... 다시 도전하라.',
-            emotion: 'normal',
-            characterImage: 'characters/garen_stone'
+            speaker: 'Leon',
+            text: '회의가 깨졌다. 감정이 격해지기 전에 다시 정비하자.',
+            emotion: 'angry',
+            characterImage: 'characters/leon_ardenia.png',
           },
           {
             speaker: 'Seraphina',
-            text: '더 강해져서 돌아올게요. 모두를 지키기 위해.',
+            text: '약속을 다시 엮어서 초대하자고 전할게.',
             emotion: 'sad',
-            characterImage: 'characters/seraphina_belmont'
+            characterImage: 'characters/seraphina_belmont.png',
           }
         ]
       }
     },
-    { 
-      id: 48, name: '가주 협력', theme: 'Elder2', recommendedPower: 1200, 
+    {
+      id: 48, name: '새로운 박동', theme: 'Dawn', recommendedPower: 1200,
       firstReward: { gold: 4600, shards: 46 }, repeatReward: { gold: 2300, shards: 30 }, cleared: false,
       story: {
-        description: '벨몬트 가문 가주와 함께하는 협력 전투. 가문의 힘을 합치는 특별한 공간.',
-        backgroundImage: 'backgrounds/stage_48_elder_cooperation.webp'
+        description: '새벽 정원에서 세라피나가 친구와 가족과 함께 새 덱 ‘해일’을 열어 새로운 시작을 다짐한다.',
+        backgroundImage: 'backgrounds/stage_27_sisters.png'
       },
       characterImage: 'characters/seraphina_belmont.png',
-      enemyImage: 'characters/elder_belmont.png',
+      enemyImage: 'characters/mira.png',
       cutscene: {
         preBattle: [
           {
-            speaker: 'Elder Belmont',
-            text: '세라피나, 이제 우리가 함께 싸울 차례다. 가문의 힘을 보여주자.',
-            emotion: 'normal',
-            characterImage: 'characters/elder_belmont'
+            speaker: 'Mira',
+            text: '이제 정말 끝이네요, 아가씨.',
+            emotion: 'happy',
+            characterImage: 'characters/mira.png',
           },
           {
             speaker: 'Seraphina',
-            text: '가주님과 어깨를 나란히 하게 되다니 영광입니다.',
+            text: '아니, 이제 시작이에요. [감정 노트 카드: 기록 개시] [해일 카드: 공명 시험]',
             emotion: 'happy',
-            characterImage: 'characters/seraphina_belmont'
+            characterImage: 'characters/seraphina_belmont.png',
           },
           {
-            speaker: 'Elder Belmont',
-            text: '너의 성장을 직접 확인했지. 이제는 내가 너를 믿고 의지할 차례다.',
+            speaker: 'Elena',
+            text: '이번 생, 후회 없지?',
             emotion: 'happy',
-            characterImage: 'characters/elder_belmont'
-          }
-        ],
-        postVictory: [
-          {
-            speaker: 'Elder Belmont',
-            text: '훌륭하다. 가문의 힘이 이렇게 조화로운 것은 처음 보는군.',
-            emotion: 'happy',
-            characterImage: 'characters/elder_belmont'
+            characterImage: 'characters/elena_drake.png',
           },
           {
             speaker: 'Seraphina',
-            text: '앞으로도 가문을 위해 싸우겠습니다.',
+            text: '후회가 있으면 또 회귀하겠지만... 오늘은 그냥 감사해요.',
+            emotion: 'happy',
+            characterImage: 'characters/seraphina_belmont.png',
+          },
+          {
+            speaker: 'Lucian',
+            text: '새 덱 해일. 감정값 100%, 희망 지수 최고치.',
+            emotion: 'happy',
+            characterImage: 'characters/lucian_rosegarden.png',
+          },
+          {
+            speaker: 'Seraphina',
+            text: '마력 충전은 희망, 마력 방출은 조화. 이 흐름이 이어지는 한 어둠은 돌아오지 않아.',
             emotion: 'determined',
-            characterImage: 'characters/seraphina_belmont'
-          }
-        ],
-        postDefeat: [
-          {
-            speaker: 'Elder Belmont',
-            text: '괜찮다. 우리는 다시 일어설 수 있다.',
-            emotion: 'normal',
-            characterImage: 'characters/elder_belmont'
-          },
-          {
-            speaker: 'Seraphina',
-            text: '다시 힘을 합쳐서 도전하겠습니다.',
-            emotion: 'sad',
-            characterImage: 'characters/seraphina_belmont'
-          }
-        ]
-      }
-    },
-    { 
-      id: 49, name: '가족 결사', theme: 'Family', recommendedPower: 1250, 
-      firstReward: { gold: 5000, shards: 50 }, repeatReward: { gold: 2500, shards: 33 }, cleared: false,
-      story: {
-        description: '카이와 Ariana를 포함한 가족이 모두 모이는 결집장. 가족의 힘을 보여주는 곳.',
-        backgroundImage: 'backgrounds/stage_49_family.webp'
-      },
-      characterImage: 'characters/seraphina_belmont.png',
-      cutscene: {
-        preBattle: [
-          {
-            speaker: 'Kai Drake',
-            text: '우리 가족이 모두 모였다. 이번엔 가족의 힘으로 어둠을 몰아내자.',
-            emotion: 'happy',
-            characterImage: 'characters/kai_drake'
-          },
-          {
-            speaker: 'Ariana',
-            text: '가족끼리 싸울 일이 아니라, 함께 미래를 지키는 싸움이지.',
-            emotion: 'happy',
-            characterImage: 'characters/ariana_drake'
-          },
-          {
-            speaker: 'Seraphina',
-            text: '여러분을 만나 행복해요. 이제 가족으로서 마지막까지 싸워요.',
-            emotion: 'happy',
-            characterImage: 'characters/seraphina_belmont'
+            characterImage: 'characters/seraphina_belmont.png',
           }
         ],
         postVictory: [
           {
-            speaker: 'Kai Drake',
-            text: '이것이 우리 가족의 힘이다. 정말 자랑스럽군.',
+            speaker: 'Lucian',
+            text: '모든 스토리지 정리 완료.',
             emotion: 'happy',
-            characterImage: 'characters/kai_drake'
+            characterImage: 'characters/lucian_rosegarden.png',
           },
           {
-            speaker: 'Ariana',
-            text: '앞으로도 함께 걸어가자, Seraphina.',
+            speaker: 'Mira',
+            text: '정원 회복 완료! 향기가 달라요.',
             emotion: 'happy',
-            characterImage: 'characters/ariana_drake'
+            characterImage: 'characters/mira.png',
+          },
+          {
+            speaker: 'Elena',
+            text: '이제는 정말 평화로 건배하자.',
+            emotion: 'happy',
+            characterImage: 'characters/elena_drake.png',
+          },
+          {
+            speaker: 'Seraphina',
+            text: '이 마력의 마지막 페이지는 희망이에요.',
+            emotion: 'happy',
+            characterImage: 'characters/seraphina_belmont.png',
+          },
+          {
+            speaker: 'Lucian',
+            text: '그리고 이건 새로운 서막이지.',
+            emotion: 'determined',
+            characterImage: 'characters/lucian_rosegarden.png',
+          },
+          {
+            speaker: 'Seraphina',
+            text: '맞아요. 새벽의 박동은 다시 시작됐어요.',
+            emotion: 'determined',
+            characterImage: 'characters/seraphina_belmont.png',
           }
         ],
         postDefeat: [
           {
-            speaker: 'Kai Drake',
-            text: '괜찮아. 가족이니까 다시 일어설 수 있어.',
-            emotion: 'normal',
-            characterImage: 'characters/kai_drake'
+            speaker: 'Mira',
+            text: '마음이 아직 떨리세요? 멜로디부터 다시 맞춰요.',
+            emotion: 'happy',
+            characterImage: 'characters/mira.png',
           },
           {
             speaker: 'Seraphina',
-            text: '그래요. 우리 모두 다시 힘을 모아 도전해요.',
+            text: '희망이 잠깐 흔들렸어... 조율하고 돌아올게.',
             emotion: 'sad',
-            characterImage: 'characters/seraphina_belmont'
+            characterImage: 'characters/seraphina_belmont.png',
           }
         ]
-      }
-    },
-    { 
-      id: 50, name: '공허 제왕', theme: 'Void', recommendedPower: 1500, 
-      firstReward: { gold: 6000, shards: 60 }, repeatReward: { gold: 3000, shards: 40 }, cleared: false,
-      story: {
-        description: '최종 보스 공허 제왕의 왕좌. 모든 것을 삼키는 절대적인 공허의 공간.',
-        backgroundImage: 'backgrounds/stage_50_void_emperor.webp'
       }
     },
   ] satisfies CampaignStage[];

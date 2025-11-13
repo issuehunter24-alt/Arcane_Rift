@@ -1,4 +1,5 @@
 import { Application, Assets, Sprite, Container, Text, Graphics } from 'pixi.js';
+import { registerSW } from 'virtual:pwa-register';
 import type { Card } from './types';
 import { getCardImagePath, getCardImagePathFallback } from './cardImage';
 import { t, setLocale, getCurrentLocale } from './i18n';
@@ -22,6 +23,18 @@ import { tweenNumber, Easing } from './tweens';
 import { audioManager, initAudio } from './audio';
 import { toastManager, loadingManager } from './toast';
 import { getSpecialBackground } from './utils/backgroundVariation';
+
+if ('serviceWorker' in navigator) {
+  registerSW({
+    immediate: true,
+    onRegisteredSW(swUrl, registration) {
+      console.log('[PWA] Service worker registered:', swUrl, registration);
+    },
+    onRegisterError(error) {
+      console.error('[PWA] Service worker registration failed:', error);
+    },
+  });
+}
 
 const STARTER_COLLECTION_CARD_IDS_SAFE: readonly string[] = [
   'ATT_ARIANA_NO_001',
@@ -4655,15 +4668,21 @@ let currentEnemyPortrait: string | null = null;
     
     const dialogue = currentDialogueLines[currentDialogueIndex];
     const totalLines = currentDialogueLines.length;
+    const characterImageSrc =
+      dialogue?.characterImage && typeof dialogue.characterImage === 'string'
+        ? /\.[a-zA-Z0-9]+$/.test(dialogue.characterImage)
+          ? dialogue.characterImage
+          : `${dialogue.characterImage}.png`
+        : null;
     
     cutsceneRoot.innerHTML = `
       <div class="cutscene-background" style="background-image: url('${backgroundImage}');"></div>
       <div class="cutscene-content">
         <div class="cutscene-top">
-          ${dialogue.characterImage ? `
+          ${characterImageSrc ? `
             <img 
               class="character-portrait visible ${dialogue.emotion ? `emotion-${dialogue.emotion}` : ''}" 
-              src="${dialogue.characterImage}.png" 
+              src="${characterImageSrc}" 
               alt="${dialogue.speaker}"
             >
           ` : ''}

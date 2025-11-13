@@ -59,6 +59,7 @@ type SaveTriggerSnapshot = {
 let lastSaveTriggers: SaveTriggerSnapshot | null = null;
 let pendingSavedCollection: SavedCollectionEntry[] | null = null;
 let pendingSavedDeck: SavedDeckEntry[] | null = null;
+let isApplyingSavedCardData = false;
 
 function makeSavedEntriesFromCardIds(cardIds: readonly string[]): SavedCollectionEntry[] {
   const counts = new Map<string, number>();
@@ -294,6 +295,10 @@ function instantiateSavedEntries(entries: (SavedCollectionEntry | SavedDeckEntry
 }
 
 function applySavedCardData(collectionEntries: SavedCollectionEntry[], deckEntries: SavedDeckEntry[]) {
+  if (isApplyingSavedCardData) {
+    return;
+  }
+
   const pool = useBattleStore.getState().allCardsPool;
   if (!Array.isArray(pool) || pool.length === 0) {
     pendingSavedCollection = collectionEntries;
@@ -301,22 +306,27 @@ function applySavedCardData(collectionEntries: SavedCollectionEntry[], deckEntri
     return;
   }
 
-  const hydratedCollection = instantiateSavedEntries(collectionEntries, pool);
-  const hydratedDeck = instantiateSavedEntries(deckEntries, pool, 20);
+  isApplyingSavedCardData = true;
+  try {
+    const hydratedCollection = instantiateSavedEntries(collectionEntries, pool);
+    const hydratedDeck = instantiateSavedEntries(deckEntries, pool, 20);
 
-  useBattleStore.setState(() => {
-    const patch: Partial<StoreState> = {};
-    if (hydratedCollection.length > 0) {
-      patch.collection = hydratedCollection;
-    }
-    if (hydratedDeck.length > 0) {
-      patch.playerDeck = hydratedDeck;
-    }
-    return Object.keys(patch).length > 0 ? patch : {};
-  });
+    pendingSavedCollection = null;
+    pendingSavedDeck = null;
 
-  pendingSavedCollection = null;
-  pendingSavedDeck = null;
+    useBattleStore.setState(() => {
+      const patch: Partial<StoreState> = {};
+      if (hydratedCollection.length > 0) {
+        patch.collection = hydratedCollection;
+      }
+      if (hydratedDeck.length > 0) {
+        patch.playerDeck = hydratedDeck;
+      }
+      return Object.keys(patch).length > 0 ? patch : {};
+    });
+  } finally {
+    isApplyingSavedCardData = false;
+  }
 }
 
 useBattleStore.subscribe((state) => {
