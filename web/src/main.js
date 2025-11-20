@@ -203,22 +203,22 @@ announcementCloseButtons.forEach(button => {
     });
 });
 const HERO_PORTRAIT_MAP = {
-    ARIANA: 'characters/ariana_drake.png',
-    DARIUS: 'characters/darius_blackwood.png',
-    ELDER: 'characters/elder_belmont.png',
-    ELENA: 'characters/elena_drake.png',
-    GAREN: 'characters/garen_stone.png',
-    IRIS: 'characters/iris_belmont.png',
-    KAI: 'characters/kai_drake.png',
-    LEON: 'characters/leon_ardenia.png',
-    LUCIAN: 'characters/lucian_rosegarden.png',
-    MARCUS: 'characters/marcus_belmont.png',
-    MIRA: 'characters/mira.png',
-    SERAPHINA: 'characters/seraphina_belmont.png',
-    SERAPHINE: 'characters/seraphine_winters.png',
+    ARIANA: 'characters/ariana_drake.webp',
+    DARIUS: 'characters/darius_blackwood.webp',
+    ELDER: 'characters/elder_belmont.webp',
+    ELENA: 'characters/elena_drake.webp',
+    GAREN: 'characters/garen_stone.webp',
+    IRIS: 'characters/iris_belmont.webp',
+    KAI: 'characters/kai_drake.webp',
+    LEON: 'characters/leon_ardenia.webp',
+    LUCIAN: 'characters/lucian_rosegarden.webp',
+    MARCUS: 'characters/marcus_belmont.webp',
+    MIRA: 'characters/mira.webp',
+    SERAPHINA: 'characters/seraphina_belmont.webp',
+    SERAPHINE: 'characters/seraphine_winters.webp',
 };
-const DEFAULT_PLAYER_PORTRAIT = 'characters/seraphina_belmont.png';
-const DEFAULT_ENEMY_PORTRAIT = 'characters/ariana_drake.png';
+const DEFAULT_PLAYER_PORTRAIT = 'characters/seraphina_belmont.webp';
+const DEFAULT_ENEMY_PORTRAIT = 'characters/ariana_drake.webp';
 const PVP_DEFAULT_BACKGROUND = 'backgrounds/fallback_1.webp';
 const STORY_TOTAL_STAGE_TARGET = 50;
 const PVP_STATUS_LABELS = {
@@ -282,19 +282,19 @@ function hideCloudSync(withDelay = true) {
     }
 }
 const CHARACTER_NAME_MAP = {
-    'characters/seraphina_belmont.png': '세라피나',
-    'characters/ariana_drake.png': '아리아나',
-    'characters/darius_blackwood.png': '다리우스',
-    'characters/elder_belmont.png': '엘더 벨몬트',
-    'characters/elena_drake.png': '엘레나',
-    'characters/garen_stone.png': '가렌',
-    'characters/iris_belmont.png': '아이리스',
-    'characters/kai_drake.png': '카이',
-    'characters/leon_ardenia.png': '레온',
-    'characters/lucian_rosegarden.png': '루시안',
-    'characters/marcus_belmont.png': '마커스',
-    'characters/mira.png': '미라',
-    'characters/seraphine_winters.png': '세라핀',
+    'characters/seraphina_belmont.webp': '세라피나',
+    'characters/ariana_drake.webp': '아리아나',
+    'characters/darius_blackwood.webp': '다리우스',
+    'characters/elder_belmont.webp': '엘더 벨몬트',
+    'characters/elena_drake.webp': '엘레나',
+    'characters/garen_stone.webp': '가렌',
+    'characters/iris_belmont.webp': '아이리스',
+    'characters/kai_drake.webp': '카이',
+    'characters/leon_ardenia.webp': '레온',
+    'characters/lucian_rosegarden.webp': '루시안',
+    'characters/marcus_belmont.webp': '마커스',
+    'characters/mira.webp': '미라',
+    'characters/seraphine_winters.webp': '세라핀',
 };
 const GENERIC_VICTORY_LINES = [
     '숨을 고르고 다음 전장을 준비하죠.',
@@ -2692,11 +2692,11 @@ app.init({
                 // Type icon 업데이트 - 타입별로 아이콘 표시
                 // 타입별 색상 및 아이콘 경로
                 const typeConfig = {
-                    'Attack': { color: 0xFF4444, iconPath: 'cardIcons/Type/type_attack.png' },
-                    'Defense': { color: 0x4444FF, iconPath: 'cardIcons/Type/type_defense.png' },
-                    'Heal': { color: 0x44FF44, iconPath: 'cardIcons/Type/type_heal.png' },
-                    'Special': { color: 0xFF44FF, iconPath: 'cardIcons/Type/type_special.png' },
-                }[card.type] || { color: 0xFFFFFF, iconPath: 'cardIcons/Type/type_attack.png' };
+                    'Attack': { color: 0xFF4444, iconPath: 'cardIcons/Type/type_attack.webp' },
+                    'Defense': { color: 0x4444FF, iconPath: 'cardIcons/Type/type_defense.webp' },
+                    'Heal': { color: 0x44FF44, iconPath: 'cardIcons/Type/type_heal.webp' },
+                    'Special': { color: 0xFF44FF, iconPath: 'cardIcons/Type/type_special.webp' },
+                }[card.type] || { color: 0xFFFFFF, iconPath: 'cardIcons/Type/type_attack.webp' };
                 playerHandPool.setupTypeIcon(pooledCard, typeConfig.color, typeConfig.iconPath);
                 const updatedIcon = pooledCard.typeIcon;
                 if (updatedIcon instanceof Container) {
@@ -4221,7 +4221,7 @@ app.init({
           ${dialogue.characterImage ? `
             <img 
               class="character-portrait visible ${dialogue.emotion ? `emotion-${dialogue.emotion}` : ''}" 
-              src="${dialogue.characterImage}.png" 
+              src="${dialogue.characterImage}.webp" 
               alt="${dialogue.speaker}"
             >
           ` : ''}
@@ -4459,31 +4459,31 @@ app.init({
         const cardPacks = state.getCardPacks();
         const packVisuals = {
             pack_normal: {
-                portrait: 'characters/seraphine_winters.png',
+                portrait: 'characters/seraphine_winters.webp',
                 accent: 'rgba(148, 163, 184, 0.45)',
                 border: '#9e9e9e',
                 gradient: 'linear-gradient(135deg, rgba(26, 38, 60, 0.92) 0%, rgba(18, 28, 48, 0.96) 100%)'
             },
             pack_rare: {
-                portrait: 'characters/elena_drake.png',
+                portrait: 'characters/elena_drake.webp',
                 accent: 'rgba(88, 160, 255, 0.5)',
                 border: '#2196f3',
                 gradient: 'linear-gradient(135deg, rgba(26, 42, 78, 0.92) 0%, rgba(20, 32, 62, 0.96) 100%)'
             },
             pack_epic: {
-                portrait: 'characters/lucian_rosegarden.png',
+                portrait: 'characters/lucian_rosegarden.webp',
                 accent: 'rgba(180, 120, 255, 0.5)',
                 border: '#9c27b0',
                 gradient: 'linear-gradient(135deg, rgba(32, 26, 68, 0.92) 0%, rgba(24, 20, 54, 0.96) 100%)'
             },
             pack_legendary: {
-                portrait: 'characters/seraphina_belmont.png',
+                portrait: 'characters/seraphina_belmont.webp',
                 accent: 'rgba(255, 196, 120, 0.55)',
                 border: '#ff9800',
                 gradient: 'linear-gradient(135deg, rgba(54, 32, 12, 0.9) 0%, rgba(32, 20, 8, 0.94) 100%)'
             },
             pack_premium: {
-                portrait: 'characters/ariana_drake.png',
+                portrait: 'characters/ariana_drake.webp',
                 accent: 'rgba(255, 140, 200, 0.45)',
                 border: '#f472b6',
                 gradient: 'linear-gradient(135deg, rgba(42, 24, 60, 0.92) 0%, rgba(28, 18, 46, 0.96) 100%)'

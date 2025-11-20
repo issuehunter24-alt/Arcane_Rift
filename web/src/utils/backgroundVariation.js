@@ -74,7 +74,7 @@ export function getBackgroundVariation(stageId, context = { type: 'random' }) {
     const stageName = stageNames[stageId];
     if (!stageName) {
         console.warn(`[Background] Invalid stage ID: ${stageId}, using fallback`);
-        return 'backgrounds/fallback_1.png';
+        return 'backgrounds/fallback_1.webp';
     }
     let variationNumber = 1;
     switch (context.type) {
@@ -99,7 +99,7 @@ export function getBackgroundVariation(stageId, context = { type: 'random' }) {
                     context.phase === 'battle' ? 2 : 3;
             break;
     }
-    const path = `backgrounds/stage_${String(stageId).padStart(2, '0')}_${stageName}_${variationNumber}.png`;
+    const path = `backgrounds/stage_${String(stageId).padStart(2, '0')}_${stageName}_${variationNumber}.webp`;
     console.log(`[Background] Stage ${stageId} (${stageName}) → Variation ${variationNumber} (${context.type})`);
     return path;
 }
@@ -111,5 +111,5 @@ export function getBackgroundVariation(stageId, context = { type: 'random' }) {
  */
 export function getSpecialBackground(type, variationNumber = 1) {
     const clampedVariation = Math.max(1, Math.min(3, variationNumber));
-    return `backgrounds/${type}_${clampedVariation}.png`;
+    return `backgrounds/${type}_${clampedVariation}.webp`;
 }

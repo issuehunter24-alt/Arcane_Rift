@@ -1,4 +1,4 @@
-let pendingDeckSave = false;
+﻿let pendingDeckSave = false;
 function scheduleDeckSave() {
     if (pendingDeckSave)
         return;
@@ -737,10 +737,10 @@ function getBasicEnemyDeck(allCards) {
 }
 /**
  * 이미지 경로에서 캐릭터 이름 추출
- * 예: 'characters/lucian_rosegarden.png' -> 'LUCIAN'
+ * 예: 'characters/lucian_rosegarden.webp' -> 'LUCIAN'
  */
 function extractCharacterNameFromImage(imagePath) {
-    const match = imagePath.match(/\/([^\/]+)\.png$/);
+    const match = imagePath.match(/\/([^\/]+)\.[a-z0-9]+$/i);
     if (!match)
         return '';
     const filename = match[1];
@@ -2973,6 +2973,9 @@ export const useBattleStore = create((set, get) => {
                 enemyDeck = getBasicEnemyDeck(cards);
             }
             const initialSeed = isAnyPvp ? generateRoundSeed(baseSeed, 1) : baseSeed;
+            const stageEnemyMaxHp = !isAnyPvp && currentStage
+                ? (state.campaignStages.find(stage => stage.id === currentStage)?.enemyMaxHp ?? 100)
+                : 100;
             // 🔴 setTimeout 타이머 모두 취소 (이전 게임의 타이머가 새 게임에 영향을 주지 않도록)
             if (enemyTurnTimer1 !== null) {
                 clearTimeout(enemyTurnTimer1);
@@ -3009,7 +3012,7 @@ export const useBattleStore = create((set, get) => {
                 roundSeed: initialSeed,
                 currentInitiative: null,
                 playerHp: 100, playerMaxHp: 100,
-                enemyHp: 100, enemyMaxHp: 100,
+                enemyHp: stageEnemyMaxHp, enemyMaxHp: stageEnemyMaxHp,
                 playerStatus: { ...initialEntityStatus },
                 enemyStatus: { ...initialEntityStatus },
                 gameOver: 'none',

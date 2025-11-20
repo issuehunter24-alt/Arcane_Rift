@@ -61,6 +61,6 @@ export function getCardImagePath(card?: Partial<Card> | null): string {
 
 export function getCardImagePathFallback(card?: Partial<Card> | null): string {
   const { character, type, rarity } = resolveCardMeta(card);
-  return `cards/${character}_${type}_${rarity}.png`;
+  return `cards/${character}_${type}_${rarity}.webp`;
 }
 

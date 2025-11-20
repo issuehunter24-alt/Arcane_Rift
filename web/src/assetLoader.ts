@@ -43,7 +43,7 @@ function getCardImagePaths(card: Card): { webp: string; png: string } {
   const baseName = `${character}_${card.type}_${card.rarity}`;
   return {
     webp: `cards/${baseName}.webp`,
-    png: `cards/${baseName}.png`,
+    png: `cards/${baseName}.webp`,
   };
 }
 
@@ -109,7 +109,7 @@ export async function preloadCardImages(cards: Card[]): Promise<void> {
   
   // 카드 뒷면도 프리로드
   loadPromises.push(
-    loadSingleImage('cards/card_back.webp', 'cards/card_back.png')
+    loadSingleImage('cards/card_back.webp', 'cards/card_back.webp')
       .then(() => {
         console.log('[AssetLoader] Card back loaded');
       })
@@ -120,10 +120,10 @@ export async function preloadCardImages(cards: Card[]): Promise<void> {
   
   // 타입 아이콘도 프리로드
   const typeIcons = [
-    'cardIcons/Type/type_attack.png',
-    'cardIcons/Type/type_defense.png',
-    'cardIcons/Type/type_heal.png',
-    'cardIcons/Type/type_special.png',
+    'cardIcons/Type/type_attack.webp',
+    'cardIcons/Type/type_defense.webp',
+    'cardIcons/Type/type_heal.webp',
+    'cardIcons/Type/type_special.webp',
   ];
   
   typeIcons.forEach(iconPath => {
@@ -171,7 +171,7 @@ export function getLoadedCardImage(card: Card): string | null {
  */
 export function getCardBackImage(): string | null {
   if (manifest.loaded.has('cards/card_back.webp')) return 'cards/card_back.webp';
-  if (manifest.loaded.has('cards/card_back.png')) return 'cards/card_back.png';
+  if (manifest.loaded.has('cards/card_back.webp')) return 'cards/card_back.webp';
   return null;
 }
 
@@ -183,7 +183,7 @@ export function getAssetStats() {
     loaded: manifest.loaded.size,
     failed: manifest.failed.size,
     totalWebP: manifest.webp.length,
-    totalPNG: manifest.png.length,
+    totalPNG: manifest.webp.length,
   };
 }
 

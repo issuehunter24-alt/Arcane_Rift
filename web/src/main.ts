@@ -242,23 +242,23 @@ announcementCloseButtons.forEach(button => {
 });
 
 const HERO_PORTRAIT_MAP: Record<string, string> = {
-  ARIANA: 'characters/ariana_drake.png',
-  DARIUS: 'characters/darius_blackwood.png',
-  ELDER: 'characters/elder_belmont.png',
-  ELENA: 'characters/elena_drake.png',
-  GAREN: 'characters/garen_stone.png',
-  IRIS: 'characters/iris_belmont.png',
-  KAI: 'characters/kai_drake.png',
-  LEON: 'characters/leon_ardenia.png',
-  LUCIAN: 'characters/lucian_rosegarden.png',
-  MARCUS: 'characters/marcus_belmont.png',
-  MIRA: 'characters/mira.png',
-  SERAPHINA: 'characters/seraphina_belmont.png',
-  SERAPHINE: 'characters/seraphine_winters.png',
+  ARIANA: 'characters/ariana_drake.webp',
+  DARIUS: 'characters/darius_blackwood.webp',
+  ELDER: 'characters/elder_belmont.webp',
+  ELENA: 'characters/elena_drake.webp',
+  GAREN: 'characters/garen_stone.webp',
+  IRIS: 'characters/iris_belmont.webp',
+  KAI: 'characters/kai_drake.webp',
+  LEON: 'characters/leon_ardenia.webp',
+  LUCIAN: 'characters/lucian_rosegarden.webp',
+  MARCUS: 'characters/marcus_belmont.webp',
+  MIRA: 'characters/mira.webp',
+  SERAPHINA: 'characters/seraphina_belmont.webp',
+  SERAPHINE: 'characters/seraphine_winters.webp',
 };
 
-const DEFAULT_PLAYER_PORTRAIT = 'characters/seraphina_belmont.png';
-const DEFAULT_ENEMY_PORTRAIT = 'characters/ariana_drake.png';
+const DEFAULT_PLAYER_PORTRAIT = HERO_PORTRAIT_MAP.SERAPHINA;
+const DEFAULT_ENEMY_PORTRAIT = HERO_PORTRAIT_MAP.ARIANA;
 const PVP_DEFAULT_BACKGROUND = 'backgrounds/fallback_1.webp';
 const STORY_TOTAL_STAGE_TARGET = 50;
 
@@ -321,21 +321,31 @@ function hideCloudSync(withDelay: boolean = true) {
   }
 }
 
-const CHARACTER_NAME_MAP: Record<string, string> = {
-  'characters/seraphina_belmont.png': '세라피나',
-  'characters/ariana_drake.png': '아리아나',
-  'characters/darius_blackwood.png': '다리우스',
-  'characters/elder_belmont.png': '엘더 벨몬트',
-  'characters/elena_drake.png': '엘레나',
-  'characters/garen_stone.png': '가렌',
-  'characters/iris_belmont.png': '아이리스',
-  'characters/kai_drake.png': '카이',
-  'characters/leon_ardenia.png': '레온',
-  'characters/lucian_rosegarden.png': '루시안',
-  'characters/marcus_belmont.png': '마커스',
-  'characters/mira.png': '미라',
-  'characters/seraphine_winters.png': '세라핀',
-};
+const CHARACTER_NAME_MAP: Record<string, string> = createCharacterNameMap();
+
+function createCharacterNameMap(): Record<string, string> {
+  const entries: Array<[string, string]> = [
+    ['characters/seraphina_belmont', '세라피나'],
+    ['characters/ariana_drake', '아리아나'],
+    ['characters/darius_blackwood', '다리우스'],
+    ['characters/elder_belmont', '엘더 벨몬트'],
+    ['characters/elena_drake', '엘레나'],
+    ['characters/garen_stone', '가렌'],
+    ['characters/iris_belmont', '아이리스'],
+    ['characters/kai_drake', '카이'],
+    ['characters/leon_ardenia', '레온'],
+    ['characters/lucian_rosegarden', '루시안'],
+    ['characters/marcus_belmont', '마커스'],
+    ['characters/mira', '미라'],
+    ['characters/seraphine_winters', '세라핀'],
+  ];
+
+  return entries.reduce<Record<string, string>>((acc, [basePath, name]) => {
+    acc[`${basePath}.png`] = name;
+    acc[`${basePath}.webp`] = name;
+    return acc;
+  }, {});
+}
 
 const GENERIC_VICTORY_LINES = [
   '숨을 고르고 다음 전장을 준비하죠.',
@@ -1951,24 +1961,29 @@ let currentEnemyPortrait: string | null = null;
   const enemyHPBar = new Container();
   
   // HP 바 설정 함수
+  const HP_BAR_HEIGHT = 20;
+  const HP_SEGMENT_COLORS = {
+    healthy: [0x4CAF50, 0x66BB6A, 0x81C784, 0xA5D6A7],
+    warning: [0xffeb3b, 0xffd54f, 0xffc107, 0xffb300],
+    danger: [0xf44336, 0xff7043, 0xff8a65, 0xffab91],
+  } as const;
+
   function createHPBar(container: Container, maxWidth: number, isPlayer: boolean) {
     container.removeChildren();
     
     // 배경 (어두운 바)
     const bgBar = new Graphics();
-    bgBar.rect(0, 0, maxWidth, 20);
+    bgBar.rect(0, 0, maxWidth, HP_BAR_HEIGHT);
     bgBar.fill({ color: 0x333333 });
     container.addChild(bgBar);
     
     // HP 바 (색상 변화)
     const hpBar = new Graphics();
-    hpBar.rect(0, 0, maxWidth, 20);
-    hpBar.fill({ color: 0x4CAF50 });
     container.addChild(hpBar);
     
     // 테두리
     const border = new Graphics();
-    border.rect(0, 0, maxWidth, 20);
+    border.rect(0, 0, maxWidth, HP_BAR_HEIGHT);
     border.stroke({ color: 0x000000, width: 2 });
     container.addChild(border);
     
@@ -1984,7 +1999,7 @@ let currentEnemyPortrait: string | null = null;
     });
     hpText.anchor.set(0.5);
     hpText.x = maxWidth / 2;
-    hpText.y = 10;
+    hpText.y = HP_BAR_HEIGHT / 2;
     container.addChild(hpText);
     
     // 이름 라벨
@@ -2468,23 +2483,51 @@ let currentEnemyPortrait: string | null = null;
     prevHP: number,
     animate: boolean = true
   ) {
-    const ratio = Math.max(0, Math.min(1, currentHP / maxHP));
-    const targetWidth = maxWidth * ratio;
-    
-    // 색상 결정 (초록 → 노랑 → 빨강)
-    let color: number;
-    if (ratio > 0.6) {
-      color = 0x4CAF50; // 초록
-    } else if (ratio > 0.3) {
-      color = 0xffeb3b; // 노랑
-    } else {
-      color = 0xf44336; // 빨강
+    const ratio = Math.max(0, Math.min(1, maxHP === 0 ? 0 : currentHP / maxHP));
+    const segmentCount = Math.max(1, Math.ceil(maxHP / 100));
+    const segmentHeight = HP_BAR_HEIGHT / segmentCount;
+    const segmentGap = segmentCount > 1 ? Math.min(2, segmentHeight * 0.25) : 0;
+    const palette =
+      ratio > 0.6 ? HP_SEGMENT_COLORS.healthy : ratio > 0.3 ? HP_SEGMENT_COLORS.warning : HP_SEGMENT_COLORS.danger;
+
+    // 배경 업데이트 (분절감 제공)
+    components.bgBar.clear();
+    components.bgBar.rect(0, 0, maxWidth, HP_BAR_HEIGHT);
+    components.bgBar.fill({ color: 0x1f1f1f });
+
+    if (segmentCount > 1) {
+      const dividerColor = 0xffffff;
+      const dividerAlpha = 0.12;
+      for (let i = 1; i < segmentCount; i += 1) {
+        const y = i * segmentHeight;
+        components.bgBar.moveTo(0, y);
+        components.bgBar.lineTo(maxWidth, y);
+        components.bgBar.stroke({ color: dividerColor, alpha: dividerAlpha, width: 1 });
+      }
     }
-    
-    // HP 바 너비와 색상 업데이트
+
+    // HP 바 (세그먼트 기반으로 채우기)
     components.hpBar.clear();
-    components.hpBar.rect(0, 0, targetWidth, 20);
-    components.hpBar.fill({ color });
+    for (let i = 0; i < segmentCount; i += 1) {
+      const segmentBase = i * 100;
+      const segmentHP = Math.min(100, Math.max(0, currentHP - segmentBase));
+      if (segmentHP <= 0) {
+        continue;
+      }
+
+      const fillRatio = segmentHP / 100;
+      const segmentWidth = maxWidth * fillRatio;
+      if (segmentWidth <= 0) {
+        continue;
+      }
+
+      const y = HP_BAR_HEIGHT - (i + 1) * segmentHeight + segmentGap / 2;
+      const height = Math.max(0, segmentHeight - segmentGap);
+      const color = palette[Math.min(i, palette.length - 1)];
+
+      components.hpBar.rect(0, y, segmentWidth, height);
+      components.hpBar.fill({ color });
+    }
     
     // 텍스트 업데이트
     components.hpText.text = `${Math.round(currentHP)}/${maxHP}`;
@@ -3008,11 +3051,11 @@ let currentEnemyPortrait: string | null = null;
       // Type icon 업데이트 - 타입별로 아이콘 표시
       // 타입별 색상 및 아이콘 경로
       const typeConfig = {
-        'Attack': { color: 0xFF4444, iconPath: 'cardIcons/Type/type_attack.png' },
-        'Defense': { color: 0x4444FF, iconPath: 'cardIcons/Type/type_defense.png' },
-        'Heal': { color: 0x44FF44, iconPath: 'cardIcons/Type/type_heal.png' },
-        'Special': { color: 0xFF44FF, iconPath: 'cardIcons/Type/type_special.png' },
-      }[card.type] || { color: 0xFFFFFF, iconPath: 'cardIcons/Type/type_attack.png' };
+        'Attack': { color: 0xFF4444, iconPath: 'cardIcons/Type/type_attack.webp' },
+        'Defense': { color: 0x4444FF, iconPath: 'cardIcons/Type/type_defense.webp' },
+        'Heal': { color: 0x44FF44, iconPath: 'cardIcons/Type/type_heal.webp' },
+        'Special': { color: 0xFF44FF, iconPath: 'cardIcons/Type/type_special.webp' },
+      }[card.type] || { color: 0xFFFFFF, iconPath: 'cardIcons/Type/type_attack.webp' };
       
       playerHandPool.setupTypeIcon(pooledCard, typeConfig.color, typeConfig.iconPath);
       const updatedIcon = pooledCard.typeIcon;
@@ -4672,7 +4715,7 @@ let currentEnemyPortrait: string | null = null;
       dialogue?.characterImage && typeof dialogue.characterImage === 'string'
         ? /\.[a-zA-Z0-9]+$/.test(dialogue.characterImage)
           ? dialogue.characterImage
-          : `${dialogue.characterImage}.png`
+          : `${dialogue.characterImage}.webp`
         : null;
     
     cutsceneRoot.innerHTML = `
@@ -4938,31 +4981,31 @@ let currentEnemyPortrait: string | null = null;
     const cardPacks = state.getCardPacks();
     const packVisuals: Record<string, { portrait: string; accent: string; border: string; gradient: string }> = {
       pack_normal: {
-        portrait: 'characters/seraphine_winters.png',
+        portrait: 'characters/seraphine_winters.webp',
         accent: 'rgba(148, 163, 184, 0.45)',
         border: '#9e9e9e',
         gradient: 'linear-gradient(135deg, rgba(26, 38, 60, 0.92) 0%, rgba(18, 28, 48, 0.96) 100%)'
       },
       pack_rare: {
-        portrait: 'characters/elena_drake.png',
+        portrait: 'characters/elena_drake.webp',
         accent: 'rgba(88, 160, 255, 0.5)',
         border: '#2196f3',
         gradient: 'linear-gradient(135deg, rgba(26, 42, 78, 0.92) 0%, rgba(20, 32, 62, 0.96) 100%)'
       },
       pack_epic: {
-        portrait: 'characters/lucian_rosegarden.png',
+        portrait: 'characters/lucian_rosegarden.webp',
         accent: 'rgba(180, 120, 255, 0.5)',
         border: '#9c27b0',
         gradient: 'linear-gradient(135deg, rgba(32, 26, 68, 0.92) 0%, rgba(24, 20, 54, 0.96) 100%)'
       },
       pack_legendary: {
-        portrait: 'characters/seraphina_belmont.png',
+        portrait: 'characters/seraphina_belmont.webp',
         accent: 'rgba(255, 196, 120, 0.55)',
         border: '#ff9800',
         gradient: 'linear-gradient(135deg, rgba(54, 32, 12, 0.9) 0%, rgba(32, 20, 8, 0.94) 100%)'
       },
       pack_premium: {
-        portrait: 'characters/ariana_drake.png',
+        portrait: 'characters/ariana_drake.webp',
         accent: 'rgba(255, 140, 200, 0.45)',
         border: '#f472b6',
         gradient: 'linear-gradient(135deg, rgba(42, 24, 60, 0.92) 0%, rgba(28, 18, 46, 0.96) 100%)'

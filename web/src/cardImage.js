@@ -52,5 +52,5 @@ export function getCardImagePath(card) {
 }
 export function getCardImagePathFallback(card) {
     const { character, type, rarity } = resolveCardMeta(card);
-    return `cards/${character}_${type}_${rarity}.png`;
+    return `cards/${character}_${type}_${rarity}.webp`;
 }

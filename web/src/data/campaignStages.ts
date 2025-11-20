@@ -1,5 +1,29 @@
 import type { CampaignStage, DialogueLine } from '../types/campaign';
 
+const WEBP_EXTENSION_REGEX = /\.webp(\?.*)?$/i;
+const PNG_LIKE_EXTENSION_REGEX = /\.(png|jpg|jpeg)(\?.*)?$/i;
+const HAS_EXTENSION_REGEX = /\.[a-z0-9]+(\?.*)?$/i;
+
+function ensureWebpPath(path?: string | null): string | undefined {
+  if (!path) {
+    return path ?? undefined;
+  }
+  const trimmed = path.trim();
+  if (!trimmed) {
+    return undefined;
+  }
+  if (WEBP_EXTENSION_REGEX.test(trimmed)) {
+    return trimmed;
+  }
+  if (PNG_LIKE_EXTENSION_REGEX.test(trimmed)) {
+    return trimmed.replace(PNG_LIKE_EXTENSION_REGEX, '.webp$2');
+  }
+  if (!HAS_EXTENSION_REGEX.test(trimmed)) {
+    return `${trimmed}.webp`;
+  }
+  return trimmed;
+}
+
 export const campaignStageData = [
     {
       id: 1, name: '새벽의 회귀', theme: 'Neutral', recommendedPower: 100,
@@ -1291,6 +1315,7 @@ export const campaignStageData = [
       },
       characterImage: 'characters/seraphina_belmont.png',
       enemyImage: 'characters/marcus_belmont.png',
+      enemyMaxHp: 150,
       cutscene: {
         preBattle: [
           {
@@ -2433,6 +2458,7 @@ export const campaignStageData = [
       },
       characterImage: 'characters/seraphina_belmont.png',
       enemyImage: 'characters/darius_blackwood.png',
+      enemyMaxHp: 190,
       cutscene: {
         preBattle: [
           {
@@ -3592,6 +3618,7 @@ export const campaignStageData = [
       },
       characterImage: 'characters/seraphina_belmont.png',
       enemyImage: 'characters/leon_ardenia.png',
+      enemyMaxHp: 230,
       cutscene: {
         preBattle: [
           {
@@ -4555,6 +4582,7 @@ export const campaignStageData = [
       },
       characterImage: 'characters/seraphina_belmont.png',
       enemyImage: 'characters/darius_blackwood.png',
+      enemyMaxHp: 270,
       cutscene: {
         preBattle: [
           {
@@ -5284,6 +5312,7 @@ export const campaignStageData = [
       },
       characterImage: 'characters/seraphina_belmont.png',
       enemyImage: 'characters/mira.png',
+      enemyMaxHp: 300,
       cutscene: {
         preBattle: [
           {
@@ -5382,6 +5411,8 @@ export const campaignStageData = [
 export function createInitialCampaignStages() {
   return campaignStageData.map<CampaignStage>(stage => ({
     ...stage,
+    characterImage: ensureWebpPath(stage.characterImage) ?? stage.characterImage,
+    enemyImage: ensureWebpPath(stage.enemyImage) ?? stage.enemyImage,
     firstReward: {
       ...stage.firstReward,
       cards:
@@ -5396,7 +5427,12 @@ export function createInitialCampaignStages() {
           ? [...stage.repeatReward.cards]
           : undefined,
     },
-    story: stage.story ? { ...stage.story } : undefined,
+    story: stage.story
+      ? {
+          ...stage.story,
+          backgroundImage: ensureWebpPath(stage.story.backgroundImage) ?? stage.story.backgroundImage,
+        }
+      : undefined,
     cutscene: stage.cutscene
       ? {
           preBattle: stage.cutscene.preBattle?.map(mapDialogueLine),
@@ -5408,5 +5444,8 @@ export function createInitialCampaignStages() {
 }
 
 function mapDialogueLine(line: DialogueLine): DialogueLine {
-  return { ...line };
+  return {
+    ...line,
+    characterImage: ensureWebpPath(line.characterImage) ?? line.characterImage,
+  };
 }

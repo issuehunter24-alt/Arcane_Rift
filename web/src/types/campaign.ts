@@ -30,5 +30,6 @@ export type CampaignStage = {
   };
   characterImage?: string;
   enemyImage?: string;
+  enemyMaxHp?: number;
 };
 
