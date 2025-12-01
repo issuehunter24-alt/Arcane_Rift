@@ -2,11 +2,16 @@ import { create } from 'zustand';
 import type { Session } from '@supabase/supabase-js';
 import { supabase } from './supabaseClient';
 import { useBattleStore } from './store';
+import { enableGuestSaveMode, disableGuestSaveMode } from './cloudSave';
 
 type AuthView = 'sign-in' | 'sign-up';
+type AuthMode = 'user' | 'guest';
 
 type AuthState = {
   session: Session | null;
+  mode: AuthMode;
+  guestSessionActive: boolean;
+  guestId: string | null;
   initializing: boolean;
   loading: boolean;
   error: string | null;
@@ -20,9 +25,12 @@ type AuthState = {
   signIn: (email: string, password: string) => Promise<void>;
   signUp: (email: string, password: string, nickname: string) => Promise<void>;
   signOut: () => Promise<void>;
+  startGuestMode: () => void;
+  exitGuestMode: () => void;
 };
 
 const defaultNickname = '소환사';
+const guestNicknameStorageKey = 'gals_guest_nickname';
 
 function normalizeNickname(value: string | null | undefined): string | null {
   if (!value || typeof value !== 'string') {
@@ -48,8 +56,30 @@ function resolveSessionNickname(session: Session | null): string | null {
   );
 }
 
+function generateGuestNickname(): string {
+  const randomId = Math.floor(Math.random() * 9000) + 1000;
+  return `게스트 ${randomId}`;
+}
+
+function getStoredGuestNickname(): string | null {
+  if (typeof window === 'undefined') {
+    return null;
+  }
+  return window.localStorage.getItem(guestNicknameStorageKey);
+}
+
+function persistGuestNickname(nickname: string) {
+  if (typeof window === 'undefined') {
+    return;
+  }
+  window.localStorage.setItem(guestNicknameStorageKey, nickname);
+}
+
 export const useAuthStore = create<AuthState>((set, get) => ({
   session: null,
+  mode: 'user',
+  guestSessionActive: false,
+  guestId: null,
   initializing: true,
   loading: false,
   error: null,
@@ -67,12 +97,16 @@ export const useAuthStore = create<AuthState>((set, get) => ({
       const metaNickname = resolveSessionNickname(session);
       set({
         session,
+        mode: session ? 'user' : 'user',
         initializing: false,
         error: null,
         message: null,
         profileNickname: metaNickname ?? defaultNickname,
+        guestSessionActive: false,
+        guestId: null
       });
       if (session?.user?.id) {
+        disableGuestSaveMode();
         await get().refreshProfileNickname();
       }
     }
@@ -80,8 +114,10 @@ export const useAuthStore = create<AuthState>((set, get) => ({
     supabase.auth.onAuthStateChange((event, session) => {
       if (event === 'SIGNED_IN') {
         const metaNickname = resolveSessionNickname(session);
+        get().exitGuestMode();
         set({
           session,
+          mode: 'user',
           loading: false,
           error: null,
           message: null,
@@ -89,9 +125,17 @@ export const useAuthStore = create<AuthState>((set, get) => ({
         });
         void get().refreshProfileNickname();
       } else if (event === 'SIGNED_OUT') {
-        set({ session: null, loading: false, message: null, profileNickname: defaultNickname });
+        set({
+          session: null,
+          mode: 'user',
+          guestSessionActive: false,
+          guestId: null,
+          loading: false,
+          message: null,
+          profileNickname: defaultNickname
+        });
       } else if (event === 'TOKEN_REFRESHED') {
-        set({ session, loading: false });
+        set({ session, mode: 'user', loading: false });
       }
     });
   },
@@ -137,7 +181,14 @@ export const useAuthStore = create<AuthState>((set, get) => ({
     const { data } = await supabase.auth.getSession();
     const session = data.session ?? null;
     const metaNickname = resolveSessionNickname(session);
-    set({ loading: false, message: '환영합니다!', profileNickname: metaNickname ?? defaultNickname });
+    get().exitGuestMode();
+    set({
+      loading: false,
+      message: '환영합니다!',
+      profileNickname: metaNickname ?? defaultNickname,
+      session,
+      mode: 'user'
+    });
     void get().refreshProfileNickname();
   },
   async signUp(email, password, nickname) {
@@ -172,8 +223,13 @@ export const useAuthStore = create<AuthState>((set, get) => ({
       });
     }
 
-    set({ loading: false, message: '회원가입이 완료되었습니다. 이메일을 확인해주세요.' });
-    set({ profileNickname: normalizedNickname });
+    set({
+      loading: false,
+      message: '회원가입이 완료되었습니다. 이메일을 확인해주세요.',
+      profileNickname: normalizedNickname,
+      mode: 'user',
+      guestSessionActive: false
+    });
   },
   async signOut() {
           set({ loading: true, error: null });
@@ -189,7 +245,15 @@ export const useAuthStore = create<AuthState>((set, get) => ({
               throw error;
             }
 
-            set({ session: null, loading: false, message: '로그아웃 되었습니다.', profileNickname: defaultNickname });
+            set({
+              session: null,
+              mode: 'user',
+              guestSessionActive: false,
+              guestId: null,
+              loading: false,
+              message: '로그아웃 되었습니다.',
+              profileNickname: defaultNickname
+            });
             useBattleStore.getState().setGameScreen('intro');
             if (typeof window !== 'undefined') {
               window.dispatchEvent(new CustomEvent('auth-force-overlay'));
@@ -198,6 +262,38 @@ export const useAuthStore = create<AuthState>((set, get) => ({
             console.error('[Auth] 로그아웃 실패', error);
             set({ error: error instanceof Error ? error.message : String(error), loading: false });
           }
+  },
+  startGuestMode() {
+    if (get().guestSessionActive) {
+      return;
+    }
+    const storedNickname = getStoredGuestNickname();
+    const nickname = storedNickname ?? generateGuestNickname();
+    persistGuestNickname(nickname);
+    disableGuestSaveMode();
+    enableGuestSaveMode();
+    set({
+      session: null,
+      mode: 'guest',
+      guestSessionActive: true,
+      guestId: `guest-${Date.now()}-${Math.floor(Math.random() * 1000)}`,
+      initializing: false,
+      loading: false,
+      error: null,
+      message: '게스트 모드로 플레이합니다.',
+      profileNickname: nickname,
+    });
+  },
+  exitGuestMode() {
+    if (!get().guestSessionActive) {
+      return;
+    }
+    disableGuestSaveMode();
+    set({
+      guestSessionActive: false,
+      guestId: null,
+      mode: 'user',
+    });
   }
 }));
 

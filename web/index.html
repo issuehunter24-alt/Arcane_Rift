@@ -260,6 +260,51 @@
               cursor: not-allowed;
             }
 
+            .auth-guest-block {
+              display: flex;
+              flex-direction: column;
+              gap: 10px;
+              margin-top: 6px;
+              padding: 14px;
+              border-radius: 14px;
+              background: rgba(10, 18, 32, 0.8);
+              border: 1px solid rgba(74, 158, 255, 0.2);
+            }
+
+            .auth-guest-block strong {
+              font-size: 14px;
+              color: #cfe3ff;
+            }
+
+            .auth-guest-note {
+              font-size: 12px;
+              color: rgba(206, 222, 255, 0.7);
+              margin-top: -6px;
+            }
+
+            #auth-guest-start {
+              padding: 12px 16px;
+              border-radius: 10px;
+              border: 1px solid rgba(74, 158, 255, 0.4);
+              background: rgba(12, 22, 36, 0.85);
+              color: #9ecbff;
+              font-size: 14px;
+              font-weight: 600;
+              cursor: pointer;
+              transition: background var(--transition-base), transform var(--transition-base);
+            }
+
+            #auth-guest-start:hover:not(:disabled) {
+              background: rgba(74, 158, 255, 0.2);
+              transform: translateY(-1px);
+            }
+
+            #auth-guest-start.active {
+              background: rgba(74, 158, 255, 0.25);
+              color: #fff;
+              border-color: rgba(74, 158, 255, 0.6);
+            }
+
             .auth-sign-out {
               position: fixed;
               top: 18px;
@@ -4255,6 +4300,13 @@
         <div class="auth-switch auth-hidden" data-auth-visible="sign-up">
           <span>이미 계정이 있나요?</span>
           <button type="button" class="auth-switch-btn" data-auth-view="sign-in">로그인 화면으로</button>
+        </div>
+        <div class="auth-guest-block">
+          <div>
+            <strong>게스트 모드</strong>
+            <p id="auth-guest-note" class="auth-guest-note">로그인 없이 체험할 수 있으며 진행 상황은 이 기기에 저장됩니다.</p>
+          </div>
+          <button type="button" id="auth-guest-start">게스트로 시작하기</button>
         </div>
       </div>
     </div>

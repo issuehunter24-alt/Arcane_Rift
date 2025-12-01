@@ -4673,6 +4673,7 @@ export const campaignStageData = [
         backgroundImage: 'backgrounds/stage_46_mastermind.png'
       },
       characterImage: 'characters/seraphina_belmont.png',
+      enemyImage: 'characters/marcus_belmont.png',
       cutscene: {
         preBattle: [
           {
@@ -4771,6 +4772,7 @@ export const campaignStageData = [
         backgroundImage: 'backgrounds/stage_28_multi_tactics.png'
       },
       characterImage: 'characters/seraphina_belmont.png',
+      enemyImage: 'characters/darius_blackwood.png',
       cutscene: {
         preBattle: [
           {
@@ -4853,6 +4855,7 @@ export const campaignStageData = [
         backgroundImage: 'backgrounds/stage_48_elder_cooperation.png'
       },
       characterImage: 'characters/seraphina_belmont.png',
+      enemyImage: 'characters/elder_belmont.png',
       cutscene: {
         preBattle: [
           {
@@ -4942,6 +4945,7 @@ export const campaignStageData = [
         backgroundImage: 'backgrounds/stage_30_final_boss.png'
       },
       characterImage: 'characters/seraphina_belmont.png',
+      enemyImage: 'characters/elder_belmont.png',
       cutscene: {
         preBattle: [
           {
@@ -5031,6 +5035,7 @@ export const campaignStageData = [
         backgroundImage: 'backgrounds/stage_32_politics.png'
       },
       characterImage: 'characters/seraphina_belmont.png',
+      enemyImage: 'characters/marcus_belmont.png',
       cutscene: {
         preBattle: [
           {

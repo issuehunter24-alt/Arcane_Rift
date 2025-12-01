@@ -2,14 +2,15 @@
  * 사운드 시스템 매니저
  * Web Audio API 기반
  */
+const AUDIO_OUTPUT_BLOCKED = true;
 class AudioManager {
     constructor() {
         this.tracks = new Map();
         this.settings = {
-            masterVolume: 0.7,
-            bgmVolume: 0.5,
-            sfxVolume: 0.8,
-            muted: false,
+            masterVolume: 0,
+            bgmVolume: 0,
+            sfxVolume: 0,
+            muted: true,
         };
         this.currentBGM = null;
         // localStorage에서 설정 불러오기
@@ -52,6 +53,9 @@ class AudioManager {
      * 효과음 재생 (원샷)
      */
     playSFX(name, volume) {
+        if (AUDIO_OUTPUT_BLOCKED) {
+            return;
+        }
         if (this.settings.muted)
             return;
         const track = this.tracks.get(name);
@@ -73,6 +77,10 @@ class AudioManager {
      * 배경음악 재생
      */
     playBGM(name, fadeIn = true) {
+        if (AUDIO_OUTPUT_BLOCKED) {
+            this.currentBGM = name;
+            return;
+        }
         if (this.currentBGM === name)
             return;
         // 기존 BGM 정지
@@ -162,6 +170,9 @@ class AudioManager {
     resumeBGM() {
         if (!this.currentBGM)
             return;
+        if (AUDIO_OUTPUT_BLOCKED) {
+            return;
+        }
         const track = this.tracks.get(this.currentBGM);
         if (track?.audio && !this.settings.muted) {
             track.audio.play();

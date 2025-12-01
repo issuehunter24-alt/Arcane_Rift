@@ -61,6 +61,11 @@ let pendingSavedCollection: SavedCollectionEntry[] | null = null;
 let pendingSavedDeck: SavedDeckEntry[] | null = null;
 let isApplyingSavedCardData = false;
 
+const GUEST_SAVE_KEY = 'gals_guest_save_v1';
+let guestSyncUnsubscribe: (() => void) | null = null;
+let guestLastSaveTriggers: SaveTriggerSnapshot | null = null;
+let guestLastSavedJson = '';
+
 function makeSavedEntriesFromCardIds(cardIds: readonly string[]): SavedCollectionEntry[] {
   const counts = new Map<string, number>();
   for (const rawId of cardIds) {
@@ -731,4 +736,81 @@ export async function handleAuthSessionChange(userId: string | null) {
 
   await startSync(userId);
 }
+
+function readGuestSaveFromStorage(): CloudSaveData | null {
+  if (typeof window === 'undefined') {
+    return null;
+  }
+  try {
+    const raw = window.localStorage.getItem(GUEST_SAVE_KEY);
+    if (!raw) {
+      return null;
+    }
+    return JSON.parse(raw) as CloudSaveData;
+  } catch (error) {
+    console.warn('[CloudSave] Failed to parse guest save snapshot', error);
+    return null;
+  }
+}
+
+function persistGuestSave(snapshot: CloudSaveData) {
+  if (typeof window === 'undefined') {
+    return;
+  }
+  try {
+    window.localStorage.setItem(GUEST_SAVE_KEY, JSON.stringify(snapshot));
+  } catch (error) {
+    console.error('[CloudSave] Failed to persist guest save', error);
+  }
+}
+
+export function enableGuestSaveMode() {
+  if (typeof window === 'undefined') {
+    console.warn('[CloudSave] Guest mode persistence is not available in this environment.');
+    return;
+  }
+
+  disableGuestSaveMode();
+
+  console.log('[CloudSave] Guest mode persistence enabled');
+
+  const existingSave = readGuestSaveFromStorage();
+  if (existingSave) {
+    try {
+      applyCloudSave(existingSave);
+      applyDailyProgressFromSave(existingSave.daily);
+      guestLastSavedJson = JSON.stringify(existingSave);
+    } catch (error) {
+      console.error('[CloudSave] Failed to apply guest save snapshot, clearing it', error);
+      window.localStorage.removeItem(GUEST_SAVE_KEY);
+      guestLastSavedJson = '';
+    }
+  } else {
+    guestLastSavedJson = '';
+    useBattleStore.getState().ensureDailyDungeon();
+  }
+
+  guestLastSaveTriggers = extractSaveTriggers(useBattleStore.getState());
+
+  guestSyncUnsubscribe = useBattleStore.subscribe((state) => {
+    const triggers = extractSaveTriggers(state);
+    if (!triggersChanged(guestLastSaveTriggers, triggers)) {
+      return;
+    }
+    guestLastSaveTriggers = triggers;
+    const snapshot = selectPersistentState(state);
+    guestLastSavedJson = JSON.stringify(snapshot);
+    persistGuestSave(snapshot);
+  });
+}
+
+export function disableGuestSaveMode() {
+  if (guestSyncUnsubscribe) {
+    guestSyncUnsubscribe();
+    guestSyncUnsubscribe = null;
+  }
+  guestLastSaveTriggers = null;
+  guestLastSavedJson = '';
+}
+
 

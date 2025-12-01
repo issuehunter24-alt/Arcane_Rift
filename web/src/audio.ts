@@ -20,13 +20,15 @@ interface AudioTrack {
   isPlaying: boolean;
 }
 
+const AUDIO_OUTPUT_BLOCKED = true;
+
 class AudioManager {
   private tracks: Map<string, AudioTrack> = new Map();
   private settings: AudioSettings = {
-    masterVolume: 0.7,
-    bgmVolume: 0.5,
-    sfxVolume: 0.8,
-    muted: false,
+    masterVolume: 0,
+    bgmVolume: 0,
+    sfxVolume: 0,
+    muted: true,
   };
   private currentBGM: string | null = null;
 
@@ -80,6 +82,9 @@ class AudioManager {
    * 효과음 재생 (원샷)
    */
   playSFX(name: string, volume?: number): void {
+    if (AUDIO_OUTPUT_BLOCKED) {
+      return;
+    }
     if (this.settings.muted) return;
 
     const track = this.tracks.get(name);
@@ -105,6 +110,10 @@ class AudioManager {
    * 배경음악 재생
    */
   playBGM(name: string, fadeIn: boolean = true): void {
+    if (AUDIO_OUTPUT_BLOCKED) {
+      this.currentBGM = name;
+      return;
+    }
     if (this.currentBGM === name) return;
 
     // 기존 BGM 정지
@@ -199,6 +208,9 @@ class AudioManager {
 
   resumeBGM(): void {
     if (!this.currentBGM) return;
+    if (AUDIO_OUTPUT_BLOCKED) {
+      return;
+    }
     const track = this.tracks.get(this.currentBGM);
     if (track?.audio && !this.settings.muted) {
       track.audio.play();

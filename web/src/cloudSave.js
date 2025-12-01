@@ -13,6 +13,10 @@ let currentSyncStatus = 'idle';
 let lastSaveTriggers = null;
 let pendingSavedCollection = null;
 let pendingSavedDeck = null;
+const GUEST_SAVE_KEY = 'gals_guest_save_v1';
+let guestSyncUnsubscribe = null;
+let guestLastSaveTriggers = null;
+let guestLastSavedJson = '';
 function makeSavedEntriesFromCardIds(cardIds) {
     const counts = new Map();
     for (const rawId of cardIds) {
@@ -542,15 +546,34 @@ async function startSync(userId) {
             lastSaveTriggers = extractSaveTriggers(currentState);
         }
         else {
-            console.log('[CloudSave] No save found, creating default snapshot');
+            console.log('[CloudSave] No save found, checking existing local data...');
             useBattleStore.getState().ensureDailyDungeon();
-            const starterCollection = cloneSavedEntries(STARTER_COLLECTION_ENTRIES);
-            const starterDeck = cloneSavedEntries(STARTER_DECK_ENTRIES);
-            applySavedCardData(starterCollection, starterDeck);
+            const currentState = useBattleStore.getState();
+            const currentCollection = currentState.collection || [];
+            const currentDeck = currentState.playerDeck || [];
+            
+            // 기존 로컬 데이터가 있으면 그것을 사용, 없으면 스타터 덱 사용
+            let collectionEntries, deckEntries;
+            if (currentCollection.length > 0 || currentDeck.length > 0) {
+                console.log('[CloudSave] Preserving existing local data', {
+                    collection: currentCollection.length,
+                    deck: currentDeck.length
+                });
+                // 기존 데이터를 세이브 포맷으로 변환
+                const persistentState = selectPersistentState(currentState);
+                collectionEntries = persistentState.collection;
+                deckEntries = persistentState.playerDeck;
+            } else {
+                console.log('[CloudSave] No local data found, using starter deck');
+                collectionEntries = cloneSavedEntries(STARTER_COLLECTION_ENTRIES);
+                deckEntries = cloneSavedEntries(STARTER_DECK_ENTRIES);
+                applySavedCardData(collectionEntries, deckEntries);
+            }
+            
             const defaultSave = {
                 ...selectPersistentState(useBattleStore.getState()),
-                collection: starterCollection,
-                playerDeck: starterDeck,
+                collection: collectionEntries,
+                playerDeck: deckEntries,
                 timestamp: new Date().toISOString(),
             };
             await persistCloudSave(userId, defaultSave);
@@ -607,4 +630,75 @@ export async function handleAuthSessionChange(userId) {
         return;
     }
     await startSync(userId);
+}
+function readGuestSaveFromStorage() {
+    if (typeof window === 'undefined') {
+        return null;
+    }
+    try {
+        const raw = window.localStorage.getItem(GUEST_SAVE_KEY);
+        if (!raw) {
+            return null;
+        }
+        return JSON.parse(raw);
+    }
+    catch (error) {
+        console.warn('[CloudSave] Failed to parse guest save snapshot', error);
+        return null;
+    }
+}
+function persistGuestSave(snapshot) {
+    if (typeof window === 'undefined') {
+        return;
+    }
+    try {
+        window.localStorage.setItem(GUEST_SAVE_KEY, JSON.stringify(snapshot));
+    }
+    catch (error) {
+        console.error('[CloudSave] Failed to persist guest save', error);
+    }
+}
+export function enableGuestSaveMode() {
+    if (typeof window === 'undefined') {
+        console.warn('[CloudSave] Guest mode persistence is not available in this environment.');
+        return;
+    }
+    disableGuestSaveMode();
+    console.log('[CloudSave] Guest mode persistence enabled');
+    const existingSave = readGuestSaveFromStorage();
+    if (existingSave) {
+        try {
+            applyCloudSave(existingSave);
+            applyDailyProgressFromSave(existingSave.daily);
+            guestLastSavedJson = JSON.stringify(existingSave);
+        }
+        catch (error) {
+            console.error('[CloudSave] Failed to apply guest save snapshot, clearing it', error);
+            window.localStorage.removeItem(GUEST_SAVE_KEY);
+            guestLastSavedJson = '';
+        }
+    }
+    else {
+        guestLastSavedJson = '';
+        useBattleStore.getState().ensureDailyDungeon();
+    }
+    guestLastSaveTriggers = extractSaveTriggers(useBattleStore.getState());
+    guestSyncUnsubscribe = useBattleStore.subscribe((state) => {
+        const triggers = extractSaveTriggers(state);
+        if (!triggersChanged(guestLastSaveTriggers, triggers)) {
+            return;
+        }
+        guestLastSaveTriggers = triggers;
+        const snapshot = selectPersistentState(state);
+        guestLastSavedJson = JSON.stringify(snapshot);
+        persistGuestSave(snapshot);
+    });
+}
+export function disableGuestSaveMode() {
+    if (guestSyncUnsubscribe) {
+        guestSyncUnsubscribe();
+        guestSyncUnsubscribe = null;
+    }
+    guestLastSaveTriggers = null;
+    guestLastSavedJson = '';
 }

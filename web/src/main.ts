@@ -486,7 +486,7 @@ useBattleStore.subscribe((state) => {
   if (previewEl?.classList.contains('active')) {
     closeCardPreview();
   }
-    if (tooltipRoot.style.display !== 'none') {
+    if (tooltipRoot && tooltipRoot.style && tooltipRoot.style.display !== 'none') {
       hideTooltip();
     }
   }
@@ -531,8 +531,10 @@ function setupAuthUI(): {
   const signInForm = document.getElementById('auth-sign-in') as HTMLFormElement | null;
   const signUpForm = document.getElementById('auth-sign-up') as HTMLFormElement | null;
   const logoutButton = document.getElementById('auth-sign-out') as HTMLButtonElement | null;
+  const guestButton = document.getElementById('auth-guest-start') as HTMLButtonElement | null;
+  const guestNote = document.getElementById('auth-guest-note');
 
-  if (!authScreen || !authTitle || !authError || !authMessage || !signInForm || !signUpForm) {
+  if (!authScreen || !authTitle || !authError || !authMessage || !signInForm || !signUpForm || !guestButton) {
     console.warn('[Auth] UI 요소를 찾을 수 없습니다.');
     return noopAuthUI;
   }
@@ -568,6 +570,10 @@ function setupAuthUI(): {
         }
       }
     });
+  });
+
+  guestButton.addEventListener('click', () => {
+    useAuthStore.getState().startGuestMode();
   });
 
   signUpNickname.addEventListener('input', (event) => {
@@ -620,7 +626,9 @@ function setupAuthUI(): {
 
   const updateAuthUIState = () => {
     const state = useAuthStore.getState();
-    const isAuthed = !!state.session;
+    const isGuest = state.guestSessionActive;
+    const hasUserSession = !!state.session;
+    const isAuthed = hasUserSession || isGuest;
     const shouldShowOverlay = authOverlayEnabled && (!isAuthed || state.initializing);
     const showForms = shouldShowOverlay && !state.initializing;
 
@@ -633,7 +641,7 @@ function setupAuthUI(): {
     }
 
     if (logoutButton) {
-      const shouldShowLogout = authOverlayEnabled && isAuthed;
+      const shouldShowLogout = authOverlayEnabled && hasUserSession;
       logoutButton.classList.toggle('auth-hidden', !shouldShowLogout);
       logoutButton.disabled = state.loading;
     }
@@ -677,6 +685,12 @@ function setupAuthUI(): {
     toggleButtons.forEach((btn) => {
       btn.disabled = disabled;
     });
+    guestButton.disabled = disabled;
+    guestButton.textContent = state.guestSessionActive ? '게스트로 플레이 중' : '게스트로 시작하기';
+    guestButton.classList.toggle('active', state.guestSessionActive);
+    if (guestNote) {
+      guestNote.classList.toggle('auth-hidden', state.initializing);
+    }
   };
 
   const setAuthOverlayEnabled = (enabled: boolean) => {
@@ -686,7 +700,7 @@ function setupAuthUI(): {
 
   const requestAuthWithCallback = (onAuthenticated: () => void) => {
     const state = useAuthStore.getState();
-    if (state.session) {
+    if (state.session || state.guestSessionActive) {
       onAuthenticated();
       return;
     }
@@ -708,7 +722,7 @@ function setupAuthUI(): {
       });
     }
 
-    if (pendingAuthCallback && state.session) {
+    if (pendingAuthCallback && (state.session || state.guestSessionActive)) {
       const callback = pendingAuthCallback;
       pendingAuthCallback = null;
       setAuthOverlayEnabled(false);
@@ -1158,6 +1172,7 @@ let currentEnemyPortrait: string | null = null;
   
   // Tooltip helper functions
   function showTooltip(card: typeof store.hand[0], x: number, y: number) {
+    if (!tooltipRoot) return;
     const keywordTexts = card.keywords.map(kw => {
       const desc = keywordDescriptions[kw];
       return desc ? `<strong>${kw}</strong>: ${desc}` : kw;
@@ -1184,6 +1199,7 @@ let currentEnemyPortrait: string | null = null;
   }
   
   hideTooltip = function hideTooltip() {
+    if (!tooltipRoot) return;
     tooltipRoot.style.display = 'none';
   };
   let energy = store.energy;
@@ -1971,9 +1987,14 @@ let currentEnemyPortrait: string | null = null;
   function createHPBar(container: Container, maxWidth: number, isPlayer: boolean) {
     container.removeChildren();
     
+    // 모바일 최적화: 바 높이 동적 계산
+    const isMobileView = window.innerWidth <= 768;
+    const isSmallMobile = window.innerWidth <= 480;
+    const barHeight = isSmallMobile ? 24 : (isMobileView ? 22 : HP_BAR_HEIGHT);
+    
     // 배경 (어두운 바)
     const bgBar = new Graphics();
-    bgBar.rect(0, 0, maxWidth, HP_BAR_HEIGHT);
+    bgBar.rect(0, 0, maxWidth, barHeight);
     bgBar.fill({ color: 0x333333 });
     container.addChild(bgBar);
     
@@ -1983,39 +2004,43 @@ let currentEnemyPortrait: string | null = null;
     
     // 테두리
     const border = new Graphics();
-    border.rect(0, 0, maxWidth, HP_BAR_HEIGHT);
+    border.rect(0, 0, maxWidth, barHeight);
     border.stroke({ color: 0x000000, width: 2 });
     container.addChild(border);
     
-    // HP 텍스트
+    // HP 텍스트 (모바일에서 더 크게)
+    const fontSize = isSmallMobile ? 16 : (isMobileView ? 15 : 14);
+    const strokeWidth = isMobileView ? 4 : 3;
     const hpText = new Text({
       text: '100/100',
       style: {
-        fontSize: 14,
+        fontSize: fontSize,
         fill: 0xffffff,
         fontWeight: 'bold',
-        stroke: { color: 0x000000, width: 3 }
+        stroke: { color: 0x000000, width: strokeWidth }
       }
     });
     hpText.anchor.set(0.5);
     hpText.x = maxWidth / 2;
-    hpText.y = HP_BAR_HEIGHT / 2;
+    hpText.y = barHeight / 2;
     container.addChild(hpText);
     
-    // 이름 라벨
+    // 이름 라벨 (모바일에서 더 크게)
+    const nameFontSize = isSmallMobile ? 13 : (isMobileView ? 12 : 12);
     const nameText = new Text({
       text: isPlayer ? 'PLAYER' : 'ENEMY',
       style: {
-        fontSize: 12,
+        fontSize: nameFontSize,
         fill: isPlayer ? 0x4a9eff : 0xff4444,
-        fontWeight: 'bold'
+        fontWeight: 'bold',
+        stroke: isMobileView ? { color: 0x000000, width: 2 } : undefined
       }
     });
     nameText.x = 0;
-    nameText.y = -18;
+    nameText.y = isMobileView ? -20 : -18;
     container.addChild(nameText);
     
-    return { hpBar, hpText, bgBar };
+    return { hpBar, hpText, bgBar, barHeight };
   }
   
   // HP 바 생성 (모바일 대응 - 전역 변수로 선언하여 리사이즈 시 업데이트 가능하게 함)
@@ -2029,15 +2054,16 @@ let currentEnemyPortrait: string | null = null;
   app.stage.addChild(playerHPBar);
   app.stage.addChild(enemyHPBar);
   
-  // 에너지 바 생성 함수
+  // 에너지 바 생성 함수 (모바일 최적화 개선)
   function createEnergyBar(container: Container, maxWidth: number, isPlayer: boolean) {
     container.removeChildren();
     
     // 모바일 대응 - 바 높이와 폰트 크기 조정
     const isMobile = window.innerWidth <= 768;
     const isSmallMobile = window.innerWidth <= 480;
-    const barHeight = isSmallMobile ? 12 : 16;
-    const fontSize = isSmallMobile ? 9 : (isMobile ? 10 : 12);
+    // 모바일에서 바 높이와 텍스트 크기 증가
+    const barHeight = isSmallMobile ? 18 : (isMobile ? 18 : 16);
+    const fontSize = isSmallMobile ? 12 : (isMobile ? 11 : 12);
     
     // 배경 (어두운 바)
     const bgBar = new Graphics();
@@ -2057,13 +2083,14 @@ let currentEnemyPortrait: string | null = null;
     border.stroke({ color: 0x000000, width: 2 });
     container.addChild(border);
     
-    // 에너지 텍스트
+    // 에너지 텍스트 (모바일에서 더 명확하게)
     const energyText = new Text({
       text: '10/10',
       style: {
         fontSize: fontSize,
         fill: 0x000000,
-        fontWeight: 'bold'
+        fontWeight: 'bold',
+        stroke: isMobile ? { color: 0xffffff, width: 1 } : undefined // 모바일에서 가독성 향상
       }
     });
     energyText.anchor.set(0.5);
@@ -2071,7 +2098,7 @@ let currentEnemyPortrait: string | null = null;
     energyText.y = barHeight / 2;
     container.addChild(energyText);
     
-    return { energyBar, energyText, bgBar };
+    return { energyBar, energyText, bgBar, barHeight };
   }
   
   // 에너지 바 컨테이너 생성
@@ -2417,6 +2444,8 @@ let currentEnemyPortrait: string | null = null;
     if (handContainerRef) {
       const baseHandOffset = isSmallMobile ? 140 : (isLandscapeCompact ? 130 : (isMobile ? 170 : 220));
       handContainerRef.y = app.renderer.height - baseHandOffset;
+      // 손패 스크롤 경계 업데이트
+      updateHandScrollBounds();
     }
   };
   updateBattleLayoutRef = updateBattleLayout;
@@ -2476,7 +2505,7 @@ let currentEnemyPortrait: string | null = null;
   // HP 바 업데이트 함수
   function updateHPBar(
     container: Container,
-    components: { hpBar: Graphics; hpText: Text; bgBar: Graphics },
+    components: { hpBar: Graphics; hpText: Text; bgBar: Graphics; barHeight?: number },
     currentHP: number,
     maxHP: number,
     maxWidth: number,
@@ -2485,14 +2514,16 @@ let currentEnemyPortrait: string | null = null;
   ) {
     const ratio = Math.max(0, Math.min(1, maxHP === 0 ? 0 : currentHP / maxHP));
     const segmentCount = Math.max(1, Math.ceil(maxHP / 100));
-    const segmentHeight = HP_BAR_HEIGHT / segmentCount;
+    // 동적 barHeight 사용 (모바일 최적화) - components에 barHeight가 없으면 기본값 사용
+    const barHeight = components.barHeight || HP_BAR_HEIGHT;
+    const segmentHeight = barHeight / segmentCount;
     const segmentGap = segmentCount > 1 ? Math.min(2, segmentHeight * 0.25) : 0;
     const palette =
       ratio > 0.6 ? HP_SEGMENT_COLORS.healthy : ratio > 0.3 ? HP_SEGMENT_COLORS.warning : HP_SEGMENT_COLORS.danger;
 
     // 배경 업데이트 (분절감 제공)
     components.bgBar.clear();
-    components.bgBar.rect(0, 0, maxWidth, HP_BAR_HEIGHT);
+    components.bgBar.rect(0, 0, maxWidth, barHeight);
     components.bgBar.fill({ color: 0x1f1f1f });
 
     if (segmentCount > 1) {
@@ -2521,7 +2552,7 @@ let currentEnemyPortrait: string | null = null;
         continue;
       }
 
-      const y = HP_BAR_HEIGHT - (i + 1) * segmentHeight + segmentGap / 2;
+      const y = barHeight - (i + 1) * segmentHeight + segmentGap / 2;
       const height = Math.max(0, segmentHeight - segmentGap);
       const color = palette[Math.min(i, palette.length - 1)];
 
@@ -2673,12 +2704,17 @@ let currentEnemyPortrait: string | null = null;
   handContainerRef = handContainer;
   
   // 핸드 스크롤 기능 (모바일)
+  // 핸드 스크롤 기능 (모바일) - 개선된 버전
   let handScrollData = {
     isDragging: false,
     startX: 0,
     startContainerX: 0,
     minX: 0,
     maxX: 0,
+    velocity: 0,
+    lastX: 0,
+    lastTime: 0,
+    animationFrame: null as number | null,
   };
   
   // 핸드 경계 업데이트 (카드 수에 따라)
@@ -2691,15 +2727,16 @@ let currentEnemyPortrait: string | null = null;
     }
     
     const isMobileView = window.innerWidth <= 768;
-    const cardWidth = isMobileView ? 100 : 120;
-    const spacing = isMobileView ? 8 : 10;
+    const isSmallMobile = window.innerWidth <= 480;
+    const cardWidth = isSmallMobile ? 80 : (isMobileView ? 95 : 120);
+    const spacing = isSmallMobile ? 8 : (isMobileView ? 10 : 10);
     const totalWidth = state.hand.length * (cardWidth + spacing) - spacing;
     const screenWidth = app.renderer.width;
     
     // 카드들이 화면보다 넓으면 스크롤 가능
     if (totalWidth > screenWidth) {
       handScrollData.maxX = 0;
-      handScrollData.minX = screenWidth - totalWidth - 50; // 50px 여유
+      handScrollData.minX = screenWidth - totalWidth - 20; // 20px 여유
     } else {
       // 중앙 정렬 유지
       handScrollData.minX = 0;
@@ -2708,12 +2745,74 @@ let currentEnemyPortrait: string | null = null;
     }
   }
   
-  // 터치/마우스 드래그 이벤트
+  // 관성 스크롤 애니메이션
+  function animateScroll() {
+    if (Math.abs(handScrollData.velocity) < 0.1) {
+      handScrollData.velocity = 0;
+      if (handScrollData.animationFrame) {
+        cancelAnimationFrame(handScrollData.animationFrame);
+        handScrollData.animationFrame = null;
+      }
+      // 스냅: 가장 가까운 카드로 정렬
+      snapToNearestCard();
+      return;
+    }
+    let newX = handContainer.x + handScrollData.velocity;
+    newX = Math.max(handScrollData.minX, Math.min(handScrollData.maxX, newX));
+    handContainer.x = newX;
+    handScrollData.velocity *= 0.95; // 마찰
+    handScrollData.animationFrame = requestAnimationFrame(animateScroll);
+  }
+  
+  // 가장 가까운 카드로 스냅
+  function snapToNearestCard() {
+    const state = useBattleStore.getState();
+    if (!state.hand || state.hand.length === 0) return;
+    const isMobileView = window.innerWidth <= 768;
+    const isSmallMobile = window.innerWidth <= 480;
+    const cardWidth = isSmallMobile ? 80 : (isMobileView ? 95 : 120);
+    const spacing = isSmallMobile ? 8 : (isMobileView ? 10 : 10);
+    const cardSize = cardWidth + spacing;
+    // 현재 위치에서 가장 가까운 카드 인덱스 계산
+    const centerX = app.renderer.width / 2;
+    const relativeX = centerX - handContainer.x;
+    const nearestIndex = Math.round(relativeX / cardSize - (state.hand.length - 1) / 2);
+    const clampedIndex = Math.max(0, Math.min(state.hand.length - 1, nearestIndex));
+    // 해당 카드가 중앙에 오도록 조정
+    const targetX = centerX - (clampedIndex * cardSize + (state.hand.length - 1) * cardSize / 2);
+    const clampedTargetX = Math.max(handScrollData.minX, Math.min(handScrollData.maxX, targetX));
+    // 부드러운 애니메이션으로 이동
+    const startX = handContainer.x;
+    const distance = clampedTargetX - startX;
+    let progress = 0;
+    const duration = 200; // 200ms
+    const startTime = Date.now();
+    const animate = () => {
+      const elapsed = Date.now() - startTime;
+      progress = Math.min(1, elapsed / duration);
+      const easeOut = 1 - Math.pow(1 - progress, 3); // ease-out cubic
+      handContainer.x = startX + distance * easeOut;
+      if (progress < 1) {
+        requestAnimationFrame(animate);
+      }
+    };
+    animate();
+  }
+  
+  // 터치/마우스 드래그 이벤트 (개선된 버전)
   handContainer.eventMode = 'static';
   handContainer.on('pointerdown', (event) => {
+    // 기존 애니메이션 취소
+    if (handScrollData.animationFrame) {
+      cancelAnimationFrame(handScrollData.animationFrame);
+      handScrollData.animationFrame = null;
+    }
     handScrollData.isDragging = true;
     handScrollData.startX = event.global.x;
     handScrollData.startContainerX = handContainer.x;
+    handScrollData.lastX = event.global.x;
+    handScrollData.lastTime = Date.now();
+    handScrollData.velocity = 0;
   });
   
   handContainer.on('pointermove', (event) => {
@@ -2725,14 +2824,36 @@ let currentEnemyPortrait: string | null = null;
     // 경계 체크
     newX = Math.max(handScrollData.minX, Math.min(handScrollData.maxX, newX));
     handContainer.x = newX;
+    
+    // 속도 계산 (관성 스크롤용)
+    const now = Date.now();
+    const dt = now - handScrollData.lastTime;
+    if (dt > 0) {
+      const dx2 = event.global.x - handScrollData.lastX;
+      handScrollData.velocity = dx2 / dt * 16; // 프레임당 픽셀
+    }
+    handScrollData.lastX = event.global.x;
+    handScrollData.lastTime = now;
   });
   
   handContainer.on('pointerup', () => {
     handScrollData.isDragging = false;
+    // 관성 스크롤 시작
+    if (Math.abs(handScrollData.velocity) > 0.5) {
+      animateScroll();
+    } else {
+      snapToNearestCard();
+    }
   });
   
   handContainer.on('pointerupoutside', () => {
     handScrollData.isDragging = false;
+    // 관성 스크롤 시작
+    if (Math.abs(handScrollData.velocity) > 0.5) {
+      animateScroll();
+    } else {
+      snapToNearestCard();
+    }
   });
   
   let cardSprites: { sprite: Sprite; container: Container; index: number }[] = [];
@@ -2997,9 +3118,10 @@ let currentEnemyPortrait: string | null = null;
       // 모바일에서는 카드를 더 작게 표시
       const isMobileView = window.innerWidth <= 768;
       const isSmallMobile = window.innerWidth <= 480;
-      const cardWidth = isSmallMobile ? 75 : (isMobileView ? 90 : 120);
-      const cardHeight = isSmallMobile ? 112 : (isMobileView ? 135 : 180);
-      const spacing = isSmallMobile ? 5 : (isMobileView ? 6 : 10);
+      const cardWidth = isSmallMobile ? 80 : (isMobileView ? 95 : 120);
+      const cardHeight = isSmallMobile ? 120 : (isMobileView ? 142 : 180);
+      // 모바일에서 터치 영역 최적화: 간격 증가
+      const spacing = isSmallMobile ? 8 : (isMobileView ? 10 : 10);
       const startX = (app.renderer.width - (cardsToShow * (cardWidth + spacing) - spacing)) * 0.5;
       
       for (let idx = 0; idx < cardsToShow; idx++) {
@@ -3081,15 +3203,38 @@ let currentEnemyPortrait: string | null = null;
       
       // 선언 연출 먼저 설정
       const baseY = cardContainer.y;
-      const queuedY = baseY - 20;
-      const queuedScale = 1.05;
+      const queuedY = baseY - (isMobileView ? 25 : 20);
+      const queuedScale = isMobileView ? 1.15 : 1.05; // 모바일에서 더 크게
       
       if (isQueued) {
         cardContainer.y = queuedY;
         cardContainer.scale.set(queuedScale);
         cardContainer.alpha = 1;
+        // 선언된 카드: 펄스 애니메이션 (모바일에서 더 명확하게)
+        if (isMobileView) {
+          // 간단한 펄스 효과를 위해 틴트 애니메이션
+          const pulseTint = () => {
+            if (!cardContainer.parent) return;
+            const current = useBattleStore.getState();
+            if (!current.queuedHandIndices.includes(idx)) return;
+            cardContainer.tint = 0xFFFFFF;
+            setTimeout(() => {
+              if (cardContainer.parent && current.queuedHandIndices.includes(idx)) {
+                cardContainer.tint = 0xE8F4FF; // 연한 파란색
+                setTimeout(() => {
+                  if (cardContainer.parent) {
+                    cardContainer.tint = 0xFFFFFF;
+                    setTimeout(pulseTint, 800);
+                  }
+                }, 200);
+              }
+            }, 200);
+          };
+          pulseTint();
+        }
       } else {
         cardContainer.alpha = canDeclare ? 1 : 0.5;
+        cardContainer.tint = 0xFFFFFF; // 선언되지 않은 카드는 기본 색상
       }
       
       // Make interactive with hover effects (선언 상태 고려)
@@ -3135,6 +3280,7 @@ let currentEnemyPortrait: string | null = null;
       let longPressTimer: number | null = null;
       let pointerDownTime = 0;
       let pointerDownPos = { x: 0, y: 0 };
+      let hasMoved = false;
       
       cardContainer.on('pointerdown', (e) => {
         const currentState = useBattleStore.getState();
@@ -3142,14 +3288,32 @@ let currentEnemyPortrait: string | null = null;
         
         pointerDownTime = Date.now();
         pointerDownPos = { x: e.globalX, y: e.globalY };
+        hasMoved = false;
         
-        // 롱프레스 타이머 시작 (500ms)
+        // 모바일에서는 더 짧은 롱프레스 시간 (300ms)
+        const longPressDelay = isMobileView ? 300 : 500;
+        
+        // 롱프레스 타이머 시작
         longPressTimer = window.setTimeout(() => {
           // 롱프레스: 카드 프리뷰 표시
           hideTooltip();
           showCardPreview(card);
           longPressTimer = null;
-        }, 500);
+        }, longPressDelay);
+      });
+      
+      cardContainer.on('pointermove', (e) => {
+        // 이동 감지: 롱프레스 취소
+        if (pointerDownTime > 0) {
+          const moveDistance = Math.hypot(e.globalX - pointerDownPos.x, e.globalY - pointerDownPos.y);
+          if (moveDistance > 15) { // 이동 임계값 증가
+            hasMoved = true;
+            if (longPressTimer !== null) {
+              clearTimeout(longPressTimer);
+              longPressTimer = null;
+            }
+          }
+        }
       });
       
       cardContainer.on('pointerup', (e) => {
@@ -3166,13 +3330,27 @@ let currentEnemyPortrait: string | null = null;
         const pressDuration = Date.now() - pointerDownTime;
         const moveDistance = Math.hypot(e.globalX - pointerDownPos.x, e.globalY - pointerDownPos.y);
         
-        if (pressDuration < 500 && moveDistance < 10) {
+        // 모바일에서 이동 임계값 증가 (스크롤과 구분)
+        const moveThreshold = isMobileView ? 15 : 10;
+        
+        if (pressDuration < (isMobileView ? 300 : 500) && moveDistance < moveThreshold && !hasMoved) {
           // 툴팁 숨김
           hideTooltip();
           
           // 🔒 턴 처리 중에는 카드 선택 불가
           if (useBattleStore.getState().isTurnProcessing) {
             return;
+          }
+          
+          // 모바일에서 더 강한 피드백
+          if (isMobileView) {
+            cardContainer.scale.set(queuedScale * 1.1);
+            setTimeout(() => {
+              if (cardContainer.parent) {
+                const nowQueued = useBattleStore.getState().queuedHandIndices.includes(idx);
+                cardContainer.scale.set(nowQueued ? queuedScale : 1.0);
+              }
+            }, 150);
           }
           
           // 토글: 선택되어 있으면 취소, 아니면 선언
@@ -3184,6 +3362,8 @@ let currentEnemyPortrait: string | null = null;
             useBattleStore.getState().declareCard(idx);
           }
         }
+        pointerDownTime = 0;
+        hasMoved = false;
       });
       
       cardContainer.on('pointerupoutside', () => {
@@ -3192,6 +3372,8 @@ let currentEnemyPortrait: string | null = null;
           clearTimeout(longPressTimer);
           longPressTimer = null;
         }
+        pointerDownTime = 0;
+        hasMoved = false;
       });
       
       handContainer.addChild(cardContainer);
@@ -3278,8 +3460,9 @@ let currentEnemyPortrait: string | null = null;
     useBattleStore.getState().setAllCardsPool(allCards);
     
     // 초기 컬렉션: 20장만 소유 (초기 덱 구성)
-    const storeState = useBattleStore.getState();
-    const isLoggedIn = useAuthStore.getState().session !== null;
+  const storeState = useBattleStore.getState();
+  const authState = useAuthStore.getState();
+  const isLoggedIn = authState.session !== null || authState.guestSessionActive;
     if (storeState.collection.length === 0 && !isLoggedIn) {
       const initialCollection = getInitialCollection(allCards);
       storeState.setCollection(initialCollection);
@@ -5454,9 +5637,10 @@ let currentEnemyPortrait: string | null = null;
 
     const authState = useAuthStore.getState();
     const battleState = useBattleStore.getState();
+    const isGuest = authState.guestSessionActive;
 
     const nickname = authState.profileNickname?.trim() ? authState.profileNickname : '소환사';
-    menuUserNicknameEl.textContent = nickname;
+    menuUserNicknameEl.textContent = isGuest ? `${nickname} (게스트)` : nickname;
 
     const stageListCount = battleState.campaignStages?.length ?? 0;
     const totalStages = stageListCount > 0
@@ -5480,8 +5664,13 @@ let currentEnemyPortrait: string | null = null;
       rankInfo.nextMinWins !== null ? Math.max(0, rankInfo.nextMinWins - wins) : null;
     let rankText = `${rankInfo.name} · ${wins}승`;
     rankText += remaining !== null ? ` · 다음까지 ${remaining}승` : ' · 최고 등급';
-    menuUserRankEl.textContent = rankText;
-    menuUserRankEl.style.color = rankInfo.color;
+    if (isGuest) {
+      menuUserRankEl.textContent = `게스트 모드 · ${rankText}`;
+      menuUserRankEl.style.color = '#9ecbff';
+    } else {
+      menuUserRankEl.textContent = rankText;
+      menuUserRankEl.style.color = rankInfo.color;
+    }
   }
 
   updateMenuUserInfo();

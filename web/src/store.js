@@ -578,6 +578,12 @@ function getEnemyDeckForStage(stageId, allCards, campaignStages) {
     // 적 캐릭터 이름 추출 (enemyImage에서)
     const enemyImage = stage.enemyImage || '';
     const characterName = extractCharacterNameFromImage(enemyImage);
+    console.log(`[EnemyDeck] Stage ${stageId}: enemyImage="${enemyImage}", characterName="${characterName}"`);
+    // 캐릭터 이름 추출 실패 시 기본 덱으로 폴백
+    if (!characterName || allCards.length === 0) {
+        console.warn(`[EnemyDeck] Stage ${stageId}: Failed to extract character name from ${enemyImage} or no cards available, using basic deck`);
+        return getBasicEnemyDeck(allCards);
+    }
     // 스테이지 난이도에 따른 카드 풀 구성
     let availableCards = [];
     if (stageId <= 5) {
@@ -614,6 +620,11 @@ function getEnemyDeckForStage(stageId, allCards, campaignStages) {
             ...normalCards,
             ...rareCards.slice(0, Math.ceil(rareCards.length * 0.3))
         ];
+        // 해당 캐릭터 카드가 부족하면 일반 Normal 카드로 보충
+        if (availableCards.length < 10) {
+            const fallbackCards = allCards.filter(c => c.rarity === 'Normal' && c.cost <= 2);
+            availableCards = [...availableCards, ...fallbackCards];
+        }
     }
     else if (stageId <= 20) {
         // 11-20 스테이지: 이전 카드 + Epic 카드 일부
@@ -641,6 +652,11 @@ function getEnemyDeckForStage(stageId, allCards, campaignStages) {
             ...rareCards,
             ...epicCards.slice(0, Math.ceil(epicCards.length * 0.2))
         ];
+        // 해당 캐릭터 카드가 부족하면 일반 카드로 보충
+        if (availableCards.length < 10) {
+            const fallbackCards = allCards.filter(c => (c.rarity === 'Normal' || c.rarity === 'Rare') && c.cost <= 3);
+            availableCards = [...availableCards, ...fallbackCards];
+        }
     }
     else {
         // 21+ 스테이지: 이전 카드 + Legendary 카드 일부
@@ -671,6 +687,26 @@ function getEnemyDeckForStage(stageId, allCards, campaignStages) {
             ...epicCards,
             ...legendaryCards.slice(0, Math.ceil(legendaryCards.length * 0.1))
         ];
+        // 해당 캐릭터 카드가 부족하면 일반 카드로 보충
+        if (availableCards.length < 10) {
+            const fallbackCards = allCards.filter(c => c.rarity === 'Normal' || c.rarity === 'Rare' || c.rarity === 'Epic');
+            availableCards = [...availableCards, ...fallbackCards];
+        }
+    }
+    // availableCards가 여전히 비어있으면 기본 덱으로 폴백
+    console.log(`[EnemyDeck] Stage ${stageId}: availableCards count = ${availableCards.length}`);
+    if (availableCards.length === 0) {
+        console.warn(`[EnemyDeck] Stage ${stageId}: has no available cards for character ${characterName}, using basic deck`);
+        // 디버깅: 모든 카드에서 해당 캐릭터 카드가 있는지 확인
+        const allCharacterCards = allCards.filter(c => {
+            const cardChar = extractCharacterFromCardId(c.id);
+            return cardChar === characterName;
+        });
+        console.warn(`[EnemyDeck] Stage ${stageId}: Total ${characterName} cards in allCards = ${allCharacterCards.length}`);
+        if (allCharacterCards.length > 0) {
+            console.warn(`[EnemyDeck] Stage ${stageId}: Sample ${characterName} card IDs:`, allCharacterCards.slice(0, 3).map(c => c.id));
+        }
+        return getBasicEnemyDeck(allCards);
     }
     // 덱 구성: 공격 40% (8장), 방어 30% (6장), 회복 20% (4장), 특수 10% (2장)
     const attackCards = availableCards.filter(c => c.type === 'Attack');
@@ -721,6 +757,26 @@ function getEnemyDeckForStage(stageId, allCards, campaignStages) {
             const card = shuffled[i];
             deck.push({ ...card, id: `${card.id}_enemy_${timestamp}_${cardIndex++}` });
         }
+    }
+    // availableCards가 비어있거나 덱이 여전히 비어있으면 전체 카드 풀에서 보충
+    if (deck.length < 20) {
+        console.warn(`[EnemyDeck] Stage ${stageId} enemy deck is incomplete (${deck.length}/20), supplementing from all cards`);
+        const allRemaining = allCards.filter(c => !deck.some(d => {
+            const deckBaseId = d.id.split('_enemy_')[0];
+            const cardBaseId = c.id;
+            return deckBaseId === cardBaseId;
+        }));
+        const needed = 20 - deck.length;
+        const shuffled = [...allRemaining].sort(() => Math.random() - 0.5);
+        for (let i = 0; i < needed && i < shuffled.length; i++) {
+            const card = shuffled[i];
+            deck.push({ ...card, id: `${card.id}_enemy_${timestamp}_${cardIndex++}` });
+        }
+    }
+    // 여전히 덱이 비어있으면 기본 덱으로 폴백
+    if (deck.length === 0) {
+        console.error(`[EnemyDeck] Stage ${stageId} enemy deck is empty after all attempts, using basic deck`);
+        return getBasicEnemyDeck(allCards);
     }
     return deck.slice(0, 20).sort(() => Math.random() - 0.5);
 }
@@ -1990,8 +2046,26 @@ export const useBattleStore = create((set, get) => {
         setCollection: (cards) => {
             const pool = get().allCardsPool;
             const hydrated = rehydrateCardsFromPool(cards, pool);
+            
+            // 세이브 데이터가 있는지 확인 (업데이트 전 상태 확인)
+            const stateBeforeUpdate = get();
+            const hasSaveData = 
+                stateBeforeUpdate.completedStageIds.length > 0 || 
+                stateBeforeUpdate.collection.length > 0 || 
+                stateBeforeUpdate.playerDeck.length > 0 ||
+                stateBeforeUpdate.gold !== 1200 || // 초기 골드가 아니면 세이브 데이터 있음
+                stateBeforeUpdate.shards !== 80; // 초기 파편이 아니면 세이브 데이터 있음
+            
             set({ collection: hydrated });
-            // 초기 덱이 비어있으면 자동으로 20장 구성 (초기 덱)
+            
+            // 최초 플레이어가 아니면 자동 초기화하지 않음
+            if (hasSaveData) {
+                console.log('[Deck] Save data detected, skipping auto-deck initialization');
+                triggerCloudSave();
+                return;
+            }
+            
+            // 최초 플레이어일 때만 초기 덱 구성
             const currentDeck = get().playerDeck;
             if (currentDeck.length === 0) {
                 // allCardsPool에서 초기 덱 구성 (전체 카드 풀에서 선택)
@@ -2901,15 +2975,40 @@ export const useBattleStore = create((set, get) => {
             const baseSeed = isAnyPvp && matchState ? matchState.seed : Math.floor(Math.random() * 1000000);
             const playerPhase = matchState ? (matchState.playerRole === 'player1' ? 1 : 2) : 1;
             const enemyPhase = matchState ? (playerPhase === 1 ? 2 : 1) : 2;
-            // playerDeck이 비어있거나 20장이 아니면 랜덤 구성
+            // playerDeck이 비어있거나 20장이 아니면 팝업 띄우고 재시작
             if (deck.length !== 20) {
-                console.warn('[Battle] playerDeck is invalid, generating random deck');
-                if (isOnlinePvp) {
-                    const fallbackSeed = generateRoundSeed(baseSeed, 0, playerPhase + 10);
-                    deck = shuffleWithSeed(cards, fallbackSeed).slice(0, 20);
+                console.error('[Battle] playerDeck is invalid, deck length:', deck.length);
+                
+                // 세이브 데이터가 있는지 확인
+                const hasSaveData = 
+                    state.completedStageIds.length > 0 || 
+                    state.collection.length > 0 || 
+                    state.gold !== 1200 ||
+                    state.shards !== 80;
+                
+                if (hasSaveData) {
+                    // 세이브 데이터가 있으면 팝업 띄우고 재시작
+                    const message = `덱이 올바르지 않습니다 (현재 ${deck.length}장).\n게임을 재시작하여 덱을 복구하시겠습니까?`;
+                    if (window.confirm(message)) {
+                        window.location.reload();
+                        return; // 재시작하므로 여기서 종료
+                    }
+                    else {
+                        // 취소하면 전투 시작하지 않음
+                        console.warn('[Battle] User cancelled battle start due to invalid deck');
+                        return;
+                    }
                 }
                 else {
-                    deck = [...cards].sort(() => Math.random() - 0.5).slice(0, 20);
+                    // 최초 플레이어이고 덱이 없으면 랜덤 구성 (예외 처리)
+                    console.warn('[Battle] First-time player with invalid deck, generating random deck');
+                    if (isOnlinePvp) {
+                        const fallbackSeed = generateRoundSeed(baseSeed, 0, playerPhase + 10);
+                        deck = shuffleWithSeed(cards, fallbackSeed).slice(0, 20);
+                    }
+                    else {
+                        deck = [...cards].sort(() => Math.random() - 0.5).slice(0, 20);
+                    }
                 }
             }
             // 덱 셔플
@@ -3465,20 +3564,40 @@ export const useBattleStore = create((set, get) => {
                 }
                 else if (eff.type === 'GainAction') {
                     const value = Number(eff.value ?? 0);
+                    // target 확인: 명시되지 않으면 플레이어 카드는 플레이어에게
+                    const targetOverride = eff.target;
+                    const defaultTarget = 'player';
+                    const energyTarget = targetOverride === 'player' || targetOverride === 'enemy' ? targetOverride : defaultTarget;
+                    
                     if (value > 0) {
                         if (eff.delayed) {
                             const turns = Math.max(1, Number(eff.delayTurns ?? 1));
-                            const playerStatus = { ...get().playerStatus };
-                            playerStatus.energyBoostPending = (playerStatus.energyBoostPending || 0) + value;
-                            playerStatus.energyBoostDuration = Math.max(playerStatus.energyBoostDuration, turns);
-                            set({ playerStatus });
-                            get().addLog(`지연 에너지 효과 준비: ${turns}턴 동안 +${value}`, 'effect');
-                            triggerVFX('buff', 'player', value);
+                            if (energyTarget === 'player') {
+                                const playerStatus = { ...get().playerStatus };
+                                playerStatus.energyBoostPending = (playerStatus.energyBoostPending || 0) + value;
+                                playerStatus.energyBoostDuration = Math.max(playerStatus.energyBoostDuration, turns);
+                                set({ playerStatus });
+                                get().addLog(`지연 에너지 효과 준비: ${turns}턴 동안 +${value}`, 'effect');
+                                triggerVFX('buff', 'player', value);
+                            } else {
+                                const enemyStatus = { ...get().enemyStatus };
+                                enemyStatus.energyBoostPending = (enemyStatus.energyBoostPending || 0) + value;
+                                enemyStatus.energyBoostDuration = Math.max(enemyStatus.energyBoostDuration, turns);
+                                set({ enemyStatus });
+                                get().addLog(`적 지연 에너지 효과 준비: ${turns}턴 동안 +${value}`, 'effect');
+                                triggerVFX('buff', 'enemy', value);
+                            }
                         }
                         else {
-                            set({ energy: get().energy + value });
-                            get().addLog(`효과: 에너지 +${value}`, 'effect');
-                            triggerVFX('energy', 'player', value);
+                            if (energyTarget === 'player') {
+                                set({ energy: get().energy + value });
+                                get().addLog(`효과: 에너지 +${value}`, 'effect');
+                                triggerVFX('energy', 'player', value);
+                            } else {
+                                set({ enemyEnergy: get().enemyEnergy + value });
+                                get().addLog(`적 효과: 에너지 +${value}`, 'effect');
+                                triggerVFX('energy', 'enemy', value);
+                            }
                         }
                     }
                 }
@@ -3567,6 +3686,11 @@ export const useBattleStore = create((set, get) => {
                     const value = Number(eff.value ?? 0);
                     const aoe = eff.aoe === true;
                     const overflowToShield = eff.overflowToShield === true;
+                    // target 확인: 명시되지 않으면 플레이어 카드는 플레이어에게, 적 카드는 적에게
+                    const targetOverride = eff.target;
+                    const defaultTarget = card.type === 'Heal' ? 'player' : (card.type === 'Attack' ? 'enemy' : 'player');
+                    const healTarget = targetOverride === 'player' || targetOverride === 'enemy' ? targetOverride : defaultTarget;
+                    
                     if (value > 0) {
                         if (aoe) {
                             // 광역 회복: 플레이어와 적 모두에게 (초과 보호막 없음)
@@ -3575,6 +3699,7 @@ export const useBattleStore = create((set, get) => {
                             get().addLog(`광역 회복: 플레이어와 적에게 ${value}`, 'effect');
                         }
                         else if (overflowToShield) {
+                            // overflowToShield는 플레이어에게만 적용 가능
                             const currentState = get();
                             const currentHp = currentState.playerHp;
                             const maxHp = currentState.playerMaxHp;
@@ -3596,7 +3721,8 @@ export const useBattleStore = create((set, get) => {
                             }
                         }
                         else {
-                            get().heal('player', value);
+                            // target에 따라 회복 적용
+                            get().heal(healTarget, value);
                         }
                     }
                 }
@@ -3604,36 +3730,73 @@ export const useBattleStore = create((set, get) => {
                     const stacks = Math.max(1, Number(eff.stacks ?? 1));
                     const duration = Math.max(1, Number(eff.duration ?? 2));
                     const damagePerStack = Math.max(1, Number(eff.damagePerStack ?? 5));
-                    get().applyStatus('enemy', 'Bleed', stacks, duration, 100, damagePerStack);
-                    get().addLog(`출혈 적용: ${stacks}중첩 / ${duration}턴 (스택당 ${damagePerStack})`, 'effect');
-                    triggerVFX('damage', 'enemy', stacks);
+                    // target 확인: 명시되지 않으면 Attack 카드는 적에게
+                    const targetOverride = eff.target;
+                    const defaultTarget = card.type === 'Attack' ? 'enemy' : 'player';
+                    const bleedTarget = targetOverride === 'player' || targetOverride === 'enemy' ? targetOverride : defaultTarget;
+                    
+                    get().applyStatus(bleedTarget, 'Bleed', stacks, duration, 100, damagePerStack);
+                    get().addLog(`출혈 적용: ${bleedTarget === 'player' ? '플레이어' : '적'}에게 ${stacks}중첩 / ${duration}턴 (스택당 ${damagePerStack})`, 'effect');
+                    triggerVFX('damage', bleedTarget, stacks);
                 }
                 else if (eff.type === 'ReactiveArmor') {
                     const charges = Math.max(1, Number(eff.charges ?? 1));
                     const reflectRatio = Math.min(1, Math.max(0, Number(eff.reflectRatio ?? 0.3)));
                     const shieldRatio = Math.min(1, Math.max(0, Number(eff.shieldRatio ?? 0)));
                     const duration = Math.max(0, Number(eff.duration ?? charges));
-                    const playerStatus = { ...get().playerStatus };
-                    playerStatus.reactiveArmorCharges = charges;
-                    playerStatus.reactiveArmorReflectRatio = reflectRatio;
-                    playerStatus.reactiveArmorShieldRatio = shieldRatio;
-                    playerStatus.reactiveArmorDuration = duration;
-                    set({ playerStatus });
-                    const reflectPct = Math.round(reflectRatio * 100);
-                    const shieldPct = Math.round(shieldRatio * 100);
-                    get().addLog(`반응 장갑 활성화: ${charges}회 (반격 ${reflectPct}%, 보호막 전환 ${shieldPct}%)`, 'effect');
-                    triggerVFX('shield', 'player', charges);
+                    // target 확인: 명시되지 않으면 플레이어 카드는 플레이어에게
+                    const targetOverride = eff.target;
+                    const defaultTarget = 'player';
+                    const armorTarget = targetOverride === 'player' || targetOverride === 'enemy' ? targetOverride : defaultTarget;
+                    
+                    if (armorTarget === 'player') {
+                        const playerStatus = { ...get().playerStatus };
+                        playerStatus.reactiveArmorCharges = charges;
+                        playerStatus.reactiveArmorReflectRatio = reflectRatio;
+                        playerStatus.reactiveArmorShieldRatio = shieldRatio;
+                        playerStatus.reactiveArmorDuration = duration;
+                        set({ playerStatus });
+                        const reflectPct = Math.round(reflectRatio * 100);
+                        const shieldPct = Math.round(shieldRatio * 100);
+                        get().addLog(`반응 장갑 활성화: ${charges}회 (반격 ${reflectPct}%, 보호막 전환 ${shieldPct}%)`, 'effect');
+                        triggerVFX('shield', 'player', charges);
+                    } else {
+                        const enemyStatus = { ...get().enemyStatus };
+                        enemyStatus.reactiveArmorCharges = charges;
+                        enemyStatus.reactiveArmorReflectRatio = reflectRatio;
+                        enemyStatus.reactiveArmorShieldRatio = shieldRatio;
+                        enemyStatus.reactiveArmorDuration = duration;
+                        set({ enemyStatus });
+                        const reflectPct = Math.round(reflectRatio * 100);
+                        const shieldPct = Math.round(shieldRatio * 100);
+                        get().addLog(`적 반응 장갑 활성화: ${charges}회 (반격 ${reflectPct}%, 보호막 전환 ${shieldPct}%)`, 'effect');
+                        triggerVFX('shield', 'enemy', charges);
+                    }
                 }
                 else if (eff.type === 'TempoBoost') {
                     const amount = Number(eff.amount ?? 0);
                     const turns = Math.max(1, Number(eff.turns ?? 1));
+                    // target 확인: 명시되지 않으면 플레이어 카드는 플레이어에게
+                    const targetOverride = eff.target;
+                    const defaultTarget = 'player';
+                    const boostTarget = targetOverride === 'player' || targetOverride === 'enemy' ? targetOverride : defaultTarget;
+                    
                     if (amount > 0) {
-                        const playerStatus = { ...get().playerStatus };
-                        playerStatus.energyBoostPending = (playerStatus.energyBoostPending || 0) + amount;
-                        playerStatus.energyBoostDuration = Math.max(playerStatus.energyBoostDuration, turns);
-                        set({ playerStatus });
-                        get().addLog(`에너지 가속: 다음 ${turns}턴 동안 에너지 +${amount}`, 'effect');
-                        triggerVFX('energy', 'player', amount);
+                        if (boostTarget === 'player') {
+                            const playerStatus = { ...get().playerStatus };
+                            playerStatus.energyBoostPending = (playerStatus.energyBoostPending || 0) + amount;
+                            playerStatus.energyBoostDuration = Math.max(playerStatus.energyBoostDuration, turns);
+                            set({ playerStatus });
+                            get().addLog(`에너지 가속: 다음 ${turns}턴 동안 에너지 +${amount}`, 'effect');
+                            triggerVFX('energy', 'player', amount);
+                        } else {
+                            const enemyStatus = { ...get().enemyStatus };
+                            enemyStatus.energyBoostPending = (enemyStatus.energyBoostPending || 0) + amount;
+                            enemyStatus.energyBoostDuration = Math.max(enemyStatus.energyBoostDuration, turns);
+                            set({ enemyStatus });
+                            get().addLog(`적 에너지 가속: 다음 ${turns}턴 동안 에너지 +${amount}`, 'effect');
+                            triggerVFX('energy', 'enemy', amount);
+                        }
                     }
                 }
                 else if (eff.type === 'ArmorBreak') {
@@ -3681,7 +3844,11 @@ export const useBattleStore = create((set, get) => {
                     }
                 }
                 else if (eff.type === 'OnHitStatus') {
-                    const playerStatus = { ...get().playerStatus };
+                    // target 확인: 명시되지 않으면 플레이어 카드는 플레이어에게
+                    const targetOverride = eff.target;
+                    const defaultTarget = 'player';
+                    const onHitTarget = targetOverride === 'player' || targetOverride === 'enemy' ? targetOverride : defaultTarget;
+                    
                     const entry = {
                         status: {
                             key: eff.status.key,
@@ -3694,10 +3861,20 @@ export const useBattleStore = create((set, get) => {
                     if (typeof eff.status.value === 'number') {
                         entry.status.value = eff.status.value;
                     }
-                    playerStatus.onHitStatuses = [...(playerStatus.onHitStatuses || []), entry];
-                    set({ playerStatus });
-                    get().addLog(`🛡️ 반격 상태 준비: 공격자에게 ${eff.status.key} 적용 (${eff.duration}턴)`, 'effect');
-                    triggerVFX('buff', 'player', entry.status.stacks ?? 1);
+                    
+                    if (onHitTarget === 'player') {
+                        const playerStatus = { ...get().playerStatus };
+                        playerStatus.onHitStatuses = [...(playerStatus.onHitStatuses || []), entry];
+                        set({ playerStatus });
+                        get().addLog(`🛡️ 반격 상태 준비: 공격자에게 ${eff.status.key} 적용 (${eff.duration}턴)`, 'effect');
+                        triggerVFX('buff', 'player', entry.status.stacks ?? 1);
+                    } else {
+                        const enemyStatus = { ...get().enemyStatus };
+                        enemyStatus.onHitStatuses = [...(enemyStatus.onHitStatuses || []), entry];
+                        set({ enemyStatus });
+                        get().addLog(`🛡️ 적 반격 상태 준비: 공격자에게 ${eff.status.key} 적용 (${eff.duration}턴)`, 'effect');
+                        triggerVFX('buff', 'enemy', entry.status.stacks ?? 1);
+                    }
                 }
                 else if (eff.type === 'StealCard') {
                     const count = Math.max(1, Number(eff.count ?? 1));
@@ -3777,46 +3954,91 @@ export const useBattleStore = create((set, get) => {
                 else if (eff.type === 'Shield') {
                     const value = Number(eff.value ?? 0);
                     const duration = Number(eff.duration ?? 1);
+                    // target 확인: 명시되지 않으면 플레이어 카드는 플레이어에게
+                    const targetOverride = eff.target;
+                    const defaultTarget = 'player';
+                    const shieldTarget = targetOverride === 'player' || targetOverride === 'enemy' ? targetOverride : defaultTarget;
+                    
                     if (value > 0) {
-                        const playerStatus = { ...state.playerStatus };
-                        playerStatus.shield = (playerStatus.shield || 0) + value;
-                        playerStatus.shieldDuration = Math.max(playerStatus.shieldDuration, duration);
-                        set({ playerStatus });
-                        get().addLog(`보호막: +${value} (현재: ${playerStatus.shield}, ${playerStatus.shieldDuration}턴)`, 'effect');
-                        triggerVFX('shield', 'player', value);
+                        if (shieldTarget === 'player') {
+                            const playerStatus = { ...state.playerStatus };
+                            playerStatus.shield = (playerStatus.shield || 0) + value;
+                            playerStatus.shieldDuration = Math.max(playerStatus.shieldDuration, duration);
+                            set({ playerStatus });
+                            get().addLog(`보호막: +${value} (현재: ${playerStatus.shield}, ${playerStatus.shieldDuration}턴)`, 'effect');
+                            triggerVFX('shield', 'player', value);
+                        } else {
+                            const enemyStatus = { ...state.enemyStatus };
+                            enemyStatus.shield = (enemyStatus.shield || 0) + value;
+                            enemyStatus.shieldDuration = Math.max(enemyStatus.shieldDuration, duration);
+                            set({ enemyStatus });
+                            get().addLog(`적 보호막: +${value} (현재: ${enemyStatus.shield}, ${enemyStatus.shieldDuration}턴)`, 'effect');
+                            triggerVFX('shield', 'enemy', value);
+                        }
                     }
                 }
                 else if (eff.type === 'Guard') {
                     const value = Number(eff.value ?? 0);
                     const duration = Number(eff.duration ?? 1);
+                    // target 확인: 명시되지 않으면 플레이어 카드는 플레이어에게
+                    const targetOverride = eff.target;
+                    const defaultTarget = 'player';
+                    const guardTarget = targetOverride === 'player' || targetOverride === 'enemy' ? targetOverride : defaultTarget;
+                    
                     if (value > 0) {
-                        const playerStatus = { ...state.playerStatus };
-                        playerStatus.guard = value;
-                        playerStatus.guardDuration = duration;
-                        set({ playerStatus });
-                        get().addLog(`가드: ${value} (피해 감소, ${duration}턴)`, 'effect');
-                        triggerVFX('shield', 'player', value);
+                        if (guardTarget === 'player') {
+                            const playerStatus = { ...state.playerStatus };
+                            playerStatus.guard = value;
+                            playerStatus.guardDuration = duration;
+                            set({ playerStatus });
+                            get().addLog(`가드: ${value} (피해 감소, ${duration}턴)`, 'effect');
+                            triggerVFX('shield', 'player', value);
+                        } else {
+                            const enemyStatus = { ...state.enemyStatus };
+                            enemyStatus.guard = value;
+                            enemyStatus.guardDuration = duration;
+                            set({ enemyStatus });
+                            get().addLog(`적 가드: ${value} (피해 감소, ${duration}턴)`, 'effect');
+                            triggerVFX('shield', 'enemy', value);
+                        }
                     }
                 }
                 else if (eff.type === 'Vulnerable') {
                     const value = Number(eff.value ?? 0);
                     const duration = Number(eff.duration ?? 1);
+                    // target 확인: 명시되지 않으면 Attack 카드는 적에게
+                    const targetOverride = eff.target;
+                    const defaultTarget = card.type === 'Attack' ? 'enemy' : 'player';
+                    const vulnerableTarget = targetOverride === 'player' || targetOverride === 'enemy' ? targetOverride : defaultTarget;
+                    
                     if (value > 0) {
-                        // Attack 카드는 적에게 취약 적용
-                        get().applyStatus('enemy', 'Vulnerable', 1, duration, 100, value);
+                        get().applyStatus(vulnerableTarget, 'Vulnerable', 1, duration, 100, value);
+                        get().addLog(`취약 적용: ${vulnerableTarget === 'player' ? '플레이어' : '적'}에게 (${duration}턴)`, 'effect');
                     }
                 }
                 else if (eff.type === 'Buff') {
                     const stat = eff.stat;
                     const value = Number(eff.value ?? 0);
                     const duration = Number(eff.duration ?? 1);
+                    // target 확인: 명시되지 않으면 플레이어 카드는 플레이어에게
+                    const targetOverride = eff.target;
+                    const defaultTarget = 'player';
+                    const buffTarget = targetOverride === 'player' || targetOverride === 'enemy' ? targetOverride : defaultTarget;
+                    
                     if (value > 0 && stat === 'attack') {
-                        const playerStatus = { ...state.playerStatus };
-                        playerStatus.attackBuff = value;
-                        set({ playerStatus });
-                        get().addLog(`공격력 버프: +${value}% (${duration}턴)`, 'effect');
-                        // duration은 추후 상태이상 시스템으로 관리할 수 있음
-                        triggerVFX('buff', 'player', value);
+                        if (buffTarget === 'player') {
+                            const playerStatus = { ...state.playerStatus };
+                            playerStatus.attackBuff = value;
+                            set({ playerStatus });
+                            get().addLog(`공격력 버프: +${value}% (${duration}턴)`, 'effect');
+                            triggerVFX('buff', 'player', value);
+                        } else {
+                            const enemyStatus = { ...state.enemyStatus };
+                            enemyStatus.attackBuff = value;
+                            set({ enemyStatus });
+                            get().addLog(`적 공격력 버프: +${value}% (${duration}턴)`, 'effect');
+                            triggerVFX('buff', 'enemy', value);
+                        }
                     }
                 }
                 else if (eff.type === 'Regen') {
@@ -3833,25 +4055,55 @@ export const useBattleStore = create((set, get) => {
                 }
                 else if (eff.type === 'Cleanse') {
                     const maxStacks = Number(eff.maxStacks ?? 2);
-                    const playerStatus = { ...state.playerStatus };
-                    const removed = playerStatus.statuses.filter(s => s.key === 'Burn' && (s.stacks || 0) <= maxStacks);
-                    playerStatus.statuses = playerStatus.statuses.filter(s => !(s.key === 'Burn' && (s.stacks || 0) <= maxStacks));
-                    set({ playerStatus });
-                    if (removed.length > 0) {
-                        get().addLog(`정화: 화상 ${removed.reduce((sum, s) => sum + (s.stacks || 0), 0)}중첩 제거`, 'effect');
-                        triggerVFX('buff', 'player', removed.length);
+                    // target 확인: 명시되지 않으면 플레이어 카드는 플레이어에게
+                    const targetOverride = eff.target;
+                    const defaultTarget = 'player';
+                    const cleanseTarget = targetOverride === 'player' || targetOverride === 'enemy' ? targetOverride : defaultTarget;
+                    
+                    if (cleanseTarget === 'player') {
+                        const playerStatus = { ...state.playerStatus };
+                        const removed = playerStatus.statuses.filter(s => s.key === 'Burn' && (s.stacks || 0) <= maxStacks);
+                        playerStatus.statuses = playerStatus.statuses.filter(s => !(s.key === 'Burn' && (s.stacks || 0) <= maxStacks));
+                        set({ playerStatus });
+                        if (removed.length > 0) {
+                            get().addLog(`정화: 화상 ${removed.reduce((sum, s) => sum + (s.stacks || 0), 0)}중첩 제거`, 'effect');
+                            triggerVFX('buff', 'player', removed.length);
+                        }
+                    } else {
+                        const enemyStatus = { ...state.enemyStatus };
+                        const removed = enemyStatus.statuses.filter(s => s.key === 'Burn' && (s.stacks || 0) <= maxStacks);
+                        enemyStatus.statuses = enemyStatus.statuses.filter(s => !(s.key === 'Burn' && (s.stacks || 0) <= maxStacks));
+                        set({ enemyStatus });
+                        if (removed.length > 0) {
+                            get().addLog(`적 정화: 화상 ${removed.reduce((sum, s) => sum + (s.stacks || 0), 0)}중첩 제거`, 'effect');
+                            triggerVFX('buff', 'enemy', removed.length);
+                        }
                     }
                 }
                 else if (eff.type === 'PriorityBoost') {
                     const value = Number(eff.value ?? 0);
                     const duration = Number(eff.duration ?? 1);
+                    // target 확인: 명시되지 않으면 플레이어 카드는 플레이어에게
+                    const targetOverride = eff.target;
+                    const defaultTarget = 'player';
+                    const priorityTarget = targetOverride === 'player' || targetOverride === 'enemy' ? targetOverride : defaultTarget;
+                    
                     if (value > 0) {
-                        const playerStatus = { ...state.playerStatus };
-                        playerStatus.priorityBoost = (playerStatus.priorityBoost || 0) + value;
-                        playerStatus.priorityBoostDuration = Math.max(playerStatus.priorityBoostDuration || 0, duration);
-                        set({ playerStatus });
-                        get().addLog(`이니셔티브 증가: +${value} (${duration}턴)`, 'effect');
-                        triggerVFX('buff', 'player', value);
+                        if (priorityTarget === 'player') {
+                            const playerStatus = { ...state.playerStatus };
+                            playerStatus.priorityBoost = (playerStatus.priorityBoost || 0) + value;
+                            playerStatus.priorityBoostDuration = Math.max(playerStatus.priorityBoostDuration || 0, duration);
+                            set({ playerStatus });
+                            get().addLog(`이니셔티브 증가: +${value} (${duration}턴)`, 'effect');
+                            triggerVFX('buff', 'player', value);
+                        } else {
+                            const enemyStatus = { ...state.enemyStatus };
+                            enemyStatus.priorityBoost = (enemyStatus.priorityBoost || 0) + value;
+                            enemyStatus.priorityBoostDuration = Math.max(enemyStatus.priorityBoostDuration || 0, duration);
+                            set({ enemyStatus });
+                            get().addLog(`적 이니셔티브 증가: +${value} (${duration}턴)`, 'effect');
+                            triggerVFX('buff', 'enemy', value);
+                        }
                     }
                 }
                 else if (eff.type === 'Silence') {
@@ -3862,49 +4114,104 @@ export const useBattleStore = create((set, get) => {
                 }
                 else if (eff.type === 'Nullify') {
                     const times = Number(eff.times ?? 1);
+                    // target 확인: 명시되지 않으면 플레이어 카드는 플레이어에게
+                    const targetOverride = eff.target;
+                    const defaultTarget = 'player';
+                    const nullifyTarget = targetOverride === 'player' || targetOverride === 'enemy' ? targetOverride : defaultTarget;
+                    
                     if (times > 0) {
-                        const playerStatus = { ...state.playerStatus };
-                        playerStatus.nullifyCharges = (playerStatus.nullifyCharges || 0) + times;
-                        set({ playerStatus });
-                        get().addLog(`무효화: 적의 다음 ${times}회 카드 효과 무효`, 'effect');
-                        triggerVFX('shield', 'player', times);
+                        if (nullifyTarget === 'player') {
+                            const playerStatus = { ...state.playerStatus };
+                            playerStatus.nullifyCharges = (playerStatus.nullifyCharges || 0) + times;
+                            set({ playerStatus });
+                            get().addLog(`무효화: 적의 다음 ${times}회 카드 효과 무효`, 'effect');
+                            triggerVFX('shield', 'player', times);
+                        } else {
+                            const enemyStatus = { ...state.enemyStatus };
+                            enemyStatus.nullifyCharges = (enemyStatus.nullifyCharges || 0) + times;
+                            set({ enemyStatus });
+                            get().addLog(`적 무효화: 플레이어의 다음 ${times}회 카드 효과 무효`, 'effect');
+                            triggerVFX('shield', 'enemy', times);
+                        }
                     }
                 }
                 else if (eff.type === 'Counter') {
                     const value = Number(eff.value ?? 0);
                     const duration = Number(eff.duration ?? 1);
+                    // target 확인: 명시되지 않으면 플레이어 카드는 플레이어에게
+                    const targetOverride = eff.target;
+                    const defaultTarget = 'player';
+                    const counterTarget = targetOverride === 'player' || targetOverride === 'enemy' ? targetOverride : defaultTarget;
+                    
                     if (value > 0) {
-                        const playerStatus = { ...state.playerStatus };
-                        playerStatus.counterValue = value;
-                        playerStatus.counterDuration = duration;
-                        set({ playerStatus });
-                        get().addLog(`반격: 공격받을 시 ${value}의 피해 반사 (${duration}턴)`, 'effect');
-                        triggerVFX('buff', 'player', value);
+                        if (counterTarget === 'player') {
+                            const playerStatus = { ...state.playerStatus };
+                            playerStatus.counterValue = value;
+                            playerStatus.counterDuration = duration;
+                            set({ playerStatus });
+                            get().addLog(`반격: 공격받을 시 ${value}의 피해 반사 (${duration}턴)`, 'effect');
+                            triggerVFX('buff', 'player', value);
+                        } else {
+                            const enemyStatus = { ...state.enemyStatus };
+                            enemyStatus.counterValue = value;
+                            enemyStatus.counterDuration = duration;
+                            set({ enemyStatus });
+                            get().addLog(`적 반격: 공격받을 시 ${value}의 피해 반사 (${duration}턴)`, 'effect');
+                            triggerVFX('buff', 'enemy', value);
+                        }
                     }
                 }
                 else if (eff.type === 'Evasion') {
                     const value = Number(eff.value ?? 100); // 회피 확률 (%)
                     const charges = Number(eff.charges ?? 1);
                     const duration = Number(eff.duration ?? 1);
+                    // target 확인: 명시되지 않으면 플레이어 카드는 플레이어에게
+                    const targetOverride = eff.target;
+                    const defaultTarget = 'player';
+                    const evasionTarget = targetOverride === 'player' || targetOverride === 'enemy' ? targetOverride : defaultTarget;
+                    
                     if (charges > 0) {
-                        const playerStatus = { ...state.playerStatus };
-                        playerStatus.evasionCharges = (playerStatus.evasionCharges || 0) + charges;
-                        playerStatus.evasionDuration = Math.max(playerStatus.evasionDuration, duration);
-                        set({ playerStatus });
-                        get().addLog(`회피: ${charges}회 공격 회피 가능 (${playerStatus.evasionDuration}턴)`, 'effect');
-                        triggerVFX('buff', 'player', charges);
+                        if (evasionTarget === 'player') {
+                            const playerStatus = { ...state.playerStatus };
+                            playerStatus.evasionCharges = (playerStatus.evasionCharges || 0) + charges;
+                            playerStatus.evasionDuration = Math.max(playerStatus.evasionDuration, duration);
+                            set({ playerStatus });
+                            get().addLog(`회피: ${charges}회 공격 회피 가능 (${playerStatus.evasionDuration}턴)`, 'effect');
+                            triggerVFX('buff', 'player', charges);
+                        } else {
+                            const enemyStatus = { ...state.enemyStatus };
+                            enemyStatus.evasionCharges = (enemyStatus.evasionCharges || 0) + charges;
+                            enemyStatus.evasionDuration = Math.max(enemyStatus.evasionDuration, duration);
+                            set({ enemyStatus });
+                            get().addLog(`적 회피: ${charges}회 공격 회피 가능 (${enemyStatus.evasionDuration}턴)`, 'effect');
+                            triggerVFX('buff', 'enemy', charges);
+                        }
                     }
                 }
                 else if (eff.type === 'Immune') {
                     const keywords = eff.keywords || [];
                     const duration = Number(eff.duration ?? 1);
+                    // target 확인: 명시되지 않으면 플레이어 카드는 플레이어에게
+                    const targetOverride = eff.target;
+                    const defaultTarget = 'player';
+                    const immuneTarget = targetOverride === 'player' || targetOverride === 'enemy' ? targetOverride : defaultTarget;
+                    
                     if (keywords.length > 0) {
-                        const playerStatus = { ...state.playerStatus };
-                        playerStatus.immuneKeywords = [...new Set([...playerStatus.immuneKeywords, ...keywords])];
-                        playerStatus.immuneDuration = Math.max(playerStatus.immuneDuration, duration);
-                        set({ playerStatus });
-                        get().addLog(`🛡️ 면역: ${keywords.join(', ')} 상태이상 무효 (${duration}턴)`, 'effect');
-                        triggerVFX('shield', 'player', keywords.length);
+                        if (immuneTarget === 'player') {
+                            const playerStatus = { ...state.playerStatus };
+                            playerStatus.immuneKeywords = [...new Set([...playerStatus.immuneKeywords, ...keywords])];
+                            playerStatus.immuneDuration = Math.max(playerStatus.immuneDuration, duration);
+                            set({ playerStatus });
+                            get().addLog(`🛡️ 면역: ${keywords.join(', ')} 상태이상 무효 (${duration}턴)`, 'effect');
+                            triggerVFX('shield', 'player', keywords.length);
+                        } else {
+                            const enemyStatus = { ...state.enemyStatus };
+                            enemyStatus.immuneKeywords = [...new Set([...enemyStatus.immuneKeywords, ...keywords])];
+                            enemyStatus.immuneDuration = Math.max(enemyStatus.immuneDuration, duration);
+                            set({ enemyStatus });
+                            get().addLog(`🛡️ 적 면역: ${keywords.join(', ')} 상태이상 무효 (${duration}턴)`, 'effect');
+                            triggerVFX('shield', 'enemy', keywords.length);
+                        }
                     }
                 }
                 else if (eff.type === 'Chain') {
