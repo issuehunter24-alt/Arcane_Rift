@@ -668,6 +668,21 @@ menuButtons.forEach(btn => {
         }
     });
 });
+
+// APK 다운로드 버튼 이벤트
+const apkDownloadBtn = document.getElementById('apk-download-btn');
+if (apkDownloadBtn) {
+    apkDownloadBtn.addEventListener('click', () => {
+        audioManager.playSFX('button_click', 0.6);
+        // APK 파일 다운로드
+        const link = document.createElement('a');
+        link.href = '/apk/Arcane_Rift.apk';
+        link.download = 'Arcane_Rift.apk';
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+    });
+}
 pvpSearchBtn.addEventListener('click', async () => {
     pvpSearchBtn.disabled = true;
     try {
